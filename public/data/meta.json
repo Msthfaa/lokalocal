@@ -1,0 +1,16 @@
+{
+  "tanggal_ambil": "2026-10-09T08:36:12.355Z",
+  "tanggal_ambil_terformat": "9 Oktober 2026",
+  "sumber": "SPKT - Kementerian Kebudayaan RI",
+  "url_sumber": "https://spkt.kemenbud.go.id",
+  "atribusi": "Data: SPKT - Kementerian Kebudayaan RI, diambil 9 Oktober 2026",
+  "jumlah_record": 544,
+  "jumlah_sdm_agregat": 5,
+  "jumlah_provinsi": 38,
+  "kategori_summary": {
+    "Cagar Budaya": 65,
+    "Objek Pemajuan Kebudayaan": 473,
+    "Lembaga Budaya": 3,
+    "Sarana & Prasarana": 3
+  }
+}

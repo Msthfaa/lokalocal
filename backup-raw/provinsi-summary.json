@@ -1,0 +1,645 @@
+{
+  "ringkasan_nasional": {
+    "total_rekaman_budaya": 544,
+    "total_sdm_tercatat_agregat": 5,
+    "jumlah_provinsi": 38,
+    "kategori_totals": {
+      "Cagar Budaya": 65,
+      "Objek Pemajuan Kebudayaan": 473,
+      "Lembaga Budaya": 3,
+      "Sarana & Prasarana": 3
+    }
+  },
+  "provinsi": [
+    {
+      "provinsi": "Sumatera Barat",
+      "total_budaya": 119,
+      "kategori": {
+        "Cagar Budaya": 1,
+        "Objek Pemajuan Kebudayaan": 118,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Jawa Tengah",
+      "total_budaya": 79,
+      "kategori": {
+        "Cagar Budaya": 4,
+        "Objek Pemajuan Kebudayaan": 75,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 2
+      }
+    },
+    {
+      "provinsi": "Jawa Timur",
+      "total_budaya": 41,
+      "kategori": {
+        "Cagar Budaya": 13,
+        "Objek Pemajuan Kebudayaan": 28,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sulawesi Selatan",
+      "total_budaya": 39,
+      "kategori": {
+        "Cagar Budaya": 1,
+        "Objek Pemajuan Kebudayaan": 38,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 3
+      }
+    },
+    {
+      "provinsi": "Jawa Barat",
+      "total_budaya": 38,
+      "kategori": {
+        "Cagar Budaya": 5,
+        "Objek Pemajuan Kebudayaan": 33,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kalimantan Barat",
+      "total_budaya": 38,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 38,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Aceh",
+      "total_budaya": 26,
+      "kategori": {
+        "Cagar Budaya": 2,
+        "Objek Pemajuan Kebudayaan": 23,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 1,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sumatera Selatan",
+      "total_budaya": 18,
+      "kategori": {
+        "Cagar Budaya": 15,
+        "Objek Pemajuan Kebudayaan": 3,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "DKI Jakarta",
+      "total_budaya": 17,
+      "kategori": {
+        "Cagar Budaya": 16,
+        "Objek Pemajuan Kebudayaan": 1,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "DI Yogyakarta",
+      "total_budaya": 13,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 13,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kalimantan Selatan",
+      "total_budaya": 13,
+      "kategori": {
+        "Cagar Budaya": 3,
+        "Objek Pemajuan Kebudayaan": 7,
+        "Lembaga Budaya": 3,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kalimantan Tengah",
+      "total_budaya": 10,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 10,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kepulauan Bangka Belitung",
+      "total_budaya": 9,
+      "kategori": {
+        "Cagar Budaya": 1,
+        "Objek Pemajuan Kebudayaan": 8,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Maluku Utara",
+      "total_budaya": 9,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 9,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sulawesi Tengah",
+      "total_budaya": 9,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 9,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Lampung",
+      "total_budaya": 8,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 8,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sumatera Utara",
+      "total_budaya": 8,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 8,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Jambi",
+      "total_budaya": 7,
+      "kategori": {
+        "Cagar Budaya": 3,
+        "Objek Pemajuan Kebudayaan": 4,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Bali",
+      "total_budaya": 6,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 6,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kalimantan Timur",
+      "total_budaya": 6,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 5,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 1,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sulawesi Tenggara",
+      "total_budaya": 6,
+      "kategori": {
+        "Cagar Budaya": 1,
+        "Objek Pemajuan Kebudayaan": 5,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Banten",
+      "total_budaya": 5,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 5,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kalimantan Utara",
+      "total_budaya": 5,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 5,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Papua",
+      "total_budaya": 5,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 5,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Nusa Tenggara Timur",
+      "total_budaya": 3,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 3,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Papua Pegunungan",
+      "total_budaya": 3,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 3,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Bengkulu",
+      "total_budaya": 2,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 2,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Gorontalo",
+      "total_budaya": 2,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 1,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 1,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Kepulauan Riau",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Maluku",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Nusa Tenggara Barat",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Papua Barat",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Papua Barat Daya",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Papua Selatan",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Papua Tengah",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Riau",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sulawesi Barat",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    },
+    {
+      "provinsi": "Sulawesi Utara",
+      "total_budaya": 0,
+      "kategori": {
+        "Cagar Budaya": 0,
+        "Objek Pemajuan Kebudayaan": 0,
+        "Lembaga Budaya": 0,
+        "Sarana & Prasarana": 0,
+        "SDM Kebudayaan (Agregat)": 0
+      }
+    }
+  ],
+  "top_10_per_kategori": {
+    "Cagar Budaya": [
+      {
+        "provinsi": "DKI Jakarta",
+        "count": 16
+      },
+      {
+        "provinsi": "Sumatera Selatan",
+        "count": 15
+      },
+      {
+        "provinsi": "Jawa Timur",
+        "count": 13
+      },
+      {
+        "provinsi": "Jawa Barat",
+        "count": 5
+      },
+      {
+        "provinsi": "Jawa Tengah",
+        "count": 4
+      },
+      {
+        "provinsi": "Jambi",
+        "count": 3
+      },
+      {
+        "provinsi": "Kalimantan Selatan",
+        "count": 3
+      },
+      {
+        "provinsi": "Aceh",
+        "count": 2
+      },
+      {
+        "provinsi": "Kepulauan Bangka Belitung",
+        "count": 1
+      },
+      {
+        "provinsi": "Sulawesi Selatan",
+        "count": 1
+      }
+    ],
+    "Objek Pemajuan Kebudayaan": [
+      {
+        "provinsi": "Sumatera Barat",
+        "count": 118
+      },
+      {
+        "provinsi": "Jawa Tengah",
+        "count": 75
+      },
+      {
+        "provinsi": "Kalimantan Barat",
+        "count": 38
+      },
+      {
+        "provinsi": "Sulawesi Selatan",
+        "count": 38
+      },
+      {
+        "provinsi": "Jawa Barat",
+        "count": 33
+      },
+      {
+        "provinsi": "Jawa Timur",
+        "count": 28
+      },
+      {
+        "provinsi": "Aceh",
+        "count": 23
+      },
+      {
+        "provinsi": "DI Yogyakarta",
+        "count": 13
+      },
+      {
+        "provinsi": "Kalimantan Tengah",
+        "count": 10
+      },
+      {
+        "provinsi": "Maluku Utara",
+        "count": 9
+      }
+    ],
+    "Lembaga Budaya": [
+      {
+        "provinsi": "Kalimantan Selatan",
+        "count": 3
+      },
+      {
+        "provinsi": "Aceh",
+        "count": 0
+      },
+      {
+        "provinsi": "Bali",
+        "count": 0
+      },
+      {
+        "provinsi": "Banten",
+        "count": 0
+      },
+      {
+        "provinsi": "Bengkulu",
+        "count": 0
+      },
+      {
+        "provinsi": "DI Yogyakarta",
+        "count": 0
+      },
+      {
+        "provinsi": "DKI Jakarta",
+        "count": 0
+      },
+      {
+        "provinsi": "Gorontalo",
+        "count": 0
+      },
+      {
+        "provinsi": "Jambi",
+        "count": 0
+      },
+      {
+        "provinsi": "Jawa Barat",
+        "count": 0
+      }
+    ],
+    "Sarana & Prasarana": [
+      {
+        "provinsi": "Aceh",
+        "count": 1
+      },
+      {
+        "provinsi": "Gorontalo",
+        "count": 1
+      },
+      {
+        "provinsi": "Kalimantan Timur",
+        "count": 1
+      },
+      {
+        "provinsi": "Bali",
+        "count": 0
+      },
+      {
+        "provinsi": "Banten",
+        "count": 0
+      },
+      {
+        "provinsi": "Bengkulu",
+        "count": 0
+      },
+      {
+        "provinsi": "DI Yogyakarta",
+        "count": 0
+      },
+      {
+        "provinsi": "DKI Jakarta",
+        "count": 0
+      },
+      {
+        "provinsi": "Jambi",
+        "count": 0
+      },
+      {
+        "provinsi": "Jawa Barat",
+        "count": 0
+      }
+    ]
+  },
+  "provinsi_data_paling_sedikit": [
+    {
+      "provinsi": "Kepulauan Riau",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Maluku",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Nusa Tenggara Barat",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Papua Barat",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Papua Barat Daya",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Papua Selatan",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Papua Tengah",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Riau",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Sulawesi Barat",
+      "total_budaya": 0
+    },
+    {
+      "provinsi": "Sulawesi Utara",
+      "total_budaya": 0
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+/**
+ * tokens.css — Design Tokens Atlas Budaya
+ * Sesuai WEB_SPEC.md Bagian 6.1.
+ * Seluruh pasangan teks/latar telah diverifikasi memenuhi kontras WCAG AA (>= 4.5:1).
+ */
+
+:root {
+  /* Dasar */
+  --malam: #14110F;        /* latar gelap utama */
+  --malam-2: #1E1916;      /* permukaan di atas latar gelap */
+  --malam-3: #28211D;      /* permukaan kartu/elemen sekunder di atas malam-2 */
+  --kertas: #F4EBDD;       /* latar terang / teks utama di atas gelap (kontras ~14.7:1 thd --malam) */
+  --kertas-2: #EAE0CF;     /* permukaan sekunder di atas latar terang */
+  --kertas-redup: #C8BCB0; /* teks sekunder di atas gelap (kontras ~8.9:1 thd --malam) */
+  --tinta: #2A211B;        /* teks utama di atas terang (kontras ~12.2:1 thd --kertas) */
+  --tinta-2: #54453B;      /* teks sekunder di atas terang (kontras ~6.3:1 thd --kertas) */
+  --garis: #3A322C;        /* garis halus di mode gelap */
+  --garis-terang: #D5C7B4; /* garis halus di mode terang */
+  --aksen: #E6B14A;        /* emas: aksen utama, fokus, sorotan (kontras ~8.8:1 thd --malam) */
+  --aksen-hover: #F0C368;  /* emas lebih terang saat hover */
+  --aksen-2: #E07A4F;      /* terakota hangat: aksen kedua (kontras ~5.6:1 thd --malam) */
+  --sukses: #7FB07A;       /* hijau lumut: status benar/tercatat (kontras ~6.7:1 thd --malam) */
+  --peringatan: #E59849;   /* jingga hangat: peringatan (kontras ~7.1:1 thd --malam) */
+  --bahaya: #E26D5C;       /* warna peringatan/error di atas latar gelap (kontras ~5.4:1) */
+
+  /* Jenis budaya (seluruhnya kontras >= 4.5:1 terhadap --malam #14110F) */
+  --jenis-kerajinan: #E07A4F;   /* terakota (~5.6:1) */
+  --jenis-seni: #E6B14A;        /* emas (~8.8:1) */
+  --jenis-lisan: #8FA3E8;       /* indigo muda (~6.9:1) */
+  --jenis-pengetahuan: #7FB07A; /* hijau lumut (~6.7:1) */
+  --jenis-adat: #D983A8;        /* mawar (~5.9:1) */
+  --jenis-cagar: #A89F95;       /* abu batu (~6.5:1) */
+
+  /* Tipografi */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-isi: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Skala ukuran teks fluid */
+  --teks-h1: clamp(2.2rem, 6vw, 4.5rem);
+  --teks-h2: clamp(1.6rem, 4vw, 2.75rem);
+  --teks-h3: clamp(1.2rem, 2.5vw, 1.5rem);
+  --teks-isi-besar: clamp(1.0625rem, 1.6vw, 1.25rem);
+  --teks-isi: clamp(1rem, 1.1vw, 1.125rem);
+  --teks-kecil: 0.875rem;
+  --teks-label: 0.8125rem;
+
+  /* Ruang & bentuk */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 24px;
+  --r-bulat: 9999px;
+
+  --ruang-1: 4px;
+  --ruang-2: 8px;
+  --ruang-3: 16px;
+  --ruang-4: 24px;
+  --ruang-5: 40px;
+  --ruang-6: 72px;
+  --ruang-7: 112px;
+
+  --lebar-baca: 68ch;
+  --lebar-wadah: 1200px;
+  --tinggi-nav: 64px;
+
+  /* Gerak */
+  --ease-keluar: cubic-bezier(.22, 1, .36, 1);
+  --dur-cepat: .2s;
+  --dur-sedang: .6s;
+  --dur-lambat: 1.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-cepat: 0s;
+    --dur-sedang: 0s;
+    --dur-lambat: 0s;
+  }
+}

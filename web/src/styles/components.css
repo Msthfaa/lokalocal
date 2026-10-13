@@ -1,0 +1,535 @@
+/**
+ * components.css — Komponen UI bersama: tombol, kartu metrik, chip jenis,
+ * dialog tentang data, banner status/error data, dan toast.
+ */
+
+/* Tombol */
+.tombol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ruang-2);
+  min-height: 44px;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--r-bulat);
+  font-weight: 600;
+  font-size: var(--teks-kecil);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform var(--dur-cepat) var(--ease-keluar),
+              background-color var(--dur-cepat) var(--ease-keluar),
+              border-color var(--dur-cepat) var(--ease-keluar),
+              color var(--dur-cepat) var(--ease-keluar);
+}
+
+.tombol--utama {
+  background-color: var(--aksen);
+  color: var(--malam);
+}
+
+.tombol--utama:hover {
+  background-color: var(--aksen-hover);
+  color: var(--malam);
+}
+
+.tombol--garis {
+  background-color: transparent;
+  border-color: var(--garis);
+  color: var(--kertas);
+}
+
+.tombol--garis:hover {
+  border-color: var(--aksen);
+  color: var(--aksen);
+}
+
+.bagian--terang .tombol--garis {
+  border-color: var(--tinta-2);
+  color: var(--tinta);
+}
+
+.bagian--terang .tombol--garis:hover {
+  background-color: var(--tinta);
+  color: var(--kertas);
+}
+
+/* Kartu Metrik & Kerangka Bagian */
+.kartu-metrik {
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-1);
+}
+
+.bagian--terang .kartu-metrik {
+  background-color: var(--kertas-2);
+  border-color: var(--garis-terang);
+}
+
+.kartu-metrik-angka {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--aksen);
+  line-height: 1.1;
+}
+
+.bagian--terang .kartu-metrik-angka {
+  color: var(--tinta);
+}
+
+.kartu-metrik-label {
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  color: var(--kertas);
+}
+
+.bagian--terang .kartu-metrik-label {
+  color: var(--tinta);
+}
+
+.kartu-metrik-ket {
+  font-size: 0.8125rem;
+  color: var(--kertas-redup);
+}
+
+.bagian--terang .kartu-metrik-ket {
+  color: var(--tinta-2);
+}
+
+/* Kotak Kerangka / Placeholder Fase Berikutnya */
+.kerangka-panel {
+  background-color: var(--malam-2);
+  border: 1px dashed var(--garis);
+  border-radius: var(--r-lg);
+  padding: var(--ruang-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+.bagian--terang .kerangka-panel {
+  background-color: var(--kertas-2);
+  border-color: var(--tinta-2);
+}
+
+/* Lencana / Chip Jenis Budaya */
+.daftar-chip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ruang-2);
+}
+
+.chip-jenis {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ruang-2);
+  min-height: 36px;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--r-bulat);
+  background-color: var(--malam-3);
+  border: 1px solid var(--garis);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  color: var(--kertas);
+}
+
+.chip-titik {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chip-titik[data-jenis="kerajinan"] { background-color: var(--jenis-kerajinan); }
+.chip-titik[data-jenis="seni"] { background-color: var(--jenis-seni); }
+.chip-titik[data-jenis="lisan"] { background-color: var(--jenis-lisan); }
+.chip-titik[data-jenis="pengetahuan"] { background-color: var(--jenis-pengetahuan); }
+.chip-titik[data-jenis="adat"] { background-color: var(--jenis-adat); }
+.chip-titik[data-jenis="cagar"] { background-color: var(--jenis-cagar); }
+
+/* Catatan Penting / Kejujuran Data */
+.kotak-catatan-jujur {
+  border-left: 4px solid var(--aksen);
+  background-color: rgba(230, 177, 74, 0.08);
+  padding: var(--ruang-3) var(--ruang-4);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-size: var(--teks-kecil);
+}
+
+.bagian--terang .kotak-catatan-jujur {
+  background-color: var(--kertas-2);
+  border-left-color: var(--tinta);
+  color: var(--tinta);
+}
+
+/* Banner Error Jaringan / Data */
+.banner-error {
+  margin-block: var(--ruang-4);
+  padding: var(--ruang-4);
+  border-radius: var(--r-md);
+  background-color: rgba(226, 109, 92, 0.12);
+  border: 1px solid var(--bahaya);
+  color: var(--kertas);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+.banner-error[hidden] {
+  display: none;
+}
+
+.banner-error-judul {
+  font-weight: 700;
+  color: var(--bahaya);
+}
+
+/* Dialog (<dialog>) */
+.dialog-modal {
+  margin: auto;
+  width: calc(100% - 2rem);
+  max-width: 680px;
+  max-height: 88vh;
+  background-color: var(--kertas);
+  color: var(--tinta);
+  border: 1px solid var(--garis-terang);
+  border-radius: var(--r-lg);
+  padding: 0;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+
+.dialog-modal::backdrop {
+  background-color: rgba(20, 17, 15, 0.78);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-kepala {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ruang-3);
+  padding: var(--ruang-4);
+  border-bottom: 1px solid var(--garis-terang);
+  background-color: var(--kertas-2);
+}
+
+.dialog-judul {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--tinta);
+}
+
+.tombol-tutup-dialog {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--garis-terang);
+  color: var(--tinta);
+  background-color: var(--kertas);
+}
+
+.tombol-tutup-dialog:hover {
+  background-color: var(--tinta);
+  color: var(--kertas);
+}
+
+.dialog-isi {
+  padding: var(--ruang-4);
+  overflow-y: auto;
+  max-height: calc(88vh - 84px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-4);
+}
+
+@media (min-width: 640px) {
+  .dialog-kepala {
+    padding: var(--ruang-4) var(--ruang-5);
+  }
+
+  .dialog-isi {
+    padding: var(--ruang-5);
+  }
+}
+
+.dialog-isi h3 {
+  font-size: 1.1rem;
+  color: var(--tinta);
+  margin-bottom: var(--ruang-1);
+}
+
+.dialog-daftar {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+  color: var(--tinta-2);
+}
+
+/* Toast Umpan Balik */
+.wadah-toast {
+  position: fixed;
+  bottom: var(--ruang-4);
+  right: var(--ruang-4);
+  left: var(--ruang-4);
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .wadah-toast {
+    left: auto;
+    justify-content: flex-end;
+  }
+}
+
+.toast-item {
+  pointer-events: auto;
+  background-color: var(--malam-2);
+  color: var(--kertas);
+  border: 1px solid var(--aksen);
+  border-radius: var(--r-md);
+  padding: var(--ruang-3) var(--ruang-4);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  transition: opacity var(--dur-cepat) var(--ease-keluar),
+              transform var(--dur-cepat) var(--ease-keluar);
+}
+
+.toast-item[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   Fase 6: Kartu Cerita, Pola Generatif SVG, Chips Filter, Tabel & Dialog Detail
+   ========================================================================== */
+
+.kartu-cerita {
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--dur-cepat) var(--ease-keluar),
+              transform var(--dur-cepat) var(--ease-keluar);
+}
+
+.kartu-cerita:hover,
+.kartu-cerita:focus-within {
+  border-color: var(--aksen);
+}
+
+.kartu-cerita--tanpa-deskripsi {
+  background-color: rgba(30, 25, 22, 0.65);
+  border-style: dashed;
+}
+
+.kartu-cerita-pola {
+  width: 100%;
+  height: 104px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--garis);
+  background-color: #191412;
+}
+
+.kartu-cerita--unggulan .kartu-cerita-pola {
+  height: 132px;
+}
+
+.pola-kartu-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform var(--dur-sedang) var(--ease-keluar);
+}
+
+.kartu-cerita:hover .pola-kartu-svg,
+.kartu-cerita:focus-within .pola-kartu-svg {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kartu-cerita:hover .pola-kartu-svg,
+  .kartu-cerita:focus-within .pola-kartu-svg {
+    transform: none;
+  }
+}
+
+.kartu-cerita-isi {
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+  flex: 1;
+}
+
+.kartu-cerita-lencana-baris {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.kartu-lencana-kecil {
+  min-height: 28px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+}
+
+.kartu-lencana-multi {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-bulat);
+  background-color: rgba(230, 177, 74, 0.14);
+  border: 1px solid rgba(230, 177, 74, 0.5);
+  color: var(--aksen);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.kartu-cerita-judul {
+  font-size: 1.18rem;
+  color: var(--kertas);
+  margin-top: 2px;
+}
+
+.kartu-cerita--unggulan .kartu-cerita-judul {
+  font-size: 1.32rem;
+}
+
+.kartu-cerita-lokasi {
+  font-size: 0.8125rem;
+  color: var(--kertas-redup);
+  font-weight: 600;
+}
+
+.kartu-cerita-ringkasan {
+  font-size: var(--teks-kecil);
+  color: var(--kertas);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.kartu-cerita-kosong-teks {
+  font-size: var(--teks-kecil);
+  color: var(--kertas-redup);
+  font-style: italic;
+  margin-top: auto;
+  padding-top: var(--ruang-2);
+}
+
+.kartu-cerita-kaki {
+  margin-top: auto;
+  padding-top: var(--ruang-3);
+  display: flex;
+  align-items: center;
+}
+
+.kartu-tombol-baca {
+  width: 100%;
+}
+
+/* Skeleton Kartu saat menunggu data lengkap */
+.kartu-skeleton {
+  height: 310px;
+  border-radius: var(--r-md);
+  background: linear-gradient(90deg, var(--malam-2) 25%, var(--malam-3) 50%, var(--malam-2) 75%);
+  background-size: 200% 100%;
+  border: 1px solid var(--garis);
+  animation: kilauSkeleton 1.6s infinite linear;
+}
+
+@keyframes kilauSkeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kartu-skeleton {
+    animation: none;
+  }
+}
+
+/* Chips Filter Multi-Pilih (Target sentuh >= 44px) */
+.chip-filter-tombol {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ruang-2);
+  min-height: 44px;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--r-bulat);
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  color: var(--kertas-redup);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  transition: background-color var(--dur-cepat) var(--ease-keluar),
+              border-color var(--dur-cepat) var(--ease-keluar),
+              color var(--dur-cepat) var(--ease-keluar);
+}
+
+.chip-filter-tombol:hover {
+  border-color: var(--aksen);
+  color: var(--kertas);
+}
+
+.chip-filter-tombol[aria-pressed="true"] {
+  background-color: rgba(230, 177, 74, 0.16);
+  border-color: var(--aksen);
+  color: var(--aksen);
+}
+
+/* Dialog Detail Rekaman Tambahan */
+.dialog-rekaman-pola {
+  width: 100%;
+  height: 112px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--garis-terang);
+  background-color: #191412;
+}
+
+.dialog-chip-terang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--r-bulat);
+  background-color: var(--kertas-2);
+  border: 1px solid var(--garis-terang);
+  color: var(--tinta);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.dialog-rekaman-kaki {
+  margin-top: var(--ruang-3);
+  padding-top: var(--ruang-3);
+  border-top: 1px solid var(--garis-terang);
+  font-size: 0.8125rem;
+  color: var(--tinta-2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dialog-paragraf-lanjutan p {
+  margin-top: var(--ruang-3);
+}

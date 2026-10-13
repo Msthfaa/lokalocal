@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14110F" />
+    <title>Lokalocal — Paspor Budaya Nusantara: 38 Provinsi</title>
+    <meta
+      name="description"
+      content="Buku paspor budaya digital Indonesia. Jelajahi tradisi dari 38 provinsi, kumpulkan stempel budaya, dan raih lencana Penjaga Warisan Nusantara."
+    />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lokalocal" />
+    <meta property="og:title" content="Lokalocal — Paspor Budaya Nusantara: 38 Provinsi" />
+    <meta
+      property="og:description"
+      content="Kumpulkan stempel budaya dari 38 provinsi di buku paspor digital nusantara."
+    />
+    <meta property="og:image" content="./og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  </head>
+  <body>
+    <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
+
+    <header id="header-utama" class="header-utama">
+      <nav class="wadah nav-bar" aria-label="Navigasi utama">
+        <a href="./index.html" class="nav-merek">
+          <svg class="nav-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
+            <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
+          </svg>
+          <span id="nav-nama-situs">Lokalocal</span>
+        </a>
+
+        <button
+          type="button"
+          id="tombol-menu-ponsel"
+          class="tombol-menu-ponsel"
+          aria-expanded="false"
+          aria-controls="nav-daftar"
+          aria-label="Buka menu navigasi"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <ul id="nav-daftar" class="nav-daftar">
+          <li>
+            <a href="./index.html" class="nav-tautan" data-nav-id="cerita">
+              Cerita
+            </a>
+          </li>
+          <li>
+            <a href="./jelajah.html" class="nav-tautan" data-nav-id="jelajah">
+              Jelajah
+            </a>
+          </li>
+          <li>
+            <a href="./paspor.html" class="nav-tautan" data-nav-id="paspor" aria-current="page">
+              Paspor
+            </a>
+          </li>
+          <li>
+            <a href="./kuis.html" class="nav-tautan" data-nav-id="kuis">
+              Kuis
+            </a>
+          </li>
+          <li>
+            <button type="button" id="nav-tombol-tentang" class="nav-tautan">
+              Tentang data
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="konten-utama" tabindex="-1">
+      <div class="wadah">
+        <div id="banner-error-data" class="banner-error" role="alert" hidden>
+          <p class="banner-error-judul">Gagal memuat data paspor</p>
+          <p>Kami mengalami kendala saat membaca data lokal. Pastikan berkas data tersedia.</p>
+        </div>
+      </div>
+
+      <!-- Halaman Paspor Budaya -->
+      <section class="bagian" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Koleksi Penjelajah Budaya</p>
+            <h1>Paspor Budaya Nusantara</h1>
+            <p class="bagian-subjudul">
+              Buku paspor digital untuk mencatat jejak langkahmu menelusuri kekayaan tradisi 38 provinsi Indonesia.
+              Kumpulkan stempel, cap stempel penjaga data, dan raih gelar kehormatan.
+            </p>
+          </div>
+
+          <div style="max-width: 860px; margin-inline: auto;">
+            <!-- Wadah Komponen Paspor Budaya -->
+            <div id="s7-panel-paspor" class="s7-panel-kartu" style="min-height: 480px;" aria-live="polite"></div>
+
+            <!-- Navigasi Tambahan -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--ruang-3); margin-top: var(--ruang-6); padding: var(--ruang-4); background: var(--malam-2); border: 1px solid var(--garis); border-radius: var(--r-md);">
+              <div>
+                <strong style="color: var(--kertas);">Ingin menambah stempel baru?</strong>
+                <p style="color: var(--kertas-redup); font-size: var(--teks-kecil); margin-top: 4px;">
+                  Buka halaman Jelajah dan klik provinsi pada peta 3D atau baca kartu cerita untuk mendapatkan stempel.
+                </p>
+              </div>
+              <div style="display: flex; gap: var(--ruang-2);">
+                <a href="./jelajah.html" class="tombol tombol--utama">Jelajahi Peta 3D &rarr;</a>
+                <a href="./kuis.html" class="tombol tombol--garis">Uji Wawasan di Kuis &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Dialog Tentang Data -->
+    <dialog id="dialog-tentang" class="dialog-tentang" aria-labelledby="dialog-tentang-judul">
+      <div class="dialog-tentang-kartu">
+        <header class="dialog-tentang-header">
+          <h2 id="dialog-tentang-judul" style="font-family: var(--font-display);">Tentang Data &amp; Metodologi</h2>
+          <button type="button" id="dialog-tentang-tutup" class="tombol-tutup-dialog" aria-label="Tutup informasi data">
+            &times;
+          </button>
+        </header>
+        <div class="dialog-tentang-badan">
+          <p>
+            Situs <strong>Lokalocal</strong> menggunakan data publik dari Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan Republik Indonesia (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">spkt.kemenbud.go.id</a>).
+          </p>
+        </div>
+      </div>
+    </dialog>
+
+    <footer class="footer-utama">
+      <div class="wadah footer-konten">
+        <p id="footer-atribusi" class="footer-atribusi">
+          Data: SPKT – Kementerian Kebudayaan RI, per <span data-tanggal-ambil>9 Oktober 2026</span>.
+        </p>
+        <p class="footer-hak-cipta">
+          &copy; 2026 Lokalocal. Dibuat untuk Lomba Pemrograman Web.
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="./src/pages/paspor.js"></script>
+  </body>
+</html>

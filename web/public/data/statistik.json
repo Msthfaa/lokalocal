@@ -1,0 +1,196 @@
+{
+  "total_rekaman": 544,
+  "total_setelah_dedup_murni": 541,
+  "total_setelah_gabung": 493,
+  "total_sdm_agregat": 5,
+  "per_kategori": {
+    "OPK": 422,
+    "CB": 65,
+    "LB": 3,
+    "SP": 3
+  },
+  "per_kategori_sebelum_gabung": {
+    "OPK": 470,
+    "CB": 65,
+    "LB": 3,
+    "SP": 3
+  },
+  "per_jenis_opk": {
+    "kerajinan": 121,
+    "seni": 101,
+    "lisan": 97,
+    "pengetahuan": 72,
+    "adat": 31
+  },
+  "per_jenis_opk_sebelum_gabung": {
+    "kerajinan": 146,
+    "seni": 116,
+    "lisan": 99,
+    "pengetahuan": 78,
+    "adat": 31
+  },
+  "provinsi_berdata": 28,
+  "provinsi_belum_tercatat": 10,
+  "daftar_belum_tercatat": [
+    {
+      "kode": "14",
+      "nama": "Riau"
+    },
+    {
+      "kode": "21",
+      "nama": "Kepulauan Riau"
+    },
+    {
+      "kode": "52",
+      "nama": "Nusa Tenggara Barat"
+    },
+    {
+      "kode": "71",
+      "nama": "Sulawesi Utara"
+    },
+    {
+      "kode": "76",
+      "nama": "Sulawesi Barat"
+    },
+    {
+      "kode": "81",
+      "nama": "Maluku"
+    },
+    {
+      "kode": "92",
+      "nama": "Papua Barat"
+    },
+    {
+      "kode": "93",
+      "nama": "Papua Selatan"
+    },
+    {
+      "kode": "94",
+      "nama": "Papua Tengah"
+    },
+    {
+      "kode": "96",
+      "nama": "Papua Barat Daya"
+    }
+  ],
+  "konsentrasi": {
+    "kabupaten_teratas": {
+      "nama": "Kota Pariaman",
+      "provinsi": "Sumatera Barat",
+      "jumlah": 94,
+      "persen": 17.3
+    },
+    "top3_provinsi_persen": 44,
+    "top5_provinsi_persen": 58.2,
+    "top5_provinsi": [
+      {
+        "kode": "13",
+        "nama": "Sumatera Barat",
+        "total": 119,
+        "persen": 22
+      },
+      {
+        "kode": "33",
+        "nama": "Jawa Tengah",
+        "total": 78,
+        "persen": 14.4
+      },
+      {
+        "kode": "35",
+        "nama": "Jawa Timur",
+        "total": 41,
+        "persen": 7.6
+      },
+      {
+        "kode": "73",
+        "nama": "Sulawesi Selatan",
+        "total": 39,
+        "persen": 7.2
+      },
+      {
+        "kode": "32",
+        "nama": "Jawa Barat",
+        "total": 38,
+        "persen": 7
+      }
+    ]
+  },
+  "gelombang_input": [
+    {
+      "tahun": 2010,
+      "jumlah": 23
+    },
+    {
+      "tahun": 2011,
+      "jumlah": 6
+    },
+    {
+      "tahun": 2012,
+      "jumlah": 9
+    },
+    {
+      "tahun": 2013,
+      "jumlah": 18
+    },
+    {
+      "tahun": 2014,
+      "jumlah": 4
+    },
+    {
+      "tahun": 2015,
+      "jumlah": 2
+    },
+    {
+      "tahun": 2016,
+      "jumlah": 3
+    },
+    {
+      "tahun": 2017,
+      "jumlah": 19
+    },
+    {
+      "tahun": 2018,
+      "jumlah": 12
+    },
+    {
+      "tahun": 2019,
+      "jumlah": 5
+    },
+    {
+      "tahun": 2020,
+      "jumlah": 8
+    },
+    {
+      "tahun": 2021,
+      "jumlah": 63
+    },
+    {
+      "tahun": 2022,
+      "jumlah": 24
+    },
+    {
+      "tahun": 2023,
+      "jumlah": 17
+    },
+    {
+      "tahun": 2024,
+      "jumlah": 20
+    },
+    {
+      "tahun": 2025,
+      "jumlah": 61
+    },
+    {
+      "tahun": 2026,
+      "jumlah": 246
+    }
+  ],
+  "kelas_konten": {
+    "unggulan": 155,
+    "pendek": 65,
+    "panjang": 141,
+    "kosong": 132
+  },
+  "tanggal_ambil": "2026-10-09T08:36:12.355Z",
+  "tanggal_ambil_terformat": "9 Oktober 2026"
+}

@@ -1,0 +1,1374 @@
+{
+  "total_kabupaten_tercatat": 114,
+  "rekaman_tanpa_kabupaten": 36,
+  "kabupaten": [
+    {
+      "nama": "Kota Pariaman",
+      "kode_provinsi": "13",
+      "provinsi": "Sumatera Barat",
+      "jumlah": 94,
+      "per_kategori": {
+        "OPK": 94,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Boyolali",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 34,
+      "per_kategori": {
+        "OPK": 34,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Barru",
+      "kode_provinsi": "73",
+      "provinsi": "Sulawesi Selatan",
+      "jumlah": 25,
+      "per_kategori": {
+        "OPK": 24,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Pontianak",
+      "kode_provinsi": "61",
+      "provinsi": "Kalimantan Barat",
+      "jumlah": 22,
+      "per_kategori": {
+        "OPK": 22,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Wonogiri",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 21,
+      "per_kategori": {
+        "OPK": 18,
+        "CB": 3,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Solok",
+      "kode_provinsi": "13",
+      "provinsi": "Sumatera Barat",
+      "jumlah": 21,
+      "per_kategori": {
+        "OPK": 21,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pidie Jaya",
+      "kode_provinsi": "11",
+      "provinsi": "Aceh",
+      "jumlah": 15,
+      "per_kategori": {
+        "OPK": 15,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Singkawang",
+      "kode_provinsi": "61",
+      "provinsi": "Kalimantan Barat",
+      "jumlah": 14,
+      "per_kategori": {
+        "OPK": 14,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Sumedang",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 11,
+      "per_kategori": {
+        "OPK": 11,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Banyuasin",
+      "kode_provinsi": "16",
+      "provinsi": "Sumatera Selatan",
+      "jumlah": 9,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 9,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Tanjung Jabung Barat",
+      "kode_provinsi": "15",
+      "provinsi": "Jambi",
+      "jumlah": 7,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 3,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Malang",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 7,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 7,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Pangkal Pinang",
+      "kode_provinsi": "19",
+      "provinsi": "Kepulauan Bangka Belitung",
+      "jumlah": 7,
+      "per_kategori": {
+        "OPK": 6,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bone",
+      "kode_provinsi": "73",
+      "provinsi": "Sulawesi Selatan",
+      "jumlah": 6,
+      "per_kategori": {
+        "OPK": 6,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Indramayu",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 6,
+      "per_kategori": {
+        "OPK": 6,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Banggai",
+      "kode_provinsi": "72",
+      "provinsi": "Sulawesi Tengah",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Cirebon",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pemalang",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Penukal Abab Lematang Ilir",
+      "kode_provinsi": "16",
+      "provinsi": "Sumatera Selatan",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 5,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Purbalingga",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Sleman",
+      "kode_provinsi": "34",
+      "provinsi": "DI Yogyakarta",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Yalimo",
+      "kode_provinsi": "91",
+      "provinsi": "Papua",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Adm. Jakarta Selatan",
+      "kode_provinsi": "31",
+      "provinsi": "DKI Jakarta",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 5,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Bekasi",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 5,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Surabaya",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 5,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 4,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Balangan",
+      "kode_provinsi": "63",
+      "provinsi": "Kalimantan Selatan",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 3,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Gresik",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Halmahera Selatan",
+      "kode_provinsi": "82",
+      "provinsi": "Maluku Utara",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Jember",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kotabaru",
+      "kode_provinsi": "63",
+      "provinsi": "Kalimantan Selatan",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 3,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kotawaringin Barat",
+      "kode_provinsi": "62",
+      "provinsi": "Kalimantan Tengah",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Morowali",
+      "kode_provinsi": "72",
+      "provinsi": "Sulawesi Tengah",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Adm. Jakarta Barat",
+      "kode_provinsi": "31",
+      "provinsi": "DKI Jakarta",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 4,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Adm. Jakarta Pusat",
+      "kode_provinsi": "31",
+      "provinsi": "DKI Jakarta",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 4,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Bontang",
+      "kode_provinsi": "64",
+      "provinsi": "Kalimantan Timur",
+      "jumlah": 4,
+      "per_kategori": {
+        "OPK": 4,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bantul",
+      "kode_provinsi": "34",
+      "provinsi": "DI Yogyakarta",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Banyumas",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Buleleng",
+      "kode_provinsi": "51",
+      "provinsi": "Bali",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Gowa",
+      "kode_provinsi": "73",
+      "provinsi": "Sulawesi Selatan",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pegunungan Bintang",
+      "kode_provinsi": "95",
+      "provinsi": "Papua Pegunungan",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Adm. Jakarta Timur",
+      "kode_provinsi": "31",
+      "provinsi": "DKI Jakarta",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 3,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Bandung",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 3,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Bogor",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Pare Pare",
+      "kode_provinsi": "73",
+      "provinsi": "Sulawesi Selatan",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Salatiga",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 3,
+      "per_kategori": {
+        "OPK": 3,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Aceh Jaya",
+      "kode_provinsi": "11",
+      "provinsi": "Aceh",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 1,
+        "LB": 0,
+        "SP": 1
+      }
+    },
+    {
+      "nama": "Kab. Barito Kuala",
+      "kode_provinsi": "63",
+      "provinsi": "Kalimantan Selatan",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Barito Utara",
+      "kode_provinsi": "62",
+      "provinsi": "Kalimantan Tengah",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Gayo Lues",
+      "kode_provinsi": "11",
+      "provinsi": "Aceh",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kediri",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kolaka Utara",
+      "kode_provinsi": "74",
+      "provinsi": "Sulawesi Tenggara",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kutai Kartanegara",
+      "kode_provinsi": "64",
+      "provinsi": "Kalimantan Timur",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 1
+      }
+    },
+    {
+      "nama": "Kab. Lamongan",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Malang",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Musi Banyuasin",
+      "kode_provinsi": "16",
+      "provinsi": "Sumatera Selatan",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pinrang",
+      "kode_provinsi": "73",
+      "provinsi": "Sulawesi Selatan",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pringsewu",
+      "kode_provinsi": "18",
+      "provinsi": "Lampung",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Sidoarjo",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Sukabumi",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 2,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Sumenep",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Gorontalo",
+      "kode_provinsi": "75",
+      "provinsi": "Gorontalo",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 1
+      }
+    },
+    {
+      "nama": "Kota Yogyakarta",
+      "kode_provinsi": "34",
+      "provinsi": "DI Yogyakarta",
+      "jumlah": 2,
+      "per_kategori": {
+        "OPK": 2,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Aceh Tengah",
+      "kode_provinsi": "11",
+      "provinsi": "Aceh",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Aceh Timur",
+      "kode_provinsi": "11",
+      "provinsi": "Aceh",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Adm. Kep. Seribu",
+      "kode_provinsi": "31",
+      "provinsi": "DKI Jakarta",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bandung",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bandung Barat",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bangka Barat",
+      "kode_provinsi": "19",
+      "provinsi": "Kepulauan Bangka Belitung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bangka Selatan",
+      "kode_provinsi": "19",
+      "provinsi": "Kepulauan Bangka Belitung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Blitar",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Blora",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bogor",
+      "kode_provinsi": "32",
+      "provinsi": "Jawa Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Bulungan",
+      "kode_provinsi": "65",
+      "provinsi": "Kalimantan Utara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Buton Selatan",
+      "kode_provinsi": "74",
+      "provinsi": "Sulawesi Tenggara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Buton Utara",
+      "kode_provinsi": "74",
+      "provinsi": "Sulawesi Tenggara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Cilacap",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Deli Serdang",
+      "kode_provinsi": "12",
+      "provinsi": "Sumatera Utara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Gianyar",
+      "kode_provinsi": "51",
+      "provinsi": "Bali",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Halmahera Barat",
+      "kode_provinsi": "82",
+      "provinsi": "Maluku Utara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kayong Utara",
+      "kode_provinsi": "61",
+      "provinsi": "Kalimantan Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kepulauan Mentawai",
+      "kode_provinsi": "13",
+      "provinsi": "Sumatera Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Kotawaringin Timur",
+      "kode_provinsi": "62",
+      "provinsi": "Kalimantan Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Lampung Utara",
+      "kode_provinsi": "18",
+      "provinsi": "Lampung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Lebak",
+      "kode_provinsi": "36",
+      "provinsi": "Banten",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Lebong",
+      "kode_provinsi": "17",
+      "provinsi": "Bengkulu",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Lumajang",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Mesuji",
+      "kode_provinsi": "18",
+      "provinsi": "Lampung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Mojokerto",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Muara Enim",
+      "kode_provinsi": "16",
+      "provinsi": "Sumatera Selatan",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Muna Barat",
+      "kode_provinsi": "74",
+      "provinsi": "Sulawesi Tenggara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Nias Barat",
+      "kode_provinsi": "12",
+      "provinsi": "Sumatera Utara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pacitan",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pandeglang",
+      "kode_provinsi": "36",
+      "provinsi": "Banten",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pasuruan",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pesisir Barat",
+      "kode_provinsi": "18",
+      "provinsi": "Lampung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Pidie",
+      "kode_provinsi": "11",
+      "provinsi": "Aceh",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Ponorogo",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Serdang Bedagai",
+      "kode_provinsi": "12",
+      "provinsi": "Sumatera Utara",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Sumba Barat Daya",
+      "kode_provinsi": "53",
+      "provinsi": "Nusa Tenggara Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Tabanan",
+      "kode_provinsi": "51",
+      "provinsi": "Bali",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Tanah Datar",
+      "kode_provinsi": "13",
+      "provinsi": "Sumatera Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Timor Tengah Selatan",
+      "kode_provinsi": "53",
+      "provinsi": "Nusa Tenggara Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Trenggalek",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Tulang Bawang",
+      "kode_provinsi": "18",
+      "provinsi": "Lampung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Tulang Bawang Barat",
+      "kode_provinsi": "18",
+      "provinsi": "Lampung",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kab. Tulungagung",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Batu",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Blitar",
+      "kode_provinsi": "35",
+      "provinsi": "Jawa Timur",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Cilegon",
+      "kode_provinsi": "36",
+      "provinsi": "Banten",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Palangkaraya",
+      "kode_provinsi": "62",
+      "provinsi": "Kalimantan Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Payakumbuh",
+      "kode_provinsi": "13",
+      "provinsi": "Sumatera Barat",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 0,
+        "CB": 1,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Pekalongan",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Semarang",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    },
+    {
+      "nama": "Kota Surakarta",
+      "kode_provinsi": "33",
+      "provinsi": "Jawa Tengah",
+      "jumlah": 1,
+      "per_kategori": {
+        "OPK": 1,
+        "CB": 0,
+        "LB": 0,
+        "SP": 0
+      }
+    }
+  ]
+}

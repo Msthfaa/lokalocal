@@ -1,0 +1,313 @@
+{
+  "total_objek_pemajuan": 473,
+  "daftar_jenis_opk": [
+    "Adat Istiadat Masyarakat, Ritus, dan Perayaan",
+    "Kemahiran dan Kerajinan Tradisional",
+    "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta",
+    "Seni Pertunjukan",
+    "Tradisi dan Ekspresi Lisan"
+  ],
+  "rekap_per_jenis": {
+    "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 31,
+    "Tradisi dan Ekspresi Lisan": 99,
+    "Kemahiran dan Kerajinan Tradisional": 147,
+    "Seni Pertunjukan": 118,
+    "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 78
+  },
+  "data_per_provinsi": [
+    {
+      "provinsi": "Sumatera Barat",
+      "total_opk": 118,
+      "jenis": {
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 21,
+        "Tradisi dan Ekspresi Lisan": 43,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 28,
+        "Seni Pertunjukan": 16,
+        "Kemahiran dan Kerajinan Tradisional": 10
+      }
+    },
+    {
+      "provinsi": "Jawa Tengah",
+      "total_opk": 75,
+      "jenis": {
+        "Seni Pertunjukan": 25,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 8,
+        "Tradisi dan Ekspresi Lisan": 25,
+        "Kemahiran dan Kerajinan Tradisional": 16,
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 1
+      }
+    },
+    {
+      "provinsi": "Kalimantan Barat",
+      "total_opk": 38,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 15,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 13,
+        "Tradisi dan Ekspresi Lisan": 7,
+        "Seni Pertunjukan": 3
+      }
+    },
+    {
+      "provinsi": "Sulawesi Selatan",
+      "total_opk": 38,
+      "jenis": {
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 2,
+        "Kemahiran dan Kerajinan Tradisional": 21,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 4,
+        "Seni Pertunjukan": 11
+      }
+    },
+    {
+      "provinsi": "Jawa Barat",
+      "total_opk": 33,
+      "jenis": {
+        "Seni Pertunjukan": 5,
+        "Kemahiran dan Kerajinan Tradisional": 24,
+        "Tradisi dan Ekspresi Lisan": 1,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 3
+      }
+    },
+    {
+      "provinsi": "Jawa Timur",
+      "total_opk": 28,
+      "jenis": {
+        "Seni Pertunjukan": 19,
+        "Kemahiran dan Kerajinan Tradisional": 6,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 1,
+        "Tradisi dan Ekspresi Lisan": 1,
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 1
+      }
+    },
+    {
+      "provinsi": "Aceh",
+      "total_opk": 23,
+      "jenis": {
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 3,
+        "Kemahiran dan Kerajinan Tradisional": 16,
+        "Seni Pertunjukan": 4
+      }
+    },
+    {
+      "provinsi": "DI Yogyakarta",
+      "total_opk": 13,
+      "jenis": {
+        "Seni Pertunjukan": 4,
+        "Kemahiran dan Kerajinan Tradisional": 7,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 2
+      }
+    },
+    {
+      "provinsi": "Kalimantan Tengah",
+      "total_opk": 10,
+      "jenis": {
+        "Tradisi dan Ekspresi Lisan": 6,
+        "Kemahiran dan Kerajinan Tradisional": 2,
+        "Seni Pertunjukan": 2
+      }
+    },
+    {
+      "provinsi": "Maluku Utara",
+      "total_opk": 9,
+      "jenis": {
+        "Seni Pertunjukan": 1,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 1,
+        "Kemahiran dan Kerajinan Tradisional": 2,
+        "Tradisi dan Ekspresi Lisan": 5
+      }
+    },
+    {
+      "provinsi": "Sulawesi Tengah",
+      "total_opk": 9,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 6,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 2,
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 1
+      }
+    },
+    {
+      "provinsi": "Kepulauan Bangka Belitung",
+      "total_opk": 8,
+      "jenis": {
+        "Tradisi dan Ekspresi Lisan": 6,
+        "Kemahiran dan Kerajinan Tradisional": 2
+      }
+    },
+    {
+      "provinsi": "Lampung",
+      "total_opk": 8,
+      "jenis": {
+        "Seni Pertunjukan": 6,
+        "Kemahiran dan Kerajinan Tradisional": 2
+      }
+    },
+    {
+      "provinsi": "Sumatera Utara",
+      "total_opk": 8,
+      "jenis": {
+        "Seni Pertunjukan": 5,
+        "Kemahiran dan Kerajinan Tradisional": 3
+      }
+    },
+    {
+      "provinsi": "Kalimantan Selatan",
+      "total_opk": 7,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 1,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 4,
+        "Seni Pertunjukan": 1,
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 1
+      }
+    },
+    {
+      "provinsi": "Bali",
+      "total_opk": 6,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 2,
+        "Seni Pertunjukan": 2,
+        "Tradisi dan Ekspresi Lisan": 1,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 1
+      }
+    },
+    {
+      "provinsi": "Banten",
+      "total_opk": 5,
+      "jenis": {
+        "Tradisi dan Ekspresi Lisan": 2,
+        "Seni Pertunjukan": 3
+      }
+    },
+    {
+      "provinsi": "Kalimantan Timur",
+      "total_opk": 5,
+      "jenis": {
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 1,
+        "Seni Pertunjukan": 4
+      }
+    },
+    {
+      "provinsi": "Kalimantan Utara",
+      "total_opk": 5,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 5
+      }
+    },
+    {
+      "provinsi": "Papua",
+      "total_opk": 5,
+      "jenis": {
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 5
+      }
+    },
+    {
+      "provinsi": "Sulawesi Tenggara",
+      "total_opk": 5,
+      "jenis": {
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 2,
+        "Seni Pertunjukan": 2,
+        "Kemahiran dan Kerajinan Tradisional": 1
+      }
+    },
+    {
+      "provinsi": "Jambi",
+      "total_opk": 4,
+      "jenis": {
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 2,
+        "Seni Pertunjukan": 2
+      }
+    },
+    {
+      "provinsi": "Nusa Tenggara Timur",
+      "total_opk": 3,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 3
+      }
+    },
+    {
+      "provinsi": "Papua Pegunungan",
+      "total_opk": 3,
+      "jenis": {
+        "Seni Pertunjukan": 1,
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 2
+      }
+    },
+    {
+      "provinsi": "Sumatera Selatan",
+      "total_opk": 3,
+      "jenis": {
+        "Tradisi dan Ekspresi Lisan": 2,
+        "Seni Pertunjukan": 1
+      }
+    },
+    {
+      "provinsi": "Bengkulu",
+      "total_opk": 2,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 2
+      }
+    },
+    {
+      "provinsi": "DKI Jakarta",
+      "total_opk": 1,
+      "jenis": {
+        "Kemahiran dan Kerajinan Tradisional": 1
+      }
+    },
+    {
+      "provinsi": "Gorontalo",
+      "total_opk": 1,
+      "jenis": {
+        "Seni Pertunjukan": 1
+      }
+    },
+    {
+      "provinsi": "Kepulauan Riau",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Maluku",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Nusa Tenggara Barat",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Papua Barat",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Papua Barat Daya",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Papua Selatan",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Papua Tengah",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Riau",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Sulawesi Barat",
+      "total_opk": 0,
+      "jenis": {}
+    },
+    {
+      "provinsi": "Sulawesi Utara",
+      "total_opk": 0,
+      "jenis": {}
+    }
+  ]
+}

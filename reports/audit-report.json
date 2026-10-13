@@ -1,0 +1,1123 @@
+{
+  "tanggal_audit": "2026-10-13T01:24:44.450Z",
+  "tanggal_ambil_data": "2026-10-09T08:36:12.355Z",
+  "ringkasan_jumlah": {
+    "total_rekaman": 544,
+    "total_sdm_agregat": 5,
+    "per_kategori": {
+      "Objek Pemajuan Kebudayaan": 473,
+      "Cagar Budaya": 65,
+      "Sarana & Prasarana": 3,
+      "Lembaga Budaya": 3
+    },
+    "per_kategori_dan_jenis": {
+      "Objek Pemajuan Kebudayaan": {
+        "Adat Istiadat Masyarakat, Ritus, dan Perayaan": 31,
+        "Tradisi dan Ekspresi Lisan": 99,
+        "Kemahiran dan Kerajinan Tradisional": 147,
+        "Seni Pertunjukan": 118,
+        "Pengetahuan dan Kebiasaan Perilaku Mengenai Alam Semesta": 78
+      },
+      "Cagar Budaya": {
+        "Kawasan": 13,
+        "Struktur": 13,
+        "Benda": 13,
+        "Situs": 13,
+        "Bangunan": 13
+      },
+      "Sarana & Prasarana": {
+        "Pemerintah": 3
+      },
+      "Lembaga Budaya": {
+        "Non-Pemerintah": 3
+      }
+    }
+  },
+  "kelengkapan_field": {
+    "per_field": {
+      "id": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      },
+      "kategori": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      },
+      "jenis": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      },
+      "nama": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      },
+      "deskripsi": {
+        "terisi": 413,
+        "kosong": 131,
+        "total": 544
+      },
+      "provinsi": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      },
+      "kabupaten": {
+        "terisi": 508,
+        "kosong": 36,
+        "total": 544
+      },
+      "lat": {
+        "terisi": 2,
+        "kosong": 542,
+        "total": 544
+      },
+      "lng": {
+        "terisi": 2,
+        "kosong": 542,
+        "total": 544
+      },
+      "gambar": {
+        "terisi": 31,
+        "kosong": 513,
+        "total": 544
+      },
+      "tahun": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      },
+      "sumber": {
+        "terisi": 544,
+        "kosong": 0,
+        "total": 544
+      }
+    },
+    "catatan_gambar": {
+      "total_non_null": 31,
+      "string_array_kosong": 10,
+      "json_array_path_folder_saja": 16,
+      "url_langsung": 5,
+      "kesimpulan": "Dari 31 rekaman non-null: 10 berisi \"[]\", 16 berisi JSON array dengan path folder dasar tanpa nama file gambar, dan hanya 5 berisi string URL langsung. Sesuai DATA_SPEC.md 2.4, field gambar tidak dapat diandalkan dan wajib dihapus pada Fase 2."
+    }
+  },
+  "statistik_deskripsi": {
+    "total_rekaman": 544,
+    "terisi": 413,
+    "kosong": 131,
+    "kosong_per_kategori": {
+      "Cagar Budaya": 65,
+      "Objek Pemajuan Kebudayaan": 65,
+      "Sarana & Prasarana": 1
+    },
+    "kurang_dari_40_karakter": 149,
+    "kurang_dari_100_karakter_termasuk_kosong": 156,
+    "kurang_dari_100_karakter_hanya_terisi": 25,
+    "kandidat_unggulan_300_1200": 161,
+    "lebih_dari_1500_karakter": 140,
+    "semua_rekaman": {
+      "min": 0,
+      "median": 542.5,
+      "rata_rata": 1318,
+      "maks": 26736
+    },
+    "rekaman_terisi_saja": {
+      "min": 1,
+      "median": 937,
+      "rata_rata": 1736,
+      "maks": 26736
+    },
+    "top_5_terpanjang": [
+      {
+        "id": "a46acfab-92a8-4447-afb2-f578886b7261",
+        "nama": "OKOKAN",
+        "kategori": "Objek Pemajuan Kebudayaan",
+        "provinsi": "Bali",
+        "panjang": 26736
+      },
+      {
+        "id": "309f4359-d60b-4736-8930-bc09a3673064",
+        "nama": "Aksara Jawa",
+        "kategori": "Objek Pemajuan Kebudayaan",
+        "provinsi": "DI Yogyakarta",
+        "panjang": 17821
+      },
+      {
+        "id": "2301be83-9386-4f16-87f4-030fc17b12c2",
+        "nama": "Mamutuih Etongan",
+        "kategori": "Objek Pemajuan Kebudayaan",
+        "provinsi": "Sumatera Barat",
+        "panjang": 17305
+      },
+      {
+        "id": "12b3d65e-aeed-42b5-8a10-a9817239655f",
+        "nama": "Knobe",
+        "kategori": "Objek Pemajuan Kebudayaan",
+        "provinsi": "Nusa Tenggara Timur",
+        "panjang": 14001
+      },
+      {
+        "id": "46c65cbf-1aaa-49e9-9f47-1bf0a538a431",
+        "nama": "Famasao Ono Nihalo",
+        "kategori": "Objek Pemajuan Kebudayaan",
+        "provinsi": "Sumatera Utara",
+        "panjang": 11115
+      }
+    ]
+  },
+  "sebaran_wilayah": {
+    "jumlah_provinsi_berdata": 28,
+    "jumlah_provinsi_tanpa_data": 10,
+    "konsentrasi_top3_persen": 43.93,
+    "konsentrasi_top5_persen": 58.09,
+    "top_5_provinsi": [
+      {
+        "provinsi": "Sumatera Barat",
+        "jumlah": 119,
+        "persen": 21.88
+      },
+      {
+        "provinsi": "Jawa Tengah",
+        "jumlah": 79,
+        "persen": 14.52
+      },
+      {
+        "provinsi": "Jawa Timur",
+        "jumlah": 41,
+        "persen": 7.54
+      },
+      {
+        "provinsi": "Sulawesi Selatan",
+        "jumlah": 39,
+        "persen": 7.17
+      },
+      {
+        "provinsi": "Jawa Barat",
+        "jumlah": 38,
+        "persen": 6.99
+      }
+    ],
+    "semua_provinsi_berdata": [
+      {
+        "provinsi": "Sumatera Barat",
+        "jumlah": 119,
+        "persen": 21.88
+      },
+      {
+        "provinsi": "Jawa Tengah",
+        "jumlah": 79,
+        "persen": 14.52
+      },
+      {
+        "provinsi": "Jawa Timur",
+        "jumlah": 41,
+        "persen": 7.54
+      },
+      {
+        "provinsi": "Sulawesi Selatan",
+        "jumlah": 39,
+        "persen": 7.17
+      },
+      {
+        "provinsi": "Jawa Barat",
+        "jumlah": 38,
+        "persen": 6.99
+      },
+      {
+        "provinsi": "Kalimantan Barat",
+        "jumlah": 38,
+        "persen": 6.99
+      },
+      {
+        "provinsi": "Aceh",
+        "jumlah": 26,
+        "persen": 4.78
+      },
+      {
+        "provinsi": "Sumatera Selatan",
+        "jumlah": 18,
+        "persen": 3.31
+      },
+      {
+        "provinsi": "DKI Jakarta",
+        "jumlah": 17,
+        "persen": 3.13
+      },
+      {
+        "provinsi": "DI Yogyakarta",
+        "jumlah": 13,
+        "persen": 2.39
+      },
+      {
+        "provinsi": "Kalimantan Selatan",
+        "jumlah": 13,
+        "persen": 2.39
+      },
+      {
+        "provinsi": "Kalimantan Tengah",
+        "jumlah": 10,
+        "persen": 1.84
+      },
+      {
+        "provinsi": "Kepulauan Bangka Belitung",
+        "jumlah": 9,
+        "persen": 1.65
+      },
+      {
+        "provinsi": "Maluku Utara",
+        "jumlah": 9,
+        "persen": 1.65
+      },
+      {
+        "provinsi": "Sulawesi Tengah",
+        "jumlah": 9,
+        "persen": 1.65
+      },
+      {
+        "provinsi": "Lampung",
+        "jumlah": 8,
+        "persen": 1.47
+      },
+      {
+        "provinsi": "Sumatera Utara",
+        "jumlah": 8,
+        "persen": 1.47
+      },
+      {
+        "provinsi": "Jambi",
+        "jumlah": 7,
+        "persen": 1.29
+      },
+      {
+        "provinsi": "Bali",
+        "jumlah": 6,
+        "persen": 1.1
+      },
+      {
+        "provinsi": "Kalimantan Timur",
+        "jumlah": 6,
+        "persen": 1.1
+      },
+      {
+        "provinsi": "Sulawesi Tenggara",
+        "jumlah": 6,
+        "persen": 1.1
+      },
+      {
+        "provinsi": "Banten",
+        "jumlah": 5,
+        "persen": 0.92
+      },
+      {
+        "provinsi": "Kalimantan Utara",
+        "jumlah": 5,
+        "persen": 0.92
+      },
+      {
+        "provinsi": "Papua",
+        "jumlah": 5,
+        "persen": 0.92
+      },
+      {
+        "provinsi": "Nusa Tenggara Timur",
+        "jumlah": 3,
+        "persen": 0.55
+      },
+      {
+        "provinsi": "Papua Pegunungan",
+        "jumlah": 3,
+        "persen": 0.55
+      },
+      {
+        "provinsi": "Bengkulu",
+        "jumlah": 2,
+        "persen": 0.37
+      },
+      {
+        "provinsi": "Gorontalo",
+        "jumlah": 2,
+        "persen": 0.37
+      }
+    ],
+    "jumlah_kabupaten_tercatat": 114,
+    "rekaman_kabupaten_null": 36,
+    "top_10_kabupaten": [
+      {
+        "kabupaten_provinsi": "Kota Pariaman (Sumatera Barat)",
+        "jumlah": 94,
+        "persen": 17.28
+      },
+      {
+        "kabupaten_provinsi": "Kab. Boyolali (Jawa Tengah)",
+        "jumlah": 34,
+        "persen": 6.25
+      },
+      {
+        "kabupaten_provinsi": "Kab. Barru (Sulawesi Selatan)",
+        "jumlah": 25,
+        "persen": 4.6
+      },
+      {
+        "kabupaten_provinsi": "Kota Pontianak (Kalimantan Barat)",
+        "jumlah": 22,
+        "persen": 4.04
+      },
+      {
+        "kabupaten_provinsi": "Kab. Wonogiri (Jawa Tengah)",
+        "jumlah": 21,
+        "persen": 3.86
+      },
+      {
+        "kabupaten_provinsi": "Kota Solok (Sumatera Barat)",
+        "jumlah": 21,
+        "persen": 3.86
+      },
+      {
+        "kabupaten_provinsi": "Kab. Pidie Jaya (Aceh)",
+        "jumlah": 15,
+        "persen": 2.76
+      },
+      {
+        "kabupaten_provinsi": "Kota Singkawang (Kalimantan Barat)",
+        "jumlah": 14,
+        "persen": 2.57
+      },
+      {
+        "kabupaten_provinsi": "Kab. Sumedang (Jawa Barat)",
+        "jumlah": 11,
+        "persen": 2.02
+      },
+      {
+        "kabupaten_provinsi": "Kab. Banyuasin (Sumatera Selatan)",
+        "jumlah": 9,
+        "persen": 1.65
+      }
+    ]
+  },
+  "validasi_referensi_provinsi": {
+    "total_referensi": 38,
+    "provinsi_di_data_tidak_di_referensi": [],
+    "provinsi_referensi_tanpa_data": [
+      {
+        "kode": "14",
+        "nama": "Riau"
+      },
+      {
+        "kode": "21",
+        "nama": "Kepulauan Riau"
+      },
+      {
+        "kode": "52",
+        "nama": "Nusa Tenggara Barat"
+      },
+      {
+        "kode": "71",
+        "nama": "Sulawesi Utara"
+      },
+      {
+        "kode": "76",
+        "nama": "Sulawesi Barat"
+      },
+      {
+        "kode": "81",
+        "nama": "Maluku"
+      },
+      {
+        "kode": "92",
+        "nama": "Papua Barat"
+      },
+      {
+        "kode": "93",
+        "nama": "Papua Selatan"
+      },
+      {
+        "kode": "94",
+        "nama": "Papua Tengah"
+      },
+      {
+        "kode": "96",
+        "nama": "Papua Barat Daya"
+      }
+    ]
+  },
+  "duplikat_dan_berulang": {
+    "jumlah_grup_duplikat_murni": 3,
+    "duplikat_murni": [
+      {
+        "kunci": "jamjuri dan junenah|Banten|Kota Cilegon",
+        "jumlah": 2,
+        "rekaman": [
+          {
+            "id": "d22ab601-2fe1-43b6-b675-305ea9069c8f",
+            "nama": "Jamjuri dan Junenah",
+            "kategori": "Objek Pemajuan Kebudayaan",
+            "jenis": "Seni Pertunjukan",
+            "provinsi": "Banten",
+            "kabupaten": "Kota Cilegon",
+            "tahun": 2022,
+            "panjang_deskripsi": 114
+          },
+          {
+            "id": "90a4203d-0ce9-4c47-b9f3-a915b2ba1e2f",
+            "nama": "Jamjuri dan Junenah",
+            "kategori": "Objek Pemajuan Kebudayaan",
+            "jenis": "Seni Pertunjukan",
+            "provinsi": "Banten",
+            "kabupaten": "Kota Cilegon",
+            "tahun": 2022,
+            "panjang_deskripsi": 563
+          }
+        ]
+      },
+      {
+        "kunci": "rambi wuna|Sulawesi Tenggara|Kab. Buton Utara",
+        "jumlah": 2,
+        "rekaman": [
+          {
+            "id": "a0ee3a49-7b98-40a3-89eb-fad7340e929b",
+            "nama": "RAMBI WUNA",
+            "kategori": "Objek Pemajuan Kebudayaan",
+            "jenis": "Seni Pertunjukan",
+            "provinsi": "Sulawesi Tenggara",
+            "kabupaten": "Kab. Buton Utara",
+            "tahun": 2020,
+            "panjang_deskripsi": 0
+          },
+          {
+            "id": "1e654fda-3b48-43a0-b278-9b3fa516deb2",
+            "nama": "RAMBI WUNA",
+            "kategori": "Objek Pemajuan Kebudayaan",
+            "jenis": "Kemahiran dan Kerajinan Tradisional",
+            "provinsi": "Sulawesi Tenggara",
+            "kabupaten": "Kab. Buton Utara",
+            "tahun": 2020,
+            "panjang_deskripsi": 0
+          }
+        ]
+      },
+      {
+        "kunci": "lagu pantai widuri|Jawa Tengah|Kab. Pemalang",
+        "jumlah": 2,
+        "rekaman": [
+          {
+            "id": "ba7baaac-2171-4efe-ac90-64492443ed63",
+            "nama": "Lagu Pantai Widuri",
+            "kategori": "Objek Pemajuan Kebudayaan",
+            "jenis": "Seni Pertunjukan",
+            "provinsi": "Jawa Tengah",
+            "kabupaten": "Kab. Pemalang",
+            "tahun": 2025,
+            "panjang_deskripsi": 19
+          },
+          {
+            "id": "f093c53c-34c4-443b-b250-f8236cf4021e",
+            "nama": "Lagu Pantai Widuri",
+            "kategori": "Objek Pemajuan Kebudayaan",
+            "jenis": "Seni Pertunjukan",
+            "provinsi": "Jawa Tengah",
+            "kabupaten": "Kab. Pemalang",
+            "tahun": 2025,
+            "panjang_deskripsi": 0
+          }
+        ]
+      }
+    ],
+    "jumlah_nama_berulang": 34,
+    "nama_berulang": [
+      {
+        "nama_normal": "bantengan (pasuruan)",
+        "nama_contoh": "Bantengan (Pasuruan)",
+        "jumlah": 9,
+        "provinsi": [
+          "Jawa Timur"
+        ],
+        "kabupaten": [
+          "Kab. Ponorogo",
+          "Kab. Trenggalek",
+          "Kab. Tulungagung",
+          "Kab. Pacitan",
+          "Kab. Malang",
+          "Kab. Lumajang",
+          "Kab. Jember",
+          "Kab. Blitar",
+          "Kab. Kediri"
+        ],
+        "semua_deskripsi_kosong": true
+      },
+      {
+        "nama_normal": "alang",
+        "nama_contoh": "Alang",
+        "jumlah": 5,
+        "provinsi": [
+          "Sulawesi Selatan"
+        ],
+        "kabupaten": [
+          "Kota Pare Pare",
+          "Kab. Barru",
+          "Kab. Pinrang",
+          "Kab. Bone",
+          "Kab. Gowa"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "bedog cikeruh",
+        "nama_contoh": "BEDOG CIKERUH",
+        "jumlah": 5,
+        "provinsi": [
+          "Jawa Barat"
+        ],
+        "kabupaten": [
+          "Kota Bogor",
+          "Kab. Indramayu",
+          "Kota Bekasi",
+          "Kab. Bandung",
+          "Kab. Sumedang"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "tari bedayou tulang bawang",
+        "nama_contoh": "Tari Bedayou Tulang Bawang",
+        "jumlah": 5,
+        "provinsi": [
+          "Lampung"
+        ],
+        "kabupaten": [
+          "Kab. Tulang Bawang Barat",
+          "(null)",
+          "Kab. Lampung Utara",
+          "Kab. Tulang Bawang",
+          "Kab. Mesuji"
+        ],
+        "semua_deskripsi_kosong": true
+      },
+      {
+        "nama_normal": "batik garutan",
+        "nama_contoh": "Batik Garutan",
+        "jumlah": 4,
+        "provinsi": [
+          "Jawa Barat"
+        ],
+        "kabupaten": [
+          "Kota Bogor",
+          "Kab. Indramayu",
+          "Kab. Sumedang",
+          "Kota Bekasi"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "clurit",
+        "nama_contoh": "Clurit",
+        "jumlah": 4,
+        "provinsi": [
+          "Jawa Timur"
+        ],
+        "kabupaten": [
+          "Kab. Kediri",
+          "Kota Batu",
+          "Kota Blitar",
+          "Kab. Sidoarjo"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "bedog lubuk",
+        "nama_contoh": "Bedog Lubuk",
+        "jumlah": 3,
+        "provinsi": [
+          "Jawa Barat"
+        ],
+        "kabupaten": [
+          "Kab. Indramayu",
+          "Kota Bogor",
+          "Kab. Sumedang"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "saoraja lapinceng",
+        "nama_contoh": "Saoraja Lapinceng",
+        "jumlah": 3,
+        "provinsi": [
+          "Sulawesi Selatan"
+        ],
+        "kabupaten": [
+          "Kota Pare Pare",
+          "Kab. Pinrang",
+          "Kab. Bone"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "arsitektur tradisional rumah panjang nanga siyai",
+        "nama_contoh": "Arsitektur Tradisional Rumah Panjang Nanga Siyai",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "badewa",
+        "nama_contoh": "Badewa",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Selatan"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kab. Barito Kuala"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "bahasa arab",
+        "nama_contoh": "Bahasa Arab",
+        "jumlah": 2,
+        "provinsi": [
+          "Jawa Tengah",
+          "Sumatera Barat"
+        ],
+        "kabupaten": [
+          "Kab. Banyumas",
+          "Kota Solok"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "bahasa kotawaringin",
+        "nama_contoh": "Bahasa Kotawaringin",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Tengah"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kab. Kotawaringin Barat"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "bekai (dayak kenya)",
+        "nama_contoh": "BEKAI (DAYAK KENYA)",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Utara"
+        ],
+        "kabupaten": [
+          "Kab. Bulungan",
+          "(null)"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "bubu",
+        "nama_contoh": "Bubu",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "dungga roro",
+        "nama_contoh": "Dungga Roro",
+        "jumlah": 2,
+        "provinsi": [
+          "Nusa Tenggara Timur"
+        ],
+        "kabupaten": [
+          "Kab. Sumba Barat Daya",
+          "(null)"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "famasao ono nihalo",
+        "nama_contoh": "Famasao Ono Nihalo",
+        "jumlah": 2,
+        "provinsi": [
+          "Sumatera Utara"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kab. Nias Barat"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "jamjuri dan junenah",
+        "nama_contoh": "Jamjuri dan Junenah",
+        "jumlah": 2,
+        "provinsi": [
+          "Banten"
+        ],
+        "kabupaten": [
+          "Kota Cilegon"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "jamu jun",
+        "nama_contoh": "JAMU JUN",
+        "jumlah": 2,
+        "provinsi": [
+          "Jawa Tengah"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kota Semarang"
+        ],
+        "semua_deskripsi_kosong": true
+      },
+      {
+        "nama_normal": "kain pamintan",
+        "nama_contoh": "Kain Pamintan",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Selatan"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kab. Barito Kuala"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "ketebung / gendang",
+        "nama_contoh": "Ketebung / Gendang",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "ketoprak dor deli serdang",
+        "nama_contoh": "Ketoprak Dor Deli Serdang",
+        "jumlah": 2,
+        "provinsi": [
+          "Sumatera Utara"
+        ],
+        "kabupaten": [
+          "Kab. Deli Serdang",
+          "(null)"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "kisar",
+        "nama_contoh": "Kisar",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Pontianak",
+          "Kota Singkawang"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "krilu",
+        "nama_contoh": "Krilu",
+        "jumlah": 2,
+        "provinsi": [
+          "Bengkulu"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kab. Lebong"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "lagu pantai widuri",
+        "nama_contoh": "Lagu Pantai Widuri",
+        "jumlah": 2,
+        "provinsi": [
+          "Jawa Tengah"
+        ],
+        "kabupaten": [
+          "Kab. Pemalang"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "pakaian dayung atau hakav dayung",
+        "nama_contoh": "Pakaian Dayung atau Hakav Dayung",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Pontianak",
+          "Kota Singkawang"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "pedang bulangkait",
+        "nama_contoh": "Pedang Bulangkait",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "rambi wuna",
+        "nama_contoh": "RAMBI WUNA",
+        "jumlah": 2,
+        "provinsi": [
+          "Sulawesi Tenggara"
+        ],
+        "kabupaten": [
+          "Kab. Buton Utara"
+        ],
+        "semua_deskripsi_kosong": true
+      },
+      {
+        "nama_normal": "rujuh",
+        "nama_contoh": "Rujuh",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "rumah panggung bugis",
+        "nama_contoh": "Rumah Panggung Bugis",
+        "jumlah": 2,
+        "provinsi": [
+          "Jawa Tengah"
+        ],
+        "kabupaten": [
+          "Kab. Boyolali",
+          "Kab. Pemalang"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "saloka",
+        "nama_contoh": "Saloka",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Tengah"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kab. Kotawaringin Barat"
+        ],
+        "semua_deskripsi_kosong": true
+      },
+      {
+        "nama_normal": "serat wedhatama",
+        "nama_contoh": "SERAT WEDHATAMA",
+        "jumlah": 2,
+        "provinsi": [
+          "Jawa Tengah"
+        ],
+        "kabupaten": [
+          "(null)",
+          "Kota Surakarta"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "susualan",
+        "nama_contoh": "Susualan",
+        "jumlah": 2,
+        "provinsi": [
+          "Banten"
+        ],
+        "kabupaten": [
+          "Kab. Pandeglang",
+          "(null)"
+        ],
+        "semua_deskripsi_kosong": true
+      },
+      {
+        "nama_normal": "temaduk",
+        "nama_contoh": "Temaduk",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      },
+      {
+        "nama_normal": "tungku naga",
+        "nama_contoh": "Tungku Naga",
+        "jumlah": 2,
+        "provinsi": [
+          "Kalimantan Barat"
+        ],
+        "kabupaten": [
+          "Kota Singkawang",
+          "Kota Pontianak"
+        ],
+        "semua_deskripsi_kosong": false
+      }
+    ]
+  },
+  "koordinat": {
+    "jumlah_berkoordinat": 2,
+    "rekaman_berkoordinat": [
+      {
+        "id": "b9a71fdb-4c25-4319-9c8b-4740ffc1d12e",
+        "nama": "Museum Kayu Tuah Himba",
+        "provinsi": "Kalimantan Timur",
+        "kabupaten": "Kab. Kutai Kartanegara",
+        "lat": -0.405712,
+        "lng": 116.970886
+      },
+      {
+        "id": "175c1375-2b9e-4001-9e3b-c28899c53cbe",
+        "nama": "Masjid Agung Baiturahim Kota Gorontalo (Masjid Adat Gorontalo)",
+        "provinsi": "Gorontalo",
+        "kabupaten": "Kota Gorontalo",
+        "lat": 0.537738,
+        "lng": 123.060247
+      }
+    ],
+    "jumlah_luar_batas_indonesia": 0,
+    "koordinat_luar_batas": []
+  },
+  "sebaran_tahun_input": {
+    "per_tahun": {
+      "1970": 1,
+      "2010": 23,
+      "2011": 6,
+      "2012": 9,
+      "2013": 18,
+      "2014": 4,
+      "2015": 2,
+      "2016": 3,
+      "2017": 19,
+      "2018": 12,
+      "2019": 5,
+      "2020": 9,
+      "2021": 63,
+      "2022": 25,
+      "2023": 17,
+      "2024": 20,
+      "2025": 62,
+      "2026": 246
+    },
+    "nilai_tidak_wajar": [
+      {
+        "id": "aedef615-0706-43de-bf20-198bd791996a",
+        "nama": "Tepi Laut/Karina Waserba/Alfamart Jl. L.L. RE Martadinata No. 162",
+        "provinsi": "Jawa Barat",
+        "kabupaten": "Kota Bandung",
+        "tahun": 1970
+      }
+    ]
+  },
+  "pemeriksaan_pemotongan": {
+    "cagar_budaya_per_jenis": {
+      "Kawasan": 13,
+      "Struktur": 13,
+      "Benda": 13,
+      "Situs": 13,
+      "Bangunan": 13
+    },
+    "cagar_budaya_seragam": true,
+    "nilai_seragam_cb": 13,
+    "lembaga_budaya_total": 3,
+    "sarana_prasarana_total": 3,
+    "jumlah_jenis_opk_tercatat": 5,
+    "indikasi_terpotong": true,
+    "catatan_teknis": [
+      "Seluruh 5 jenis Cagar Budaya masing-masing berjumlah tepat 13 rekaman (total 65) dan seluruh deskripsinya kosong.",
+      "Lembaga Budaya hanya 3 rekaman dan Sarana & Prasarana hanya 3 rekaman.",
+      "Objek Pemajuan Kebudayaan (OPK) hanya memuat 5 jenis dari 10 objek pemajuan kebudayaan menurut UU Pemajuan Kebudayaan.",
+      "Berdasarkan jejak scraper/endpoints.json, request ke /api/telusuri/category/list-data sempat mengembalikan HTTP 500 Internal Server Error untuk sejumlah kombinasi, sehingga data yang tertangkap kemungkinan berasal dari tangkapan awal infinite scroll / halaman terbatas."
+    ]
+  },
+  "konsistensi_antar_file": {
+    "selisih_ditemukan": [],
+    "catatan_sdm_pada_provinsi_summary": [
+      {
+        "provinsi": "Jawa Tengah",
+        "rekaman_di_budaya_json": 79,
+        "sdm_agregat": 2,
+        "total_budaya_di_summary": 79,
+        "apakah_total_termasuk_sdm": false
+      },
+      {
+        "provinsi": "Sulawesi Selatan",
+        "rekaman_di_budaya_json": 39,
+        "sdm_agregat": 3,
+        "total_budaya_di_summary": 39,
+        "apakah_total_termasuk_sdm": false
+      }
+    ],
+    "padding_nol_pada_top10_kategori": {
+      "Lembaga Budaya": 9,
+      "Sarana & Prasarana": 7
+    }
+  },
+  "pertanyaan_untuk_pengguna": {
+    "instruksi": "Bandingkan angka lokal di bawah ini dengan total aktual di situs SPKT (https://spkt.kemenbud.go.id) untuk memastikan apakah hasil scraping terpotong.",
+    "perbandingan_kategori": [
+      {
+        "kategori": "Objek Pemajuan Kebudayaan (OPK)",
+        "jumlah_lokal": 473,
+        "status": "Digunakan apa adanya (473 rekaman, 5 jenis)"
+      },
+      {
+        "kategori": "Cagar Budaya",
+        "jumlah_lokal": 65,
+        "status": "Terindikasi terpotong (tepat 13 per jenis = 65); digunakan apa adanya dengan disclaimer jujur"
+      },
+      {
+        "kategori": "Lembaga Budaya",
+        "jumlah_lokal": 3,
+        "status": "Terindikasi terpotong (3 rekaman); digunakan apa adanya dengan disclaimer jujur"
+      },
+      {
+        "kategori": "Sarana & Prasarana",
+        "jumlah_lokal": 3,
+        "status": "Terindikasi terpotong (3 rekaman); digunakan apa adanya dengan disclaimer jujur"
+      },
+      {
+        "kategori": "SDM Kebudayaan (Agregat)",
+        "jumlah_lokal": 5,
+        "status": "Hanya ditampilkan sebagai agregat (5)"
+      }
+    ],
+    "keputusan_pengguna": "Tetap gunakan data lokal saat ini (544 rekaman) apa adanya dengan kejujuran penuh di disclaimer web, lalu lanjut ke Fase 2 tanpa crawl ulang."
+  }
+}

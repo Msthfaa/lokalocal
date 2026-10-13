@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id" class="halaman-fullscreen-html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14110F" />
+    <title>Lokalocal — Jelajah Peta 3D Nusantara</title>
+    <meta
+      name="description"
+      content="Jelajahi peta 3D interaktif 38 provinsi Indonesia selayar penuh. Klik pulau untuk menancapkan bendera rincian budaya dan telusuri tradisi nusantara."
+    />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lokalocal" />
+    <meta property="og:title" content="Lokalocal — Jelajah Peta 3D Nusantara" />
+    <meta
+      property="og:description"
+      content="Peta 3D interaktif 38 provinsi Indonesia selayar penuh dengan bendera detail budaya dan koleksi tradisi SPKT."
+    />
+    <meta property="og:image" content="./og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  </head>
+  <body class="halaman-fullscreen-body">
+    <a href="#s5-peta-wadah" class="skip-link">Lompat ke peta 3D</a>
+
+    <!-- Header Navigasi Mengambang -->
+    <header id="header-utama" class="header-utama header-fullscreen">
+      <nav class="wadah nav-bar" aria-label="Navigasi utama">
+        <a href="./index.html" class="nav-merek">
+          <svg class="nav-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
+            <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
+          </svg>
+          <span id="nav-nama-situs">Lokalocal</span>
+        </a>
+
+        <button
+          type="button"
+          id="tombol-menu-ponsel"
+          class="tombol-menu-ponsel"
+          aria-expanded="false"
+          aria-controls="nav-daftar"
+          aria-label="Buka menu navigasi"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <ul id="nav-daftar" class="nav-daftar">
+          <li>
+            <a href="./index.html" class="nav-tautan" data-nav-id="cerita">
+              Cerita
+            </a>
+          </li>
+          <li>
+            <a href="./jelajah.html" class="nav-tautan" data-nav-id="jelajah" aria-current="page">
+              Jelajah
+            </a>
+          </li>
+          <li>
+            <a href="./paspor.html" class="nav-tautan" data-nav-id="paspor">
+              Paspor
+            </a>
+          </li>
+          <li>
+            <a href="./kuis.html" class="nav-tautan" data-nav-id="kuis">
+              Kuis
+            </a>
+          </li>
+          <li>
+            <button type="button" id="nav-tombol-tentang" class="nav-tautan">
+              Tentang data
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Konten Utama: 100% Fullscreen Peta 3D -->
+    <main id="konten-utama" class="jelajah-layar-penuh-main" tabindex="-1">
+      <div id="banner-error-data" class="banner-error" role="alert" hidden style="display: none; position: absolute; z-index: 90; top: 70px; left: 16px; right: 16px;">
+        <p class="banner-error-judul">Gagal memuat data budaya</p>
+        <p>
+          Kami mengalami kendala saat membaca berkas data lokal. Pastikan berkas data tersedia.
+        </p>
+      </div>
+
+      <!-- Wadah Kanvas 3D Selayar Penuh -->
+      <div id="s5-peta-wadah" class="jelajah-wadah-fullscreen" aria-label="Peta Diorama 3D Indonesia">
+        <!-- Kanvas Three.js akan disuntikkan secara dinamis di sini -->
+      </div>
+
+      <!-- HUD Atas: Panduan Interaksi Ringkas -->
+      <div class="jelajah-hud-atas" aria-hidden="true">
+        <span class="hud-pill-petunjuk">
+          <span class="hud-titik-aktif"></span>
+          <strong>Peta 3D Indonesia</strong> &bull; Geser untuk memutar 360&deg; &bull; Klik pulau untuk menancapkan bendera
+        </span>
+      </div>
+
+      <!-- HUD Kiri Bawah: Legenda Ringkas & Atribusi Resmi -->
+      <div class="jelajah-hud-kiri-bawah">
+        <div class="hud-status-ringkas">
+          <span class="hud-status-item"><span class="hud-dot hud-dot--ada"></span> 28 Tercatat</span>
+          <span class="hud-status-item"><span class="hud-dot hud-dot--belum"></span> 10 Menanti Pendataan</span>
+        </div>
+        <p class="hud-atribusi-teks">
+          Data: <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">SPKT Kementerian Kebudayaan RI</a> &bull;
+          <button type="button" id="hud-tombol-tentang" class="hud-tautan-tentang">Tentang Data</button>
+        </p>
+      </div>
+
+      <!-- HUD Kanan Bawah: Toolbar Kontrol Peta (Perbesaran, Rotasi, Mode Warna) -->
+      <div class="jelajah-hud-kanan-bawah" role="toolbar" aria-label="Kontrol tampilan peta 3D">
+        <button
+          type="button"
+          id="hud-mode-warna"
+          class="hud-btn"
+          title="Ganti Mode Warna (Alami / Data OPK Dominan)"
+          aria-label="Ganti mode pewarnaan peta"
+        >
+          <span class="hud-btn-ikon">🎨</span>
+          <span class="hud-btn-teks" id="hud-mode-warna-label">Warna Alami</span>
+        </button>
+
+        <div class="hud-separator" aria-hidden="true"></div>
+
+        <button
+          type="button"
+          id="hud-zoom-in"
+          class="hud-btn hud-btn-ikon-only"
+          title="Perbesar Peta (+)"
+          aria-label="Perbesar peta"
+        >
+          +
+        </button>
+
+        <button
+          type="button"
+          id="hud-zoom-reset"
+          class="hud-btn"
+          title="Atur Ulang Zoom Kamera (100%)"
+          aria-label="Atur ulang zoom kamera"
+        >
+          100%
+        </button>
+
+        <button
+          type="button"
+          id="hud-zoom-out"
+          class="hud-btn hud-btn-ikon-only"
+          title="Perkecil Peta (−)"
+          aria-label="Perkecil peta"
+        >
+          −
+        </button>
+
+        <div class="hud-separator" aria-hidden="true"></div>
+
+        <button
+          type="button"
+          id="hud-reset-putar"
+          class="hud-btn"
+          title="Kembalikan Posisi Sudut Pandang Awal"
+          aria-label="Reset sudut putar diorama"
+        >
+          <span class="hud-btn-ikon">🔄</span>
+          <span class="hud-btn-teks">Reset Putar</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Dialog Detail Rekaman Lengkap -->
+    <dialog id="dialog-rekaman" class="dialog-rekaman" aria-labelledby="dialog-rekaman-judul">
+      <div class="dialog-rekaman-kartu">
+        <header class="dialog-rekaman-header">
+          <div>
+            <span id="dialog-rekaman-kategori" class="chip-jenis"></span>
+            <h2 id="dialog-rekaman-judul" style="margin-top: var(--ruang-2); font-family: var(--font-display);"></h2>
+            <p id="dialog-rekaman-lokasi" style="color: var(--kertas-redup); font-size: var(--teks-kecil);"></p>
+          </div>
+          <button type="button" id="dialog-rekaman-tutup" class="tombol-tutup-dialog" aria-label="Tutup detail rekaman">
+            &times;
+          </button>
+        </header>
+
+        <div class="dialog-rekaman-badan">
+          <div id="dialog-rekaman-deskripsi" class="dialog-rekaman-deskripsi"></div>
+
+          <div class="dialog-rekaman-meta">
+            <div>
+              <span class="label-kecil">Tahun Pencatatan di SPKT</span>
+              <p id="dialog-rekaman-tahun" style="font-weight: 600;"></p>
+            </div>
+            <div>
+              <span class="label-kecil">Pengusul</span>
+              <p id="dialog-rekaman-pengusul" style="font-weight: 600;"></p>
+            </div>
+            <div>
+              <span class="label-kecil">Status Verifikasi</span>
+              <p id="dialog-rekaman-status" style="font-weight: 600;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Dialog Tentang Data & Metodologi -->
+    <dialog id="dialog-tentang" class="dialog-tentang" aria-labelledby="dialog-tentang-judul">
+      <div class="dialog-tentang-kartu">
+        <header class="dialog-tentang-header">
+          <h2 id="dialog-tentang-judul" style="font-family: var(--font-display);">Tentang Data &amp; Metodologi</h2>
+          <button type="button" id="dialog-tentang-tutup" class="tombol-tutup-dialog" aria-label="Tutup informasi data">
+            &times;
+          </button>
+        </header>
+        <div class="dialog-tentang-badan">
+          <p>
+            Situs <strong>Lokalocal</strong> menggunakan data publik dari Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan Republik Indonesia (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">spkt.kemenbud.go.id</a>).
+          </p>
+          <p>
+            Peta 3D ini menyajikan visualisasi 38 provinsi di Indonesia dalam bentuk diorama low-poly. Kepingan provinsi yang berwarna redup menandakan daerah yang datanya belum tercatat di SPKT saat proses pendataan ini dihimpun.
+          </p>
+          <p>
+            Ketimpangan data di situs ini mencerminkan progres penginputan data resmi ke SPKT, bukan tingkat kekayaan budaya yang sebenarnya dari masing-masing daerah.
+          </p>
+        </div>
+      </div>
+    </dialog>
+
+    <script type="module" src="./src/pages/jelajah.js"></script>
+  </body>
+</html>

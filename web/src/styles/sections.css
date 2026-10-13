@@ -1,0 +1,1945 @@
+/**
+ * sections.css — Gaya khusus untuk bagian S1–S4 dan komponen Peta SVG
+ * Sesuai WEB_SPEC.md Bagian 3, 5, dan 7.
+ * Mobile-first mulai dari lebar 360 px tanpa scroll horizontal.
+ */
+
+/* ==========================================================================
+   Gaya Umum Peta SVG (S1, S2, S4, S5)
+   ========================================================================== */
+.peta-bingkai {
+  position: relative;
+  width: 100%;
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  padding: var(--ruang-2);
+}
+
+@media (min-width: 768px) {
+  .peta-bingkai {
+    padding: var(--ruang-3);
+  }
+}
+
+.peta-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.provinsi-path {
+  stroke: #3A322C;
+  stroke-width: 0.9px;
+  vector-effect: non-scaling-stroke;
+  transition: opacity var(--dur-cepat) var(--ease-keluar),
+              stroke var(--dur-cepat) var(--ease-keluar),
+              stroke-width var(--dur-cepat) var(--ease-keluar);
+  cursor: pointer;
+  outline: none;
+}
+
+.provinsi-path.is-hover,
+.provinsi-path:focus-visible {
+  stroke: var(--aksen);
+  stroke-width: 2.2px;
+  opacity: 1 !important;
+}
+
+.provinsi-path.is-selected {
+  stroke: var(--aksen);
+  stroke-width: 2.8px;
+  opacity: 1 !important;
+}
+
+.provinsi-path.is-dimmed-other {
+  opacity: 0.52;
+}
+
+.provinsi-hit {
+  cursor: pointer;
+}
+
+/* Tooltip Peta */
+.peta-tooltip {
+  position: absolute;
+  z-index: 30;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  background-color: rgba(20, 17, 15, 0.96);
+  color: var(--kertas);
+  border: 1px solid var(--aksen);
+  border-radius: var(--r-sm);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: calc(100% - 24px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.peta-tooltip[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   S1 — Pembuka (Hero)
+   ========================================================================== */
+.s1-pembuka {
+  position: relative;
+  overflow: hidden;
+}
+
+.s1-latar-peta {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.35;
+  padding-inline: var(--ruang-2);
+}
+
+.s1-latar-peta .peta-svg {
+  max-width: 1180px;
+  width: 100%;
+}
+
+.s1-latar-peta .provinsi-path {
+  fill: #241E1A;
+  stroke: #3D342E;
+  stroke-width: 0.8px;
+  cursor: default;
+}
+
+.s1-latar-peta.has-globe-3d {
+  opacity: 0.72 !important;
+}
+
+.s1-latar-peta.has-globe-3d .peta-svg {
+  opacity: 0.18;
+  transition: opacity var(--dur-lambat) var(--ease-keluar);
+}
+
+.s1-globe-kanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* Diorama 3D Indonesia Low-Poly (Fase 9) */
+.s1-latar-peta.has-diorama-3d {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+.s1-latar-peta.has-diorama-3d .peta-svg {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity var(--dur-sedang) var(--ease-keluar);
+}
+
+.s1-hero3d-kanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  touch-action: pan-y;
+  will-change: opacity, transform;
+}
+
+/* Prompt Interaktif Gulir saat Diorama 3D Utuh di Opening */
+.s1-prompt-scroll {
+  display: none;
+  position: absolute;
+  bottom: 2.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  pointer-events: none;
+  transition: opacity var(--dur-cepat) var(--ease-keluar), transform var(--dur-cepat) var(--ease-keluar);
+}
+
+.s1-pembuka.has-diorama-mode .s1-prompt-scroll {
+  display: flex;
+}
+
+.s1-prompt-badge {
+  font-family: var(--font-judul);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--aksen);
+  background: rgba(20, 17, 15, 0.82);
+  border: 1px solid rgba(230, 177, 74, 0.4);
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.s1-prompt-teks {
+  font-size: 0.8125rem;
+  color: var(--kertas-redup);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+}
+
+.s1-prompt-panah {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--aksen);
+  animation: s1-panah-ayun 1.8s infinite ease-in-out;
+}
+
+@keyframes s1-panah-ayun {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.s1-konten {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.s1-pembuka.has-diorama-mode .s1-konten {
+  will-change: opacity, transform;
+}
+
+/* ==========================================================================
+   Halaman Jelajah 3D Fullscreen & Floating HUD
+   ========================================================================== */
+.halaman-fullscreen-html,
+.halaman-fullscreen-body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden !important;
+  background-color: var(--malam);
+}
+
+.header-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(20, 17, 15, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(230, 177, 74, 0.15);
+}
+
+.jelajah-layar-penuh-main {
+  position: fixed;
+  top: var(--tinggi-nav);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: calc(100vh - var(--tinggi-nav));
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+.jelajah-wadah-fullscreen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #1c1815 0%, #110e0c 100%);
+}
+
+.jelajah-wadah-fullscreen.is-fallback-2d {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* Floating HUD Atas */
+.jelajah-hud-atas {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  pointer-events: none;
+}
+
+.hud-pill-petunjuk {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20, 17, 15, 0.82);
+  border: 1px solid rgba(230, 177, 74, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 0.4rem 1rem;
+  border-radius: var(--r-bulat);
+  font-size: 0.78rem;
+  color: var(--kertas);
+  white-space: nowrap;
+}
+
+.hud-titik-aktif {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--sukses);
+  box-shadow: 0 0 8px var(--sukses);
+  animation: denyut 2s infinite;
+}
+
+@keyframes denyut {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* Floating HUD Kiri Bawah */
+.jelajah-hud-kiri-bawah {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+.hud-status-ringkas {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(20, 17, 15, 0.82);
+  border: 1px solid var(--garis);
+  backdrop-filter: blur(8px);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--r-bulat);
+  font-size: 0.75rem;
+  color: var(--kertas);
+}
+
+.hud-status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hud-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.hud-dot--ada {
+  background-color: #7DB35F;
+}
+
+.hud-dot--belum {
+  background-color: #555A68;
+}
+
+.hud-atribusi-teks {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--kertas-redup);
+  background: rgba(20, 17, 15, 0.65);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-atribusi-teks a {
+  color: var(--aksen);
+  text-decoration: underline;
+}
+
+.hud-tautan-tentang {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--aksen);
+  font-size: 0.72rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Floating HUD Kanan Bawah: Toolbar Kontrol Peta */
+.jelajah-hud-kanan-bawah {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(20, 17, 15, 0.85);
+  border: 1px solid rgba(230, 177, 74, 0.35);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  padding: 4px;
+  border-radius: var(--r-bulat);
+}
+
+.hud-btn {
+  min-height: 38px;
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--kertas);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--r-bulat);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color var(--dur-cepat), color var(--dur-cepat);
+}
+
+.hud-btn:hover {
+  background: rgba(230, 177, 74, 0.18);
+  color: var(--aksen);
+}
+
+.hud-btn.is-mode-data {
+  background: rgba(200, 90, 50, 0.25);
+  color: var(--aksen);
+  border: 1px solid rgba(200, 90, 50, 0.5);
+}
+
+.hud-btn-ikon-only {
+  min-width: 38px;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0;
+}
+
+.hud-separator {
+  width: 1px;
+  height: 20px;
+  background: var(--garis);
+  margin: 0 2px;
+}
+
+/* ==========================================================================
+   Kartu Bendera Detail Wilayah 3D (Panji Diorama)
+   ========================================================================== */
+.diorama-bendera-kartu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  background: rgba(20, 17, 15, 0.96);
+  border: 1px solid var(--aksen);
+  border-radius: var(--r-md);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(230, 177, 74, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  width: 360px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translate3d(-50%, -100%, 0) scale(0.92);
+  transition: opacity 0.22s var(--ease-keluar), transform 0.22s var(--ease-keluar);
+}
+
+.diorama-bendera-kartu.is-muncul {
+  opacity: 1;
+}
+
+/* Ekor panah penunjuk ke tiang */
+.diorama-bendera-kartu::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid var(--aksen);
+}
+
+.diorama-bendera-kartu.posisi-bawah::after {
+  bottom: auto;
+  top: -9px;
+  border-top: none;
+  border-bottom: 9px solid var(--aksen);
+}
+
+.bendera-pita-kiri {
+  width: 8px;
+  flex-shrink: 0;
+  background-color: var(--aksen);
+}
+
+.bendera-konten {
+  flex: 1;
+  padding: 0.95rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bendera-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.bendera-judul-grup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bendera-badge-kode {
+  font-family: monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--aksen);
+  letter-spacing: 0.06em;
+}
+
+.bendera-nama-prov {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--kertas);
+  line-height: 1.2;
+}
+
+.bendera-tombol-tutup {
+  background: none;
+  border: none;
+  color: var(--kertas-redup);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color var(--dur-cepat);
+}
+
+.bendera-tombol-tutup:hover {
+  color: var(--kertas);
+}
+
+.bendera-status-bar {
+  font-size: 0.8125rem;
+  color: var(--kertas-redup);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--garis);
+}
+
+.bendera-status-bar.is-kosong {
+  color: #C0A892;
+  font-style: italic;
+}
+
+.bendera-total-angka {
+  color: var(--aksen);
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.bendera-status-titik {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #6A6258;
+}
+
+.bendera-seksi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bendera-seksi-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--kertas-redup);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bendera-rincian-kategori {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.bendera-chip-kategori {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.725rem;
+  background: rgba(40, 33, 29, 0.75);
+  border: 1px solid rgba(74, 62, 54, 0.7);
+  padding: 2px 7px;
+  border-radius: 999px;
+  color: var(--kertas);
+}
+
+.bendera-titik-warna {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bendera-kabupaten-teks {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--kertas);
+  line-height: 1.35;
+}
+
+/* Daftar Tradisi Unggulan di Bendera */
+.bendera-daftar-tradisi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bendera-item-tradisi {
+  width: 100%;
+  background: rgba(30, 24, 21, 0.8);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-sm);
+  padding: 0.4rem 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  color: var(--kertas);
+  transition: border-color var(--dur-cepat), background-color var(--dur-cepat);
+}
+
+.bendera-item-tradisi:hover {
+  border-color: var(--aksen);
+  background-color: rgba(230, 177, 74, 0.12);
+}
+
+.bendera-tradisi-nama {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bendera-tradisi-jenis {
+  font-size: 0.7rem;
+  color: var(--aksen);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bendera-catatan-kosong {
+  font-size: 0.78rem;
+  color: var(--kertas-redup);
+  line-height: 1.45;
+  background: rgba(30, 26, 23, 0.7);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--garis);
+}
+
+.bendera-footer-aksi {
+  margin-top: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bendera-tombol-paspor {
+  width: 100%;
+  min-height: 40px;
+  background: linear-gradient(135deg, var(--aksen), #D99B35);
+  color: var(--malam);
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: transform var(--dur-cepat), filter var(--dur-cepat);
+}
+
+.bendera-tombol-paspor:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.bendera-tombol-paspor.is-terkumpul {
+  background: rgba(127, 176, 122, 0.25);
+  color: #A4D4A0;
+  border: 1px solid #7FB07A;
+  cursor: default;
+}
+
+@media (max-width: 639px) {
+  .jelajah-hud-atas {
+    display: none;
+  }
+
+  .jelajah-hud-kiri-bawah {
+    bottom: 64px;
+    left: 12px;
+  }
+
+  .jelajah-hud-kanan-bawah {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    justify-content: center;
+  }
+
+  .diorama-bendera-kartu {
+    position: fixed !important;
+    bottom: 14px !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: auto !important;
+    transform: none !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: 52vh !important;
+  }
+
+  .diorama-bendera-kartu::after {
+    display: none !important;
+  }
+}
+
+
+
+.h1-baris-luar {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.h1-baris-dalam {
+  display: block;
+  will-change: transform;
+}
+
+.indikator-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ruang-2);
+  margin-top: var(--ruang-4);
+  font-size: var(--teks-kecil);
+  color: var(--kertas-redup);
+  text-decoration: none;
+}
+
+.indikator-scroll:hover {
+  color: var(--aksen);
+}
+
+.indikator-scroll-panah {
+  display: inline-flex;
+  animation: denyutPanah 2s infinite ease-in-out;
+}
+
+@keyframes denyutPanah {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indikator-scroll-panah {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   S2 — Peta Menyala (Scrollytelling)
+   ========================================================================== */
+.s2-scrolly-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-4);
+  margin-top: var(--ruang-3);
+}
+
+.s2-peta-sticky {
+  position: sticky;
+  top: var(--tinggi-nav);
+  z-index: 10;
+  background-color: var(--malam);
+  padding-block: var(--ruang-2);
+}
+
+.s2-status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ruang-2);
+  margin-bottom: var(--ruang-2);
+}
+
+.s2-penghitung-kotak {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ruang-2);
+}
+
+.s2-angka-besar {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  color: var(--aksen);
+  line-height: 1;
+}
+
+.s2-langkah-wadah {
+  position: relative;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-5);
+  padding-block: var(--ruang-3);
+}
+
+.s2-kartu-langkah {
+  background-color: rgba(30, 25, 22, 0.94);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+  padding: var(--ruang-4);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  transition: border-color var(--dur-cepat) var(--ease-keluar),
+              transform var(--dur-cepat) var(--ease-keluar);
+}
+
+.s2-kartu-langkah.is-aktif {
+  border-color: var(--aksen);
+}
+
+.s2-langkah-nomor {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--aksen);
+  margin-bottom: var(--ruang-1);
+}
+
+@media (min-width: 960px) {
+  .s2-scrolly-layout {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    align-items: start;
+    gap: var(--ruang-5);
+  }
+
+  .s2-peta-sticky {
+    top: calc(var(--tinggi-nav) + var(--ruang-4));
+  }
+
+  .s2-langkah-wadah {
+    padding-block: var(--ruang-4);
+    gap: var(--ruang-6);
+  }
+}
+
+@media (max-width: 959px) and (max-height: 540px) {
+  .s2-peta-sticky {
+    position: static;
+  }
+}
+
+/* ==========================================================================
+   S3 — Cahaya Tidak Merata (Waffle 10x10 & Bar Top 5)
+   ========================================================================== */
+.s3-kisi-utama {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ruang-5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .s3-kisi-utama {
+    grid-template-columns: 1fr 1.15fr;
+  }
+}
+
+.s3-kartu-panel {
+  background-color: var(--kertas-2);
+  border: 1px solid var(--garis-terang);
+  border-radius: var(--r-lg);
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+@media (min-width: 768px) {
+  .s3-kartu-panel {
+    padding: var(--ruang-5);
+  }
+}
+
+.waffle-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+}
+
+.waffle-sel {
+  border-radius: 4px;
+  background-color: #D7C8B5;
+  border: 1px solid rgba(42, 33, 27, 0.14);
+  transition: background-color var(--dur-cepat) var(--ease-keluar),
+              transform var(--dur-cepat) var(--ease-keluar);
+}
+
+.waffle-sel.is-sorot {
+  background-color: #C85A32;
+  border-color: #8F3B1B;
+}
+
+.waffle-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ruang-3);
+  font-size: var(--teks-kecil);
+  color: var(--tinta-2);
+  justify-content: center;
+}
+
+.waffle-legenda-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ruang-2);
+}
+
+.waffle-kotak-kecil {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Bar Horizontal Top 5 Provinsi */
+.bar-top5-daftar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+.bar-top5-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bar-top5-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ruang-2);
+  font-size: var(--teks-kecil);
+}
+
+.bar-top5-nama {
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.bar-top5-angka {
+  color: var(--tinta-2);
+  font-weight: 600;
+}
+
+.bar-top5-trek {
+  width: 100%;
+  height: 12px;
+  background-color: #D7C8B5;
+  border-radius: var(--r-bulat);
+  overflow: hidden;
+}
+
+.bar-top5-isi {
+  height: 100%;
+  background-color: var(--tinta);
+  border-radius: var(--r-bulat);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.bar-top5-item:first-child .bar-top5-isi {
+  background-color: #C85A32;
+}
+
+/* ==========================================================================
+   S4 — Yang Masih Gelap (10 Provinsi Belum Tercatat di SPKT)
+   ========================================================================== */
+.s4-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ruang-4);
+}
+
+@media (min-width: 960px) {
+  .s4-layout {
+    grid-template-columns: 1.35fr 1fr;
+    align-items: start;
+  }
+}
+
+.s4-peta-wadah .provinsi-grup[data-status="ada"] .provinsi-path {
+  opacity: 0.32;
+}
+
+.s4-peta-wadah .provinsi-grup[data-status="belum_tercatat"] .provinsi-path {
+  stroke: var(--aksen);
+  stroke-width: 1.6px;
+}
+
+.s4-peta-wadah .provinsi-grup[data-status="belum_tercatat"] .provinsi-path.is-selected {
+  stroke-width: 3px;
+}
+
+.s4-chip-tombol {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ruang-2);
+  min-height: 44px;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--r-bulat);
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  color: var(--kertas);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  transition: border-color var(--dur-cepat) var(--ease-keluar),
+              background-color var(--dur-cepat) var(--ease-keluar),
+              color var(--dur-cepat) var(--ease-keluar);
+}
+
+.s4-chip-tombol:hover,
+.s4-chip-tombol[aria-pressed="true"] {
+  border-color: var(--aksen);
+  background-color: var(--malam-3);
+  color: var(--aksen);
+}
+
+.s4-ikon-arsir {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--aksen);
+  background: repeating-linear-gradient(
+    -45deg,
+    #1A1512,
+    #1A1512 2px,
+    #6B5B4E 2px,
+    #6B5B4E 4px
+  );
+  flex-shrink: 0;
+}
+
+.s4-kartu-detail-kosong {
+  margin-top: var(--ruang-3);
+  background-color: var(--malam-2);
+  border: 1px solid var(--aksen);
+  border-radius: var(--r-md);
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+}
+
+/* ==========================================================================
+   S5 — Jelajah (Peta Interaktif, Panel Provinsi, Tabel Daftar, dan Kisi Kartu)
+   ========================================================================== */
+.s5-kontrol-peta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ruang-3);
+  margin-bottom: var(--ruang-3);
+}
+
+.s5-grup-mode {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ruang-2);
+}
+
+/* Toggle Format Peta 3D vs 2D */
+.s5-toggle-dimensi {
+  display: inline-flex;
+  background-color: var(--malam-3);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-bulat);
+  padding: 3px;
+  gap: 3px;
+}
+
+.s5-btn-dimensi {
+  background: none;
+  border: none;
+  color: var(--kertas-redup);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--r-bulat);
+  cursor: pointer;
+  transition: all var(--dur-cepat) var(--ease-keluar);
+}
+
+.s5-btn-dimensi:hover {
+  color: var(--kertas);
+}
+
+.s5-btn-dimensi.is-active {
+  background-color: var(--aksen);
+  color: var(--malam);
+}
+
+/* Bingkai Peta Jelajah Saat Mode 3D Aktif (Tampak Jauh Lebih Besar) */
+.s5-bingkai-peta.is-mode-3d {
+  min-height: 540px;
+  height: 58vh;
+  max-height: 680px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.s5-bingkai-peta.is-mode-3d .peta-svg {
+  display: none !important;
+}
+
+.s5-jelajah3d-kanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+.s5-select {
+  min-height: 44px;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--r-sm);
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  color: var(--kertas);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+}
+
+.s5-select:focus-visible {
+  border-color: var(--aksen);
+}
+
+.s5-grup-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tombol-zoom {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--r-sm);
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  color: var(--kertas);
+  font-weight: 700;
+  font-size: var(--teks-kecil);
+}
+
+.tombol-zoom:hover {
+  border-color: var(--aksen);
+  color: var(--aksen);
+}
+
+.s5-legenda-peta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ruang-3);
+  margin-top: var(--ruang-2);
+  font-size: 0.8125rem;
+  color: var(--kertas-redup);
+}
+
+.legenda-peta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legenda-peta-kotak {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-block;
+}
+
+/* Grid Peta + Panel Provinsi */
+.s5-peta-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ruang-4);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .s5-peta-panel-grid {
+    grid-template-columns: 1.35fr 1fr;
+  }
+}
+
+/* Daftar Chips Cepat 38 Provinsi di Bawah Peta */
+.s5-chips-provinsi-bungkus {
+  margin-top: var(--ruang-3);
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+  padding: var(--ruang-3);
+}
+
+.s5-chips-provinsi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 156px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.chip-provinsi-kecil {
+  min-height: 44px;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--r-bulat);
+  background-color: var(--malam);
+  border: 1px solid var(--garis);
+  color: var(--kertas-redup);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.chip-provinsi-kecil:hover {
+  border-color: var(--aksen);
+  color: var(--kertas);
+}
+
+.chip-provinsi-kecil[aria-pressed="true"] {
+  background-color: var(--aksen);
+  border-color: var(--aksen);
+  color: var(--malam);
+}
+
+.chip-provinsi-kecil.is-belum {
+  border-style: dashed;
+}
+
+/* Panel Detail Provinsi */
+.panel-prov-placeholder,
+.panel-prov-kartu {
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-lg);
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-4);
+}
+
+.panel-prov-kartu {
+  border-color: var(--aksen);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.panel-prov-kepala {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ruang-2);
+  padding-bottom: var(--ruang-3);
+  border-bottom: 1px solid var(--garis);
+}
+
+.panel-prov-judul {
+  font-size: 1.5rem;
+  color: var(--kertas);
+  margin-top: 2px;
+}
+
+.tombol-tutup-panel {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--r-sm);
+  background-color: var(--malam-3);
+  border: 1px solid var(--garis);
+  color: var(--kertas-redup);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tombol-tutup-panel:hover {
+  border-color: var(--aksen);
+  color: var(--aksen);
+}
+
+.panel-prov-metrik-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: var(--ruang-2);
+}
+
+.panel-prov-metrik-item {
+  background-color: var(--malam);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-sm);
+  padding: var(--ruang-2) var(--ruang-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.panel-prov-metrik-angka {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--aksen);
+}
+
+.panel-prov-metrik-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--kertas);
+}
+
+.panel-prov-metrik-ket {
+  font-size: 0.7rem;
+  color: var(--kertas-redup);
+}
+
+.panel-prov-seksi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+}
+
+.panel-prov-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel-prov-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.panel-prov-bar-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+}
+
+.panel-prov-bar-trek {
+  width: 100%;
+  height: 7px;
+  background-color: var(--malam);
+  border-radius: var(--r-bulat);
+  overflow: hidden;
+}
+
+.panel-prov-bar-isi {
+  height: 100%;
+  border-radius: var(--r-bulat);
+}
+
+/* Keadaan Kosong Provinsi Belum Tercatat di Panel */
+.panel-prov-kosong {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+.panel-prov-ornamen-arsir {
+  width: 100%;
+  height: 48px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--garis);
+  background: repeating-linear-gradient(
+    -45deg,
+    #191412,
+    #191412 6px,
+    #352C26 6px,
+    #352C26 12px
+  );
+}
+
+/* Tabel Daftar 38 Provinsi */
+.tabel-provinsi-bungkus {
+  margin-top: var(--ruang-3);
+  overflow-x: auto;
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+}
+
+.tabel-provinsi {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--teks-kecil);
+  text-align: left;
+}
+
+.tabel-provinsi th,
+.tabel-provinsi td {
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--garis);
+}
+
+.tabel-provinsi thead th {
+  background-color: var(--malam-3);
+  color: var(--kertas);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tabel-tombol-urut {
+  font-weight: 700;
+  color: var(--kertas);
+  min-height: 44px;
+}
+
+.tabel-tombol-urut:hover {
+  color: var(--aksen);
+}
+
+.baris-belum-tercatat {
+  background-color: rgba(20, 17, 15, 0.45);
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-bulat);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-chip--ada {
+  background-color: rgba(127, 176, 122, 0.16);
+  color: #A4D4A0;
+  border: 1px solid rgba(127, 176, 122, 0.4);
+}
+
+.status-chip--belum {
+  background-color: rgba(230, 177, 74, 0.12);
+  color: var(--aksen);
+  border: 1px dashed rgba(230, 177, 74, 0.5);
+}
+
+.tabel-tombol-pilih {
+  min-height: 44px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+}
+
+/* Bar Pencarian & Filter Kartu di S5 */
+.s5-filter-panel {
+  margin-top: var(--ruang-5);
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-lg);
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+.s5-cari-baris {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ruang-2);
+  align-items: center;
+}
+
+.s5-input-bungkus {
+  position: relative;
+  flex: 1 1 260px;
+  display: flex;
+  align-items: center;
+}
+
+.s5-input-cari {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.6rem 2.8rem 0.6rem 1rem;
+  border-radius: var(--r-bulat);
+  background-color: var(--malam);
+  border: 1px solid var(--garis);
+  color: var(--kertas);
+  font-size: var(--teks-isi);
+}
+
+.s5-input-cari::placeholder {
+  color: var(--kertas-redup);
+}
+
+.s5-input-cari:focus {
+  border-color: var(--aksen);
+}
+
+.s5-tombol-hapus-cari {
+  position: absolute;
+  right: 2px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  color: var(--kertas-redup);
+}
+
+.s5-tombol-hapus-cari:hover {
+  color: var(--aksen);
+}
+
+/* Kisi Kartu Cerita (S5 & S6) */
+.kisi-kartu-cerita {
+  margin-top: var(--ruang-4);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ruang-4);
+}
+
+@media (min-width: 640px) {
+  .kisi-kartu-cerita {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .kisi-kartu-cerita {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.s5-muat-lagi-wadah {
+  margin-top: var(--ruang-5);
+  display: flex;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   S7 — Paspor Budaya (38 Stempel) & Kuis Interaktif (8 Soal)
+   ========================================================================== */
+.s7-kisi-dua {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ruang-5);
+  align-items: start;
+}
+
+@media (min-width: 1080px) {
+  .s7-kisi-dua {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.s7-panel-kartu {
+  background-color: var(--malam-2);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-lg);
+  padding: var(--ruang-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-4);
+}
+
+@media (min-width: 640px) {
+  .s7-panel-kartu {
+    padding: var(--ruang-5);
+  }
+}
+
+/* Paspor Budaya */
+.paspor-kepala {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--ruang-3);
+}
+
+.paspor-catatan-storage {
+  padding: var(--ruang-2) var(--ruang-3);
+  border-radius: var(--r-sm);
+  background-color: rgba(230, 177, 74, 0.1);
+  border: 1px dashed var(--aksen);
+  font-size: 0.8125rem;
+  color: var(--kertas);
+}
+
+.paspor-progres-blok {
+  background-color: var(--malam);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+  padding: var(--ruang-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+}
+
+.paspor-progres-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ruang-2);
+  font-size: var(--teks-kecil);
+}
+
+.paspor-progres-trek {
+  width: 100%;
+  height: 10px;
+  background-color: var(--malam-3);
+  border-radius: var(--r-bulat);
+  overflow: hidden;
+}
+
+.paspor-progres-isi {
+  height: 100%;
+  background: linear-gradient(90deg, var(--aksen-2), var(--aksen));
+  border-radius: var(--r-bulat);
+  transition: width var(--dur-sedang) var(--ease-keluar);
+}
+
+.paspor-kisi-38 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .paspor-kisi-38 {
+    grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+    gap: 10px;
+  }
+}
+
+.paspor-petak {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 8px 4px;
+  border-radius: var(--r-sm);
+  background-color: var(--malam);
+  border: 1px dashed var(--garis);
+  color: var(--kertas-redup);
+  text-align: center;
+  transition: border-color var(--dur-cepat) var(--ease-keluar),
+              background-color var(--dur-cepat) var(--ease-keluar),
+              transform var(--dur-cepat) var(--ease-keluar);
+}
+
+.paspor-petak:hover {
+  border-color: var(--aksen);
+  color: var(--kertas);
+  transform: translateY(-2px);
+}
+
+.paspor-petak.is-terkumpul {
+  border-style: solid;
+  border-color: rgba(230, 177, 74, 0.55);
+  background-color: rgba(230, 177, 74, 0.06);
+  color: var(--kertas);
+}
+
+.paspor-petak.is-penjaga {
+  border-style: dashed;
+  border-color: var(--aksen);
+}
+
+.paspor-petak-visual {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stempel-paspor-svg {
+  width: 52px;
+  height: 52px;
+  display: block;
+}
+
+.paspor-lingkaran-kosong {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--garis);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--kertas-redup);
+}
+
+.paspor-petak-nama {
+  font-size: 0.68rem;
+  line-height: 1.25;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.paspor-kaki {
+  padding-top: var(--ruang-3);
+  border-top: 1px solid var(--garis);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ruang-2);
+}
+
+/* Kuis Interaktif 8 Soal */
+.kuis-kepala {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--ruang-2);
+  padding-bottom: var(--ruang-3);
+  border-bottom: 1px solid var(--garis);
+}
+
+.kuis-badan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-3);
+}
+
+.kuis-poin-awal {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--teks-kecil);
+  color: var(--kertas);
+}
+
+.kuis-pertanyaan {
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: var(--kertas);
+}
+
+.kuis-petunjuk {
+  background-color: var(--malam);
+  border-left: 3px solid var(--aksen);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: var(--ruang-3);
+  font-size: var(--teks-kecil);
+  color: var(--kertas);
+}
+
+.kuis-pilihan-grup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kuis-pilihan-tombol {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.7rem 1rem;
+  border-radius: var(--r-sm);
+  background-color: var(--malam);
+  border: 1px solid var(--garis);
+  color: var(--kertas);
+  font-size: var(--teks-kecil);
+  font-weight: 600;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ruang-2);
+  transition: border-color var(--dur-cepat) var(--ease-keluar),
+              background-color var(--dur-cepat) var(--ease-keluar);
+}
+
+.kuis-pilihan-tombol:hover:not(:disabled) {
+  border-color: var(--aksen);
+  background-color: var(--malam-3);
+}
+
+.kuis-pilihan-tombol.is-benar {
+  border-color: var(--sukses);
+  background-color: rgba(127, 176, 122, 0.16);
+  color: #C7E8C4;
+}
+
+.kuis-pilihan-tombol.is-salah {
+  border-color: var(--peringatan);
+  background-color: rgba(217, 130, 43, 0.16);
+  color: #F5C396;
+}
+
+.kuis-pilihan-ket {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--r-bulat);
+  background-color: rgba(20, 17, 15, 0.65);
+  white-space: nowrap;
+}
+
+.kuis-umpan-balik {
+  padding: var(--ruang-3);
+  border-radius: var(--r-md);
+  border: 1px solid var(--garis);
+  background-color: var(--malam);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+}
+
+.kuis-umpan-balik.is-benar {
+  border-color: var(--sukses);
+}
+
+.kuis-umpan-balik.is-salah {
+  border-color: var(--peringatan);
+}
+
+.kuis-umpan-judul {
+  font-weight: 700;
+  font-size: var(--teks-kecil);
+  color: var(--kertas);
+}
+
+.kuis-umpan-aksi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ruang-2);
+  margin-top: 4px;
+}
+
+.kuis-skor-akhir {
+  background-color: var(--malam);
+  border: 1px solid var(--aksen);
+  border-radius: var(--r-md);
+  padding: var(--ruang-4);
+  text-align: center;
+}
+
+.kuis-skor-angka {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--aksen);
+  line-height: 1.1;
+}
+
+.kuis-tradisi-ditemui {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ruang-2);
+}
+
+.kuis-tradisi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kuis-tradisi-item {
+  background-color: var(--malam);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-sm);
+  padding: var(--ruang-2) var(--ruang-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ruang-2);
+}
+

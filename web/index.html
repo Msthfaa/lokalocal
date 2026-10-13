@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14110F" />
+    <title>Lokalocal — Berapa banyak budaya Indonesia yang sudah tercatat?</title>
+    <meta
+      name="description"
+      content="Menelusuri 544 catatan budaya Indonesia dari SPKT Kementerian Kebudayaan RI: melihat yang sudah tercatat dengan indah dan celah yang menunggu didokumentasikan."
+    />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lokalocal" />
+    <meta property="og:title" content="Lokalocal — Berapa banyak budaya Indonesia yang sudah tercatat?" />
+    <meta
+      property="og:description"
+      content="Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat. Jelajahi peta 38 provinsi dan 493 catatan unik dari data SPKT."
+    />
+    <meta property="og:image" content="./og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Lokalocal — Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lokalocal — Berapa banyak budaya Indonesia yang sudah tercatat?" />
+    <meta
+      name="twitter:description"
+      content="Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat. Jelajahi peta dan kisah budaya Nusantara dari data SPKT."
+    />
+    <meta name="twitter:image" content="./og-image.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  </head>
+  <body>
+    <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
+
+    <header id="header-utama" class="header-utama">
+      <nav class="wadah nav-bar" aria-label="Navigasi utama">
+        <a href="#pembuka" class="nav-merek">
+          <svg class="nav-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
+            <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
+          </svg>
+          <span id="nav-nama-situs">Lokalocal</span>
+        </a>
+
+        <button
+          type="button"
+          id="tombol-menu-ponsel"
+          class="tombol-menu-ponsel"
+          aria-expanded="false"
+          aria-controls="nav-daftar"
+          aria-label="Buka menu navigasi"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <ul id="nav-daftar" class="nav-daftar">
+          <li>
+            <a href="./index.html" class="nav-tautan" data-nav-id="cerita" aria-current="page">
+              Cerita
+            </a>
+          </li>
+          <li>
+            <a href="./jelajah.html" class="nav-tautan" data-nav-id="jelajah">
+              Jelajah
+            </a>
+          </li>
+          <li>
+            <a href="./paspor.html" class="nav-tautan" data-nav-id="paspor">
+              Paspor
+            </a>
+          </li>
+          <li>
+            <a href="./kuis.html" class="nav-tautan" data-nav-id="kuis">
+              Kuis
+            </a>
+          </li>
+          <li>
+            <button type="button" id="nav-tombol-tentang" class="nav-tautan">
+              Tentang data
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="konten-utama" tabindex="-1">
+      <div class="wadah">
+        <div id="banner-error-data" class="banner-error" role="alert" hidden>
+          <p class="banner-error-judul" id="banner-error-judul">Gagal memuat data budaya</p>
+          <p id="banner-error-pesan">
+            Kami mengalami kendala saat membaca berkas data lokal. Pastikan berkas data tersedia.
+          </p>
+          <div>
+            <button type="button" id="tombol-coba-lagi-data" class="tombol tombol--utama">
+              Coba lagi
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- S1 — Pembuka -->
+      <section id="pembuka" class="bagian bagian--penuh s1-pembuka" aria-labelledby="judul-s1">
+        <div id="s1-latar-peta" class="s1-latar-peta" aria-hidden="true"></div>
+
+        <!-- Prompt scroll interaktif saat diorama 3D utuh di opening -->
+        <div id="s1-prompt-scroll" class="s1-prompt-scroll" aria-hidden="true">
+          <span class="s1-prompt-badge">Atlas 3D Nusantara</span>
+          <span class="s1-prompt-teks">Gulir untuk menyingkap catatan budaya</span>
+          <span class="s1-prompt-panah">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="wadah s1-konten">
+          <div class="bagian-kepala">
+            <p class="kicker" id="kicker-s1">Lokalocal</p>
+            <h1 id="judul-s1">
+              <span class="h1-baris-luar">
+                <span class="h1-baris-dalam">Berapa banyak budaya Indonesia</span>
+              </span>
+              <span class="h1-baris-luar">
+                <span class="h1-baris-dalam">yang sudah tercatat?</span>
+              </span>
+            </h1>
+            <p class="bagian-subjudul" id="subjudul-s1">
+              Kami membaca <strong id="stat-total-mentah">544</strong> catatan dari sistem pendataan resmi
+              Kementerian Kebudayaan. Ada yang indah. Ada yang janggal.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--ruang-3); margin-top: var(--ruang-2);">
+              <a href="#peta-menyala" class="tombol tombol--utama">
+                Mulai menelusuri
+                <span class="indikator-scroll-panah" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </a>
+              <a href="./jelajah.html" class="tombol tombol--garis">Langsung ke peta jelajah 3D</a>
+            </div>
+          </div>
+
+          <div class="kisi-metrik" aria-label="Ringkasan data pencatatan budaya">
+            <div class="kartu-metrik">
+              <span class="kartu-metrik-angka" id="metrik-rekaman-bersih">493</span>
+              <span class="kartu-metrik-label">Catatan Budaya Unik</span>
+              <span class="kartu-metrik-ket">
+                Dari <span id="metrik-rekaman-mentah">544</span> rekaman SPKT per <span data-tanggal-ambil>9 Oktober 2026</span>
+              </span>
+            </div>
+            <div class="kartu-metrik">
+              <span class="kartu-metrik-angka" id="metrik-provinsi-berdata">28 / 38</span>
+              <span class="kartu-metrik-label">Provinsi Tercatat</span>
+              <span class="kartu-metrik-ket">
+                <span id="metrik-provinsi-belum">10</span> provinsi berstatus belum tercatat di SPKT
+              </span>
+            </div>
+            <div class="kartu-metrik">
+              <span class="kartu-metrik-angka" id="metrik-opk-total">422</span>
+              <span class="kartu-metrik-label">Objek Pemajuan Kebudayaan (OPK)</span>
+              <span class="kartu-metrik-ket">Mencakup 5 jenis tradisi, seni, bahasa, dan kerajinan</span>
+            </div>
+            <div class="kartu-metrik">
+              <span class="kartu-metrik-angka" id="metrik-cagar-total">65</span>
+              <span class="kartu-metrik-label">Cagar Budaya</span>
+              <span class="kartu-metrik-ket">Benda, bangunan, struktur, situs, dan kawasan</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S2 — Peta Menyala -->
+      <section id="peta-menyala" class="bagian" aria-labelledby="judul-s2">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Bab 1 — Peta Menyala</p>
+            <h2 id="judul-s2">Satu per satu, provinsi yang sudah mencatat budayanya mulai menyala.</h2>
+            <p class="bagian-subjudul">
+              Setiap warna pada peta menunjukkan jenis <strong>Objek Pemajuan Kebudayaan (OPK)</strong> — unsur budaya
+              takbenda maupun tradisi yang menjadi sasaran pemajuan kebudayaan nasional — yang paling banyak tercatat
+              di provinsi tersebut per <span data-tanggal-ambil>9 Oktober 2026</span>.
+            </p>
+          </div>
+
+          <div class="s2-scrolly-layout">
+            <div class="s2-peta-sticky">
+              <div class="s2-status-bar">
+                <div class="s2-penghitung-kotak">
+                  <span id="s2-angka-visual" class="s2-angka-besar" aria-hidden="true">544</span>
+                  <span id="s2-angka-sr" class="sr-only">544 catatan budaya</span>
+                  <span style="font-size: var(--teks-kecil); color: var(--kertas-redup);">
+                    catatan budaya di SPKT
+                  </span>
+                </div>
+                <span style="font-size: 0.8125rem; color: var(--kertas-redup);">
+                  Mode peta: <strong style="color: var(--kertas);">Jenis OPK Dominan</strong>
+                </span>
+              </div>
+
+              <div class="peta-bingkai">
+                <div id="s2-peta-wadah"></div>
+                <div id="s2-peta-tooltip" class="peta-tooltip" role="status" hidden></div>
+              </div>
+              <p style="margin-top: var(--ruang-2); font-size: 0.8125rem; color: var(--kertas-redup);">
+                Arahkan kursor atau gunakan tombol Tab pada peta untuk melihat jumlah catatan tiap provinsi. Provinsi berarsir diagonal berstatus <strong>belum tercatat di SPKT</strong>.
+              </p>
+            </div>
+
+            <div class="s2-langkah-wadah">
+              <article class="s2-kartu-langkah is-aktif">
+                <p class="s2-langkah-nomor">Langkah 01 • Barat ke Timur</p>
+                <h3>Cahaya dari Aceh hingga Papua</h3>
+                <p style="margin-top: var(--ruang-2); color: var(--kertas-redup); font-size: var(--teks-kecil);">
+                  Satu per satu, provinsi yang sudah memiliki catatan di dalam sistem mulai menyala dari ujung barat ke timur Nusantara.
+                </p>
+              </article>
+
+              <article class="s2-kartu-langkah">
+                <p class="s2-langkah-nomor">Langkah 02 • Total Tangkapan</p>
+                <h3>544 Rekaman (493 Catatan Unik)</h3>
+                <p style="margin-top: var(--ruang-2); color: var(--kertas-redup); font-size: var(--teks-kecil);">
+                  Setelah membersihkan 3 duplikat identik dan menggabungkan 26 tradisi lintas kabupaten yang berdeskripsi sama persis, kita memperoleh 493 catatan unik siap dijelajahi.
+                </p>
+              </article>
+
+              <article class="s2-kartu-langkah">
+                <p class="s2-langkah-nomor">Langkah 03 • Sebaran Wilayah</p>
+                <h3>
+                  Tersebar di <span id="s2-provinsi-berdata">28</span> dari <span id="s2-total-provinsi">38</span> provinsi
+                </h3>
+                <p style="margin-top: var(--ruang-2); color: var(--kertas-redup); font-size: var(--teks-kecil);">
+                  Sebagian besar provinsi telah memiliki rekaman awal, namun kepadatan pencatatan antarwilayah masih sangat beragam.
+                </p>
+              </article>
+
+              <article class="s2-kartu-langkah">
+                <p class="s2-langkah-nomor">Langkah 04 • Ragam Budaya</p>
+                <h3>Setiap warna adalah jenis budaya yang berbeda</h3>
+                <p style="margin-top: var(--ruang-2); margin-bottom: var(--ruang-3); color: var(--kertas-redup); font-size: var(--teks-kecil);">
+                  Kerajinan tradisional dan seni pertunjukan mendominasi sebagian besar catatan yang sudah masuk ke SPKT:
+                </p>
+                <ul id="s2-legenda-jenis" class="daftar-chip" aria-label="Daftar jenis budaya dan jumlah catatan"></ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S3 — Cahaya Tidak Merata -->
+      <section id="konsentrasi" class="bagian bagian--terang" aria-labelledby="judul-s3">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Bab 2 — Cahaya Tidak Merata</p>
+            <h2 id="judul-s3">Tapi cahayanya tidak merata.</h2>
+            <p class="bagian-subjudul" id="s3-narasi-kabupaten">
+              Dari setiap 100 catatan, <strong id="s3-persen-kabupaten">17</strong> berasal dari satu kota:
+              <strong id="s3-nama-kabupaten">Kota Pariaman</strong>, <span id="s3-provinsi-kabupaten">Sumatera Barat</span>
+              (<span id="s3-jumlah-kabupaten">94</span> catatan). Lima provinsi teratas menyumbang
+              <strong id="s3-top5-persen">58,2%</strong> dari seluruh catatan (per <span data-tanggal-ambil>9 Oktober 2026</span>).
+            </p>
+          </div>
+
+          <div class="kotak-catatan-jujur" style="margin-bottom: var(--ruang-5);">
+            <strong>Catatan penting:</strong> Angka ini menunjukkan seberapa banyak yang sudah dicatat,
+            bukan seberapa kaya budaya sebuah daerah.
+          </div>
+
+          <div class="s3-kisi-utama">
+            <div class="s3-kartu-panel">
+              <div>
+                <p class="label-kecil">Proporsi 100 Catatan (Waffle 10×10)</p>
+                <h3 style="margin-top: 4px;">Satu kota menyumbang hampir seperlima data</h3>
+              </div>
+
+              <div id="s3-waffle-grid" class="waffle-grid" role="img"></div>
+
+              <div class="waffle-legenda">
+                <span class="waffle-legenda-item">
+                  <span class="waffle-kotak-kecil" style="background-color: #C85A32; border: 1px solid #8F3B1B;"></span>
+                  <span>Kota Pariaman (17 kotak)</span>
+                </span>
+                <span class="waffle-legenda-item">
+                  <span class="waffle-kotak-kecil" style="background-color: #D7C8B5; border: 1px solid rgba(42,33,27,0.2);"></span>
+                  <span>130 kabupaten/kota lainnya (83 kotak)</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="s3-kartu-panel">
+              <div>
+                <p class="label-kecil">Konsentrasi Provinsi</p>
+                <h3 style="margin-top: 4px;">5 Provinsi dengan Catatan Terbanyak di SPKT</h3>
+              </div>
+
+              <ol id="s3-daftar-top5" class="bar-top5-daftar" aria-label="Lima provinsi dengan jumlah catatan terbanyak"></ol>
+
+              <p style="font-size: 0.8125rem; color: var(--tinta-2); margin-top: var(--ruang-1);">
+                Sumatera Barat dan Jawa Tengah saja mencakup lebih dari sepertiga (36,4%) seluruh rekaman yang tersedia pada dataset ini.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S4 — Yang Masih Gelap -->
+      <section id="provinsi-gelap" class="bagian" aria-labelledby="judul-s4">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Bab 3 — Yang Masih Gelap</p>
+            <h2 id="judul-s4">
+              <span id="s4-jumlah-belum">10</span> provinsi belum punya catatan di SPKT.
+            </h2>
+            <p class="bagian-subjudul">
+              Belum tercatat bukan berarti tidak ada. Setiap provinsi ini punya tradisi, kerajinan, dan cerita.
+              Catatannya yang belum sampai di sini per <span data-tanggal-ambil>9 Oktober 2026</span>.
+            </p>
+          </div>
+
+          <div class="s4-layout">
+            <div>
+              <div class="peta-bingkai s4-peta-wadah">
+                <div id="s4-peta-wadah"></div>
+                <div id="s4-peta-tooltip" class="peta-tooltip" role="status" hidden></div>
+              </div>
+              <p style="margin-top: var(--ruang-2); font-size: 0.8125rem; color: var(--kertas-redup);">
+                10 provinsi dengan pola arsir diagonal dan tepi emas adalah wilayah yang <strong>belum tercatat di SPKT</strong> pada saat pengambilan data.
+              </p>
+            </div>
+
+            <div>
+              <p class="label-kecil" style="margin-bottom: var(--ruang-2);">
+                Klik Provinsi untuk Melihat Status Pencatatan
+              </p>
+              <ul
+                id="s4-daftar-provinsi-belum"
+                class="daftar-chip"
+                aria-label="10 provinsi yang belum tercatat di SPKT"
+              ></ul>
+
+              <div id="s4-detail-provinsi-kosong" class="s4-kartu-detail-kosong" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S5 — Jelajah -->
+      <section id="jelajah" class="bagian" aria-labelledby="judul-s5">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Eksplorasi Data</p>
+            <h2 id="judul-s5">Jelajahi Peta &amp; Catatan Budaya</h2>
+            <p class="bagian-subjudul">
+              Pilih provinsi di peta atau cari nama tradisi, kerajinan, dan cagar budaya untuk membaca kisah di baliknya
+              (data per <span data-tanggal-ambil>9 Oktober 2026</span>).
+            </p>
+          </div>
+
+          <!-- Bar Kontrol Mode Peta, Zoom, dan Tabel Alternatif Aksesibel -->
+          <div class="s5-kontrol-peta-bar">
+            <div class="s5-grup-mode">
+              <div class="s5-toggle-dimensi" id="s5-grup-toggle-dimensi" role="group" aria-label="Pilih format tampilan peta">
+                <button type="button" id="s5-btn-mode-3d" class="s5-btn-dimensi is-active">🌐 Diorama 3D</button>
+                <button type="button" id="s5-btn-mode-2d" class="s5-btn-dimensi">🗺️ Peta 2D</button>
+              </div>
+
+              <label for="s5-select-mode-peta" class="label-kecil">Warna:</label>
+              <select id="s5-select-mode-peta" class="s5-select" aria-label="Pilih mode pewarnaan peta">
+                <option value="jumlah">Jumlah Catatan (Skala Akar Kuadrat)</option>
+                <option value="jenis-dominan">Jenis OPK Dominan</option>
+                <option value="per-jenis">Per Jenis OPK Tertentu</option>
+                <option value="cagar">Jumlah Cagar Budaya</option>
+              </select>
+
+              <select
+                id="s5-select-subjenis-peta"
+                class="s5-select"
+                aria-label="Pilih jenis OPK untuk ditampilkan di peta"
+                hidden
+              >
+                <option value="kerajinan">Kerajinan Tradisional</option>
+                <option value="seni">Seni Pertunjukan</option>
+                <option value="lisan">Tradisi Lisan &amp; Bahasa</option>
+                <option value="pengetahuan">Pengetahuan &amp; Teknologi</option>
+                <option value="adat">Adat, Ritus &amp; Perayaan</option>
+              </select>
+            </div>
+
+            <div class="s5-grup-mode">
+              <div class="s5-grup-zoom" role="group" aria-label="Kontrol perbesaran peta">
+                <button type="button" id="s5-zoom-out" class="tombol-zoom" aria-label="Perkecil peta">−</button>
+                <button type="button" id="s5-zoom-reset" class="tombol-zoom" aria-label="Atur ulang ukuran peta">100%</button>
+                <button type="button" id="s5-zoom-in" class="tombol-zoom" aria-label="Perbesar peta">+</button>
+              </div>
+
+              <button
+                type="button"
+                id="s5-tombol-tabel"
+                class="tombol tombol--garis"
+                aria-expanded="false"
+                aria-controls="s5-wadah-tabel"
+              >
+                Lihat sebagai daftar (Tabel 38 Provinsi)
+              </button>
+            </div>
+          </div>
+
+          <!-- Grid Peta Interaktif + Panel Detail Provinsi -->
+          <div class="s5-peta-panel-grid">
+            <div>
+              <div class="peta-bingkai s5-bingkai-peta" id="s5-bingkai-peta">
+                <div id="s5-peta-wadah"></div>
+                <div id="s5-peta-tooltip" class="peta-tooltip" role="status" hidden></div>
+              </div>
+
+              <div id="s5-legenda-peta" class="s5-legenda-peta" aria-label="Legenda skala peta"></div>
+
+              <div class="s5-chips-provinsi-bungkus">
+                <p class="label-kecil" style="margin-bottom: 8px;">
+                  Pilih Cepat Provinsi (38 Provinsi):
+                </p>
+                <div
+                  id="s5-chips-provinsi"
+                  class="s5-chips-provinsi"
+                  role="group"
+                  aria-label="Daftar tombol pilih cepat 38 provinsi"
+                ></div>
+              </div>
+            </div>
+
+            <div id="s5-panel-provinsi" aria-live="polite"></div>
+          </div>
+
+          <!-- Wadah Tabel 38 Provinsi (Alternatif Aksesibel) -->
+          <div id="s5-wadah-tabel" hidden></div>
+
+          <!-- Kontrol Pencarian Teks & Filter Jenis Kartu Cerita -->
+          <div class="s5-filter-panel">
+            <div class="s5-cari-baris">
+              <div class="s5-input-bungkus">
+                <label for="s5-input-cari" class="sr-only">Cari nama objek budaya, kabupaten, atau provinsi</label>
+                <input
+                  type="search"
+                  id="s5-input-cari"
+                  class="s5-input-cari"
+                  placeholder="Cari nama tradisi, kuliner, senjata, kabupaten, atau provinsi..."
+                  autocomplete="off"
+                />
+                <button
+                  type="button"
+                  id="s5-hapus-cari"
+                  class="s5-tombol-hapus-cari"
+                  aria-label="Bersihkan kata kunci pencarian"
+                  hidden
+                >
+                  ✕
+                </button>
+              </div>
+
+              <button type="button" id="s5-reset-filter" class="tombol tombol--garis" hidden>
+                Reset semua filter
+              </button>
+            </div>
+
+            <div>
+              <p class="label-kecil" style="margin-bottom: 8px;">
+                Saring menurut Jenis Budaya (Multi-pilih):
+              </p>
+              <div
+                id="s5-filter-jenis"
+                class="daftar-chip"
+                role="group"
+                aria-label="Saring kartu cerita menurut jenis budaya"
+              ></div>
+            </div>
+
+            <p id="s5-ringkasan-hasil" style="font-size: var(--teks-kecil); color: var(--kertas-redup);" aria-live="polite">
+              Menyiapkan koleksi catatan budaya...
+            </p>
+          </div>
+
+          <!-- Kisi Kartu Cerita -->
+          <div id="s5-kisi-kartu" class="kisi-kartu-cerita"></div>
+
+          <div id="s5-wadah-muat-lagi" class="s5-muat-lagi-wadah" hidden>
+            <button type="button" id="s5-tombol-muat-lagi" class="tombol tombol--utama">
+              Muat lebih banyak
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- S6 — Kisah Pilihan -->
+      <section id="kisah-pilihan" class="bagian" aria-labelledby="judul-s6">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--ruang-3);">
+              <div>
+                <p class="kicker">Kisah Pilihan</p>
+                <h2 id="judul-s6" style="margin-top: var(--ruang-1);">Potret tradisi dari berbagai penjuru</h2>
+                <p class="bagian-subjudul" style="margin-top: var(--ruang-2);">
+                  Enam catatan pilihan dengan deskripsi lengkap dari berbagai provinsi dan jenis Objek Pemajuan Kebudayaan.
+                </p>
+              </div>
+              <button type="button" id="s6-tombol-acak" class="tombol tombol--garis">
+                Tampilkan 6 kisah lainnya
+              </button>
+            </div>
+          </div>
+
+          <div id="s6-kisi-kisah" class="kisi-kartu-cerita"></div>
+        </div>
+      </section>
+
+      <!-- S7 — Paspor Budaya & Kuis -->
+      <section id="paspor-kuis" class="bagian" aria-labelledby="judul-s7">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Interaksi &amp; Tantangan</p>
+            <h2 id="judul-s7">Paspor Budaya &amp; Uji Pengetahuanmu</h2>
+            <p class="bagian-subjudul">
+              Kumpulkan stempel dari 38 provinsi yang kamu telusuri, lalu uji seberapa jauh kamu mengenal catatan budaya Nusantara.
+            </p>
+          </div>
+
+          <div class="s7-kisi-dua">
+            <div id="s7-panel-paspor" class="s7-panel-kartu" aria-live="polite"></div>
+            <div id="s7-panel-kuis" class="s7-panel-kartu" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S8 — Penutup & Ajakan -->
+      <section id="penutup" class="bagian" aria-labelledby="judul-s8">
+        <div class="wadah">
+          <div class="bagian-kepala">
+            <p class="kicker">Jaga Ceritanya</p>
+            <h2 id="judul-s8">Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.</h2>
+            <p class="bagian-subjudul">
+              Budaya hidup lewat cerita yang dituturkan. Kalau daerahmu belum banyak tercatat, kamu bisa ikut menjaga dan mendokumentasikan ceritanya.
+            </p>
+            <p id="s8-ringkasan-jejak" class="kotak-catatan-jujur" style="margin-top: var(--ruang-2);"></p>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--ruang-3); margin-top: var(--ruang-2);">
+              <a
+                href="https://spkt.kemenbud.go.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="tombol tombol--utama"
+              >
+                Kunjungi SPKT Kementerian Kebudayaan
+              </a>
+              <button type="button" id="tombol-bagikan-halaman" class="tombol tombol--garis">
+                Bagikan halaman ini
+              </button>
+              <a href="#pembuka" class="tombol tombol--garis">
+                Ulangi dari awal
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Utama dengan Atribusi Wajib -->
+    <footer class="footer-utama">
+      <div class="wadah">
+        <div class="footer-kisi">
+          <div class="footer-kolom">
+            <p class="footer-judul" id="footer-judul-situs">Lokalocal</p>
+            <p>
+              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah,
+              sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
+            </p>
+            <div class="footer-atribusi" id="footer-atribusi-dinamis">
+              Data:
+              <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">
+                SPKT – Kementerian Kebudayaan RI
+              </a>, diambil 9 Oktober 2026
+            </div>
+          </div>
+
+          <div class="footer-kolom">
+            <p class="label-kecil">Transparansi &amp; Pernyataan</p>
+            <p>
+              Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+            </p>
+            <div>
+              <button type="button" id="footer-tombol-tentang" class="tombol tombol--garis">
+                Baca tentang data &amp; keterbatasan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-catatan-bawah">
+          <span>Pesan inti: "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."</span>
+          <span>Data statis lokal • Menghormati prefers-reduced-motion</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Dialog Detail Rekaman Budaya -->
+    <dialog id="dialog-rekaman" class="dialog-modal" aria-labelledby="dialog-rekaman-judul">
+      <div id="dialog-rekaman-pola" class="dialog-rekaman-pola" aria-hidden="true"></div>
+      <div class="dialog-kepala">
+        <h2 id="dialog-rekaman-judul" class="dialog-judul" tabindex="-1">
+          Detail Catatan Budaya
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-rekaman"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog detail catatan budaya"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <div id="dialog-rekaman-meta" class="daftar-chip"></div>
+        <div id="dialog-rekaman-kabupaten" hidden></div>
+        <div id="dialog-rekaman-deskripsi"></div>
+        <div id="dialog-rekaman-sumber" class="dialog-rekaman-kaki"></div>
+      </div>
+    </dialog>
+
+    <!-- Dialog Tentang Data & Keterbatasan -->
+    <dialog id="dialog-tentang" class="dialog-modal" aria-labelledby="dialog-tentang-judul">
+      <div class="dialog-kepala">
+        <h2 id="dialog-tentang-judul" class="dialog-judul" tabindex="-1">
+          Tentang Data &amp; Keterbatasan
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-tentang"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog tentang data"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <div id="dialog-atribusi-dinamis">
+          <p>
+            Sumber resmi: SPKT – Sistem Pendataan Kebudayaan Terpadu, Kementerian Kebudayaan RI
+            (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">https://spkt.kemenbud.go.id</a>),
+            diambil pada 9 Oktober 2026.
+          </p>
+        </div>
+
+        <div class="kotak-catatan-jujur">
+          <strong>Disclaimer:</strong> Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+        </div>
+
+        <div>
+          <h3>Keterbatasan Data (Transparansi)</h3>
+          <ul id="daftar-keterbatasan-data" class="dialog-daftar"></ul>
+        </div>
+
+        <div>
+          <h3>Tentang Pembuat</h3>
+          <p style="color: var(--tinta-2);">
+            Disusun untuk Lomba Pembuatan Website bertema Sosial Budaya — menyajikan data terbuka menjadi pengalaman bercerita yang jujur dan mudah dijelajahi.
+          </p>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Komponen Toast -->
+    <div class="wadah-toast">
+      <div id="toast-status" class="toast-item" role="status" aria-live="polite" hidden></div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

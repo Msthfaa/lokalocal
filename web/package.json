@@ -1,0 +1,25 @@
+{
+  "name": "atlas-budaya-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "sync-data": "node scripts/sync-data.mjs",
+    "predev": "npm run sync-data",
+    "dev": "vite",
+    "prebuild": "npm run sync-data",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.1.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.1.0",
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "gsap": "^3.12.5",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

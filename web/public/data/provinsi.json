@@ -1,0 +1,1628 @@
+[
+  {
+    "kode": "11",
+    "nama": "Aceh",
+    "total": 26,
+    "total_setelah_gabung": 26,
+    "per_kategori": {
+      "OPK": 23,
+      "CB": 2,
+      "LB": 0,
+      "SP": 1
+    },
+    "per_jenis_opk": {
+      "kerajinan": 16,
+      "seni": 4,
+      "lisan": 0,
+      "pengetahuan": 3,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 1,
+      "situs": 0,
+      "kawasan": 1
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 7,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Pidie Jaya",
+        "jumlah": 15
+      },
+      {
+        "nama": "Kab. Aceh Jaya",
+        "jumlah": 2
+      },
+      {
+        "nama": "Kab. Gayo Lues",
+        "jumlah": 2
+      },
+      {
+        "nama": "Kab. Aceh Tengah",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Aceh Timur",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "88547014-8004-4e9a-805c-67e089621fdf",
+      "bc9e6799-1b9c-4d91-89b4-9dd25f568121",
+      "0e6095a9-8f41-43bb-99e0-fe25ea018b09"
+    ]
+  },
+  {
+    "kode": "12",
+    "nama": "Sumatera Utara",
+    "total": 8,
+    "total_setelah_gabung": 7,
+    "per_kategori": {
+      "OPK": 8,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 3,
+      "seni": 5,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 16,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Deli Serdang",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Nias Barat",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Serdang Bedagai",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "e3638c01-f61e-439e-8dd4-8e29d5f5b7eb"
+    ]
+  },
+  {
+    "kode": "13",
+    "nama": "Sumatera Barat",
+    "total": 119,
+    "total_setelah_gabung": 119,
+    "per_kategori": {
+      "OPK": 118,
+      "CB": 1,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 10,
+      "seni": 16,
+      "lisan": 43,
+      "pengetahuan": 28,
+      "adat": 21
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 1
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 1,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Pariaman",
+        "jumlah": 94
+      },
+      {
+        "nama": "Kota Solok",
+        "jumlah": 21
+      },
+      {
+        "nama": "Kab. Kepulauan Mentawai",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Tanah Datar",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kota Payakumbuh",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "d39ef454-4241-48e1-8c5d-23db39a8d7c3",
+      "23e75522-b6df-4699-9e8e-26632abb53b6",
+      "1a7ea1e3-0461-4b8e-97f6-ac120c910952"
+    ]
+  },
+  {
+    "kode": "14",
+    "nama": "Riau",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "15",
+    "nama": "Jambi",
+    "total": 7,
+    "total_setelah_gabung": 7,
+    "per_kategori": {
+      "OPK": 4,
+      "CB": 3,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 2,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 2
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 3,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 18,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Tanjung Jabung Barat",
+        "jumlah": 7
+      }
+    ],
+    "unggulan_ids": [
+      "25d5be03-34b9-4a78-bd6b-d86a50b010c7",
+      "59587d0b-18cb-4477-8b5f-3c4a34617944",
+      "fe89f97f-376e-47eb-a334-0c9c377992ab"
+    ]
+  },
+  {
+    "kode": "16",
+    "nama": "Sumatera Selatan",
+    "total": 18,
+    "total_setelah_gabung": 18,
+    "per_kategori": {
+      "OPK": 3,
+      "CB": 15,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 1,
+      "lisan": 2,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 1,
+      "struktur": 5,
+      "situs": 9,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 8,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Banyuasin",
+        "jumlah": 9
+      },
+      {
+        "nama": "Kab. Penukal Abab Lematang Ilir",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kab. Musi Banyuasin",
+        "jumlah": 2
+      },
+      {
+        "nama": "Kab. Muara Enim",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "17",
+    "nama": "Bengkulu",
+    "total": 2,
+    "total_setelah_gabung": 2,
+    "per_kategori": {
+      "OPK": 2,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 2,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 27,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Lebong",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "72132654-9861-47f5-ab24-53d094260f2c"
+    ]
+  },
+  {
+    "kode": "18",
+    "nama": "Lampung",
+    "total": 8,
+    "total_setelah_gabung": 4,
+    "per_kategori": {
+      "OPK": 8,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 2,
+      "seni": 6,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 17,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Pringsewu",
+        "jumlah": 2
+      },
+      {
+        "nama": "Kab. Lampung Utara",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Mesuji",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Pesisir Barat",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Tulang Bawang",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "f4c5a728-e195-4580-b275-3f24e8393c87"
+    ]
+  },
+  {
+    "kode": "19",
+    "nama": "Kepulauan Bangka Belitung",
+    "total": 9,
+    "total_setelah_gabung": 9,
+    "per_kategori": {
+      "OPK": 8,
+      "CB": 1,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 2,
+      "seni": 0,
+      "lisan": 6,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 1,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 13,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Pangkal Pinang",
+        "jumlah": 7
+      },
+      {
+        "nama": "Kab. Bangka Barat",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Bangka Selatan",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "21",
+    "nama": "Kepulauan Riau",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "31",
+    "nama": "DKI Jakarta",
+    "total": 17,
+    "total_setelah_gabung": 17,
+    "per_kategori": {
+      "OPK": 1,
+      "CB": 16,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 1,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 8,
+      "bangunan": 7,
+      "struktur": 1,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 9,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Adm. Jakarta Selatan",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kota Adm. Jakarta Barat",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kota Adm. Jakarta Pusat",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kota Adm. Jakarta Timur",
+        "jumlah": 3
+      },
+      {
+        "nama": "Kab. Adm. Kep. Seribu",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "32",
+    "nama": "Jawa Barat",
+    "total": 38,
+    "total_setelah_gabung": 29,
+    "per_kategori": {
+      "OPK": 33,
+      "CB": 5,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 24,
+      "seni": 5,
+      "lisan": 1,
+      "pengetahuan": 3,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 4,
+      "struktur": 1,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 5,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Sumedang",
+        "jumlah": 11
+      },
+      {
+        "nama": "Kab. Indramayu",
+        "jumlah": 6
+      },
+      {
+        "nama": "Kab. Cirebon",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kota Bekasi",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kota Bandung",
+        "jumlah": 3
+      }
+    ],
+    "unggulan_ids": [
+      "f90bff69-6ed6-4ce5-92ae-1ea6b483d157",
+      "9ccb76ec-69a1-42d6-b813-23eacdb9346e",
+      "f2eb029c-a5b7-4c55-9f3f-178e6f149f25"
+    ]
+  },
+  {
+    "kode": "33",
+    "nama": "Jawa Tengah",
+    "total": 78,
+    "total_setelah_gabung": 75,
+    "per_kategori": {
+      "OPK": 74,
+      "CB": 4,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 16,
+      "seni": 24,
+      "lisan": 25,
+      "pengetahuan": 8,
+      "adat": 1
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 4
+    },
+    "sdm_agregat": 2,
+    "status_data": "ada",
+    "peringkat_total": 2,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Boyolali",
+        "jumlah": 34
+      },
+      {
+        "nama": "Kab. Wonogiri",
+        "jumlah": 21
+      },
+      {
+        "nama": "Kab. Pemalang",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kab. Purbalingga",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kab. Banyumas",
+        "jumlah": 3
+      }
+    ],
+    "unggulan_ids": [
+      "c555224e-d1e6-4d1a-b533-4574e3eb4f83",
+      "66e1f2a8-f1be-4a2b-bdaf-eef994e39102",
+      "0f971a9b-39e2-45c5-8041-efb9865769ae"
+    ]
+  },
+  {
+    "kode": "34",
+    "nama": "DI Yogyakarta",
+    "total": 13,
+    "total_setelah_gabung": 13,
+    "per_kategori": {
+      "OPK": 13,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 7,
+      "seni": 4,
+      "lisan": 0,
+      "pengetahuan": 2,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 10,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Sleman",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kab. Bantul",
+        "jumlah": 3
+      },
+      {
+        "nama": "Kota Yogyakarta",
+        "jumlah": 2
+      }
+    ],
+    "unggulan_ids": [
+      "ede21f23-f0e9-432d-a94c-eb42db47a456"
+    ]
+  },
+  {
+    "kode": "35",
+    "nama": "Jawa Timur",
+    "total": 41,
+    "total_setelah_gabung": 30,
+    "per_kategori": {
+      "OPK": 28,
+      "CB": 13,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 6,
+      "seni": 19,
+      "lisan": 1,
+      "pengetahuan": 1,
+      "adat": 1
+    },
+    "per_jenis_cb": {
+      "benda": 4,
+      "bangunan": 1,
+      "struktur": 3,
+      "situs": 0,
+      "kawasan": 5
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 3,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Malang",
+        "jumlah": 7
+      },
+      {
+        "nama": "Kota Surabaya",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kab. Gresik",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Jember",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Kediri",
+        "jumlah": 2
+      }
+    ],
+    "unggulan_ids": [
+      "ebbea9ee-471a-4376-8888-b854b9577b13",
+      "68be0ca9-55f0-4e27-8083-0fb6fc954ae2",
+      "ecf007e3-3460-4297-a6ae-4f1736d644dd"
+    ]
+  },
+  {
+    "kode": "36",
+    "nama": "Banten",
+    "total": 4,
+    "total_setelah_gabung": 3,
+    "per_kategori": {
+      "OPK": 4,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 2,
+      "lisan": 2,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 24,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Lebak",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Pandeglang",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kota Cilegon",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "90a4203d-0ce9-4c47-b9f3-a915b2ba1e2f"
+    ]
+  },
+  {
+    "kode": "51",
+    "nama": "Bali",
+    "total": 6,
+    "total_setelah_gabung": 6,
+    "per_kategori": {
+      "OPK": 6,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 2,
+      "seni": 2,
+      "lisan": 1,
+      "pengetahuan": 1,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 19,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Buleleng",
+        "jumlah": 3
+      },
+      {
+        "nama": "Kab. Gianyar",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Tabanan",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "52",
+    "nama": "Nusa Tenggara Barat",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "53",
+    "nama": "Nusa Tenggara Timur",
+    "total": 3,
+    "total_setelah_gabung": 3,
+    "per_kategori": {
+      "OPK": 3,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 3,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 25,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Sumba Barat Daya",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Timor Tengah Selatan",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "244493fb-6118-40be-87aa-053bf50ceb20",
+      "040d2d28-4a82-4e2d-ad41-178b6440ed36"
+    ]
+  },
+  {
+    "kode": "61",
+    "nama": "Kalimantan Barat",
+    "total": 38,
+    "total_setelah_gabung": 29,
+    "per_kategori": {
+      "OPK": 38,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 15,
+      "seni": 3,
+      "lisan": 7,
+      "pengetahuan": 13,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 6,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Pontianak",
+        "jumlah": 22
+      },
+      {
+        "nama": "Kota Singkawang",
+        "jumlah": 14
+      },
+      {
+        "nama": "Kab. Kayong Utara",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "e4dd9e41-3da5-4021-9950-037496c4fa8f",
+      "35eefcea-01d1-42de-9fe7-e0f01ce92ef5",
+      "a0687abd-5bb7-4e67-9115-3aee3c80d5f0"
+    ]
+  },
+  {
+    "kode": "62",
+    "nama": "Kalimantan Tengah",
+    "total": 10,
+    "total_setelah_gabung": 9,
+    "per_kategori": {
+      "OPK": 10,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 2,
+      "seni": 2,
+      "lisan": 6,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 12,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Kotawaringin Barat",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Barito Utara",
+        "jumlah": 2
+      },
+      {
+        "nama": "Kab. Kotawaringin Timur",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kota Palangkaraya",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "183e864b-f972-4347-8176-d1b743005f37",
+      "62f26494-58e2-4354-b027-d113df365637"
+    ]
+  },
+  {
+    "kode": "63",
+    "nama": "Kalimantan Selatan",
+    "total": 13,
+    "total_setelah_gabung": 11,
+    "per_kategori": {
+      "OPK": 7,
+      "CB": 3,
+      "LB": 3,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 1,
+      "seni": 1,
+      "lisan": 0,
+      "pengetahuan": 4,
+      "adat": 1
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 2,
+      "situs": 1,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 11,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Balangan",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Kotabaru",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Barito Kuala",
+        "jumlah": 2
+      }
+    ],
+    "unggulan_ids": [
+      "35318e58-1e5a-475c-b833-ba7645f37190",
+      "aa36abf8-91cc-4c3b-94df-a3ac0c047af6",
+      "34bf0c3c-9ac9-4360-a7bb-507558b42cc2"
+    ]
+  },
+  {
+    "kode": "64",
+    "nama": "Kalimantan Timur",
+    "total": 6,
+    "total_setelah_gabung": 6,
+    "per_kategori": {
+      "OPK": 5,
+      "CB": 0,
+      "LB": 0,
+      "SP": 1
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 4,
+      "lisan": 0,
+      "pengetahuan": 1,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 20,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Bontang",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Kutai Kartanegara",
+        "jumlah": 2
+      }
+    ],
+    "unggulan_ids": [
+      "b9a71fdb-4c25-4319-9c8b-4740ffc1d12e"
+    ]
+  },
+  {
+    "kode": "65",
+    "nama": "Kalimantan Utara",
+    "total": 5,
+    "total_setelah_gabung": 4,
+    "per_kategori": {
+      "OPK": 5,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 5,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 21,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Bulungan",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "1f24a5bb-2363-479f-b081-e4e661aa2adc",
+      "6d61dc8c-353f-42c6-a621-cd24565d504e",
+      "1a19e7cd-1571-45af-9c01-08589c471172"
+    ]
+  },
+  {
+    "kode": "71",
+    "nama": "Sulawesi Utara",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "72",
+    "nama": "Sulawesi Tengah",
+    "total": 9,
+    "total_setelah_gabung": 9,
+    "per_kategori": {
+      "OPK": 9,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 6,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 2,
+      "adat": 1
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 14,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Banggai",
+        "jumlah": 5
+      },
+      {
+        "nama": "Kab. Morowali",
+        "jumlah": 4
+      }
+    ],
+    "unggulan_ids": [
+      "6f6cb229-38c5-40e8-bc93-8c9caa236af3",
+      "9858e1c1-3773-45fd-8366-62533474716c",
+      "5bdba08f-8109-41ad-8702-49cd89cf838f"
+    ]
+  },
+  {
+    "kode": "73",
+    "nama": "Sulawesi Selatan",
+    "total": 39,
+    "total_setelah_gabung": 33,
+    "per_kategori": {
+      "OPK": 38,
+      "CB": 1,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 21,
+      "seni": 11,
+      "lisan": 0,
+      "pengetahuan": 4,
+      "adat": 2
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 1
+    },
+    "sdm_agregat": 3,
+    "status_data": "ada",
+    "peringkat_total": 4,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Barru",
+        "jumlah": 25
+      },
+      {
+        "nama": "Kab. Bone",
+        "jumlah": 6
+      },
+      {
+        "nama": "Kab. Gowa",
+        "jumlah": 3
+      },
+      {
+        "nama": "Kota Pare Pare",
+        "jumlah": 3
+      },
+      {
+        "nama": "Kab. Pinrang",
+        "jumlah": 2
+      }
+    ],
+    "unggulan_ids": [
+      "8ae7bd8d-3d9e-48ca-859c-71d1ffdb5800",
+      "fa41edc6-b2da-49d7-a94c-ebed9178e3fd",
+      "ec71b991-7bb6-41a5-89ba-830454292271"
+    ]
+  },
+  {
+    "kode": "74",
+    "nama": "Sulawesi Tenggara",
+    "total": 5,
+    "total_setelah_gabung": 5,
+    "per_kategori": {
+      "OPK": 4,
+      "CB": 1,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 2,
+      "lisan": 0,
+      "pengetahuan": 2,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 1
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 22,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Kolaka Utara",
+        "jumlah": 2
+      },
+      {
+        "nama": "Kab. Buton Selatan",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Buton Utara",
+        "jumlah": 1
+      },
+      {
+        "nama": "Kab. Muna Barat",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "174fd7dc-01ed-49fd-9152-0d622d7928df"
+    ]
+  },
+  {
+    "kode": "75",
+    "nama": "Gorontalo",
+    "total": 2,
+    "total_setelah_gabung": 2,
+    "per_kategori": {
+      "OPK": 1,
+      "CB": 0,
+      "LB": 0,
+      "SP": 1
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 1,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 28,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kota Gorontalo",
+        "jumlah": 2
+      }
+    ],
+    "unggulan_ids": [
+      "c791887c-723a-4a67-9e74-0399cd307342"
+    ]
+  },
+  {
+    "kode": "76",
+    "nama": "Sulawesi Barat",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "81",
+    "nama": "Maluku",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "82",
+    "nama": "Maluku Utara",
+    "total": 9,
+    "total_setelah_gabung": 9,
+    "per_kategori": {
+      "OPK": 9,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 2,
+      "seni": 1,
+      "lisan": 5,
+      "pengetahuan": 1,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 15,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Halmahera Selatan",
+        "jumlah": 4
+      },
+      {
+        "nama": "Kab. Halmahera Barat",
+        "jumlah": 1
+      }
+    ],
+    "unggulan_ids": [
+      "dfc42185-5126-4212-9c2b-b953441b13ea",
+      "a94df84c-5612-4be4-9e7b-01cf3ee10ed5"
+    ]
+  },
+  {
+    "kode": "91",
+    "nama": "Papua",
+    "total": 5,
+    "total_setelah_gabung": 5,
+    "per_kategori": {
+      "OPK": 5,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 5,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 23,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Yalimo",
+        "jumlah": 5
+      }
+    ],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "92",
+    "nama": "Papua Barat",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "93",
+    "nama": "Papua Selatan",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "94",
+    "nama": "Papua Tengah",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  },
+  {
+    "kode": "95",
+    "nama": "Papua Pegunungan",
+    "total": 3,
+    "total_setelah_gabung": 3,
+    "per_kategori": {
+      "OPK": 3,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 1,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 2
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "ada",
+    "peringkat_total": 26,
+    "kabupaten_teratas": [
+      {
+        "nama": "Kab. Pegunungan Bintang",
+        "jumlah": 3
+      }
+    ],
+    "unggulan_ids": [
+      "26a2e0a0-4442-40c7-9395-b94846fab476",
+      "679dfa3d-8360-42e0-9bb7-5cb066fbee08"
+    ]
+  },
+  {
+    "kode": "96",
+    "nama": "Papua Barat Daya",
+    "total": 0,
+    "total_setelah_gabung": 0,
+    "per_kategori": {
+      "OPK": 0,
+      "CB": 0,
+      "LB": 0,
+      "SP": 0
+    },
+    "per_jenis_opk": {
+      "kerajinan": 0,
+      "seni": 0,
+      "lisan": 0,
+      "pengetahuan": 0,
+      "adat": 0
+    },
+    "per_jenis_cb": {
+      "benda": 0,
+      "bangunan": 0,
+      "struktur": 0,
+      "situs": 0,
+      "kawasan": 0
+    },
+    "sdm_agregat": 0,
+    "status_data": "belum_tercatat",
+    "peringkat_total": null,
+    "kabupaten_teratas": [],
+    "unggulan_ids": []
+  }
+]
