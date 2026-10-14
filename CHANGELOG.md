@@ -977,3 +977,19 @@
   - `npm run build` sukses 100% (0 error).
   - `node tools/validate.mjs` lolos 100% (0 error).
 
+## [2026-10-14] Penyelarasan Navbar Halaman Jelajah 3D dengan Desain Floating Glassmorphism Beranda
+- **Dibuat/diubah:**
+  - `web/jelajah.html`:
+    - Mengubah `<header id="header-utama" class="header-utama header-fullscreen">` menjadi `<header id="header-utama" class="header-utama">` (menghapus kelas `header-fullscreen`).
+    - Menghapus kelas `wadah` pada `<nav class="nav-bar">` sehingga ketiga pulau navigasi (Logo kiri, Kapsul menu tengah, Aksi kanan) menyebar secara proporsional sesuai grid layout desktop `layout.css`.
+  - `web/src/styles/sections.css`:
+    - Menghapus aturan `body.tema-siang .header-fullscreen` yang sebelumnya memaksakan latar bar putih solid (`rgba(255, 255, 255, 0.88) !important;`) dan garis `border-bottom` kaku pada navigasi.
+    - Menetralkan `.header-fullscreen` dan mengatur `.jelajah-layar-penuh-main` dengan `top: 0; width: 100vw; height: 100vh;` sehingga kanvas 3D mengisi layar penuh 100% tanpa celah putih di atas.
+    - Menyesuaikan posisi `.jelajah-hud-atas` ke `top: 4.85rem;` agar badge petunjuk interaksi mengambang manis tepat di bawah kapsul menu navbar tanpa saling bertabrakan.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Navbar di halaman Jelajah 3D (`jelajah.html`) kini tampil 100% identik dengan halaman Beranda (`index.html`): mengambang bebas (*floating pill*) dengan efek *frosted glassmorphism*, logo emas bercahaya, dan tombol aksi terpisah tanpa ada bilah putih padat di belakangnya.
+  - Posisi dan tata letak navbar di halaman Beranda (`index.html`) tetap terjaga utuh tanpa ada perubahan sedikit pun.
+  - Build produksi Vite sukses 100% (0 error). HMR server aktif memperbarui tampilan peramban.
+
+
