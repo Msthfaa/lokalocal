@@ -287,7 +287,7 @@
 
 .hero-cta-pill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(0, 119, 182, 0.45);
+  box-shadow: 0 18px 40px rgba(184, 115, 20, 0.4);
   background: #fdfdfd;
 }
 
@@ -298,37 +298,70 @@
   width: 34px;
   height: 34px;
   border-radius: 9999px;
-  background: #0077b6;
+  background: linear-gradient(135deg, #E6B14A 0%, #C88A24 60%, #9C5E0D 100%);
   color: #ffffff;
-  transition: transform var(--dur-cepat) ease, background-color var(--dur-cepat) ease;
+  box-shadow: 0 4px 12px rgba(184, 115, 20, 0.35);
+  transition: transform var(--dur-cepat) ease, background var(--dur-cepat) ease, box-shadow var(--dur-cepat) ease;
 }
 
 .hero-cta-pill:hover .hero-cta-ikon {
   transform: scale(1.08) translate(1px, -1px);
-  background: #0288d1;
+  background: linear-gradient(135deg, #F0C368 0%, #D4942E 60%, #B87314 100%);
+  box-shadow: 0 6px 16px rgba(184, 115, 20, 0.5);
 }
 
 .hero-cta-sekunder {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  gap: 0.6rem;
+  background: rgba(18, 16, 14, 0.45);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(230, 177, 74, 0.35);
   padding: 0.65rem 1.4rem;
   border-radius: 9999px;
   font-size: 0.92rem;
   font-weight: 600;
   text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   transition: all var(--dur-cepat) ease;
 }
 
 .hero-cta-sekunder:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(230, 177, 74, 0.18);
+  border-color: var(--aksen);
+  color: var(--aksen-hover);
   transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.hero-cta-sekunder-ikon {
+  color: var(--aksen);
+  flex-shrink: 0;
+  transition: transform var(--dur-cepat) ease, color var(--dur-cepat) ease;
+}
+
+.hero-cta-sekunder:hover .hero-cta-sekunder-ikon {
+  transform: rotate(20deg) scale(1.1);
+  color: var(--aksen-hover);
+}
+
+[data-tema="terang"] .hero-cta-sekunder {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(184, 115, 20, 0.35);
+  color: #1C1917;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-tema="terang"] .hero-cta-sekunder:hover {
+  background: #FFFFFF;
+  border-color: #B87314;
+  color: #B87314;
+}
+
+[data-tema="terang"] .hero-cta-sekunder .hero-cta-sekunder-ikon {
+  color: #B87314;
 }
 
 /* ==========================================================================

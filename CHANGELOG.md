@@ -992,4 +992,18 @@
   - Posisi dan tata letak navbar di halaman Beranda (`index.html`) tetap terjaga utuh tanpa ada perubahan sedikit pun.
   - Build produksi Vite sukses 100% (0 error). HMR server aktif memperbarui tampilan peramban.
 
+## [2026-10-14] Penyelarasan Palet Hero CTA: Transformasi Warna Biru Menjadi Kuning Kecoklatan Emas
+- **Dibuat/diubah:**
+  - `web/index.html`:
+    - Mengganti emoji bola dunia `🌐` pada tombol "Jelajah Peta 3D" dengan SVG ikon globe geometris modern (`.hero-cta-sekunder-ikon`) yang dapat diwarnai secara presisi sesuai palet identitas situs.
+  - `web/src/styles/sections.css`:
+    - Mengubah lingkaran `.hero-cta-ikon` pada tombol utama "Telusuri Cerita Budaya" dari warna biru laut (`#0077b6` / `#0288d1`) menjadi gradasi kuning kecoklatan keemasan kaya: `linear-gradient(135deg, #E6B14A 0%, #C88A24 60%, #9C5E0D 100%)`.
+    - Mengubah bayangan hover tombol utama dari biru laut menjadi keemasan hangat: `box-shadow: 0 18px 40px rgba(184, 115, 20, 0.4);`.
+    - Menerapkan warna kuning kecoklatan emas (`var(--aksen)` / `#E6B14A`) pada ikon globe dan batas tepi tombol sekunder `.hero-cta-sekunder`, lengkap dengan efek rotasi interaktif saat hover serta penyesuaian kontras pada mode terang.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Seluruh elemen tombol aksi di hero kini memiliki harmoni visual yang senada dengan identitas warna budaya Nusantara (kuning kecoklatan emas / *warm amber gold*), menghilangkan ketidaksesuaian warna biru sebelumnya.
+  - Build produksi Vite sukses 100% (0 error). HMR dev server langsung menyalurkan pembaruan ke layar peramban.
+
+
 
