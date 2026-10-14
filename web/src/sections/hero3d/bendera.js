@@ -8,82 +8,123 @@ import {
   Group,
   Mesh,
   CylinderGeometry,
-  SphereGeometry,
-  BoxGeometry,
+  OctahedronGeometry,
+  TorusGeometry,
+  Shape,
+  ExtrudeGeometry,
   MeshStandardMaterial,
   Vector3
 } from 'three';
 import { WARNA_JENIS_HEX } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
+import { KETEBALAN_EXTRUDE } from './build-provinces.js';
 
 /**
- * Membuat pengontrol bendera 3D dan kartu popover bendera
+ * Membuat pengontrol penanda kristal diorama 3D dan kartu popover
  *
  * @param {object} parameter
  * @param {THREE.Scene} parameter.scene
+ * @param {THREE.Group} [parameter.grupUtama]
  * @param {THREE.Camera} parameter.camera
  * @param {HTMLElement} parameter.wadahEl - Wadah elemen canvas
  * @param {(kode: string) => void} [parameter.onJelajahiProvinsi]
  * @param {(rekaman: object, pemicuEl: HTMLElement) => void} [parameter.onBukaDetailRekaman]
  * @param {(kode: string, jenis: string) => void} [parameter.onCatatStempel]
  * @param {(kode: string) => Array} [parameter.ambilBudayaProvinsi]
- * @returns {object} API kontrol bendera
+ * @returns {object} API kontrol bendera/penanda
  */
 export function buatPengontrolBendera({
   scene,
+  grupUtama,
   camera,
   wadahEl,
+  tampilkanOverlayDOM = false,
   onJelajahiProvinsi,
   onBukaDetailRekaman,
   onCatatStempel,
   ambilBudayaProvinsi
 }) {
-  // 1. Objek 3D Tiang Bendera
+  // 1. Objek 3D Penanda: Beacon Kristal Emas & Cincin Riak Daratan
   const grupTiang = new Group();
+  grupTiang.name = 'penanda-kristal-diorama';
   grupTiang.visible = false;
 
-  // Batang tiang emas berkilau
-  const tiangGeo = new CylinderGeometry(0.045, 0.045, 1.6, 12);
-  const tiangMat = new MeshStandardMaterial({
-    color: 0xE6B14A,
+  // Dasar Cincin Riak Penanda di Permukaan Tanah (Menyatu dengan Daratan Pulau)
+  const riakGeo = new TorusGeometry(0.12, 0.009, 8, 24);
+  riakGeo.rotateX(Math.PI / 2);
+  const riakMat = new MeshStandardMaterial({
+    color: 0xFFC94A,
+    emissive: 0xFFA826,
+    emissiveIntensity: 0.85,
     roughness: 0.25,
     metalness: 0.7,
-    flatShading: true
+    transparent: true,
+    opacity: 0.9
+  });
+  const riakMesh = new Mesh(riakGeo, riakMat);
+  riakMesh.position.y = 0.006;
+  grupTiang.add(riakMesh);
+
+  // Jarum Tiang Emas Ramping & Ringkas (Tinggi proporsional 0.44 unit)
+  const tiangGeo = new CylinderGeometry(0.013, 0.018, 0.44, 12);
+  const tiangMat = new MeshStandardMaterial({
+    color: 0xE8BA4D,
+    roughness: 0.22,
+    metalness: 0.85
   });
   const tiangMesh = new Mesh(tiangGeo, tiangMat);
-  tiangMesh.position.y = 0.8;
+  tiangMesh.position.y = 0.22;
   grupTiang.add(tiangMesh);
 
-  // Bola emas di puncak tiang
-  const bolaGeo = new SphereGeometry(0.095, 12, 12);
-  const bolaMesh = new Mesh(bolaGeo, tiangMat);
-  bolaMesh.position.y = 1.6;
-  grupTiang.add(bolaMesh);
-
-  // Bendera mini 3D low-poly
-  const kainGeo = new BoxGeometry(0.68, 0.44, 0.035);
-  const kainMat = new MeshStandardMaterial({
-    color: 0xC85A32,
-    roughness: 0.55,
-    metalness: 0.1,
-    flatShading: true
+  // Puncak Permata Kristal 3D Octahedron Emas yang Berputar
+  const kristalGeo = new OctahedronGeometry(0.065, 0);
+  const kristalMat = new MeshStandardMaterial({
+    color: 0xFFD255,
+    emissive: 0xE89828,
+    emissiveIntensity: 0.75,
+    roughness: 0.18,
+    metalness: 0.8
   });
-  const kainMesh = new Mesh(kainGeo, kainMat);
-  kainMesh.position.set(0.38, 1.35, 0);
-  grupTiang.add(kainMesh);
+  const kristalMesh = new Mesh(kristalGeo, kristalMat);
+  kristalMesh.position.y = 0.46;
+  grupTiang.add(kristalMesh);
 
-  scene.add(grupTiang);
+  // Panji Segitiga Mini (Pennant Ribbon)
+  const panjiShape = new Shape();
+  panjiShape.moveTo(0, 0);
+  panjiShape.lineTo(0.18, -0.05);
+  panjiShape.lineTo(0, -0.10);
+  panjiShape.closePath();
+  const panjiGeo = new ExtrudeGeometry(panjiShape, {
+    depth: 0.01,
+    bevelEnabled: false
+  });
+  const panjiMat = new MeshStandardMaterial({
+    color: 0xC85A32,
+    roughness: 0.4,
+    metalness: 0.15
+  });
+  const panjiMesh = new Mesh(panjiGeo, panjiMat);
+  panjiMesh.position.set(0.014, 0.44, 0);
+  grupTiang.add(panjiMesh);
 
-  // 2. Elemen DOM Overlay Kartu Bendera
-  const elKartu = document.createElement('div');
-  elKartu.className = 'diorama-bendera-kartu';
-  elKartu.setAttribute('role', 'dialog');
-  elKartu.setAttribute('aria-label', 'Detail budaya wilayah provinsi terpilih');
-  elKartu.hidden = true;
-  wadahEl.appendChild(elKartu);
+  (grupUtama || scene).add(grupTiang);
+
+  // 2. Elemen DOM Overlay Kartu Bendera (hanya jika diaktifkan)
+  let elKartu = null;
+  if (tampilkanOverlayDOM && wadahEl) {
+    elKartu = document.createElement('div');
+    elKartu.className = 'diorama-bendera-kartu';
+    elKartu.setAttribute('role', 'dialog');
+    elKartu.setAttribute('aria-label', 'Detail budaya wilayah provinsi terpilih');
+    elKartu.hidden = true;
+    wadahEl.appendChild(elKartu);
+  }
 
   // State
   let provinsiAktif = null;
+  let meshAktif = null;
+  let waktuMulaiTampil = 0;
   let titikUjungDunia = new Vector3();
   let titikProyeksiLayar = new Vector3();
   let skalaAnimasiTiang = 0;
@@ -91,7 +132,7 @@ export function buatPengontrolBendera({
   let stempelTerkumpul = false;
 
   /**
-   * Menampilkan bendera di atas provinsi
+   * Menampilkan penanda di atas pulau terpilih
    * @param {object} provData - Data dari provinsi.json
    * @param {THREE.Mesh} mesh - Mesh provinsi
    */
@@ -99,18 +140,28 @@ export function buatPengontrolBendera({
     if (!provData || !mesh) return;
 
     provinsiAktif = provData;
+    meshAktif = mesh;
     stempelTerkumpul = false;
+    waktuMulaiTampil = performance.now();
 
-    // Posisikan tiang di pusat keping provinsi
-    grupTiang.position.copy(mesh.position);
+    // Posisikan penanda tepat di daratan utama (bukan di tengah laut!)
+    const posDaratan = mesh.userData?.titikDaratanUtama || mesh.position;
+    const maxYLokal = mesh.geometry?.boundingBox?.max?.y ?? (KETEBALAN_EXTRUDE * 0.5);
+    const yPermukaan = mesh.position.y + maxYLokal + 0.002;
+
+    grupTiang.position.set(posDaratan.x, yPermukaan, posDaratan.z);
     grupTiang.visible = true;
     skalaAnimasiTiang = 0.1;
     targetSkala = 1;
     grupTiang.scale.set(1, 0.1, 1);
 
-    // Tentukan warna bendera mini 3D berdasarkan jenis dominan
+    // Tentukan warna panji segitiga mini berdasarkan jenis dominan budaya
     const warnaJenis = WARNA_JENIS_HEX[provData.jenis_dominan] || '#E6B14A';
-    kainMat.color.set(warnaJenis);
+    panjiMat.color.set(warnaJenis);
+
+    if (!tampilkanOverlayDOM || !elKartu) {
+      return;
+    }
 
     // Susun rincian jenis OPK
     const perJenis = provData.per_jenis_opk || {};
@@ -265,20 +316,33 @@ export function buatPengontrolBendera({
   function sembunyikan() {
     provinsiAktif = null;
     targetSkala = 0;
-    elKartu.classList.remove('is-muncul');
-    setTimeout(() => {
-      if (!provinsiAktif) {
-        grupTiang.visible = false;
-        elKartu.hidden = true;
-      }
-    }, 200);
+    if (elKartu) {
+      elKartu.classList.remove('is-muncul');
+      setTimeout(() => {
+        if (!provinsiAktif) {
+          grupTiang.visible = false;
+          elKartu.hidden = true;
+        }
+      }, 200);
+    } else {
+      grupTiang.visible = false;
+    }
   }
 
   /**
    * Memperbarui posisi koordinat kartu di layar setiap frame loop
    */
+  /**
+   * Memperbarui posisi koordinat penanda di ruang 3D dan kartu DOM setiap frame loop
+   */
   function perbaruiPosisi() {
     if (!provinsiAktif || !grupTiang.visible) return;
+
+    // Ketinggian Y penanda selalu mengikuti ketinggian pulau yang beranimasi spring lerp
+    if (meshAktif) {
+      const maxYLokal = meshAktif.geometry?.boundingBox?.max?.y ?? (KETEBALAN_EXTRUDE * 0.5);
+      grupTiang.position.y = meshAktif.position.y + maxYLokal + 0.002;
+    }
 
     // Animasi skala tumbuh tiang
     if (Math.abs(skalaAnimasiTiang - targetSkala) > 0.01) {
@@ -286,9 +350,21 @@ export function buatPengontrolBendera({
       grupTiang.scale.set(1, Math.max(0.01, skalaAnimasiTiang), 1);
     }
 
-    // Hitung posisi ujung tiang (puncak bola emas) di ruang dunia
+    // Animasi rotasi kristal permata 3D & denyut riak daratan
+    const sekarang = performance.now();
+    const tDetik = (sekarang - waktuMulaiTampil) * 0.001;
+    kristalMesh.rotation.y += 0.025;
+    kristalMesh.position.y = 0.46 + Math.sin(tDetik * 3.5) * 0.012;
+
+    const skalaRiak = 1.0 + (Math.sin(tDetik * 3.0) * 0.5 + 0.5) * 0.35;
+    riakMesh.scale.set(skalaRiak, skalaRiak, 1);
+    riakMat.opacity = Math.max(0.1, 0.85 - (skalaRiak - 1.0) * 0.5);
+
+    if (!elKartu) return;
+
+    // Hitung posisi ujung tiang (puncak kristal) di ruang dunia
     grupTiang.getWorldPosition(titikUjungDunia);
-    titikUjungDunia.y += 1.65 * skalaAnimasiTiang;
+    titikUjungDunia.y += 0.55 * skalaAnimasiTiang;
 
     // Proyeksikan ke ruang kanvas [ -1..1 ] -> [ 0..width, 0..height ]
     titikProyeksiLayar.copy(titikUjungDunia);
@@ -344,13 +420,20 @@ export function buatPengontrolBendera({
 
   function dispose() {
     sembunyikan();
-    scene.remove(grupTiang);
+    if (grupUtama) {
+      grupUtama.remove(grupTiang);
+    } else {
+      scene.remove(grupTiang);
+    }
+    riakGeo.dispose();
+    riakMat.dispose();
     tiangGeo.dispose();
     tiangMat.dispose();
-    bolaGeo.dispose();
-    kainGeo.dispose();
-    kainMat.dispose();
-    if (elKartu.parentNode) {
+    kristalGeo.dispose();
+    kristalMat.dispose();
+    panjiGeo.dispose();
+    panjiMat.dispose();
+    if (elKartu && elKartu.parentNode) {
       elKartu.parentNode.removeChild(elKartu);
     }
   }

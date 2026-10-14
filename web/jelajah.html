@@ -29,8 +29,98 @@
       })();
     </script>
   </head>
-  <body class="halaman-fullscreen-body">
+  <body class="halaman-fullscreen-body tema-siang">
     <a href="#s5-peta-wadah" class="skip-link">Lompat ke peta 3D</a>
+
+    <!-- Layar Pemuatan Interaktif & Animasi Lucu Nusantara -->
+    <div id="jelajah-loading-screen" class="jelajah-loading-screen" role="status" aria-live="polite">
+      <div class="jelajah-loading-kartu">
+        <!-- Panggung Maskot & Samudra Beranimasi -->
+        <div class="jelajah-maskot-panggung" aria-hidden="true">
+          <div class="jelajah-maskot-awan jelajah-maskot-awan--1">☁️</div>
+          <div class="jelajah-maskot-awan jelajah-maskot-awan--2">☁️</div>
+          <div class="jelajah-maskot-lumba">🐬</div>
+
+          <div class="jelajah-kapal-animasi">
+            <svg class="jelajah-kapal-svg" viewBox="0 0 160 140" width="160" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g class="jelajah-bintang-kilau">
+                <path d="M125 22L127 27L132 29L127 31L125 36L123 31L118 29L123 27Z" fill="#FFD15C" opacity="0.85"/>
+                <circle cx="35" cy="40" r="3" fill="#FFF" opacity="0.6"/>
+              </g>
+              <line x1="80" y1="20" x2="80" y2="92" stroke="#5C3B1E" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="112" y1="36" x2="112" y2="92" stroke="#5C3B1E" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="48" y1="46" x2="48" y2="92" stroke="#5C3B1E" stroke-width="3" stroke-linecap="round"/>
+
+              <g class="jelajah-bendera-tiang">
+                <rect x="80" y="14" width="22" height="7" fill="#E83D3D" rx="1.5"/>
+                <rect x="80" y="21" width="22" height="7" fill="#FFFFFF" rx="1.5"/>
+                <path d="M102 14L99 21L102 28" fill="none" stroke="#D32F2F" stroke-width="1.5"/>
+              </g>
+
+              <path d="M48 50L24 86H48Z" fill="#FBF5E8" stroke="#D9C7A5" stroke-width="2"/>
+              <line x1="42" y1="58" x2="28" y2="82" stroke="#E6B14A" stroke-width="1.5" stroke-dasharray="2 2"/>
+              <path d="M112 40L142 86H112Z" fill="#F4E8D1" stroke="#CBB48C" stroke-width="2"/>
+              <path d="M80 26L48 86H80Z" fill="#FFFDF8" stroke="#E2D4B7" stroke-width="2.5"/>
+              <path d="M80 30L112 86H80Z" fill="#C86A3D" stroke="#A94F25" stroke-width="2"/>
+
+              <path d="M18 84C24 104 46 112 80 112C114 112 136 104 146 84C136 88 114 91 80 91C46 91 26 88 18 84Z" fill="#8B4513" stroke="#5C2E0B" stroke-width="3"/>
+              <path d="M22 90C36 102 60 106 80 106C100 106 124 102 140 90" stroke="#FFBE3B" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+              <ellipse cx="64" cy="99" rx="4.5" ry="3" fill="#FF8A8A" opacity="0.8"/>
+              <ellipse cx="96" cy="99" rx="4.5" ry="3" fill="#FF8A8A" opacity="0.8"/>
+
+              <g class="jelajah-mata-kapal">
+                <circle cx="70" cy="94" r="4.2" fill="#241B15"/>
+                <circle cx="68.5" cy="92.5" r="1.6" fill="#FFFFFF"/>
+                <circle cx="90" cy="94" r="4.2" fill="#241B15"/>
+                <circle cx="88.5" cy="92.5" r="1.6" fill="#FFFFFF"/>
+              </g>
+
+              <path d="M76 98C78 101 82 101 84 98" stroke="#241B15" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+
+          <div class="jelajah-ombak-wadah">
+            <div class="jelajah-ombak jelajah-ombak--belakang"></div>
+            <div class="jelajah-ombak jelajah-ombak--depan"></div>
+          </div>
+        </div>
+
+        <div class="jelajah-loading-header">
+          <span class="jelajah-loading-lencana">
+            <span class="jelajah-loading-titik"></span>
+            Dapur Peta Nusantara
+          </span>
+          <h2 class="jelajah-loading-judul">Menyiapkan Nusantara 3D</h2>
+        </div>
+
+        <div class="jelajah-loading-pesan-kotak">
+          <p id="jelajah-loading-pesan" class="jelajah-loading-pesan">
+            Menyusun 17.000 pulau satu per satu... (awas ada yang hanyut!) 🏝️
+          </p>
+        </div>
+
+        <div class="jelajah-loading-progres-area">
+          <div class="jelajah-loading-jalur">
+            <div id="jelajah-loading-bar" class="jelajah-loading-bar" style="width: 15%;">
+              <span class="jelajah-loading-kapal-mini" aria-hidden="true">⛵</span>
+            </div>
+          </div>
+          <div class="jelajah-loading-footer">
+            <div class="jelajah-loading-posisi">
+              <span class="jelajah-loading-kota">Sabang</span>
+              <span class="jelajah-loading-panah">&rarr;</span>
+              <span class="jelajah-loading-kota">Merauke</span>
+            </div>
+            <span id="jelajah-loading-persen" class="jelajah-loading-persen">15%</span>
+          </div>
+        </div>
+
+        <p class="jelajah-loading-tip">
+          💡 <strong>Tahukah kamu?</strong> Di peta ini kamu bisa memutar Nusantara 360°, beralih ke Mode Malam berbintang, dan mencap paspor tiap provinsi!
+        </p>
+      </div>
+    </div>
 
     <!-- Header Navigasi Mengambang -->
     <header id="header-utama" class="header-utama header-fullscreen">
@@ -142,17 +232,17 @@
         </p>
       </div>
 
-      <!-- HUD Kanan Bawah: Toolbar Kontrol Peta (Perbesaran, Rotasi, Mode Warna) -->
+      <!-- HUD Kanan Bawah: Toolbar Kontrol Peta (Perbesaran, Rotasi, Waktu Siang/Malam) -->
       <div class="jelajah-hud-kanan-bawah" role="toolbar" aria-label="Kontrol tampilan peta 3D">
         <button
           type="button"
-          id="hud-mode-warna"
+          id="hud-mode-waktu"
           class="hud-btn"
-          title="Ganti Mode Warna (Alami / Data OPK Dominan)"
-          aria-label="Ganti mode pewarnaan peta"
+          title="Ubah Waktu Diorama (Siang / Malam)"
+          aria-label="Ubah waktu diorama antara siang dan malam"
         >
-          <span class="hud-btn-ikon">🎨</span>
-          <span class="hud-btn-teks" id="hud-mode-warna-label">Warna Alami</span>
+          <span class="hud-btn-ikon" id="hud-mode-waktu-ikon">☀️</span>
+          <span class="hud-btn-teks" id="hud-mode-waktu-label">Siang Hari</span>
         </button>
 
         <div class="hud-separator" aria-hidden="true"></div>

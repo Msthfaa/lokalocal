@@ -16,6 +16,16 @@ export const WARNA_JENIS_HEX = {
   cagar: '#A89F95'
 };
 
+// Gradien pastel lembut untuk kartu budaya ala Gambar 2 (Bagian 5.3 WEB_SPEC)
+export const GRADIEN_JENIS_CSS = {
+  kerajinan: 'linear-gradient(135deg, #FF9A6B, #FFD3B0)',
+  seni: 'linear-gradient(135deg, #FFD36B, #FFF1B8)',
+  lisan: 'linear-gradient(135deg, #A9B8FF, #E3E8FF)',
+  pengetahuan: 'linear-gradient(135deg, #8FD3A0, #D6F2C8)',
+  adat: 'linear-gradient(135deg, #FF9EC4, #FFD6E7)',
+  cagar: 'linear-gradient(135deg, #CFC6BC, #F1ECE6)'
+};
+
 export const LABEL_JENIS = Object.fromEntries(
   DAFTAR_JENIS_OPK.map((j) => [j.kode, j.label])
 );
