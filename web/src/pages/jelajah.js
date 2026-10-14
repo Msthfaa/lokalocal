@@ -11,7 +11,9 @@ import '../styles/sections.css';
 
 import { muatDataAwal, jadwalkanMuatDataLengkap } from '../data/loader.js';
 import { inisialisasiNavigasi } from '../ui/nav.js';
-import { inisialisasiDialogTentang } from '../ui/footer.js';
+import { inisialisasiTema } from '../ui/tema.js';
+import { inisialisasiBacksound } from '../ui/audio.js';
+import { inisialisasiDialogTentang, inisialisasiDialogTentangKami } from '../ui/footer.js';
 import { inisialisasiDialogRekaman } from '../ui/dialog-rekaman.js';
 import { buatPengelolaPaspor } from '../features/paspor.js';
 import { inisialisasiJelajah3D } from '../sections/hero3d/jelajah3d.js';
@@ -25,11 +27,18 @@ let pengelolaPaspor = null;
 let kontroler3D = null;
 
 async function mulaiHalamanJelajah() {
+  inisialisasiTema();
+  inisialisasiBacksound();
+
   const dialogTentangKontrol = inisialisasiDialogTentang();
+  const dialogTentangKamiKontrol = inisialisasiDialogTentangKami();
 
   inisialisasiNavigasi({
     bukaDialogTentang: (pemicu) => {
       if (dialogTentangKontrol) dialogTentangKontrol.buka(pemicu);
+    },
+    bukaDialogTentangKami: (pemicu) => {
+      if (dialogTentangKamiKontrol) dialogTentangKamiKontrol.buka(pemicu);
     },
     halamanAktif: 'jelajah'
   });

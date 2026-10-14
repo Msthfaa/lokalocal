@@ -1,6 +1,7 @@
 /**
- * nav.js — Bilah navigasi utama, menu layar penuh ponsel, dan penanda bagian aktif
- * Sesuai WEB_SPEC.md Bagian 4.1.
+ * nav.js — Bilah navigasi utama mengambang (floating glassmorphism navbar),
+ * menu layar penuh ponsel, dan penanda halaman/bagian aktif.
+ * Menu: Cerita, Jelajah, Paspor, Kuis, Tentang data, Tentang kami
  */
 
 import { TEKS } from '../content/teks.js';
@@ -8,19 +9,16 @@ import { TEKS } from '../content/teks.js';
 /**
  * Menginisialisasi perilaku navigasi utama.
  * @param {object} opsi
- * @param {(pemicu: HTMLElement) => void} opsi.bukaDialogTentang
- */
-/**
- * Menginisialisasi perilaku navigasi utama.
- * @param {object} opsi
- * @param {(pemicu: HTMLElement) => void} opsi.bukaDialogTentang
+ * @param {(pemicu: HTMLElement) => void} [opsi.bukaDialogTentang]
+ * @param {(pemicu: HTMLElement) => void} [opsi.bukaDialogTentangKami]
  * @param {'cerita'|'jelajah'|'paspor'|'kuis'} [opsi.halamanAktif='cerita']
  */
-export function inisialisasiNavigasi({ bukaDialogTentang, halamanAktif = 'cerita' }) {
+export function inisialisasiNavigasi({ bukaDialogTentang, bukaDialogTentangKami, halamanAktif = 'cerita' }) {
   const headerEl = document.getElementById('header-utama');
   const tombolMenuEl = document.getElementById('tombol-menu-ponsel');
   const daftarNavEl = document.getElementById('nav-daftar');
   const tombolTentangNav = document.getElementById('nav-tombol-tentang');
+  const tombolTentangKamiNav = document.getElementById('nav-tombol-tentang-kami');
   const tautanNav = daftarNavEl
     ? Array.from(daftarNavEl.querySelectorAll('a.nav-tautan'))
     : [];
@@ -65,6 +63,17 @@ export function inisialisasiNavigasi({ bukaDialogTentang, halamanAktif = 'cerita
     });
   }
 
+  if (tombolTentangKamiNav) {
+    tombolTentangKamiNav.addEventListener('click', () => {
+      if (menuTerbuka) {
+        aturStatusMenu(false);
+      }
+      if (typeof bukaDialogTentangKami === 'function') {
+        bukaDialogTentangKami(tombolTentangKamiNav);
+      }
+    });
+  }
+
   // Tutup menu ponsel dengan tombol Escape
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menuTerbuka) {
@@ -73,13 +82,7 @@ export function inisialisasiNavigasi({ bukaDialogTentang, halamanAktif = 'cerita
     }
   });
 
-  // Efek latar solid saat halaman digulir
-  const perbaruiStatusGulir = () => {
-    if (!headerEl) return;
-    headerEl.classList.toggle('tergulir', window.scrollY > 16);
-  };
-  perbaruiStatusGulir();
-  window.addEventListener('scroll', perbaruiStatusGulir, { passive: true });
+  // Navbar tetap diam di posisi atas (tanpa animasi saat scroll)
 
   // Tandai navigasi aktif berdasarkan halaman aktif saat ini
   function tandaiNavAktif(idNav) {

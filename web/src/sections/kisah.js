@@ -76,6 +76,8 @@ export function pilihEnamKisahUnggulan(daftarBudaya, seedStr = 'atlas') {
  */
 export function inisialisasiBagianKisah({ saatBukaDetailRekaman }) {
   const wadahKisah = document.getElementById('s6-kisi-kisah');
+  if (!wadahKisah) return null;
+
   const tombolAcakKisah = document.getElementById('s6-tombol-acak');
 
   let daftarBudaya = [];

@@ -1,5 +1,5 @@
 /**
- * footer.js — Merender atribusi dinamis di footer dan mengelola dialog "Tentang Data"
+ * footer.js — Merender atribusi dinamis di footer dan mengelola dialog "Tentang Data" & "Tentang Kami"
  * Sesuai AGENTS.md Aturan Emas #7 & WEB_SPEC.md Bagian 3 (Footer / Tentang data).
  */
 
@@ -40,12 +40,36 @@ export function inisialisasiDialogTentang() {
 }
 
 /**
+ * Menginisialisasi dialog "Tentang Kami" (Pengembang & Visi Proyek).
+ * @returns {{ buka: (pemicu?: HTMLElement) => void, tutup: () => void }}
+ */
+export function inisialisasiDialogTentangKami() {
+  const dialogEl = document.getElementById('dialog-tentang-kami');
+  const judulEl = document.getElementById('dialog-tentang-kami-judul');
+  const tombolTutupEl = document.getElementById('tombol-tutup-tentang-kami');
+  const tombolBukaNav = document.getElementById('nav-tombol-tentang-kami');
+  const tombolBukaFooter = document.getElementById('footer-tombol-tentang-kami');
+
+  const kontrol = pasangPerilakuDialog(dialogEl, judulEl);
+
+  if (tombolTutupEl) {
+    tombolTutupEl.addEventListener('click', () => kontrol.tutup());
+  }
+
+  if (tombolBukaNav) {
+    tombolBukaNav.addEventListener('click', () => kontrol.buka(tombolBukaNav));
+  }
+
+  if (tombolBukaFooter) {
+    tombolBukaFooter.addEventListener('click', () => kontrol.buka(tombolBukaFooter));
+  }
+
+  return kontrol;
+}
+
+/**
  * Memperbarui teks atribusi dan tanggal pengambilan data dari meta.clean.json
  * di seluruh elemen footer dan dialog tentang data.
- *
- * Wajib menampilkan:
- * "Data: SPKT – Kementerian Kebudayaan RI, diambil {tanggal_ambil_terformat}"
- * dengan tautan ke https://spkt.kemenbud.go.id
  *
  * @param {object} meta - Isi dari meta.clean.json
  */

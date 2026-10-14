@@ -324,3 +324,338 @@
   - **Proporsi Sempurna:** Pulau-pulau kecil tidak lagi mencuat seperti pilar tinggi, dan papan laut diorama menyangga kepulauan nusantara dengan anggun tanpa menenggelamkan pulau.
   - Build produksi lolos dengan **0 error dan 0 warning**.
 
+## [2026-10-13] Navigasi Mengambang Glassmorphism & Dashboard Sinematik Alam-Budaya Nusantara
+- **Dibuat/diubah:**
+  - `web/src/sections/hero-cinema.js` (komponen pengontrol latar belakang sinematik video-like alam & budaya nusantara dengan efek Ken Burns halus, auto-advance 6 detik, HUD lokasi, dan dots kontrol)
+  - `web/src/sections/hero.js` (integrasi hero cinema, transisi GSAP halus untuk konten utama dan kartu kaca)
+  - `web/src/styles/layout.css` (navigasi mengambang floating pill dengan `backdrop-filter: blur(20px)`, rounded-full, active state putih solid, dan drawer ponsel melayang)
+  - `web/src/styles/sections.css` (gaya visual dashboard sinematik ala referensi Sunrock: judul display besar, subjudul, CTA pil putih dengan badge panah sirkular, dan 2 kartu kaca frosted glass di sudut kiri & kanan bawah)
+  - `web/src/ui/nav.js` & `web/src/ui/footer.js` (penambahan tombol dan dialog modal `Tentang Kami` di seluruh halaman)
+  - `web/index.html`, `web/jelajah.html`, `web/paspor.html`, `web/kuis.html` (penyelarasan menu navbar mengambang 6 butir: Cerita, Jelajah, Paspor, Kuis, Tentang data, Tentang kami + tombol aksi Jelajah 3D)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Navigasi Mengambang Glassmorphism:** Bilah navigasi kini melayang di atas konten dengan sudut membulat penuh (*pill*), efek latar blur kaca buram, penanda aktif berbentuk pil putih tegas, dan tombol aksi "Jelajah 3D" di sisi kanan.
+  - **Latar Sinematik Seperti Video:** Latar belakang beranda kini memutar 8 destinasi ikonik wisata alam dan budaya Indonesia (Candi Borobudur, Raja Ampat, Gunung Bromo, Candi Prambanan, Pulau Padar/Komodo, Kete Kesu Toraja, Danau Toba, dan Pura Ulun Danu Beratan Bali) dengan pergerakan kamera Ken Burns lambat yang menyerupai video rekaman udara (*aerial drone reel*).
+  - **Tata Letak Dashboard Sesuai Gambar Referensi:**
+    - Di tengah: Judul display megah, narasi pembuka, dan tombol CTA pil putih elegan berikon panah sirkular (*"Telusuri Cerita Budaya ↗"*).
+    - Di sudut kiri bawah: Kartu kaca buram (*frosted glass*) "544 Warisan Budaya SPKT" dengan ikon lencana.
+    - Di sudut kanan bawah: Kartu kaca buram (*frosted glass*) "Celah & Dampak Dokumentasi" dengan ikon kompas.
+  - **Dialog Modal "Tentang Kami":** Menyajikan profil platform Lokalocal, visi sosial, empat pilar eksplorasi, serta komitmen etika data.
+  - Build produksi lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-13] Penyesuaian Blur Navbar 30%, Statis Tanpa Animasi, & Latar 5 Detik Otomatis
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css` (menetapkan opasitas latar belakang navbar menjadi 30% `rgba(18, 16, 14, 0.3)` dengan `backdrop-filter: blur(16px) saturate(180%)`, serta menonaktifkan seluruh animasi/transisi gulir sehingga navbar 100% diam dan stay di tempatnya)
+  - `web/src/ui/nav.js` (menghapus event listener scroll pada header agar tidak ada pergantian kelas/gaya saat digulir)
+  - `web/src/sections/hero-cinema.js` (menghapus HUD lencana lokasi dan titik indikator, mengubah durasi pergantian otomatis menjadi tepat 5 detik per slide, serta menghapus jeda hover agar latar belakang terus berputar secara konsisten)
+  - `web/index.html` & `web/src/styles/sections.css` (menghapus elemen pill kicker "Atlas Budaya & Alam Nusantara" dan CSS terkait)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Blur navbar jernih dengan opasitas 30% dan navbar tetap berada di posisinya secara statis tanpa animasi.
+  - Tampilan beranda bersih tanpa HUD badge/kicker yang mengganggu.
+  - Latar belakang foto alam dan budaya nusantara berpindah secara otomatis dan mulus setiap 5 detik sekali.
+## [2026-10-13] Pemisahan Navbar Menjadi 3 Komponen Mandiri (Logo, Menu Tengah, Tombol 3D)
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css` (memisahkan wadah `.nav-bar` menjadi 3 elemen mandiri dengan CSS Grid `1fr auto 1fr` pada desktop: Logo Lokalocal di kiri, kapsul daftar menu di tengah dengan blur 30%, dan tombol Jelajah 3D di kanan dengan blur 30%)
+  - `web/src/ui/nav.js` & berkas HTML (`index.html`, `jelajah.html`, `paspor.html`, `kuis.html`)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Pemisahan 3 Elemen Navbar:**
+    1. **Sisi Kiri:** Logo merek "Lokalocal" dengan lambang belah ketupat emas melayang anggun mandiri di kiri.
+    2. **Tengah (Center):** Kapsul daftar navigasi (Cerita, Jelajah, Paspor, Kuis, Tentang data, Tentang kami) mengambang presisi di tengah layar dengan latar kaca buram (*frosted blur*) opasitas 30% dan tab aktif pil putih solid.
+    3. **Sisi Kanan:** Tombol kapsul "Jelajah 3D ↗" (atau "Baca Cerita →" di halaman jelajah) berdiri mandiri di kanan dengan efek frosted blur 30% yang senada.
+  - **Bebas Animasi & Statis:** Seluruh elemen navbar tetap diam di posisinya (*stay*) tanpa lonjakan atau pergeseran saat halaman digulir.
+  - Build produksi lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-13] Fitur Dark Mode & Light Mode Serta Transformasi Editorial Bento Bab 1–3
+- **Dibuat/diubah:**
+  - `web/src/ui/tema.js` (modul baru untuk manajemen preferensi tema gelap/terang, persistensi `localStorage`, sinkronisasi atribut `[data-tema]`, pemancar event kustom `lokalocal-ganti-tema`, serta listener toggle pada tombol desktop dan ponsel)
+  - `web/src/styles/tokens.css` (definisi token warna lengkap untuk `[data-tema="terang"]`: latar kertas gading hangat `#F9F6F0`, kartu putih `#FFFFFF`, tipografi espresso pekat `#1C1917` berkontras > 14:1, garis batas lembut `#E2D9CD`, dan aksen emas pekat `#B87314`)
+  - `web/src/styles/layout.css` (penataan tombol toggle tema mengambang di kanan navbar `.nav-tombol-tema`, tombol drawer tema ponsel, serta penyesuaian navbar kaca frosted di mode terang)
+  - `web/src/styles/sections.css` (gaya visual Editorial Bento Blog Grid 5 kartu dan Popular Destinations 5 kolom horizontal ala referensi gambar perjalanan)
+  - `web/index.html` (transformasi presentasi Bab 1 s.d. Bab 3 menjadi Bento Magazine Grid dengan 1 kartu besar di kiri, 4 kartu di kanan 2x2, baris 5 destinasi teratas, serta drawer toggle accordion untuk mengakses infografis peta D3 interaktif, grafik waffle 10x10, dan peta 10 provinsi gelap asli)
+  - `web/jelajah.html`, `web/paspor.html`, `web/kuis.html` (dukungan script anti-FOUC tema instan dan tombol toggle tema di seluruh halaman)
+  - `web/src/main.js`, `web/src/pages/jelajah.js`, `web/src/pages/paspor.js`, `web/src/pages/kuis.js` (inisialisasi tema dan pengkabelan interaksi klik kartu Bento ke drawer infografis)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Fitur Dark Mode & Light Mode Berfungsi Penuh:**
+    - Tombol toggle tema (🌙 / ☀️) diletakkan rapi di sisi kanan navbar bersebelahan dengan tombol Jelajah 3D, sementara kapsul menu navigasi tengah dipertahankan bersih khusus untuk 6 butir menu utama (item teks "Mode Tampilan" di dalam menu telah dihapus sesuai permintaan).
+    - Pilihan tema tersimpan secara persisten di `localStorage` dan dimuat seketika tanpa kedipan layar (*zero-FOUC*).
+    - Mode Terang menampilkan estetika hangat bertema kertas koran/majalah (*editorial ivory*) dengan kontras teks yang memenuhi standar aksesibilitas WCAG AA (≥ 4.5:1).
+  - **Transformasi Bab 1 — 3 Menjadi Tata Letak Majalah Editorial (Sesuai Gambar Referensi):**
+    - **Bento Grid 5 Kartu:**
+      1. *Kartu Kiri Besar (Bab 1):* Foto megah Candi Prambanan, badge `BAB 1 • PETA MENYALA`, judul display, ringkasan 544 catatan budaya dari 28 provinsi, serta avatar kurator & tanggal.
+      2. *Kartu Kanan 1 (Bab 2):* Rumah Gadang Minangkabau, badge `BAB 2 • KONSENTRASI`, bahasan Kota Pariaman penyumbang 17% data.
+      3. *Kartu Kanan 2 (Top 5):* Gunung Bromo, badge `TOP 5 WILAYAH`, bahasan 58,2% data terpusat di 5 provinsi.
+      4. *Kartu Kanan 3 (Bab 3):* Raja Ampat Papua, badge `BAB 3 • YANG MASIH GELAP`, pesan sosial 10 provinsi belum tercatat.
+      5. *Kartu Kanan 4 (Pusaka):* Desa Adat Toraja, badge `PUSAKA NUSANTARA`, 65 Cagar Budaya & 422 OPK resmi.
+    - **Destinasi Unggulan (5 Kolom Horizontal):**
+      - Deretan kartu foto berbingkai dengan ikon dan status catatan kebudayaan: Bali (38 catatan), Sumatera Barat (119 catatan), Jawa Tengah (79 catatan), Jawa Timur (61 catatan), dan D.I. Yogyakarta (45 catatan).
+    - **Aksesibel & Interaktif:**
+      - Tersedia tombol drawer *"Buka Peta Interaktif & Infografis Detail (Bab 1–3)"* yang memungkinkan pengunjung tetap mengeksplorasi peta D3 interaktif, waffle grid 10x10, dan peta 10 provinsi gelap secara penuh.
+      - Mengklik masing-masing kartu Bento secara otomatis membuka drawer dan menggulir ke bagian visualisasi yang bersangkutan.
+  - Build produksi lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-13] Penghapusan Kartu Kaca Hero & Perataan Teks Hero Rata Tengah
+- **Dibuat/diubah:**
+  - `web/index.html` (menghapus wadah `.hero-floating-cards` beserta 2 kartu kaca di dalamnya: "544 Warisan Budaya SPKT" dan "Celah & Dampak Dokumentasi")
+  - `web/src/styles/sections.css` (menyesuaikan container `.s1-pembuka` dan `.hero-cinema-tengah` menjadi flexbox terpusat penuh dengan `justify-content: center; align-items: center; min-height: 100vh;`, mengatur teks judul, subjudul, dan deretan tombol CTA menjadi rata tengah simetris, serta membersihkan deklarasi CSS kartu kaca yang sudah tidak digunakan)
+  - `web/src/sections/hero.js` (memperbarui timeline animasi GSAP agar hanya menganimasikan teks dan tombol CTA hero tanpa mencari kartu kaca)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Bagian hero/beranda kini tampil bersih, elegan, dan fokus:
+    - Judul utama *"Pesona Alam & Mahakarya Budaya Nusantara"*, subjudul narasi, serta tombol aksi *"Telusuri Cerita Budaya"* dan *"Jelajah Peta 3D"* terpusat sempurna di tengah layar secara vertikal dan horizontal.
+    - Dua kartu kaca di bagian bawah hero telah dihilangkan sepenuhnya, memberikan ruang pandang yang lebih lega ke latar belakang sinematik alam dan budaya nusantara.
+  - Build produksi lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-13] Transformasi Wilayah Unggulan Menjadi Top 5 Kebudayaan Indonesia yang Mendunia
+- **Dibuat/diubah:**
+  - `web/index.html` (mengubah Modul 2 dari deretan 5 provinsi unggulan menjadi **Top 5 Kebudayaan Indonesia yang Mendunia** yang diakui UNESCO: 1. Bambu Angklung, 2. Seni Wayang, 3. Batik, 4. Gamelan, 5. Tari Saman; menyematkan teks deskripsi lengkap untuk masing-masing kebudayaan; menyematkan tautan rujukan resmi ke situs Tribratanews Polri baik pada baris kepala maupun banner atribusi rujukan; serta memperbaiki URL foto Candi Prambanan dan Rumah Gadang Minangkabau di Bento Grid Bab 1 & 2)
+  - `web/src/sections/hero-cinema.js` (memperbarui URL foto Candi Prambanan agar menampilkan candi batu asli)
+  - `web/src/styles/sections.css` (menambahkan aturan CSS `.top5-budaya-grid`, kartu editorial `.budaya-top5-kartu`, badge UNESCO, tipografi teks, tombol pencarian ke katalog data, serta banner sumber rujukan `.top5-sumber-rujukan-bar` yang ramah mode gelap dan terang)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Bagian Modul 2 di beranda kini menampilkan 5 warisan kebudayaan agung Indonesia yang diakui dunia internasional (UNESCO) lengkap dengan foto beresolusi tinggi, badge pengakuan, narasi mendalam, dan tombol penelusuran ke katalog data SPKT.
+  - Tautan sumber rujukan ke artikel resmi Tribratanews Polri (`https://tribratanews.polri.go.id/blog/none-22/inilah-5-warisan-budaya-indonesia-yang-mendunia-52549`) terpasang jelas dan dapat diklik.
+  - Foto Bento Grid Bab 1 (Prambanan) dan Bab 2 (Minangkabau) kini tampil tajam, akurat, dan tidak ada lagi gambar yang rusak (*broken*).
+  - Build produksi lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-13] Penambahan Fitur Backsound Lagu Daerah Nusantara & Kontrol Pemutar Mengambang
+- **Dibuat/diubah:**
+  - `web/public/audio/` (mengunduh dan menyimpan 5 berkas audio lagu daerah Nusantara berkualitas tinggi berlisensi CC-BY-SA 4.0 dari arsip WikiDendang, Wikimedia Indonesia secara lokal: `ampar-ampar-pisang.mp3`, `kicir-kicir.mp3`, `bungong-jeumpa.mp3`, `soleram.mp3`, `yamko-rambe-yamko.mp3`)
+  - `web/src/ui/audio.js` (modul baru pengontrol audio pemutar lagu berurutan dengan volume lembut default 18%, penanganan autoplay ramah kebijakan browser via interaksi pertama, transisi otomatis ke lagu berikutnya saat selesai, persistensi preferensi di `localStorage`, serta widget dock mengambang di kanan bawah)
+  - `web/src/styles/components.css` (penataan gaya visual widget mengambang `.audio-backsound-dock`, kapsul frosted glass, equalizer audio interaktif yang bergerak saat lagu berputar, panel pop-up daftar 5 lagu, slider volume lembut, dan dukungan penuh mode gelap serta terang)
+  - `web/src/main.js`, `web/src/pages/jelajah.js`, `web/src/pages/paspor.js`, `web/src/pages/kuis.js` (pengkabelan pemutar musik di seluruh halaman web)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Website kini dilengkapi backsound instrumental/vokal tradisional yang syahdu dan tenang dengan urutan playlist persis sesuai permintaan:
+    1. **Ampar-Ampar Pisang** (Kalimantan Selatan)
+    2. **Kicir-Kicir** (DKI Jakarta)
+    3. **Bungong Jeumpa** (Aceh)
+    4. **Soleram** (Riau)
+    5. **Yamko Rambe Yamko** (Papua)
+  - Volume audio disetel rendah (18%) agar berfungsi sebagai latar belakang (*ambient backsound*) yang menenangkan tanpa mengganggu fokus membaca narasi budaya.
+  - Pengunjung dapat menjeda, memutar, memilih lagu mana pun dari popup daftar putar, serta mengatur volume secara bebas melalui widget mengambang di sudut kanan bawah.
+  - Berkas audio tersimpan lokal secara mandiri sehingga web dapat diputar 100% offline tanpa ketergantungan koneksi pihak ketiga.
+  - Build produksi lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-13] Penyederhanaan Halaman Beranda (Penghapusan Bagian Jelajah, Kisah Pilihan, dan Paspor/Kuis)
+- **Dibuat/diubah:**
+  - `web/index.html` (menghapus `<section id="jelajah">` "Eksplorasi Data: Jelajahi Peta & Catatan Budaya", `<section id="kisah-pilihan">` "Kisah Pilihan: Potret tradisi dari berbagai penjuru", dan `<section id="paspor-kuis">` "Interaksi & Tantangan: Paspor Budaya & Uji Pengetahuanmu" dari halaman beranda `index.html`)
+  - `web/src/sections/jelajah.js` & `web/src/sections/kisah.js` (menambahkan guard kondisional agar tidak error saat elemen-elemen DOM tersebut tidak ada di halaman beranda)
+  - `web/src/main.js` (memperbarui rute interaksi klik provinsi pada peta drawer Bab 1 & Bab 3 serta klik kartu bento Cagar Budaya agar secara mulus mengarahkan pengunjung langsung ke halaman khusus `jelajah.html`)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Halaman Beranda kini jauh lebih ramping, elegan, dan fokus sebagai panggung bercerita (*Storytelling & Editorial Showcase*), terdiri atas:
+    1. **Hero Sinematik**: Latar berputar 5 detik sekali, tipografi rata tengah, dan tombol aksi.
+    2. **Editorial Bento Magazine**: Sorotan Bab 1–3 dengan foto budaya beresolusi tinggi.
+    3. **Top 5 Kebudayaan Dunia**: Angklung, Wayang, Batik, Gamelan, dan Saman berdasar rujukan resmi Tribratanews Polri.
+    4. **Drawer Infografis Lengkap (Bab 1–3)**: Peta menyala, grafik konsentrasi, dan peta 10 provinsi belum tercatat yang dapat dibuka-tutup.
+    5. **Penutup & Ajakan Aksi**: Pesan sosial dokumentasi budaya Nusantara dan atribusi resmi SPKT.
+  - Seluruh fitur interaktif Eksplorasi Peta (`jelajah.html`), Paspor Budaya (`paspor.html`), dan Kuis Budaya (`kuis.html`) tetap dapat diakses secara leluasa melalui kapsul menu di navbar.
+## [2026-10-13] Penyempurnaan Top 5 Kebudayaan: Foto Dokumenter Asli & Tata Letak Ringkas
+- **Dibuat/diubah:**
+  - `web/public/images/top5/` (mengunduh 5 foto dokumenter autentik beresolusi tinggi langsung dari arsip kebudayaan Nusantara terverifikasi Wikimedia Commons: `angklung.jpg`, `wayang.jpg`, `batik.jpg`, `gamelan.jpg`, dan `tari-saman.jpg` — menggantikan gambar eksternal dan bebas dari gambar AI/ilustrasi fantasi yang keliru konteks)
+  - `web/index.html` (memperbarui sumber gambar ke berkas lokal `./images/top5/*.jpg`, menghapus paragraf deskripsi teks panjang dan tombol "Cari di Katalog Data" pada masing-masing dari ke-5 kartu kebudayaan, serta menghapus banner sumber rujukan di bagian bawah grid)
+  - `web/src/styles/sections.css` (menyesuaikan proporsi tinggi gambar `.budaya-top5-foto-bungkus` menjadi 185px serta memadatkan padding `.budaya-top5-badan` menjadi ringkas, proporsional, dan estetis)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Seluruh kartu Top 5 Kebudayaan kini menampilkan foto dokumenter asli warisan budaya Indonesia:
+    1. **Bambu Angklung** (Pertunjukan Angklung Saung Udjo, Jawa Barat)
+    2. **Seni Wayang** (Pertunjukan Wayang Kulit oleh Ki Dalang Tradisional)
+    3. **Batik** (Pengrajin kain batik tulis tradisional menggunakan canting)
+    4. **Gamelan** (Ansambel gong dan instrumen orkestra gamelan Jawa/Bali)
+    5. **Tari Saman** (Barisan penari Saman asli suku Gayo, Aceh dalam busana adat tradisional)
+  - Kartu tampil bersih, rapi, dan elegan tanpa teks deskripsi panjang maupun tombol footer, menyisakan foto autentik, badge UNESCO, ikon, judul, dan kategori budaya.
+  - Hyperlink rujukan utama ke Tribratanews Polri tetap aktif dan tersedia di sisi kanan atas header (`Sumber: Tribratanews Polri ↗`).
+  - Berkas tersimpan lokal di dalam repositori web sehingga gambar dimuat secara instan dan 100% offline.
+## [2026-10-14] Pembaruan Bento Grid: 5 Destinasi Tempat Bersejarah di Indonesia (Indonesia.travel)
+- **Dibuat/diubah:**
+  - `web/public/images/bersejarah/` (mengunduh 5 foto dokumenter autentik beresolusi tinggi langsung dari arsip Wikimedia Commons secara lokal: `borobudur.jpg`, `rotterdam.jpg`, `mulawarman.jpg`, `maimun.jpg`, dan `kudus.jpg` — bebas gambar AI, bebas broken link, dan dimuat 100% offline)
+  - `web/index.html` (memperbarui modul Bento Grid 5 kartu dengan konten 5 tempat bersejarah Nusantara: 1. Candi Borobudur, Jawa Tengah; 2. Benteng Rotterdam, Sulawesi Selatan; 3. Museum Mulawarman, Kalimantan Timur; 4. Istana Maimun, Sumatra Utara; 5. Masjid Menara Kudus, Jawa Tengah; menyematkan badge kategori, narasi sejarah, dan penunjuk lokasi berikon SVG; serta menambahkan hyperlink sumber resmi di pojok kanan atas ke Indonesia.travel)
+  - `web/src/styles/sections.css` (menambahkan gaya badge lokasi `.bento-lokasi-badge` dengan efek frosted glass dan warna aksen emas elegan tanpa emoji)
+  - `web/src/main.js` (menghubungkan interaksi klik setiap kartu bento tempat bersejarah langsung ke pencarian katalog data `jelajah.html`)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Bento Grid di beranda kini menampilkan 5 destinasi tempat bersejarah termasyhur di Indonesia:
+    1. **Candi Borobudur, Jawa Tengah**: Candi Buddha terbesar di dunia abad ke-8 Masehi peninggalan Dinasti Syailendra.
+    2. **Benteng Rotterdam, Sulawesi Selatan**: Benteng pertahanan maritim berbentuk penyu peninggalan Raja Gowa ke-9 (1545).
+    3. **Museum Mulawarman, Kalimantan Timur**: Bekas istana megah penyimpan pusaka dan singgasana Kesultanan Kutai Kartanegara.
+    4. **Istana Maimun, Sumatra Utara**: Mahakarya arsitektur Kesultanan Deli perpaduan gaya Melayu, Islam, Spanyol, dan Italia (1888).
+    5. **Masjid Menara Kudus, Jawa Tengah**: Masjid bersejarah dengan menara bata merah kuno wujud toleransi dan akulturasi Sunan Kudus (1549).
+  - Hyperlink rujukan resmi di pojok kanan atas header mengarah langsung ke artikel resmi: `https://www.indonesia.travel/id/id/travel-ideas/heritage/tempat-bersejarah-di-indonesia`.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Background Hitam Pekat & Gradasi Transisi Halus (Seamless Fade-to-Black)
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengubah latar belakang `.editorial-section` (#cerita-editorial) menjadi hitam pekat murni (`#000000`).
+    - Menambahkan lapisan gradasi transisi `.s1-pembuka::after` setinggi 340px dengan kurva `linear-gradient` ke `#000000` di bagian bawah Hero Cinema untuk menghilangkan garis horizontal potong yang tajam pada foto slideshow.
+    - Menambahkan gradasi hitam lembut di bagian atas (`.editorial-section::before`) dan bawah (`.editorial-section::after`) setinggi 220px untuk transisi halaman yang mulus dan sinematik.
+    - Memastikan `.editorial-section > .wadah` tetap di atas lapisan gradasi (`z-index: 2`).
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Garis batas tajam antara foto latar Hero dan section Bento Grid kini menghilang sepenuhnya, berganti menjadi transisi gradasi memudar ke hitam pekat (*fade to black*) yang sangat lembut, sinematik, dan berkelas.
+  - Section Bento Grid dan Top 5 tampil elegan dengan background hitam pekat (`#000000`), memberikan kontras visual yang tajam terhadap foto-foto tempat bersejarah.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penyesuaian Light Mode: Background Putih & Gradasi Putih Transisi
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengatur `.editorial-section` pada mode terang (`[data-tema="terang"]`) menjadi berlatar belakang putih bersih (`#ffffff`).
+    - Menyesuaikan gradasi transisi atas di Hero (`[data-tema="terang"] .s1-pembuka::after`) dan atas editorial (`[data-tema="terang"] .editorial-section::before`) menjadi gradasi memudar ke putih (*fade-to-white*).
+    - Menyesuaikan gradasi transisi bawah (`[data-tema="terang"] .editorial-section::after`) menjadi gradasi memudar ke putih (*fade-to-white*) menuju section di bawahnya.
+    - Menyesuaikan warna teks judul editorial (`.editorial-judul-section`), subjudul Top 5 (`.editorial-subjudul-section`), dan kicker menjadi warna gelap kontras (`#14110F`) pada mode terang sehingga terbaca dengan sangat tajam dan jelas.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Saat beralih ke Mode Terang (*Light Mode*):
+    - Seluruh section editorial berubah bersih menjadi berlatar putih dengan teks gelap yang kontras dan tajam.
+    - Transisi dari foto Hero di atas dan transisi ke section di bawahnya memudar secara lembut ke warna putih (*seamless fade-to-white*), tanpa adanya blok atau garis hitam yang tertinggal.
+  - Saat beralih ke Mode Gelap (*Dark Mode*):
+    - Tetap tampil sinematik dengan latar hitam pekat dan transisi memudar ke hitam (*fade-to-black*).
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penyesuaian Tinggi Gradasi Transisi Hero & Editorial (Ramping & Proporsional)
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengurangi tinggi lapisan gradasi bawah Hero (`.s1-pembuka::after`) dari sebelumnya 340px menjadi **110px** agar tidak naik menutupi tombol CTA ("Telusuri Cerita Budaya" & "Jelajah Peta 3D") maupun teks narasi Hero.
+    - Menyesuaikan lapisan `.hero-cinema-overlay` agar tidak menghasilkan kabut berlebih di bagian bawah tombol.
+    - Mengurangi tinggi gradasi atas dan bawah `.editorial-section::before` & `::after` dari 220px menjadi **80px** serta merampingkan padding section.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Foto pemandangan alam dan tombol aksi CTA di Hero kini tampil jernih, tajam, dan tidak lagi tertutup kabut gradasi putih/hitam yang terlalu tinggi.
+  - Efek transisi memudar (*fade transition*) tetap bekerja dengan sangat mulus dan tepat berada di tepi batas bawah layar, baik di Mode Terang (*fade-to-white*) maupun Mode Gelap (*fade-to-black*).
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penyelarasan Transparansi Blur Navbar pada Mode Terang (Light Mode)
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Mengubah opasitas latar belakang seluruh kapsul navigasi pada mode terang (`[data-tema="terang"] .nav-daftar`, `.nav-tombol-tema`, `.nav-tombol-aksi`, `.tombol-menu-ponsel`) dari sebelumnya 80% (`rgba(255, 255, 255, 0.8)`) menjadi **30% (`rgba(255, 255, 255, 0.3)`)** sehingga persis identik dengan mode gelap (`rgba(18, 16, 14, 0.3)`).
+    - Mempertahankan efek kaca buram `backdrop-filter: blur(16px) saturate(180%)` dengan border lembut semi-transparan `rgba(255, 255, 255, 0.4)`.
+    - Menyesuaikan ketebalan dan kontras font `.nav-tautan` agar tetap terbaca jelas dan elegan di atas kapsul transparan.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Kapsul navigasi (menu tengah, tombol tema matahari, dan tombol Jelajah 3D) pada Mode Terang kini tampil dengan efek *frosted glass* kaca transparan 30% yang tembus pandang dan berbayang lembut, tidak lagi berwarna putih susu pekat dan seragam secara visual dengan Mode Gelap.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penyelarasan Badge Bento Grid: Kapsul Emas Frosted Glass & Hyperlink Keemasan
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengubah badge kategori kartu Bento Grid (`.bento-badge`) menjadi kapsul bulat *pill* (`border-radius: 9999px; font-weight: 800`), berlatar belakang kaca buram semi-transparan (`background: rgba(18, 16, 14, 0.45); backdrop-filter: blur(12px) saturate(180%)`), bingkai tipis keemasan (`1px solid rgba(230, 177, 74, 0.4)`), dan warna teks emas `var(--aksen)` (`#E6B14A`), seragam 100% dengan badge pada kartu Top 5 Kebudayaan.
+    - Menetralkan modifier warna hijau lama (`.badge-tips`, `.badge-destinasi`, `.badge-itinerary`, `.badge-foto`) sehingga seluruh badge tempat bersejarah tampil konsisten tanpa unsur kotak hijau.
+    - Mengubah warna hyperlink rujukan pojok kanan atas (`.editorial-taut-semua`) dari sebelumnya hijau (`#2D6A4F` / `#52B788`) menjadi warna gold keemasan elegan (`var(--aksen)` `#E6B14A` di dark mode, `#B87314` di light mode; hover `#F0C368` / `#92580E`) yang senada dengan kicker judul.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Seluruh badge di kartu Bento Grid (Candi Borobudur, Benteng Rotterdam, Museum Mulawarman, Istana Maimun, Masjid Menara Kudus) kini menggunakan kapsul bulat lonjong dengan efek blur kaca transparan keemasan yang serasi dengan kartu Top 5 dan navbar.
+  - Tautan rujukan di pojok kanan atas tampil dengan warna gold keemasan yang harmonis di kedua mode tampilan.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penyelarasan Kartu Top 5 Kebudayaan UNESCO Menjadi Full-Image Bento Card
+- **Dibuat/diubah:**
+  - `web/index.html`:
+    - Mengubah struktur ke-5 kartu Top 5 Kebudayaan (Bambu Angklung, Seni Wayang, Batik, Gamelan, Tari Saman) dari format *split card* (foto di atas dan badan putih di bawah) menjadi format **Full-Image Bento Card** yang sama persis dengan kartu tempat bersejarah (Gambar 1).
+    - Memasang elemen `.bento-gambar` (foto penuh melingkupi kartu), `.bento-overlay` (gradasi gelap sinematik), `.bento-badge-bungkus` > `.bento-badge` (kapsul emas *frosted glass* di pojok kiri atas), dan `.bento-konten` di bagian bawah foto.
+    - Menambahkan ikon pin lokasi emas melingkar (`.bento-lokasi-badge`) beserta info lokasi 2 baris (asal daerah & tahun penetapan warisan takbenda UNESCO).
+  - `web/src/styles/sections.css`:
+    - Menghapus aturan layout split lama (`.budaya-top5-foto-bungkus`, `.budaya-top5-badan`, dll.).
+    - Mengintegrasikan styling `.budaya-top5-kartu` dengan sistem `.bento-kartu`, mengatur tinggi kartu proporsional (`min-height: 285px` s.d. `315px` pada 5 kolom), serta merapikan padding dan ukuran font judul agar tampil simetris dan elegan di desktop maupun mobile.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Seluruh kartu pada modul "Top 5 Kebudayaan Indonesia yang Mendunia" kini tampil sinematik dengan foto memenuhi seluruh kartu, overlay gradasi gelap, badge kapsul emas *frosted glass*, teks judul putih kontras di atas foto, serta ikon pin lokasi keemasan, 100% seragam dengan kartu tempat bersejarah di Gambar 1.
+  - Tampilan konsisten sempurna di Mode Gelap maupun Mode Terang tanpa kotak putih terpisah.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penghapusan Tombol Drawer Toggle Infografis (Alur Halaman Mulus & Langsung)
+- **Dibuat/diubah:**
+  - `web/index.html`:
+    - Menghapus tombol toggle drawer `.editorial-toggle-wadah` (`#tombol-toggle-infografis` beserta label *"Buka/Sembunyikan Peta Interaktif & Infografis Detail (Bab 1–3)"*).
+    - Menghapus elemen pembungkus `#wadah-infografis-lengkap` beratribut `hidden` sehingga seluruh konten Bab 1 (Peta Menyala), Bab 2 (Konsentrasi Budaya), dan Bab 3 (Provinsi Gelap) mengalir secara langsung, alami, dan terbuka permanen di alur halaman utama.
+  - `web/src/main.js`:
+    - Menyederhanakan `inisialisasiBentoEditorial()` dengan menghapus logika buka/tutup drawer infografis dan fokus pada interaksi navigasi kartu bento.
+  - `web/src/styles/sections.css`:
+    - Menghapus aturan CSS `.editorial-toggle-wadah`, `.tombol-toggle-infografis`, dan `.wadah-infografis-lengkap`.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Tombol drawer toggle yang canggung dan mengapung di antara section editorial dan Bab 1 telah hilang sepenuhnya.
+  - Pengunjung dapat menggulir (*scroll*) dari modul editorial (Tempat Bersejarah & Top 5 UNESCO) langsung ke Bab 1 — Peta Menyala secara mulus (*seamless*), tanpa perlu mengklik tombol ekspansi terlebih dahulu.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penghapusan Section Infografis Bab 1, 2, dan 3 dari Halaman Beranda
+- **Dibuat/diubah:**
+  - `web/index.html`:
+    - Menghapus seluruh section **Bab 1 — Peta Menyala** (`#peta-menyala`), **Bab 2 — Cahaya Tidak Merata** (`#konsentrasi`), dan **Bab 3 — Yang Masih Gelap** (`#provinsi-gelap`).
+    - Memperbarui tautan tombol aksi utama pada Hero (`.hero-cta-pill`) dari sebelumnya mengarah ke `#peta-menyala` menjadi langsung mengarah ke `#editorial-bersejarah` (*"Telusuri Cerita Budaya"*).
+  - `web/src/main.js`:
+    - Menambahkan *DOM guard checks* (`if (document.getElementById(...))`) sebelum menginisialisasi modul `nyala.js`, `konsentrasi.js`, dan `gelap.js` guna mencegah referensi *null* dan menghemat alokasi memori.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Halaman beranda kini tampil sangat ramping, fokus, dan elegan: mengalir dari Hero (Peta 3D Diorama & alam) $\rightarrow$ Tempat Bersejarah di Indonesia (Bento Grid) $\rightarrow$ Top 5 Kebudayaan UNESCO (Full-Image Card) $\rightarrow$ Penutup & Ajakan Aksi.
+  - Tampilan visual bersih tanpa ada lagi blok infografis statistik yang memanjang di beranda.
+  - Ukuran HTML berkurang dari 44,6 KB menjadi **35,5 KB** (turun 20%).
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Perombakan Section Penutup & Footer Menjadi Showcase Sinematik Mewah
+- **Dibuat/diubah:**
+  - `web/index.html`:
+    - Mengubah Section Penutup (`#penutup`) menjadi **Kartu Akbar Showcase Ajakan Budaya** (`.penutup-kartu-akbar`):
+      - Badge kapsul keemasan *frosted glass* (`# JAGA CERITANYA • MARI BERKONTRIBUSI`).
+      - Judul display Fraunces akbar dengan efek teks gradasi emas berkilau (*"Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."*).
+      - Menambahkan **3 Kartu Mini Pilar Aksi Budaya** bergaya Bento Grid (Kenali Warisan Sekitarmu, Catat Tutur Maestro, Daftarkan Perlindungan).
+      - Mengemas pelacak Paspor Budaya (`#s8-ringkasan-jejak`) ke dalam kartu interaktif horizontal berikon stempel emas dan tautan langsung ke `./paspor.html`.
+      - Menata baris tombol aksi (CTA) dengan tombol utama emas menyala, tombol sekunder kaca *frosted glass*, dan tombol kembali ke atas.
+    - Mentransformasikan **Footer Utama** (`.footer-utama`) menjadi layout 3 kolom modern:
+      - Kolom 1: Merek `Lokalocal` berikon monogram SVG emas + kartu atribusi resmi SPKT Kemendikbud (`#footer-atribusi-dinamis`) berlatar kaca buram.
+      - Kolom 2: Navigasi cepat (*Beranda Cerita, Jelajah Katalog 3D, Paspor Budaya, Kuis Kebudayaan*).
+      - Kolom 3: Pernyataan transparansi karya lomba + tombol dialog *"Baca Tentang Data & Keterbatasan"* (`#footer-tombol-tentang`) dan *"Tentang Pengembang"* (`#footer-tombol-tentang-kami`).
+      - Baris bawah: Kutipan pesan sosial keemasan dan badge spesifikasi teknis (*Data Statis Lokal • Prefers-Reduced-Motion • WCAG 2.1 AA*).
+  - `web/src/styles/sections.css`:
+    - Menambahkan seluruh styling `.penutup-section`, `.penutup-kartu-akbar`, `.penutup-pilar-grid`, `.penutup-jejak-kotak`, dan tombol-tombol CTA emas/kaca dengan dukungan penuh mode gelap dan mode terang.
+  - `web/src/styles/layout.css`:
+    - Menambahkan seluruh styling modern `.footer-grid-modern`, `.footer-kolom-merek`, `.footer-atribusi-modern`, `.footer-kolom-nav`, `.footer-kolom-transparansi`, `.footer-tombol-kaca`, dan `.footer-bawah-modern`.
+  - `web/src/ui/footer.js`:
+    - Menghubungkan tombol `#footer-tombol-tentang-kami` di footer agar langsung membuka dialog tim pengembang.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Bagian Penutup dan Footer kini tampil luar biasa menarik, sinematik, dan berkelas dunia, dengan estetika *glassmorphism* dan aksen keemasan yang serasi 100% dengan Bento Grid dan modul Top 5 Kebudayaan di atasnya.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penyelarasan Background Hitam Pekat & Gradasi Transisi Halus (Dark & Light Mode)
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengubah warna latar belakang `.penutup-section` menjadi **hitam pekat murni (`#000000`)** di mode gelap (*Night Mode*), dan putih bersih (`#ffffff`) di mode terang (*Light Mode*).
+    - Memasang lapisan gradasi transisi memudar (*fade-to-black gradient*) setinggi 80px di bagian atas (`.penutup-section::before`) yang menyambung mulus dari section Top 5 Editorial, serta di bagian bawah (`.penutup-section::after`) yang menyambung mulus ke Footer.
+    - Pada mode terang, gradasi otomatis beralih menjadi memudar ke putih (*fade-to-white gradient*).
+    - Menyesuaikan latar kartu akbar (`.penutup-kartu-akbar`) agar kontras mengapung secara elegan di atas hitam pekat dengan bayangan lembut.
+  - `web/src/styles/layout.css`:
+    - Mengubah warna latar belakang `.footer-utama` menjadi **hitam pekat murni (`#000000`)** di mode gelap dan putih bersih (`#ffffff`) di mode terang.
+    - Memasang gradasi transisi memudar setinggi 60px di bagian atas footer (`.footer-utama::before`) untuk menjamin transisi 100% mulus tanpa ada garis atau blok warna yang terputus.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Seluruh alur bawah halaman dari modul Top 5 Kebudayaan $\rightarrow$ Section Penutup $\rightarrow$ Footer kini menyatu dalam satu kesatuan warna hitam pekat (`#000000`) yang sinematik di Night Mode dan putih bersih (`#ffffff`) di Light Mode, dihubungkan oleh gradasi transisi lembut tanpa patahan warna.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Penghapusan Garis Pemisah (Border-Top) antara Penutup dan Footer
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Menghapus garis `border-top: 1px solid rgba(230, 177, 74, 0.25)` pada `.footer-utama` (diubah menjadi `border-top: none;` pada mode gelap maupun mode terang).
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Garis pemisah horizontal tipis di bawah tombol aksi penutup kini telah hilang sepenuhnya.
+  - Bidang hitam pekat antara kartu akbar penutup dan footer kini menyatu secara mulus dan bersih (*seamless edge-to-edge*).
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Peniadaan Tuntas Garis Horizontal Menjalar (Border-Bottom .bagian) pada Penutup
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Menambahkan aturan override spesifik berbobot tinggi:
+      `.bagian:last-of-type, .bagian.penutup-section, #penutup.bagian, #penutup { border-bottom: none !important; border-top: none !important; border: none !important; }`
+      sehingga garis horizontal tipis warisan dari `.bagian { border-bottom: 1px solid var(--garis); }` yang menjalar selebar viewport hilang tuntas.
+    - Menegaskan `border: none !important; border-top: none !important; border-bottom: none !important;` pada `.footer-utama` baik mode gelap maupun mode terang.
+  - `web/src/styles/sections.css`:
+    - Menegaskan `#penutup`, `#penutup.bagian`, `.penutup-section` dengan `border: none !important; border-top: none !important; border-bottom: none !important; outline: none !important;` di kedua mode (gelap dan terang).
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Tidak ada lagi garis pembatas horizontal tipis yang memotong selebar layar di antara Section Penutup dan Footer.
+  - Transisi visual antara Kartu Akbar dan Footer mengalir 100% *seamless* dan bersih tanpa gangguan garis horizontal.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**. HMR dev server aktif mengalirkan pembaruan ke klien.
+

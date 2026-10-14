@@ -34,6 +34,8 @@ export function inisialisasiBagianJelajah(dataAwal, opsi = {}) {
 
   // Elemen DOM
   const wadahPeta = document.getElementById('s5-peta-wadah');
+  if (!wadahPeta) return null;
+
   const tooltipEl = document.getElementById('s5-peta-tooltip');
   const wadahLegendaPeta = document.getElementById('s5-legenda-peta');
   const selectModePeta = document.getElementById('s5-select-mode-peta');

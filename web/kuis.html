@@ -20,6 +20,14 @@
     <meta property="og:image" content="./og-image.svg" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('lokalocal-tema') || 'gelap';
+          document.documentElement.setAttribute('data-tema', t);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
@@ -73,7 +81,29 @@
               Tentang data
             </button>
           </li>
+          <li>
+            <button type="button" id="nav-tombol-tentang-kami" class="nav-tautan">
+              Tentang kami
+            </button>
+          </li>
         </ul>
+
+        <div class="nav-aksi-kanan">
+          <button
+            type="button"
+            id="tombol-toggle-tema"
+            class="nav-tombol-tema"
+            aria-label="Ganti mode terang atau gelap"
+            title="Ganti mode terang/gelap"
+          >
+            <span class="ikon-bulan" aria-hidden="true">🌙</span>
+            <span class="ikon-matahari" aria-hidden="true">☀️</span>
+          </button>
+          <a href="./jelajah.html" class="nav-tombol-aksi" title="Buka Peta 3D Nusantara">
+            <span>Jelajah 3D</span>
+            <span class="nav-panah-mini" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </nav>
     </header>
 
@@ -152,6 +182,51 @@
             Situs <strong>Lokalocal</strong> menggunakan data publik dari Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan Republik Indonesia (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">spkt.kemenbud.go.id</a>).
           </p>
         </div>
+      </div>
+    </dialog>
+
+    <!-- Dialog Tentang Kami (Pengembang & Visi) -->
+    <dialog id="dialog-tentang-kami" class="dialog-modal" aria-labelledby="dialog-tentang-kami-judul">
+      <div class="dialog-kepala">
+        <h2 id="dialog-tentang-kami-judul" class="dialog-judul" tabindex="-1">
+          Tentang Lokalocal &amp; Pengembang
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-tentang-kami"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog tentang kami"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <p>
+          <strong>Lokalocal</strong> adalah platform web interaktif bertema <em>Sosial Budaya Indonesia</em> yang memadukan jurnalisme data, visual sinematik, peta 3D, dan gamifikasi edukatif.
+        </p>
+
+        <h3 style="margin-top: var(--ruang-3); font-size: 1.1rem; color: var(--kertas);">Visi Kami</h3>
+        <p>
+          "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat." Kami hadir untuk mendobrak persepsi bahwa katalog budaya harus selalu kaku dan membosankan, sekaligus menyoroti ketimpangan pendataan digital kebudayaan secara etis dan jujur.
+        </p>
+
+        <h3 style="margin-top: var(--ruang-3); font-size: 1.1rem; color: var(--kertas);">Empat Pilar Eksplorasi</h3>
+        <ul style="padding-left: var(--ruang-4); margin-block: var(--ruang-2); line-height: 1.7;">
+          <li><strong>Cerita (Scrollytelling):</strong> Menyelami narasi data tahap demi tahap dari barat ke timur.</li>
+          <li><strong>Jelajah (3D Immersive):</strong> Mengeksplorasi diorama nusantara 38 provinsi selayar penuh dengan panji budaya.</li>
+          <li><strong>Paspor Budaya:</strong> Mengoleksi stempel 38 provinsi dan membangun keterlibatan sebagai "Penjaga Cerita".</li>
+          <li><strong>Kuis Budaya:</strong> Arena interaktif menguji wawasan dari rekaman kebudayaan nyata.</li>
+        </ul>
+
+        <h3 style="margin-top: var(--ruang-3); font-size: 1.1rem; color: var(--kertas);">Integritas Data</h3>
+        <p>
+          Seluruh data bersumber langsung dari <em>Sistem Pendataan Kebudayaan Terpadu (SPKT) Kementerian Kebudayaan RI</em>. Kami tidak menambahkan data rekaan, menjamin privasi individu, dan memberikan atribusi penuh kepada para pencatat kebudayaan di seluruh penjuru Indonesia.
+        </p>
+      </div>
+      <div class="dialog-kaki">
+        <button type="button" class="tombol tombol--utama" onclick="this.closest('dialog').close()">
+          Tutup
+        </button>
       </div>
     </dialog>
 

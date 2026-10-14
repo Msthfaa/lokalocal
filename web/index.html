@@ -29,12 +29,20 @@
     />
     <meta name="twitter:image" content="./og-image.svg" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('lokalocal-tema') || 'gelap';
+          document.documentElement.setAttribute('data-tema', t);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
 
     <header id="header-utama" class="header-utama">
-      <nav class="wadah nav-bar" aria-label="Navigasi utama">
+      <nav class="nav-bar" aria-label="Navigasi utama">
         <a href="#pembuka" class="nav-merek">
           <svg class="nav-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
@@ -82,7 +90,29 @@
               Tentang data
             </button>
           </li>
+          <li>
+            <button type="button" id="nav-tombol-tentang-kami" class="nav-tautan">
+              Tentang kami
+            </button>
+          </li>
         </ul>
+
+        <div class="nav-aksi-kanan">
+          <button
+            type="button"
+            id="tombol-toggle-tema"
+            class="nav-tombol-tema"
+            aria-label="Ganti mode terang atau gelap"
+            title="Ganti mode terang/gelap"
+          >
+            <span class="ikon-bulan" aria-hidden="true">🌙</span>
+            <span class="ikon-matahari" aria-hidden="true">☀️</span>
+          </button>
+          <a href="./jelajah.html" class="nav-tombol-aksi" title="Buka Peta 3D Nusantara">
+            <span>Jelajah 3D</span>
+            <span class="nav-panah-mini" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </nav>
     </header>
 
@@ -101,462 +131,526 @@
         </div>
       </div>
 
-      <!-- S1 — Pembuka -->
-      <section id="pembuka" class="bagian bagian--penuh s1-pembuka" aria-labelledby="judul-s1">
+      <!-- S1 — Pembuka / Dashboard Sinematik -->
+      <section id="pembuka" class="s1-pembuka" aria-labelledby="judul-s1">
         <div id="s1-latar-peta" class="s1-latar-peta" aria-hidden="true"></div>
 
-        <!-- Prompt scroll interaktif saat diorama 3D utuh di opening -->
-        <div id="s1-prompt-scroll" class="s1-prompt-scroll" aria-hidden="true">
-          <span class="s1-prompt-badge">Atlas 3D Nusantara</span>
-          <span class="s1-prompt-teks">Gulir untuk menyingkap catatan budaya</span>
-          <span class="s1-prompt-panah">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-        </div>
+        <!-- Konten Tengah Utama (Sunrock Style Hero) -->
+        <div class="hero-cinema-tengah">
+          <h1 id="judul-s1" class="hero-judul-utama">
+            Pesona Alam &amp; Mahakarya Budaya Nusantara
+          </h1>
 
-        <div class="wadah s1-konten">
-          <div class="bagian-kepala">
-            <p class="kicker" id="kicker-s1">Lokalocal</p>
-            <h1 id="judul-s1">
-              <span class="h1-baris-luar">
-                <span class="h1-baris-dalam">Berapa banyak budaya Indonesia</span>
+          <p class="hero-subjudul-utama" id="subjudul-s1">
+            Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.
+            Telusuri <strong><span id="stat-total-mentah">544</span> catatan budaya resmi</strong> di antara kemegahan bentang alam dari Sabang hingga Merauke.
+          </p>
+
+          <div class="hero-cta-wadah">
+            <a href="#editorial-bersejarah" class="hero-cta-pill">
+              <span>Telusuri Cerita Budaya</span>
+              <span class="hero-cta-ikon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M7 7H17M17 7V17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </span>
-              <span class="h1-baris-luar">
-                <span class="h1-baris-dalam">yang sudah tercatat?</span>
-              </span>
-            </h1>
-            <p class="bagian-subjudul" id="subjudul-s1">
-              Kami membaca <strong id="stat-total-mentah">544</strong> catatan dari sistem pendataan resmi
-              Kementerian Kebudayaan. Ada yang indah. Ada yang janggal.
-            </p>
-            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--ruang-3); margin-top: var(--ruang-2);">
-              <a href="#peta-menyala" class="tombol tombol--utama">
-                Mulai menelusuri
-                <span class="indikator-scroll-panah" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </a>
+            <a href="./jelajah.html" class="hero-cta-sekunder">
+              <span>🌐 Jelajah Peta 3D</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Editorial Magazine & Bento Grid: Bab 1 — 3 & Destinasi Unggulan (Ala Gambar 2) -->
+      <section id="cerita-editorial" class="bagian editorial-section" aria-labelledby="judul-editorial">
+        <div class="wadah">
+          <!-- Modul 1: Sorotan Cerita (Bento Grid 5 Tempat Bersejarah) -->
+          <div class="editorial-baris-kepala">
+            <div>
+              <p class="kicker">Destinasi Bersejarah Nusantara</p>
+              <h2 id="judul-editorial" class="editorial-judul-section">Kisah &amp; Catatan Warisan Tempat Bersejarah</h2>
+            </div>
+            <a
+              href="https://www.indonesia.travel/id/id/travel-ideas/heritage/tempat-bersejarah-di-indonesia"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="editorial-taut-semua"
+              title="Buka artikel sumber di Indonesia.travel"
+            >
+              <span>Sumber: Indonesia.travel</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="editorial-bento-grid">
+            <!-- Kartu Besar (Kiri - 1. Candi Borobudur, Jawa Tengah) -->
+            <article class="bento-kartu bento-kartu--besar" id="kartu-bento-borobudur" tabindex="0" role="button" aria-label="Buka Candi Borobudur, Jawa Tengah">
+              <img
+                src="./images/bersejarah/borobudur.jpg"
+                alt="Kemegahan Candi Borobudur, Magelang, Jawa Tengah"
+                class="bento-gambar"
+                loading="lazy"
+              />
+              <div class="bento-overlay"></div>
+              <div class="bento-badge-bungkus">
+                <span class="bento-badge badge-destinasi">#1 • CANDI BERSEJARAH</span>
+              </div>
+              <div class="bento-konten">
+                <h3 class="bento-judul-besar">
+                  1. Candi Borobudur, Jawa Tengah
+                </h3>
+                <p class="bento-deskripsi">
+                  Candi Buddha terbesar di dunia yang dibangun pada abad ke-8 Masehi oleh Dinasti Syailendra, berhiaskan ribuan panel relief dan stupa megah peninggalan peradaban agung Nusantara.
+                </p>
+                <div class="bento-penulis">
+                  <span class="bento-lokasi-badge" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
+                  <div class="bento-penulis-info">
+                    <span class="bento-penulis-nama">Magelang, Jawa Tengah</span>
+                    <span class="bento-penulis-tanggal">Warisan Budaya Dunia UNESCO • Dinasti Syailendra</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Kisi Kanan (2x2 Grid) -->
+            <div class="bento-kisi-kanan">
+              <!-- Kartu Kanan Atas 1 (2. Benteng Rotterdam, Sulawesi Selatan) -->
+              <article class="bento-kartu bento-kartu--kecil" id="kartu-bento-rotterdam" tabindex="0" role="button" aria-label="Buka Benteng Rotterdam, Sulawesi Selatan">
+                <img
+                  src="./images/bersejarah/rotterdam.jpg"
+                  alt="Benteng Rotterdam (Fort Rotterdam) Makassar, Sulawesi Selatan"
+                  class="bento-gambar"
+                  loading="lazy"
+                />
+                <div class="bento-overlay"></div>
+                <div class="bento-badge-bungkus">
+                  <span class="bento-badge badge-tips">#2 • BENTENG MARITIM</span>
+                </div>
+                <div class="bento-konten">
+                  <h3 class="bento-judul-kecil">
+                    2. Benteng Rotterdam, Sulawesi Selatan
+                  </h3>
+                  <div class="bento-penulis">
+                    <span class="bento-lokasi-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    </span>
+                    <div class="bento-penulis-info">
+                      <span class="bento-penulis-nama">Kota Makassar, Sulawesi Selatan</span>
+                      <span class="bento-penulis-tanggal">Benteng Penyu Kesultanan Gowa (1545)</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Kartu Kanan Atas 2 (3. Museum Mulawarman, Kalimantan Timur) -->
+              <article class="bento-kartu bento-kartu--kecil" id="kartu-bento-mulawarman" tabindex="0" role="button" aria-label="Buka Museum Mulawarman, Kalimantan Timur">
+                <img
+                  src="./images/bersejarah/mulawarman.jpg"
+                  alt="Museum Mulawarman Tenggarong, Kalimantan Timur"
+                  class="bento-gambar"
+                  loading="lazy"
+                />
+                <div class="bento-overlay"></div>
+                <div class="bento-badge-bungkus">
+                  <span class="bento-badge badge-destinasi">#3 • ISTANA KESULTANAN</span>
+                </div>
+                <div class="bento-konten">
+                  <h3 class="bento-judul-kecil">
+                    3. Museum Mulawarman, Kalimantan Timur
+                  </h3>
+                  <div class="bento-penulis">
+                    <span class="bento-lokasi-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    </span>
+                    <div class="bento-penulis-info">
+                      <span class="bento-penulis-nama">Kutai Kartanegara, Kalimantan Timur</span>
+                      <span class="bento-penulis-tanggal">Pusat Peninggalan Kesultanan Kutai (1936)</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Kartu Kanan Bawah 1 (4. Istana Maimun, Sumatra Utara) -->
+              <article class="bento-kartu bento-kartu--kecil" id="kartu-bento-maimun" tabindex="0" role="button" aria-label="Buka Istana Maimun, Sumatra Utara">
+                <img
+                  src="./images/bersejarah/maimun.jpg"
+                  alt="Istana Maimun Medan, Sumatra Utara"
+                  class="bento-gambar"
+                  loading="lazy"
+                />
+                <div class="bento-overlay"></div>
+                <div class="bento-badge-bungkus">
+                  <span class="bento-badge badge-itinerary">#4 • ISTANA MAIMUN</span>
+                </div>
+                <div class="bento-konten">
+                  <h3 class="bento-judul-kecil">
+                    4. Istana Maimun, Sumatra Utara
+                  </h3>
+                  <div class="bento-penulis">
+                    <span class="bento-lokasi-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    </span>
+                    <div class="bento-penulis-info">
+                      <span class="bento-penulis-nama">Kota Medan, Sumatra Utara</span>
+                      <span class="bento-penulis-tanggal">Arsitektur Melayu-Mogul Kesultanan Deli (1888)</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Kartu Kanan Bawah 2 (5. Masjid Menara Kudus, Jawa Tengah) -->
+              <article class="bento-kartu bento-kartu--kecil" id="kartu-bento-kudus" tabindex="0" role="button" aria-label="Buka Masjid Menara Kudus, Jawa Tengah">
+                <img
+                  src="./images/bersejarah/kudus.jpg"
+                  alt="Masjid Menara Kudus, Jawa Tengah"
+                  class="bento-gambar"
+                  loading="lazy"
+                />
+                <div class="bento-overlay"></div>
+                <div class="bento-badge-bungkus">
+                  <span class="bento-badge badge-foto">#5 • MASJID KUNO</span>
+                </div>
+                <div class="bento-konten">
+                  <h3 class="bento-judul-kecil">
+                    5. Masjid Menara Kudus, Jawa Tengah
+                  </h3>
+                  <div class="bento-penulis">
+                    <span class="bento-lokasi-badge" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    </span>
+                    <div class="bento-penulis-info">
+                      <span class="bento-penulis-nama">Kabupaten Kudus, Jawa Tengah</span>
+                      <span class="bento-penulis-tanggal">Akulturasi Hindu-Islam Sunan Kudus (1549)</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Modul 2: Top 5 Kebudayaan Indonesia yang Mendunia (Sumber: Tribratanews Polri) -->
+          <div class="editorial-destinasi-baris-kepala">
+            <div>
+              <p class="kicker">Top 5 Kebudayaan</p>
+              <h3 class="editorial-subjudul-section">5 WARISAN BUDAYA INDONESIA YANG MENDUNIA</h3>
+            </div>
+            <a
+              href="https://tribratanews.polri.go.id/blog/none-22/inilah-5-warisan-budaya-indonesia-yang-mendunia-52549"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="editorial-taut-semua"
+              title="Buka artikel sumber di Tribratanews Polri"
+            >
+              <span>Sumber: Tribratanews Polri</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="editorial-destinasi-grid top5-budaya-grid">
+            <!-- 1. Bambu Angklung -->
+            <article class="bento-kartu budaya-top5-kartu" id="kartu-top5-angklung" tabindex="0" role="button" aria-label="Buka Bambu Angklung, Jawa Barat">
+              <img
+                src="./images/top5/angklung.jpg"
+                alt="Alat Musik Tradisional Bambu Angklung Jawa Barat"
+                class="bento-gambar"
+                loading="lazy"
+              />
+              <div class="bento-overlay"></div>
+              <div class="bento-badge-bungkus">
+                <span class="bento-badge">#1 • BAMBU ANGKLUNG</span>
+              </div>
+              <div class="bento-konten">
+                <h3 class="bento-judul-kecil">
+                  1. Bambu Angklung, Jawa Barat
+                </h3>
+                <div class="bento-penulis">
+                  <span class="bento-lokasi-badge" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
+                  <div class="bento-penulis-info">
+                    <span class="bento-penulis-nama">Jawa Barat, Indonesia</span>
+                    <span class="bento-penulis-tanggal">Alat Musik Tradisional (UNESCO 2010)</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2. Seni Wayang -->
+            <article class="bento-kartu budaya-top5-kartu" id="kartu-top5-wayang" tabindex="0" role="button" aria-label="Buka Seni Wayang, Nusantara">
+              <img
+                src="./images/top5/wayang.jpg"
+                alt="Mahakarya Seni Wayang Kulit Nusantara"
+                class="bento-gambar"
+                loading="lazy"
+              />
+              <div class="bento-overlay"></div>
+              <div class="bento-badge-bungkus">
+                <span class="bento-badge">#2 • SENI WAYANG</span>
+              </div>
+              <div class="bento-konten">
+                <h3 class="bento-judul-kecil">
+                  2. Seni Wayang, Nusantara
+                </h3>
+                <div class="bento-penulis">
+                  <span class="bento-lokasi-badge" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
+                  <div class="bento-penulis-info">
+                    <span class="bento-penulis-nama">Jawa &amp; Bali, Indonesia</span>
+                    <span class="bento-penulis-tanggal">Seni Teater Boneka Bayangan (UNESCO 2003)</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3. Batik -->
+            <article class="bento-kartu budaya-top5-kartu" id="kartu-top5-batik" tabindex="0" role="button" aria-label="Buka Batik Nusantara">
+              <img
+                src="./images/top5/batik.jpg"
+                alt="Mahakarya Seni Kain Batik Nusantara"
+                class="bento-gambar"
+                loading="lazy"
+              />
+              <div class="bento-overlay"></div>
+              <div class="bento-badge-bungkus">
+                <span class="bento-badge">#3 • BATIK NUSANTARA</span>
+              </div>
+              <div class="bento-konten">
+                <h3 class="bento-judul-kecil">
+                  3. Batik, Nusantara
+                </h3>
+                <div class="bento-penulis">
+                  <span class="bento-lokasi-badge" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
+                  <div class="bento-penulis-info">
+                    <span class="bento-penulis-nama">Seluruh Nusantara, Indonesia</span>
+                    <span class="bento-penulis-tanggal">Kriya Kain Lilin Pusaka (UNESCO 2009)</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 4. Gamelan -->
+            <article class="bento-kartu budaya-top5-kartu" id="kartu-top5-gamelan" tabindex="0" role="button" aria-label="Buka Gamelan, Jawa &amp; Bali">
+              <img
+                src="./images/top5/gamelan.jpg"
+                alt="Ansambel Gamelan Tradisional Nusantara"
+                class="bento-gambar"
+                loading="lazy"
+              />
+              <div class="bento-overlay"></div>
+              <div class="bento-badge-bungkus">
+                <span class="bento-badge">#4 • GAMELAN</span>
+              </div>
+              <div class="bento-konten">
+                <h3 class="bento-judul-kecil">
+                  4. Gamelan, Jawa &amp; Bali
+                </h3>
+                <div class="bento-penulis">
+                  <span class="bento-lokasi-badge" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
+                  <div class="bento-penulis-info">
+                    <span class="bento-penulis-nama">Jawa &amp; Bali, Indonesia</span>
+                    <span class="bento-penulis-tanggal">Ansambel Musik Orkestra (UNESCO 2021)</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 5. Tari Saman -->
+            <article class="bento-kartu budaya-top5-kartu" id="kartu-top5-saman" tabindex="0" role="button" aria-label="Buka Tari Saman, Aceh">
+              <img
+                src="./images/top5/tari-saman.jpg"
+                alt="Pertunjukan Seni Tari Tradisional Saman"
+                class="bento-gambar"
+                loading="lazy"
+              />
+              <div class="bento-overlay"></div>
+              <div class="bento-badge-bungkus">
+                <span class="bento-badge">#5 • TARI SAMAN</span>
+              </div>
+              <div class="bento-konten">
+                <h3 class="bento-judul-kecil">
+                  5. Tari Saman, Aceh
+                </h3>
+                <div class="bento-penulis">
+                  <span class="bento-lokasi-badge" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
+                  <div class="bento-penulis-info">
+                    <span class="bento-penulis-nama">Gayo, Aceh, Indonesia</span>
+                    <span class="bento-penulis-tanggal">Tari Harmoni Seribu Tangan (UNESCO 2011)</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- S8 — Penutup & Ajakan Aksi Budaya -->
+      <section id="penutup" class="bagian penutup-section" aria-labelledby="judul-s8">
+        <div class="wadah">
+          <div class="penutup-kartu-akbar">
+            <!-- Header Penutup -->
+            <div class="penutup-header">
+              <div class="penutup-badge-bungkus">
+                <span class="bento-badge"># JAGA CERITANYA • MARI BERKONTRIBUSI</span>
+              </div>
+              <h2 id="judul-s8" class="penutup-judul-utama">
+                Budaya Indonesia tidak sedikit.<br />
+                <span class="penutup-teks-aksen">Yang sedikit adalah yang sudah tercatat.</span>
+              </h2>
+              <p class="penutup-subjudul">
+                Budaya hidup lewat cerita yang terus dituturkan dari generasi ke generasi.
+                Jika daerahmu belum banyak tercatat di basis data nasional, mari ikut menjaga,
+                mendokumentasikan, dan mendaftarkan kekayaan tradisi Nusantara.
+              </p>
+            </div>
+
+            <!-- 3 Kartu Mini Pilar Aksi Budaya (Bento Style) -->
+            <div class="penutup-pilar-grid">
+              <div class="penutup-pilar-kartu">
+                <div class="penutup-pilar-kepala">
+                  <span class="penutup-pilar-badge">#01 • TELUSURI</span>
+                  <div class="penutup-pilar-ikon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                  </div>
+                </div>
+                <h3 class="penutup-pilar-judul">Kenali Warisan Sekitarmu</h3>
+                <p class="penutup-pilar-isi">
+                  Telusuri karya budaya, naskah kuno, dan sastra lisan di daerahmu yang belum tercantum di katalog resmi SPKT.
+                </p>
+              </div>
+
+              <div class="penutup-pilar-kartu">
+                <div class="penutup-pilar-kepala">
+                  <span class="penutup-pilar-badge">#02 • DOKUMENTASI</span>
+                  <div class="penutup-pilar-ikon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 20h9"></path>
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <h3 class="penutup-pilar-judul">Catat Tutur Maestro</h3>
+                <p class="penutup-pilar-isi">
+                  Abadikan proses kriya pusaka, filosofi adat, dan rekaman lisan dari para sesepuh budaya sebelum lekang dimakan zaman.
+                </p>
+              </div>
+
+              <div class="penutup-pilar-kartu">
+                <div class="penutup-pilar-kepala">
+                  <span class="penutup-pilar-badge">#03 • ADVOKASI</span>
+                  <div class="penutup-pilar-ikon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <h3 class="penutup-pilar-judul">Daftarkan Perlindungan</h3>
+                <p class="penutup-pilar-isi">
+                  Daftarkan karya budaya ke dinas terkait untuk perlindungan hukum Kekayaan Intelektual Komunal (KIK) Indonesia.
+                </p>
+              </div>
+            </div>
+
+            <!-- Kotak Jejak Paspor Interaktif -->
+            <div class="penutup-jejak-kotak">
+              <div class="penutup-jejak-kiri">
+                <span class="penutup-jejak-ikon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
                   </svg>
                 </span>
-              </a>
-              <a href="./jelajah.html" class="tombol tombol--garis">Langsung ke peta jelajah 3D</a>
-            </div>
-          </div>
-
-          <div class="kisi-metrik" aria-label="Ringkasan data pencatatan budaya">
-            <div class="kartu-metrik">
-              <span class="kartu-metrik-angka" id="metrik-rekaman-bersih">493</span>
-              <span class="kartu-metrik-label">Catatan Budaya Unik</span>
-              <span class="kartu-metrik-ket">
-                Dari <span id="metrik-rekaman-mentah">544</span> rekaman SPKT per <span data-tanggal-ambil>9 Oktober 2026</span>
-              </span>
-            </div>
-            <div class="kartu-metrik">
-              <span class="kartu-metrik-angka" id="metrik-provinsi-berdata">28 / 38</span>
-              <span class="kartu-metrik-label">Provinsi Tercatat</span>
-              <span class="kartu-metrik-ket">
-                <span id="metrik-provinsi-belum">10</span> provinsi berstatus belum tercatat di SPKT
-              </span>
-            </div>
-            <div class="kartu-metrik">
-              <span class="kartu-metrik-angka" id="metrik-opk-total">422</span>
-              <span class="kartu-metrik-label">Objek Pemajuan Kebudayaan (OPK)</span>
-              <span class="kartu-metrik-ket">Mencakup 5 jenis tradisi, seni, bahasa, dan kerajinan</span>
-            </div>
-            <div class="kartu-metrik">
-              <span class="kartu-metrik-angka" id="metrik-cagar-total">65</span>
-              <span class="kartu-metrik-label">Cagar Budaya</span>
-              <span class="kartu-metrik-ket">Benda, bangunan, struktur, situs, dan kawasan</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- S2 — Peta Menyala -->
-      <section id="peta-menyala" class="bagian" aria-labelledby="judul-s2">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Bab 1 — Peta Menyala</p>
-            <h2 id="judul-s2">Satu per satu, provinsi yang sudah mencatat budayanya mulai menyala.</h2>
-            <p class="bagian-subjudul">
-              Setiap warna pada peta menunjukkan jenis <strong>Objek Pemajuan Kebudayaan (OPK)</strong> — unsur budaya
-              takbenda maupun tradisi yang menjadi sasaran pemajuan kebudayaan nasional — yang paling banyak tercatat
-              di provinsi tersebut per <span data-tanggal-ambil>9 Oktober 2026</span>.
-            </p>
-          </div>
-
-          <div class="s2-scrolly-layout">
-            <div class="s2-peta-sticky">
-              <div class="s2-status-bar">
-                <div class="s2-penghitung-kotak">
-                  <span id="s2-angka-visual" class="s2-angka-besar" aria-hidden="true">544</span>
-                  <span id="s2-angka-sr" class="sr-only">544 catatan budaya</span>
-                  <span style="font-size: var(--teks-kecil); color: var(--kertas-redup);">
-                    catatan budaya di SPKT
-                  </span>
+                <div class="penutup-jejak-konten">
+                  <span class="penutup-jejak-label">Status Paspor Budaya Pengunjung</span>
+                  <p id="s8-ringkasan-jejak" class="penutup-jejak-teks">
+                    Menghubungkan catatan progres paspor budaya...
+                  </p>
                 </div>
-                <span style="font-size: 0.8125rem; color: var(--kertas-redup);">
-                  Mode peta: <strong style="color: var(--kertas);">Jenis OPK Dominan</strong>
-                </span>
               </div>
-
-              <div class="peta-bingkai">
-                <div id="s2-peta-wadah"></div>
-                <div id="s2-peta-tooltip" class="peta-tooltip" role="status" hidden></div>
-              </div>
-              <p style="margin-top: var(--ruang-2); font-size: 0.8125rem; color: var(--kertas-redup);">
-                Arahkan kursor atau gunakan tombol Tab pada peta untuk melihat jumlah catatan tiap provinsi. Provinsi berarsir diagonal berstatus <strong>belum tercatat di SPKT</strong>.
-              </p>
+              <a href="./paspor.html" class="penutup-jejak-tombol">
+                <span>Buka Paspor Budaya</span>
+                <span aria-hidden="true">↗</span>
+              </a>
             </div>
 
-            <div class="s2-langkah-wadah">
-              <article class="s2-kartu-langkah is-aktif">
-                <p class="s2-langkah-nomor">Langkah 01 • Barat ke Timur</p>
-                <h3>Cahaya dari Aceh hingga Papua</h3>
-                <p style="margin-top: var(--ruang-2); color: var(--kertas-redup); font-size: var(--teks-kecil);">
-                  Satu per satu, provinsi yang sudah memiliki catatan di dalam sistem mulai menyala dari ujung barat ke timur Nusantara.
-                </p>
-              </article>
-
-              <article class="s2-kartu-langkah">
-                <p class="s2-langkah-nomor">Langkah 02 • Total Tangkapan</p>
-                <h3>544 Rekaman (493 Catatan Unik)</h3>
-                <p style="margin-top: var(--ruang-2); color: var(--kertas-redup); font-size: var(--teks-kecil);">
-                  Setelah membersihkan 3 duplikat identik dan menggabungkan 26 tradisi lintas kabupaten yang berdeskripsi sama persis, kita memperoleh 493 catatan unik siap dijelajahi.
-                </p>
-              </article>
-
-              <article class="s2-kartu-langkah">
-                <p class="s2-langkah-nomor">Langkah 03 • Sebaran Wilayah</p>
-                <h3>
-                  Tersebar di <span id="s2-provinsi-berdata">28</span> dari <span id="s2-total-provinsi">38</span> provinsi
-                </h3>
-                <p style="margin-top: var(--ruang-2); color: var(--kertas-redup); font-size: var(--teks-kecil);">
-                  Sebagian besar provinsi telah memiliki rekaman awal, namun kepadatan pencatatan antarwilayah masih sangat beragam.
-                </p>
-              </article>
-
-              <article class="s2-kartu-langkah">
-                <p class="s2-langkah-nomor">Langkah 04 • Ragam Budaya</p>
-                <h3>Setiap warna adalah jenis budaya yang berbeda</h3>
-                <p style="margin-top: var(--ruang-2); margin-bottom: var(--ruang-3); color: var(--kertas-redup); font-size: var(--teks-kecil);">
-                  Kerajinan tradisional dan seni pertunjukan mendominasi sebagian besar catatan yang sudah masuk ke SPKT:
-                </p>
-                <ul id="s2-legenda-jenis" class="daftar-chip" aria-label="Daftar jenis budaya dan jumlah catatan"></ul>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- S3 — Cahaya Tidak Merata -->
-      <section id="konsentrasi" class="bagian bagian--terang" aria-labelledby="judul-s3">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Bab 2 — Cahaya Tidak Merata</p>
-            <h2 id="judul-s3">Tapi cahayanya tidak merata.</h2>
-            <p class="bagian-subjudul" id="s3-narasi-kabupaten">
-              Dari setiap 100 catatan, <strong id="s3-persen-kabupaten">17</strong> berasal dari satu kota:
-              <strong id="s3-nama-kabupaten">Kota Pariaman</strong>, <span id="s3-provinsi-kabupaten">Sumatera Barat</span>
-              (<span id="s3-jumlah-kabupaten">94</span> catatan). Lima provinsi teratas menyumbang
-              <strong id="s3-top5-persen">58,2%</strong> dari seluruh catatan (per <span data-tanggal-ambil>9 Oktober 2026</span>).
-            </p>
-          </div>
-
-          <div class="kotak-catatan-jujur" style="margin-bottom: var(--ruang-5);">
-            <strong>Catatan penting:</strong> Angka ini menunjukkan seberapa banyak yang sudah dicatat,
-            bukan seberapa kaya budaya sebuah daerah.
-          </div>
-
-          <div class="s3-kisi-utama">
-            <div class="s3-kartu-panel">
-              <div>
-                <p class="label-kecil">Proporsi 100 Catatan (Waffle 10×10)</p>
-                <h3 style="margin-top: 4px;">Satu kota menyumbang hampir seperlima data</h3>
-              </div>
-
-              <div id="s3-waffle-grid" class="waffle-grid" role="img"></div>
-
-              <div class="waffle-legenda">
-                <span class="waffle-legenda-item">
-                  <span class="waffle-kotak-kecil" style="background-color: #C85A32; border: 1px solid #8F3B1B;"></span>
-                  <span>Kota Pariaman (17 kotak)</span>
-                </span>
-                <span class="waffle-legenda-item">
-                  <span class="waffle-kotak-kecil" style="background-color: #D7C8B5; border: 1px solid rgba(42,33,27,0.2);"></span>
-                  <span>130 kabupaten/kota lainnya (83 kotak)</span>
-                </span>
-              </div>
-            </div>
-
-            <div class="s3-kartu-panel">
-              <div>
-                <p class="label-kecil">Konsentrasi Provinsi</p>
-                <h3 style="margin-top: 4px;">5 Provinsi dengan Catatan Terbanyak di SPKT</h3>
-              </div>
-
-              <ol id="s3-daftar-top5" class="bar-top5-daftar" aria-label="Lima provinsi dengan jumlah catatan terbanyak"></ol>
-
-              <p style="font-size: 0.8125rem; color: var(--tinta-2); margin-top: var(--ruang-1);">
-                Sumatera Barat dan Jawa Tengah saja mencakup lebih dari sepertiga (36,4%) seluruh rekaman yang tersedia pada dataset ini.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- S4 — Yang Masih Gelap -->
-      <section id="provinsi-gelap" class="bagian" aria-labelledby="judul-s4">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Bab 3 — Yang Masih Gelap</p>
-            <h2 id="judul-s4">
-              <span id="s4-jumlah-belum">10</span> provinsi belum punya catatan di SPKT.
-            </h2>
-            <p class="bagian-subjudul">
-              Belum tercatat bukan berarti tidak ada. Setiap provinsi ini punya tradisi, kerajinan, dan cerita.
-              Catatannya yang belum sampai di sini per <span data-tanggal-ambil>9 Oktober 2026</span>.
-            </p>
-          </div>
-
-          <div class="s4-layout">
-            <div>
-              <div class="peta-bingkai s4-peta-wadah">
-                <div id="s4-peta-wadah"></div>
-                <div id="s4-peta-tooltip" class="peta-tooltip" role="status" hidden></div>
-              </div>
-              <p style="margin-top: var(--ruang-2); font-size: 0.8125rem; color: var(--kertas-redup);">
-                10 provinsi dengan pola arsir diagonal dan tepi emas adalah wilayah yang <strong>belum tercatat di SPKT</strong> pada saat pengambilan data.
-              </p>
-            </div>
-
-            <div>
-              <p class="label-kecil" style="margin-bottom: var(--ruang-2);">
-                Klik Provinsi untuk Melihat Status Pencatatan
-              </p>
-              <ul
-                id="s4-daftar-provinsi-belum"
-                class="daftar-chip"
-                aria-label="10 provinsi yang belum tercatat di SPKT"
-              ></ul>
-
-              <div id="s4-detail-provinsi-kosong" class="s4-kartu-detail-kosong" aria-live="polite"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- S5 — Jelajah -->
-      <section id="jelajah" class="bagian" aria-labelledby="judul-s5">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Eksplorasi Data</p>
-            <h2 id="judul-s5">Jelajahi Peta &amp; Catatan Budaya</h2>
-            <p class="bagian-subjudul">
-              Pilih provinsi di peta atau cari nama tradisi, kerajinan, dan cagar budaya untuk membaca kisah di baliknya
-              (data per <span data-tanggal-ambil>9 Oktober 2026</span>).
-            </p>
-          </div>
-
-          <!-- Bar Kontrol Mode Peta, Zoom, dan Tabel Alternatif Aksesibel -->
-          <div class="s5-kontrol-peta-bar">
-            <div class="s5-grup-mode">
-              <div class="s5-toggle-dimensi" id="s5-grup-toggle-dimensi" role="group" aria-label="Pilih format tampilan peta">
-                <button type="button" id="s5-btn-mode-3d" class="s5-btn-dimensi is-active">🌐 Diorama 3D</button>
-                <button type="button" id="s5-btn-mode-2d" class="s5-btn-dimensi">🗺️ Peta 2D</button>
-              </div>
-
-              <label for="s5-select-mode-peta" class="label-kecil">Warna:</label>
-              <select id="s5-select-mode-peta" class="s5-select" aria-label="Pilih mode pewarnaan peta">
-                <option value="jumlah">Jumlah Catatan (Skala Akar Kuadrat)</option>
-                <option value="jenis-dominan">Jenis OPK Dominan</option>
-                <option value="per-jenis">Per Jenis OPK Tertentu</option>
-                <option value="cagar">Jumlah Cagar Budaya</option>
-              </select>
-
-              <select
-                id="s5-select-subjenis-peta"
-                class="s5-select"
-                aria-label="Pilih jenis OPK untuk ditampilkan di peta"
-                hidden
-              >
-                <option value="kerajinan">Kerajinan Tradisional</option>
-                <option value="seni">Seni Pertunjukan</option>
-                <option value="lisan">Tradisi Lisan &amp; Bahasa</option>
-                <option value="pengetahuan">Pengetahuan &amp; Teknologi</option>
-                <option value="adat">Adat, Ritus &amp; Perayaan</option>
-              </select>
-            </div>
-
-            <div class="s5-grup-mode">
-              <div class="s5-grup-zoom" role="group" aria-label="Kontrol perbesaran peta">
-                <button type="button" id="s5-zoom-out" class="tombol-zoom" aria-label="Perkecil peta">−</button>
-                <button type="button" id="s5-zoom-reset" class="tombol-zoom" aria-label="Atur ulang ukuran peta">100%</button>
-                <button type="button" id="s5-zoom-in" class="tombol-zoom" aria-label="Perbesar peta">+</button>
-              </div>
-
-              <button
-                type="button"
-                id="s5-tombol-tabel"
-                class="tombol tombol--garis"
-                aria-expanded="false"
-                aria-controls="s5-wadah-tabel"
-              >
-                Lihat sebagai daftar (Tabel 38 Provinsi)
-              </button>
-            </div>
-          </div>
-
-          <!-- Grid Peta Interaktif + Panel Detail Provinsi -->
-          <div class="s5-peta-panel-grid">
-            <div>
-              <div class="peta-bingkai s5-bingkai-peta" id="s5-bingkai-peta">
-                <div id="s5-peta-wadah"></div>
-                <div id="s5-peta-tooltip" class="peta-tooltip" role="status" hidden></div>
-              </div>
-
-              <div id="s5-legenda-peta" class="s5-legenda-peta" aria-label="Legenda skala peta"></div>
-
-              <div class="s5-chips-provinsi-bungkus">
-                <p class="label-kecil" style="margin-bottom: 8px;">
-                  Pilih Cepat Provinsi (38 Provinsi):
-                </p>
-                <div
-                  id="s5-chips-provinsi"
-                  class="s5-chips-provinsi"
-                  role="group"
-                  aria-label="Daftar tombol pilih cepat 38 provinsi"
-                ></div>
-              </div>
-            </div>
-
-            <div id="s5-panel-provinsi" aria-live="polite"></div>
-          </div>
-
-          <!-- Wadah Tabel 38 Provinsi (Alternatif Aksesibel) -->
-          <div id="s5-wadah-tabel" hidden></div>
-
-          <!-- Kontrol Pencarian Teks & Filter Jenis Kartu Cerita -->
-          <div class="s5-filter-panel">
-            <div class="s5-cari-baris">
-              <div class="s5-input-bungkus">
-                <label for="s5-input-cari" class="sr-only">Cari nama objek budaya, kabupaten, atau provinsi</label>
-                <input
-                  type="search"
-                  id="s5-input-cari"
-                  class="s5-input-cari"
-                  placeholder="Cari nama tradisi, kuliner, senjata, kabupaten, atau provinsi..."
-                  autocomplete="off"
-                />
-                <button
-                  type="button"
-                  id="s5-hapus-cari"
-                  class="s5-tombol-hapus-cari"
-                  aria-label="Bersihkan kata kunci pencarian"
-                  hidden
-                >
-                  ✕
-                </button>
-              </div>
-
-              <button type="button" id="s5-reset-filter" class="tombol tombol--garis" hidden>
-                Reset semua filter
-              </button>
-            </div>
-
-            <div>
-              <p class="label-kecil" style="margin-bottom: 8px;">
-                Saring menurut Jenis Budaya (Multi-pilih):
-              </p>
-              <div
-                id="s5-filter-jenis"
-                class="daftar-chip"
-                role="group"
-                aria-label="Saring kartu cerita menurut jenis budaya"
-              ></div>
-            </div>
-
-            <p id="s5-ringkasan-hasil" style="font-size: var(--teks-kecil); color: var(--kertas-redup);" aria-live="polite">
-              Menyiapkan koleksi catatan budaya...
-            </p>
-          </div>
-
-          <!-- Kisi Kartu Cerita -->
-          <div id="s5-kisi-kartu" class="kisi-kartu-cerita"></div>
-
-          <div id="s5-wadah-muat-lagi" class="s5-muat-lagi-wadah" hidden>
-            <button type="button" id="s5-tombol-muat-lagi" class="tombol tombol--utama">
-              Muat lebih banyak
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- S6 — Kisah Pilihan -->
-      <section id="kisah-pilihan" class="bagian" aria-labelledby="judul-s6">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--ruang-3);">
-              <div>
-                <p class="kicker">Kisah Pilihan</p>
-                <h2 id="judul-s6" style="margin-top: var(--ruang-1);">Potret tradisi dari berbagai penjuru</h2>
-                <p class="bagian-subjudul" style="margin-top: var(--ruang-2);">
-                  Enam catatan pilihan dengan deskripsi lengkap dari berbagai provinsi dan jenis Objek Pemajuan Kebudayaan.
-                </p>
-              </div>
-              <button type="button" id="s6-tombol-acak" class="tombol tombol--garis">
-                Tampilkan 6 kisah lainnya
-              </button>
-            </div>
-          </div>
-
-          <div id="s6-kisi-kisah" class="kisi-kartu-cerita"></div>
-        </div>
-      </section>
-
-      <!-- S7 — Paspor Budaya & Kuis -->
-      <section id="paspor-kuis" class="bagian" aria-labelledby="judul-s7">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Interaksi &amp; Tantangan</p>
-            <h2 id="judul-s7">Paspor Budaya &amp; Uji Pengetahuanmu</h2>
-            <p class="bagian-subjudul">
-              Kumpulkan stempel dari 38 provinsi yang kamu telusuri, lalu uji seberapa jauh kamu mengenal catatan budaya Nusantara.
-            </p>
-          </div>
-
-          <div class="s7-kisi-dua">
-            <div id="s7-panel-paspor" class="s7-panel-kartu" aria-live="polite"></div>
-            <div id="s7-panel-kuis" class="s7-panel-kartu" aria-live="polite"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- S8 — Penutup & Ajakan -->
-      <section id="penutup" class="bagian" aria-labelledby="judul-s8">
-        <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Jaga Ceritanya</p>
-            <h2 id="judul-s8">Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.</h2>
-            <p class="bagian-subjudul">
-              Budaya hidup lewat cerita yang dituturkan. Kalau daerahmu belum banyak tercatat, kamu bisa ikut menjaga dan mendokumentasikan ceritanya.
-            </p>
-            <p id="s8-ringkasan-jejak" class="kotak-catatan-jujur" style="margin-top: var(--ruang-2);"></p>
-            <div style="display: flex; flex-wrap: wrap; gap: var(--ruang-3); margin-top: var(--ruang-2);">
+            <!-- Baris Tombol Aksi Call to Action -->
+            <div class="penutup-cta-baris">
               <a
                 href="https://spkt.kemenbud.go.id"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="tombol tombol--utama"
+                class="penutup-btn-emas"
+                title="Buka portal resmi SPKT Kementerian Kebudayaan RI"
               >
-                Kunjungi SPKT Kementerian Kebudayaan
+                <span>Kunjungi SPKT Kemendikbud</span>
+                <span class="cta-panah" aria-hidden="true">↗</span>
               </a>
-              <button type="button" id="tombol-bagikan-halaman" class="tombol tombol--garis">
-                Bagikan halaman ini
+              <button
+                type="button"
+                id="tombol-bagikan-halaman"
+                class="penutup-btn-kaca"
+                title="Salin dan bagikan tautan Lokalocal"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                <span>Bagikan Halaman Ini</span>
               </button>
-              <a href="#pembuka" class="tombol tombol--garis">
-                Ulangi dari awal
+              <a href="#pembuka" class="penutup-btn-kaca" title="Kembali ke atas beranda">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+                <span>Kembali ke Awal</span>
               </a>
             </div>
           </div>
@@ -564,40 +658,109 @@
       </section>
     </main>
 
-    <!-- Footer Utama dengan Atribusi Wajib -->
+    <!-- Footer Utama Sinematik dengan Atribusi Wajib -->
     <footer class="footer-utama">
       <div class="wadah">
-        <div class="footer-kisi">
-          <div class="footer-kolom">
-            <p class="footer-judul" id="footer-judul-situs">Lokalocal</p>
-            <p>
-              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah,
-              sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
+        <div class="footer-grid-modern">
+          <!-- Kolom 1: Merek & Misi -->
+          <div class="footer-kolom-merek">
+            <a href="#pembuka" class="footer-merek-link">
+              <svg class="footer-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
+                <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
+              </svg>
+              <span class="footer-merek-nama" id="footer-judul-situs">Lokalocal</span>
+            </a>
+            <p class="footer-deskripsi">
+              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah, sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
             </p>
-            <div class="footer-atribusi" id="footer-atribusi-dinamis">
-              Data:
-              <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">
-                SPKT – Kementerian Kebudayaan RI
-              </a>, diambil 9 Oktober 2026
+            <div class="footer-atribusi-modern" id="footer-atribusi-dinamis">
+              <div class="footer-atribusi-ikon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <div class="footer-atribusi-teks">
+                <span class="footer-atribusi-label">Sumber Data Resmi:</span>
+                <div class="footer-atribusi-baris">
+                  <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer" class="footer-tautan-emas">
+                    SPKT – Kementerian Kebudayaan RI ↗
+                  </a>
+                  <span id="footer-tanggal-ambil" class="footer-tanggal-badge">diambil 9 Oktober 2026</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="footer-kolom">
-            <p class="label-kecil">Transparansi &amp; Pernyataan</p>
-            <p>
-              Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+          <!-- Kolom 2: Navigasi Halaman -->
+          <div class="footer-kolom-nav">
+            <p class="footer-kicker">Navigasi Utama</p>
+            <ul class="footer-menu-list">
+              <li>
+                <a href="./index.html" class="footer-menu-link">
+                  <span class="footer-menu-bullet" aria-hidden="true">✦</span>
+                  <span>Beranda Cerita</span>
+                </a>
+              </li>
+              <li>
+                <a href="./jelajah.html" class="footer-menu-link">
+                  <span class="footer-menu-bullet" aria-hidden="true">✦</span>
+                  <span>Jelajah Katalog 3D</span>
+                </a>
+              </li>
+              <li>
+                <a href="./paspor.html" class="footer-menu-link">
+                  <span class="footer-menu-bullet" aria-hidden="true">✦</span>
+                  <span>Paspor Budaya</span>
+                </a>
+              </li>
+              <li>
+                <a href="./kuis.html" class="footer-menu-link">
+                  <span class="footer-menu-bullet" aria-hidden="true">✦</span>
+                  <span>Kuis Kebudayaan</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Kolom 3: Transparansi & Dialog -->
+          <div class="footer-kolom-transparansi">
+            <p class="footer-kicker">Transparansi &amp; Pernyataan</p>
+            <p class="footer-transparansi-teks">
+              Situs ini dibuat sebagai karya lomba eksplorasi teknologi dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
             </p>
-            <div>
-              <button type="button" id="footer-tombol-tentang" class="tombol tombol--garis">
-                Baca tentang data &amp; keterbatasan
+            <div class="footer-tombol-grup">
+              <button type="button" id="footer-tombol-tentang" class="footer-tombol-kaca">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>Baca Tentang Data &amp; Keterbatasan</span>
+              </button>
+              <button type="button" id="footer-tombol-tentang-kami" class="footer-tombol-kaca">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Tentang Pengembang</span>
               </button>
             </div>
           </div>
         </div>
 
-        <div class="footer-catatan-bawah">
-          <span>Pesan inti: "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."</span>
-          <span>Data statis lokal • Menghormati prefers-reduced-motion</span>
+        <div class="footer-bawah-modern">
+          <p class="footer-kutipan">
+            &ldquo;Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.&rdquo;
+          </p>
+          <div class="footer-teknis-chips">
+            <span class="footer-chip">Data Statis Lokal</span>
+            <span class="footer-chip">Prefers-Reduced-Motion</span>
+            <span class="footer-chip">WCAG 2.1 AA</span>
+          </div>
         </div>
       </div>
     </footer>
@@ -669,6 +832,53 @@
             Disusun untuk Lomba Pembuatan Website bertema Sosial Budaya — menyajikan data terbuka menjadi pengalaman bercerita yang jujur dan mudah dijelajahi.
           </p>
         </div>
+      </div>
+    </dialog>
+
+    <!-- Dialog Tentang Kami (Pengembang & Visi) -->
+    <dialog id="dialog-tentang-kami" class="dialog-modal" aria-labelledby="dialog-tentang-kami-judul">
+      <div class="dialog-kepala">
+        <h2 id="dialog-tentang-kami-judul" class="dialog-judul" tabindex="-1">
+          Tentang Lokalocal &amp; Pengembang
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-tentang-kami"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog tentang kami"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <p>
+          <strong>Lokalocal</strong> adalah platform web interaktif bertema <em>Sosial Budaya Indonesia</em> yang memadukan jurnalisme data, visual sinematik, peta 3D, dan gamifikasi edukatif.
+        </p>
+
+        <h3 style="margin-top: var(--ruang-3); font-size: 1.1rem; color: var(--kertas);">Visi Kami</h3>
+        <p>
+          "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat." Kami hadir untuk mendobrak persepsi bahwa katalog budaya harus selalu kaku dan membosankan, sekaligus menyoroti ketimpangan pendataan digital kebudayaan secara etis dan jujur.
+        </p>
+
+        <h3 style="margin-top: var(--ruang-3); font-size: 1.1rem; color: var(--kertas);">Empat Pilar Eksplorasi</h3>
+        <ul style="padding-left: var(--ruang-4); margin-block: var(--ruang-2); line-height: 1.7;">
+          <li><strong>Cerita (Scrollytelling):</strong> Menyelami narasi data tahap demi tahap dari barat ke timur.</li>
+          <li><strong>Jelajah (3D Immersive):</strong> Mengeksplorasi diorama nusantara 38 provinsi selayar penuh dengan panji budaya.</li>
+          <li><strong>Paspor Budaya:</strong> Mengoleksi stempel 38 provinsi dan membangun keterlibatan sebagai "Penjaga Cerita".</li>
+          <li><strong>Kuis Budaya:</strong> Arena interaktif menguji wawasan dari rekaman kebudayaan nyata.</li>
+        </ul>
+
+        <h3 style="margin-top: var(--ruang-3); font-size: 1.1rem; color: var(--kertas);">Integritas Data</h3>
+        <p>
+          Seluruh data bersumber langsung dari <em>Sistem Pendataan Kebudayaan Terpadu (SPKT) Kementerian Kebudayaan RI</em>. Kami tidak menambahkan data rekaan, menjamin privasi individu, dan memberikan atribusi penuh kepada para pencatat kebudayaan di seluruh penjuru Indonesia.
+        </p>
+      </div>
+      <div class="dialog-kaki">
+        <button type="button" class="tombol tombol--utama" onclick="this.closest('dialog').close()">
+          Tutup
+        </button>
       </div>
     </dialog>
 

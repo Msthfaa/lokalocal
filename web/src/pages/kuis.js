@@ -10,18 +10,27 @@ import '../styles/sections.css';
 
 import { muatDataAwal } from '../data/loader.js';
 import { inisialisasiNavigasi } from '../ui/nav.js';
-import { inisialisasiDialogTentang, perbaruiAtribusiFooter } from '../ui/footer.js';
+import { inisialisasiTema } from '../ui/tema.js';
+import { inisialisasiBacksound } from '../ui/audio.js';
+import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { inisialisasiBagianKuis } from '../sections/kuis.js';
 import { inisialisasiDialogRekaman } from '../ui/dialog-rekaman.js';
 
 let dialogRekamanKontrol = null;
 
 async function mulaiHalamanKuis() {
+  inisialisasiTema();
+  inisialisasiBacksound();
+
   const dialogTentangKontrol = inisialisasiDialogTentang();
+  const dialogTentangKamiKontrol = inisialisasiDialogTentangKami();
 
   inisialisasiNavigasi({
     bukaDialogTentang: (pemicu) => {
       if (dialogTentangKontrol) dialogTentangKontrol.buka(pemicu);
+    },
+    bukaDialogTentangKami: (pemicu) => {
+      if (dialogTentangKamiKontrol) dialogTentangKamiKontrol.buka(pemicu);
     },
     halamanAktif: 'kuis'
   });

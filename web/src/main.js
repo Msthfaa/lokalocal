@@ -15,7 +15,9 @@ import { muatDataAwal, jadwalkanMuatDataLengkap } from './data/loader.js';
 import { formatAngka } from './util/format.js';
 import { segarkanScrollTrigger } from './util/motion.js';
 import { inisialisasiNavigasi } from './ui/nav.js';
-import { inisialisasiDialogTentang, perbaruiAtribusiFooter } from './ui/footer.js';
+import { inisialisasiTema } from './ui/tema.js';
+import { inisialisasiBacksound } from './ui/audio.js';
+import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from './ui/footer.js';
 import { tampilkanToast } from './ui/toast.js';
 
 import { inisialisasiBagianHero } from './sections/hero.js';
@@ -164,21 +166,31 @@ function renderDataAwalKeHalaman(dataAwal) {
 
   // Inisialisasi bagian S1 - S6
   inisialisasiBagianHero(dataAwal);
-  inisialisasiBagianNyala(dataAwal, {
-    saatKlikProvinsi: (kode) => {
-      if (kontrolJelajah) {
-        kontrolJelajah.pilihProvinsiDariLuar(kode);
+  if (document.getElementById('peta-menyala')) {
+    inisialisasiBagianNyala(dataAwal, {
+      saatKlikProvinsi: (kode) => {
+        if (kontrolJelajah) {
+          kontrolJelajah.pilihProvinsiDariLuar(kode);
+        } else {
+          window.location.href = `./jelajah.html?provinsi=${encodeURIComponent(kode)}`;
+        }
       }
-    }
-  });
-  inisialisasiBagianKonsentrasi(dataAwal);
-  inisialisasiBagianGelap(dataAwal, {
-    saatPilihProvinsiKeJelajah: (kode) => {
-      if (kontrolJelajah) {
-        kontrolJelajah.pilihProvinsiDariLuar(kode);
+    });
+  }
+  if (document.getElementById('konsentrasi')) {
+    inisialisasiBagianKonsentrasi(dataAwal);
+  }
+  if (document.getElementById('provinsi-gelap')) {
+    inisialisasiBagianGelap(dataAwal, {
+      saatPilihProvinsiKeJelajah: (kode) => {
+        if (kontrolJelajah) {
+          kontrolJelajah.pilihProvinsiDariLuar(kode);
+        } else {
+          window.location.href = `./jelajah.html?provinsi=${encodeURIComponent(kode)}`;
+        }
       }
-    }
-  });
+    });
+  }
 
   kontrolJelajah = inisialisasiBagianJelajah(dataAwal, {
     saatBukaDetailRekaman: (rekaman, pemicuEl) => {
@@ -290,17 +302,54 @@ async function jalankanPemuatanData(paksaUlang = false) {
   }
 }
 
+/**
+ * Menginisialisasi interaksi kartu Bento Tempat Bersejarah.
+ */
+function inisialisasiBentoEditorial() {
+
+  const kartuBersejarah = [
+    { id: 'kartu-bento-borobudur', query: 'Borobudur' },
+    { id: 'kartu-bento-rotterdam', query: 'Rotterdam' },
+    { id: 'kartu-bento-mulawarman', query: 'Mulawarman' },
+    { id: 'kartu-bento-maimun', query: 'Maimun' },
+    { id: 'kartu-bento-kudus', query: 'Kudus' },
+  ];
+
+  kartuBersejarah.forEach(({ id, query }) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const navigasi = () => {
+        window.location.href = `./jelajah.html?q=${encodeURIComponent(query)}`;
+      };
+      el.addEventListener('click', navigasi);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          navigasi();
+        }
+      });
+    }
+  });
+}
+
 function init() {
+  inisialisasiTema();
+  inisialisasiBacksound();
+
   isiTeks('nav-nama-situs', NAMA_SITUS);
   isiTeks('kicker-s1', NAMA_SITUS);
   isiTeks('footer-judul-situs', NAMA_SITUS);
 
   const dialogTentang = inisialisasiDialogTentang();
+  const dialogTentangKami = inisialisasiDialogTentangKami();
 
   inisialisasiNavigasi({
-    bukaDialogTentang: (pemicu) => dialogTentang.buka(pemicu)
+    bukaDialogTentang: (pemicu) => dialogTentang.buka(pemicu),
+    bukaDialogTentangKami: (pemicu) => dialogTentangKami.buka(pemicu),
+    halamanAktif: 'cerita'
   });
   inisialisasiTombolBagikan();
+  inisialisasiBentoEditorial();
 
   const tombolCobaLagi = document.getElementById('tombol-coba-lagi-data');
   if (tombolCobaLagi) {

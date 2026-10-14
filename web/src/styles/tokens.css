@@ -5,7 +5,7 @@
  */
 
 :root {
-  /* Dasar */
+  /* Dasar (Default Gelap) */
   --malam: #14110F;        /* latar gelap utama */
   --malam-2: #1E1916;      /* permukaan di atas latar gelap */
   --malam-3: #28211D;      /* permukaan kartu/elemen sekunder di atas malam-2 */
@@ -67,6 +67,29 @@
   --dur-cepat: .2s;
   --dur-sedang: .6s;
   --dur-lambat: 1.2s;
+}
+
+/* ==========================================================================
+   Tema Terang (Light Mode) Tokens
+   Diaktifkan via [data-tema="terang"]
+   ========================================================================== */
+[data-tema="terang"] {
+  --malam: #F9F6F0;        /* latar terang utama (warm ivory paper) */
+  --malam-2: #FFFFFF;      /* permukaan kartu putih bersih */
+  --malam-3: #F1ECE3;      /* permukaan sekunder / elevasi lembut */
+  --kertas: #1C1917;       /* teks utama di mode terang (kontras > 14:1) */
+  --kertas-2: #2E2824;     /* teks tebal / judul */
+  --kertas-redup: #60564D; /* teks sekunder di mode terang (kontras > 5:1) */
+  --tinta: #1C1917;
+  --tinta-2: #60564D;
+  --garis: #E2D9CD;        /* garis batas lembut di mode terang */
+  --garis-terang: #D6CBC0;
+  --aksen: #B87314;        /* emas pekat berwibawa agar kontras di latar terang (> 4.5:1) */
+  --aksen-hover: #965B0A;
+  --aksen-2: #C45528;
+  --sukses: #2D6A4F;       /* hijau tua kontras */
+  --peringatan: #B86214;
+  --bahaya: #C24130;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -10,16 +10,25 @@ import '../styles/sections.css';
 
 import { muatDataAwal } from '../data/loader.js';
 import { inisialisasiNavigasi } from '../ui/nav.js';
-import { inisialisasiDialogTentang, perbaruiAtribusiFooter } from '../ui/footer.js';
+import { inisialisasiTema } from '../ui/tema.js';
+import { inisialisasiBacksound } from '../ui/audio.js';
+import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { buatPengelolaPaspor } from '../features/paspor.js';
 import { inisialisasiBagianPaspor } from '../sections/paspor.js';
 
 async function mulaiHalamanPaspor() {
+  inisialisasiTema();
+  inisialisasiBacksound();
+
   const dialogTentangKontrol = inisialisasiDialogTentang();
+  const dialogTentangKamiKontrol = inisialisasiDialogTentangKami();
 
   inisialisasiNavigasi({
     bukaDialogTentang: (pemicu) => {
       if (dialogTentangKontrol) dialogTentangKontrol.buka(pemicu);
+    },
+    bukaDialogTentangKami: (pemicu) => {
+      if (dialogTentangKamiKontrol) dialogTentangKamiKontrol.buka(pemicu);
     },
     halamanAktif: 'paspor'
   });
