@@ -33,18 +33,18 @@ export function hitungPosisiKameraFit(aspect, faktorZoom = 1) {
   const fovVertikalRad = (34 * Math.PI) / 180;
   const fovHorizontalRad = 2 * Math.atan(Math.tan(fovVertikalRad / 2) * aspect);
 
-  // Jika aspect >= 1.3 (layar lebar), radius target 4.1 unit (sebelumnya 7.6)
-  // Ini membuat diorama tampak hampir 2x lebih besar, mengisi layar secara penuh
+  // Jika aspect >= 1.3 (layar lebar), radius target 3.6 unit agar pulau tampak dekat, besar, dan megah
   const adalahLayarLebar = aspect >= 1.3;
-  const radiusTargetDasar = adalahLayarLebar ? 4.1 : (aspect >= 1.0 ? 4.6 : 5.0);
+  const radiusTargetDasar = adalahLayarLebar ? 3.6 : (aspect >= 1.0 ? 3.7 : 3.9);
   const radiusTarget = radiusTargetDasar / faktorZoom;
 
   const jarakVert = radiusTarget / Math.tan(fovVertikalRad / 2);
   const jarakHoriz = radiusTarget / Math.tan(fovHorizontalRad / 2);
   const jarak = Math.max(jarakVert, jarakHoriz);
 
-  // Sudut kamera 38 derajat dari atas agar sudut pandang 3/4 diorama nusantara terlihat proporsional
-  const sudutElevasi = (38 * Math.PI) / 180;
+  // Sudut kamera 31 derajat dari horizontal: sudut 3/4 isometrik yang seimbang
+  // kepulauan terlihat dekat dan detail, serta matahari & bulan melayang nyaman di langit
+  const sudutElevasi = (31 * Math.PI) / 180;
   const y = jarak * Math.sin(sudutElevasi);
   const z = jarak * Math.cos(sudutElevasi);
 

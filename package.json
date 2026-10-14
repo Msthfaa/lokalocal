@@ -1,0 +1,14 @@
+{
+  "name": "lokalokal",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "preview": "npm --prefix web run preview",
+    "sync-data": "npm --prefix web run sync-data",
+    "validate": "node tools/validate.mjs",
+    "audit": "node tools/audit.mjs"
+  }
+}

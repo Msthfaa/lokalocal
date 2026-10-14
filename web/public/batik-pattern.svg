@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <defs>
+    <style>
+      .b-line { stroke: rgba(255, 255, 255, 0.40); stroke-width: 1.2; fill: none; }
+      .b-soft { stroke: rgba(255, 255, 255, 0.20); stroke-width: 0.85; fill: none; }
+      .b-accent { stroke: rgba(255, 215, 120, 0.45); stroke-width: 1.0; fill: none; }
+      .b-dot { fill: rgba(255, 255, 255, 0.35); }
+      .b-gold { fill: rgba(255, 215, 120, 0.40); }
+    </style>
+  </defs>
+
+  <!-- Kawung Pusat (80, 80) -->
+  <g transform="translate(80, 80)">
+    <!-- Kelopak Kawung Luar -->
+    <ellipse cx="0" cy="-38" rx="16" ry="36" class="b-line" />
+    <ellipse cx="0" cy="38" rx="16" ry="36" class="b-line" />
+    <ellipse cx="-38" cy="0" rx="36" ry="16" class="b-line" />
+    <ellipse cx="38" cy="0" rx="36" ry="16" class="b-line" />
+
+    <!-- Aksen Garis Dalam Kelopak -->
+    <ellipse cx="0" cy="-38" rx="9" ry="22" class="b-soft" />
+    <ellipse cx="0" cy="38" rx="9" ry="22" class="b-soft" />
+    <ellipse cx="-38" cy="0" rx="22" ry="9" class="b-soft" />
+    <ellipse cx="38" cy="0" rx="22" ry="9" class="b-soft" />
+
+    <!-- Cecek-cecek (Titik Isen-isen Emas) -->
+    <circle cx="0" cy="-38" r="2.5" class="b-gold" />
+    <circle cx="0" cy="38" r="2.5" class="b-gold" />
+    <circle cx="-38" cy="0" r="2.5" class="b-gold" />
+    <circle cx="38" cy="0" r="2.5" class="b-gold" />
+
+    <!-- Belah Ketupat & Kembang Pusat -->
+    <polygon points="0,-12 12,0 0,12 -12,0" class="b-accent" />
+    <circle cx="0" cy="0" r="3.5" class="b-gold" />
+    <line x1="-8" y1="-8" x2="8" y2="8" class="b-soft" />
+    <line x1="-8" y1="8" x2="8" y2="-8" class="b-soft" />
+  </g>
+
+  <!-- Sudut Kiri Atas (0, 0) -->
+  <g transform="translate(0, 0)">
+    <ellipse cx="0" cy="38" rx="16" ry="36" class="b-line" />
+    <ellipse cx="38" cy="0" rx="36" ry="16" class="b-line" />
+    <ellipse cx="0" cy="38" rx="9" ry="22" class="b-soft" />
+    <ellipse cx="38" cy="0" rx="22" ry="9" class="b-soft" />
+    <circle cx="0" cy="38" r="2.5" class="b-gold" />
+    <circle cx="38" cy="0" r="2.5" class="b-gold" />
+    <polygon points="0,-12 12,0 0,12 -12,0" class="b-accent" />
+    <circle cx="0" cy="0" r="3.5" class="b-gold" />
+  </g>
+
+  <!-- Sudut Kanan Atas (160, 0) -->
+  <g transform="translate(160, 0)">
+    <ellipse cx="0" cy="38" rx="16" ry="36" class="b-line" />
+    <ellipse cx="-38" cy="0" rx="36" ry="16" class="b-line" />
+    <ellipse cx="0" cy="38" rx="9" ry="22" class="b-soft" />
+    <ellipse cx="-38" cy="0" rx="22" ry="9" class="b-soft" />
+    <circle cx="0" cy="38" r="2.5" class="b-gold" />
+    <circle cx="-38" cy="0" r="2.5" class="b-gold" />
+    <polygon points="0,-12 12,0 0,12 -12,0" class="b-accent" />
+    <circle cx="0" cy="0" r="3.5" class="b-gold" />
+  </g>
+
+  <!-- Sudut Kiri Bawah (0, 160) -->
+  <g transform="translate(0, 160)">
+    <ellipse cx="0" cy="-38" rx="16" ry="36" class="b-line" />
+    <ellipse cx="38" cy="0" rx="36" ry="16" class="b-line" />
+    <ellipse cx="0" cy="-38" rx="9" ry="22" class="b-soft" />
+    <ellipse cx="38" cy="0" rx="22" ry="9" class="b-soft" />
+    <circle cx="0" cy="-38" r="2.5" class="b-gold" />
+    <circle cx="38" cy="0" r="2.5" class="b-gold" />
+    <polygon points="0,-12 12,0 0,12 -12,0" class="b-accent" />
+    <circle cx="0" cy="0" r="3.5" class="b-gold" />
+  </g>
+
+  <!-- Sudut Kanan Bawah (160, 160) -->
+  <g transform="translate(160, 160)">
+    <ellipse cx="0" cy="-38" rx="16" ry="36" class="b-line" />
+    <ellipse cx="-38" cy="0" rx="36" ry="16" class="b-line" />
+    <ellipse cx="0" cy="-38" rx="9" ry="22" class="b-soft" />
+    <ellipse cx="-38" cy="0" rx="22" ry="9" class="b-soft" />
+    <circle cx="0" cy="-38" r="2.5" class="b-gold" />
+    <circle cx="-38" cy="0" r="2.5" class="b-gold" />
+    <polygon points="0,-12 12,0 0,12 -12,0" class="b-accent" />
+    <circle cx="0" cy="0" r="3.5" class="b-gold" />
+  </g>
+
+  <!-- Gelombang Parang & Aksen Diagonal Antar Motif -->
+  <path d="M 32,32 Q 40,24 48,32 T 64,32" class="b-soft" />
+  <path d="M 128,32 Q 120,24 112,32 T 96,32" class="b-soft" />
+  <path d="M 32,128 Q 40,136 48,128 T 64,128" class="b-soft" />
+  <path d="M 128,128 Q 120,136 112,128 T 96,128" class="b-soft" />
+
+  <circle cx="40" cy="40" r="1.8" class="b-dot" />
+  <circle cx="120" cy="40" r="1.8" class="b-dot" />
+  <circle cx="40" cy="120" r="1.8" class="b-dot" />
+  <circle cx="120" cy="120" r="1.8" class="b-dot" />
+</svg>

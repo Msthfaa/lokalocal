@@ -1,5 +1,53 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-14] Perbaikan Tampilan Pulau & Animasi Masuk Membal Sinkron (Pulau & Kapal Pinisi)
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/ornamen-maritim.js` (Perbaikan evaluasi kurva pelayaran Catmull-Rom agar aman dari nilai negatif; penambahan parameter `sembunyikanAwal: true` dan implementasi `mulaiAnimasiMasuk()` untuk 3 kapal Pinisi: kapal disembunyikan di awal, lalu menyembul membal keluar dari air laut bertahap seirama dengan penyebaran pulau: Pinisi Flores/Makassar di tengah t=0.25s, Pinisi Laut Jawa di barat-tengah t=0.55s, Flagship Sabang-Merauke t=0.85s, dan Kompas Mawar di t=0.35s).
+  - `web/src/sections/hero3d/build-scene.js` (Meneruskan opsi `sembunyikanMaritimAwal` dari `jelajah3d` ke `bangunOrnamenKemaritiman`).
+  - `web/src/sections/hero3d/build-provinces.js` (Menyimpan field `rNorm`, `distCenter`, `tinggiAngkat`, dan `sumbuPutar` pada `mesh.userData` untuk kalkulasi jarak radial dari pusat nusantara serta kompatibilitas penuh).
+  - `web/src/sections/hero3d/jelajah3d.js` (Implementasi `mulaiAnimasiMasuk()` menggunakan GSAP `back.out(2.2)` untuk 38 pulau dan memicu kemunculan membal kapal Pinisi secara sinkron; menghapus panggilan `aplikasikanPose` yang tidak relevan di halaman fullscreen; membentengi render loop dengan blok `try...finally` sehingga requestAnimationFrame tidak pernah macet).
+  - `web/src/pages/jelajah.js` (Sinkronisasi pemanggilan `kontroler3D.mulaiAnimasiMasuk()` tepat saat layar pemuatan maskot lucu memudar keluar).
+- **Hasil:**
+  - Peta 3D diorama kini 100% muncul dengan visual pulau yang lengkap, cerah zamrud, dan stabil tanpa freeze atau galat konsol.
+  - Saat layar pemuatan selesai, pengguna disuguhkan animasi spektakuler dan menggemaskan: baik pulau-pulau maupun kapal Pinisi menyembul membal bersamaan dari dalam air laut mulai dari pusat nusantara lalu menyebar hingga Sabang dan Merauke.
+
+## [2026-10-14] Optimasi Kinerja Muat & Layar Pemuatan Animasi Lucu Nusantara (Jelajah 3D)
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/build-provinces.js` (Pembangkitan material & tekstur atlas peta topografi diubah menjadi *Lazy On-Demand*. Mengeliminasi komputasi sinkron 76 kanvas resolusi 1024x1024 saat inisialisasi awal)
+  - `web/src/ui/loader-lucu.js` (Komponen layar pemuatan interaktif: Maskot SVG Kapal Pinisi Chibi "Si Kembara" dengan mata imut berkedip, bendera Merah Putih berkibar, lumba-lumba melompat, ombak berlapis beranimasi, bilah progres Sabang–Merauke, dan lelucon kebudayaan nusantara berputar dinamis)
+  - `web/src/pages/jelajah.js` (Integrasi tahapan pemuatan `loaderLucu`: 18% muat data -> 48% batas provinsi -> 72% relief 3D -> 92% lentera maritim -> 100% transisi halus saat frame pertama siap)
+  - `web/jelajah.html` (Markup statis awal `#jelajah-loading-screen` agar langsung muncul tanpa jeda kosong)
+  - `web/src/styles/sections.css` (Gaya visual kartu ceria, panggung samudra biru, animasi kedip mata, ombak dinamis, bilah progres bercahaya)
+- **Hasil:**
+  - Waktu persiapan adegan 3D terpangkas drastis dari sebelumnya beberapa detik menjadi sub-detik karena tekstur hanya dibangkitkan pada 1 provinsi terpilih saat Mode Detail dibuka.
+  - Pengguna disambut layar pemuatan lucu dan menghibur bernuansa kebudayaan Nusantara yang secara visual memandu proses persiapan pulau sampai 100% matang dan siap dijelajahi.
+
+## [2026-10-13] Ornamen Kemaritiman Nusantara & Pengayaan Tampilan Zoom Out
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/ornamen-maritim.js` (Modul mandiri kemaritiman nusantara: Flagship Pinisi berbendera Merah Putih rute Sabang–Merauke, perahu lokal di perairan terbuka tanpa menembus pulau, Cincin Khatulistiwa Emas 0°, Jalur Rempah Maritim kuno, Kompas Mawar antik)
+  - `web/public/batik-pattern.svg` (Pola SVG Batik Kawung & Isen-isen mulus untuk tekstur halus di latar belakang)
+  - `web/src/sections/hero3d/build-scene.js` (Penyatuan pengontrolMaritim ke adegan diorama dan mode waktu siang/malam)
+  - `web/src/sections/hero3d/jelajah3d.js` (Loop animasi maritim, pembatasan minimum zoom-out ke 72% / 0.90 agar selalu proporsional dan tidak hampa)
+  - `web/src/styles/sections.css` (Watermark tekstur batik halus pada bidang latar belakang luas serta gradasi atmosfer horison siang dan malam)
+- **Hasil:**
+  - Saat diorama di-zoom out, latar belakang biru luas dihiasi tekstur Batik Kawung yang sangat halus dan bernuansa royal budaya nusantara (tidak polos lagi).
+  - Kapal Flagship Pinisi berlayar mulus dari Sabang ke Merauke melintasi 23 titik perairan laut dalam nasional (Selat Malaka, Laut Jawa, Laut Flores, Laut Banda, Arafura) dan kembali lewat Pasifik utara dengan bendera Merah Putih berkibar di tiang utama.
+  - Seluruh rute kapal dihitung menggunakan kurva spline Catmull-Rom di perairan laut terbuka sehingga 100% realistis dan tidak pernah menembus daratan pulau.
+  - Cincin Khatulistiwa Emas membentang membelah nusantara di garis 0° dengan tugu cincin emas dan plakat penanda.
+  - Jalur Rempah Maritim menghubungkan pelabuhan kuno dengan garis bercahaya safir putus-putus.
+  - Kompas Mawar Antik berukir emas diletakkan di samudra selatan.
+
+## [2026-10-13] Peningkatan Visual — Efek Bokeh Blur Latar Belakang saat Keping Terpilih
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/mode-detail.js` (Pipeline blur render target, shader post-processing 17-tap Poisson disc, renderKhusus dengan Layer 0 & Layer 1 Three.js)
+  - `web/src/sections/hero3d/jelajah3d.js` (Integrasi renderKhusus pada loop requestAnimationFrame)
+  - `web/src/styles/sections.css` (Radial vignette backdrop pada `.mode-detail-overlay`)
+  - `tools/check-imports.mjs` (Penambahan `WebGLRenderTarget`, `OrthographicCamera`, `ShaderMaterial` ke whitelist Three.js)
+- **Hasil:**
+  - Saat keping provinsi dipilih dan Mode Detail terbuka, latar belakang 3D diorama (kepulauan Indonesia, lautan, awan, dan cetakan keping asal) mendapatkan efek blur lembut natural (*depth of field / bokeh lens* 3.8px).
+  - Keping daratan provinsi aktif di depan dirender pada Layer 1 dengan pembersihan depth buffer, sehingga 100% tajam, berkilau, dan bertekstur atlas tanpa ikut ter-blur.
+  - Saat kembali ke peta, rendering kembali ke mode normal langsung tanpa overhead post-processing.
+
 ## [2026-10-13] Fase 0 — Persiapan dan keamanan
 - **Dibuat/diubah:**
   - Folder `public/data/`, `public/data/clean/`, `backup-raw/`, `tools/`, `reports/`
@@ -324,3 +372,272 @@
   - **Proporsi Sempurna:** Pulau-pulau kecil tidak lagi mencuat seperti pilar tinggi, dan papan laut diorama menyangga kepulauan nusantara dengan anggun tanpa menenggelamkan pulau.
   - Build produksi lolos dengan **0 error dan 0 warning**.
 
+## [2026-10-13] Floating Side Card Kanan (Compact Secuil -> Animasi Bubble Melebar Kaya Data)
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/panel-kanan.js` (komponen baru Floating Side Card di kanan layar dengan transisi dua tahap: compact preview ringkas dan bubble expand kaya data)
+  - `web/src/sections/hero3d/jelajah3d.js` (mengintegrasikan `panelKanan`, menonaktifkan kartu DOM lama yang menutupi tengah pulau, memperhalus lerp damping rotasi orbit menjadi 0.075 untuk kehalusan ekstra, dan animasi keping pulau naik +0.14)
+  - `web/src/sections/hero3d/bendera.js` (mendukung `tampilkanOverlayDOM: false` sehingga tiang pin 3D emas tetap tertancap di pulau tanpa ada popup yang menghalangi peta)
+  - `web/src/styles/sections.css` (gaya glassmorphism luxury `.jelajah-kartu-kanan`, mode `.is-compact` 350px, mode `.is-expanded` 520px dengan animasi `bubbleExpand`, tab bar koleksi budaya vs metrik, grafik bar persentase OPK, daftar scroll tradisi lokal, dan responsif mobile bottom sheet)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Tengah Layar Bebas Rintangan:** Memilih provinsi tidak lagi menutupi pulau di tengah peta; kartu informasi kini mengambang di sebelah kanan layar dengan rapi.
+  - **Mode Compact ("Secuil Saja"):** Menampilkan identitas provinsi, status pencatatan SPKT, total catatan, quick chips kategori, dan tombol ciamik *"Buka Detail Budaya &rarr;"*.
+  - **Mode Expanded ("Animasi Bubble Melebar"):** Kartu melebar mulus dengan efek pegas bubble (tidak sampai full screen), memuat tab katalog tradisi riil (dengan input pencarian & filter), grafik komposisi 6 jenis budaya, kabupaten kontributor teratas, dan tombol koleksi paspor.
+  - Build produksi Vite lolos **100% tanpa error**.
+
+## [2026-10-13] Redesain Jelajah 3D: Animasi Spring Halus, Ornamen 3D Matahari & Bulan Siang/Malam, POV Lapang, dan Tab Kota/Kabupaten
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/build-sky.js` (ornamen langit 3D: Matahari emas berkas sinar kerucut low-poly, Bulan perak berkawah, dan 22 bintang octahedron berkelap-kelip dengan orbit rotasi dan siklus pencahayaan)
+  - `web/src/sections/hero3d/build-scene.js` (mengintegrasikan pengontrol langit ke dalam adegan, menambahkan `aturModeWaktu('siang' | 'malam')` yang mengubah hemisphere light, directional light, dan material laut secara dinamis)
+  - `web/src/sections/hero3d/build-provinces.js` (ekstrusi dirampingkan menjadi 0.13 agar kepulauan tampil anggun, filter pulau mikro degenerate `< 0.035` unit dibersihkan, inisialisasi `targetY`, `offsetTerpilih`, `offsetHover` untuk animasi spring)
+  - `web/src/sections/hero3d/index.js` (POV kamera diatur dengan `radiusTargetDasar = 5.8` dan elevasi 38°, memberi ruang lapang di langit untuk matahari & bulan serta menampilkan kepulauan nusantara secara proporsional di tengah)
+  - `web/src/sections/hero3d/jelajah3d.js` (perbaikan fatal bug pencarian budaya dengan mencocokkan `kode_provinsi`, loop render dengan spring lerp `0.14` pada `mesh.position.y` sehingga animasi pulau naik-turun menjadi sangat mulus tanpa patah-patah, integrasi siklus waktu siang/malam, dan zoom default 1.05)
+  - `web/src/sections/hero3d/panel-kanan.js` (memperbaiki daftar tradisi sehingga seluruh 493 rekaman budaya muncul lengkap, menambahkan Tab 2 "🏛️ Kota & Kabupaten" yang menampilkan seluruh kota/kabupaten kontributor per provinsi beserta jumlah rekaman dan persentase kontribusinya, mendesain ulang card menjadi glassmorphism mewah dengan tipografi Fraunces)
+  - `web/jelajah.html` & `web/src/pages/jelajah.js` (mengganti tombol toggle mode warna alami/OPK yang tidak berguna menjadi tombol toggle Siang ☀️ / Malam 🌙 yang mengubah suasana langit dan pencahayaan secara interaktif)
+  - `web/src/styles/sections.css` (styling Tab Kota & Kabupaten, Tab Metrik, tombol mode waktu malam/siang di HUD, dan penyesuaian dimensi card)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Animasi Pulau Buttery-Smooth:** Keping provinsi kini terangkat bertahap (`+0.18`) dengan interpolasi spring lerp yang mulus saat diklik atau di-hover, tanpa bug snapping atau ter-overwrite oleh mouse move.
+  - **Ornamen 3D Matahari & Bulan Melayang:** Ruang langit yang sebelumnya kosong kini dihiasi Matahari 3D low-poly bersinar dan Bulan perak dengan bintang-bintang.
+  - **Siklus Siang ☀️ & Malam 🌙 Interaktif:** Pengguna dapat beralih antara siang tropis yang cerah dan malam temaram yang magis melalui tombol HUD, mengubah pencahayaan langit, bayangan, dan warna laut.
+  - Validasi data lolos **0 error** dan build produksi Vite selesai **100% sukses**.
+
+## [2026-10-13] Penyempurnaan Total Jelajah 3D: Latar Langit Biru Atmosfer (Gambar Referensi), POV Dekat & Besar, Matahari/Bulan Anti-Tembus, Awan Mengalir & Efek Audio Gamelan
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css` (memperbaiki background kanvas `.jelajah-wadah-fullscreen` menjadi transparan dan menerapkan radial gradient atmosfer langit biru siang jenuh `#769BE6 -> #5477CB -> #3D5EA8` sesuai referensi visual Gambar 2, serta langit malam kosmis `#18223C -> #070A12`)
+  - `web/src/sections/hero3d/build-scene.js` (memperkecil radius papan laut silinder dari 6.6 menjadi 5.3 agar pulau Indonesia membentang gagah dan memenuhi bidang piring diorama)
+  - `web/src/sections/hero3d/index.js` & `jelajah3d.js` (menyetel `radiusTargetDasar = 3.6` dan `sudutElevasi = 31°` sehingga kepulauan nusantara tampak sangat dekat, besar, dan mudah diklik oleh pengguna)
+  - `web/src/sections/hero3d/build-sky.js` (memposisikan Matahari dan Bulan di koordinat aman `Z = -3.8` dan `Y = 2.4`, mengubah transisi Siang/Malam murni menggunakan lerp skala/opacity tanpa menurunkan posisi melewati dasar papan laut sehingga 100% bebas dari bug tembus laut)
+  - `web/src/util/audio.js` (membuat modul efek suara lonceng gamelan "ting" pentatonis lembut via Web Audio API tanpa dependensi eksternal)
+  - `web/src/sections/hero3d/jelajah3d.js` (mengintegrasikan suara gamelan saat pulau dipilih, menambahkan efek denyut emissive emas pada pulau terpilih, dan menganimasikan awan melayang mengelilingi nusantara secara dinamis)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Background Siang Cantik & Bersih:** Background hitam di belakang piring laut hilang total, digantikan oleh langit biru atmosfer cerah yang segar sesuai referensi video.
+  - **Pulau Dekat & Mudah Dijangkau:** Papan laut kompak dan kepulauan Indonesia tampil besar, megah, dan dekat di depan mata.
+  - **Matahari & Bulan Bebas Bug Tembus:** Terletak di langit atas yang pas, tidak menabrak navbar dan bertransisi memudar/membesar tanpa pernah menembus laut.
+  - **Awan Bergerak Hidup:** Gugus awan melayang lembut mengitari kepulauan nusantara secara organik.
+  - **Interaksi Memuaskan:** Memilih pulau kini diiringi nada lonceng gamelan modern yang merdu serta denyut cahaya emas elastis pada pulau terpilih.
+
+## [2026-10-13] Perbaikan Kritis Seleksi Pulau 3D, Zero-Crash Selection Event, & Harmonisasi Tema Siang/Malam Floating Card
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/jelajah3d.js` (menghapus duplikasi deklarasi variabel `zoomLevel`, `camera`, dan `cameraBasePos` yang memicu syntax error; memperluas ambang toleransi klik menjadi `< 22px` dan durasi `< 650ms`; menambahkan proteksi agar interaksi pada floating card, HUD, dan dialog tidak memicu event deselect "klik di luar pulau" ke kanvas)
+  - `web/src/sections/hero3d/bendera.js` (menambahkan guard null-check aman pada `elKartu` dan pelepasan `grupTiang` dari parent saat `dispose()` untuk mencegah uncaught TypeError)
+  - `web/src/sections/hero3d/panel-kanan.js` (memasang listener `stopPropagation` pada `pointerdown`, `pointerup`, dan `click` di elemen kartu mengambang agar tidak bocor ke kanvas 3D di belakangnya)
+  - `web/src/styles/sections.css` (menambahkan aturan `touch-action: none` dan `user-select: none` pada kanvas 3D; menambahkan sistem styling lengkap tema siang untuk `body.tema-siang .jelajah-kartu-kanan` dan elemen HUD sehingga kartu berubah menjadi krem-putih museum elegan saat matahari aktif)
+- **Hasil:**
+  - **Seleksi Provinsi 100% Responsif & Lancar:** Masalah tidak bisa memilih pulau dan animasi freeze teratasi tuntas. Keping pulau terangkat mulus dengan pantulan cahaya emas berdenyut serta lonceng gamelan merdu.
+  - **Interaksi Kartu Bebas Bug:** Mengklik tombol tab, input cari budaya, atau tombol di dalam floating side card tidak lagi menutup kartu secara tiba-tiba.
+  - **Sinkronisasi Tema Siang & Malam:** Floating Side Card dan HUD kini otomatis beralih tampilan (mode terang saat Siang ☀️ dengan matahari, dan mode gelap glassmorphism saat Malam 🌙 dengan bulan).
+  - Build produksi lolos **0 error** dan pengujian validasi data lolos **0 error**.
+
+## [2026-10-13] Redesain Penanda Pulau: Beacon Kristal Emas & Cincin Riak Daratan, Presisi Mainland Island, serta Tekstur Topografi Alami Zamrud Nusantara
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/bendera.js` (meredesain penanda pulau dari tiang pipa bendera raksasa menjadi **Pin Kristal Emas & Cincin Riak Tanah** proporsional: tinggi tiang dirampingkan dari 1.6 unit ke 0.44 unit, jarum kuningan halus, permata kristal octahedron emas berputar di puncaknya, panji segitiga mini bertekstur, dan cincin riak emas di permukaan tanah yang berdenyut lembut mengunci posisi pin ke daratan pulau)
+  - `web/src/sections/hero3d/build-provinces.js` (menambahkan algoritma kalkulasi luas poligon & centroid daratan utama sehingga penanda dijamin 100% berdiri tepat di atas pulau daratan utama — misalnya Halmahera di Maluku Utara — bukan di tengah laut kosong; menambahkan kanvas tekstur topografi tropis berarsir kontur mikro dan bintik kanopi alami; menyelaraskan 10 provinsi yang belum tercatat dengan rona hijau zamrud sejuk teduh `#5B9C69` yang menyatu harmonis dengan bentang alam kepulauan lainnya, menggantikan warna abu-abu kusam)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Penanda Menyatu & Proporsional:** Penanda tidak lagi berukuran raksasa dan tidak lagi menancap canggung di tengah laut; kini berdiri kokoh di daratan pulau utama dengan riak tanah dan kristal berputar yang elegan.
+  - **Kepulauan Nusantara Utuh & Bertekstur:** Kesan pulau plastik polos dan abu-abu semen hilang total; seluruh Indonesia tampil sebagai satu kesatuan Zamrud Khatulistiwa yang hijau subur, hidup, bertekstur relief topografi alami, dan memukau mata.
+  - Build produksi Vite lolos **100% tanpa error** dan validasi data lolos **0 error**.
+
+## [2026-10-13] Fitur Titik Lampu Gemerlap Malam Hari Nusantara (Night City Lights) & Perbaikan Indikator Persentase Zoom HUD
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/build-lights.js` (komponen baru sistem partikel lampu malam nusantara: menghasilkan ratusan titik cahaya berkilau emas, jingga, dan putih pijar yang tersebar secara akurat di daratan pulau 38 provinsi menggunakan Ray-Casting point-in-polygon; beranimasi kelap-kelip lembut dan otomatis memudar saat siang serta menyala saat malam)
+  - `web/src/sections/hero3d/build-scene.js` (mengintegrasikan pengontrol lampu malam ke grupUtama dan menyinkronkan siklus waktu `aturModeWaktu` siang/malam)
+  - `web/src/sections/hero3d/jelajah3d.js` (menghubungkan loop update animasi kelap-kelip lampu malam, menambahkan dukungan zoom via mouse wheel, menghitung persentase zoom presisi `Math.round((zoomLevel / 1.25) * 100)`, serta menambahkan callback `onZoomUbah` dan method `getZoomPersen()`)
+  - `web/src/pages/jelajah.js` (memperbaiki bug teks zoom HUD yang sebelumnya macet di 100%: kini tombol persentase zoom secara real-time memperbarui angkanya saat tombol `+`, tombol `−`, reset, maupun scroll wheel mouse digunakan)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Pesona Malam Hari Bertabur Cahaya:** Saat mode Malam Hari aktif, daratan kepulauan Indonesia memancarkan ratusan titik lampu gemerlap yang hidup seperti pemandangan satelit bumi di malam hari.
+  - **Lampu Mengikuti Elevasi Pulau (Fix Tertinggal di Bawah):** Titik lampu kini diikatkan langsung sebagai child dari masing-masing mesh keping provinsi, sehingga saat keping pulau terangkat ke atas karena dipilih atau beranimasi spring, lampu-lampu malam otomatis ikut terangkat menempel di daratan pulau secara sempurna.
+  - **Indikator Zoom 100% Berfungsi Akurat:** Angka zoom HUD kini selalu berubah dinamis (misalnya 70%, 85%, 100%, 115%, 130%, 145%) sesuai tingkat perbesaran kamera.
+## [2026-10-13] Checkpoint CP-0: Audit Struktur Kode & Pembersihan Audio Klik Provinsi
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/jelajah3d.js` (menghapus panggilan dan import audio klik provinsi `mainkanSuaraPilihPulau()`).
+  - `backup-removed/audio.js` (mencadangkan modul audio sintetis lama yang tidak lagi dipakai ke folder backup yang aman).
+  - `web/src/util/audio.js` (dihapus dari bundel aktif proyek).
+- **Hasil:**
+  - Struktur kode terpetakan lengkap (Peta 3D Three.js, panel provinsi, event click/pointer, state, dan CSS styling).
+  - Grep codebase 100% bersih dari pemanggilan audio maupun aset audio biner.
+  - Tidak ada audio lain yang terpasang di situs (tidak ada BGM, tidak ada efek suara lain).
+  - Build produksi Vite lolos 100% (0 error), validasi data lolos 0 error.
+## [2026-10-13] Perbaikan Masalah Tiba-Tiba Jatuh ke Peta 2D Setelah Server Stop & Run Lagi
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/fallback.js`:
+    - Mengeliminasi aturan kaku `cpu <= 4 && ram <= 4` yang sering salah mendeteksi laptop kerja/lomba sebagai perangkat lemah dan memblokir WebGL.
+    - Menambahkan mekanisme caching dukungan WebGL dan segera memanggil ekstensi `WEBGL_lose_context` pada canvas probe agar tidak terjadi kebocoran kuota konteks WebGL browser saat tab me-reload berulang kali setelah server restart.
+    - Menambahkan parameter `abaikanKurangiGerak: true` untuk halaman khusus Jelajah 3D agar preferensi animasi OS pengguna tidak mematikan visualisasi 3D.
+  - `web/src/sections/hero3d/jelajah3d.js`:
+    - Memanggil `apakahBisaMemuat3D({ abaikanKurangiGerak: true })` dan menyematkan fallback ganda pembuatan `WebGLRenderer` (mencoba tanpa opsi `high-performance` jika GPU diskrit sedang sleep).
+  - `web/src/pages/jelajah.js`:
+    - Mengutamakan eksekusi `inisialisasiJelajah3D` secara langsung tanpa double-guard yang rapuh.
+    - Jika WebGL benar-benar tidak tersedia di browser, kontrol 3D yang tidak relevan (seperti tombol putar 3D & petunjuk 360°) disembunyikan agar tampilan antarmuka tidak rancu.
+- **Hasil:**
+  - Halaman `jelajah.html` kini selalu konsisten memuat Peta Diorama 3D Nusantara secara andal bahkan setelah server dihentikan dan dijalankan kembali (`stop` lalu `run`).
+  - Tidak ada lagi kejadian WebGL context exhaustion atau salah alih ke peta 2D SVG bergaris arsir di bawah HUD 3D.
+  - Build produksi lolos **100% tanpa error** dan validasi data lolos **0 error**.
+
+## [2026-10-13] Inovasi Eksplorasi Detail Provinsi 3 Zona (Piece Top-Down Geografi, Feed Kartu Budaya Unsplash Meluncur Turun, dan Analisis Metrik) & Penghapusan Suara Klik
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/jelajah3d.js`:
+    - Menghapus efek suara gamelan `mainkanSuaraPilihPulau()` saat provinsi diklik sehingga navigasi kini hening dan nyaman sesuai permintaan pengguna.
+    - Menghubungkan parameter `geoProvinsi` ke pengelola kartu.
+  - `web/src/data/gambar-budaya.js`:
+    - Modul baru kurasi foto Unsplash resmi bertema budaya nusantara (resolusi HD optimal, ringan, dan dipetakan cerdas berdasarkan nama budaya serta kategori OPK/Cagar Budaya: tari, wayang, batik, tenun, arsitektur, kuliner, senjata, dll.).
+  - `web/src/map/render-piece.js`:
+    - Modul baru pembuat siluet top-down (aerial view) keping provinsi ber-zoom in tinggi langsung dari koordinat GeoJSON d3-geo lengkap dengan bayangan relief, kontur grid, dan penanda daratan utama.
+  - `web/src/sections/hero3d/panel-kanan.js`:
+    - Mengintegrasikan sistem **3 Zona Eksplorasi** saat tombol "Buka Detail Budaya" diklik:
+      - **Zona 1 (Kiri / Kotak Biru):** Keping piece provinsi zoom-in dari atas (aerial view) & pembagian kota/kabupaten kontributor interaktif dengan meteran kontribusi yang dapat diklik untuk filter cepat.
+      - **Zona 2 (Tengah / Kotak Merah):** Galeri kartu budaya vertikal modern terinspirasi langsung dari **Gambar 2** (rounded 24px, foto Unsplash, tipografi Fraunces display, ringkasan cerita SPKT) yang beranimasi **meluncur turun perlahan dari atas ke bawah** (*staggered drop cascade*).
+      - **Zona 3 (Kanan / Kotak Kuning):** Ringkasan statistik, baris komposisi 5 kategori OPK + Cagar Budaya, refleksi data SPKT, aksi Paspor Budaya, dan tombol kembali ke peta.
+  - `web/src/styles/sections.css`:
+    - Menambahkan styling layout CSS Grid 3 kolom, card aesthetic ala Gambar 2, animasi `@keyframes kartuTurunMeluncur`, glassmorphism, dan responsivitas tablet/mobile.
+  - `CHANGELOG.md`
+- **Hasil:**
+  - Suara klik pulau dihilangkan sepenuhnya.
+  - Saat detail provinsi dibuka, pengunjung disajikan diorama digital 3 kolom yang sangat imersif dan megah.
+  - Build produksi Vite lolos **100% (0 error)** dan validasi data lolos **0 error**.
+
+## [2026-10-13] Checkpoint 1 (CP-1) — State Machine & Cangkang Tiga Kolom Mode Detail
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - Mengimplementasikan *State Machine* (`peta` ↔ `masuk` ↔ `detail` ↔ `keluar`) dengan tween GSAP satu variabel `detailProgress ∈ [0, 1]` (durasi normal 1.4 detik / `prefers-reduced-motion` 0.2 detik).
+    - Memanfaatkan `scene.attach(meshAktif)` agar keping pulau terpilih sepenuhnya independen dari orbit `grupUtama`, lalu di-lerp ke kuadran kolom kiri layar (NDC X ≈ -0.68, Y ≈ 0.05 di desktop; X ≈ 0.0, Y ≈ 0.48 di mobile) dengan rotasi top-down aerial view miring ±20° menghadap kamera (`quaternion.slerp`).
+    - Pulau lain meredup (`opacity: 0.12`) dan surut ke bawah (-0.22 unit); papan laut dan awan memudar secara anggun.
+    - Cangkang DOM tiga kolom (`.mode-detail-overlay`):
+      - **Kolom Kiri (≈ 28%):** Area pandang keping 3D Three.js transparan di atas + HUD label teknis + daftar kota/kabupaten kontributor dengan baris persentase.
+      - **Kolom Tengah (≈ 44%):** Header arsip budaya, masonry 2-kolom kartu budaya statis dengan gaya **Gambar 2** (rounded 24px, gradien pastel per jenis OPK, teks gelap `#1F1A17` kontras $\ge 4.5:1$, inset foto Unsplash, teks rata tengah), serta *empty state* jujur bagi 10 provinsi yang belum tercatat di SPKT.
+      - **Kolom Kanan (≈ 28%):** Penjelasan lainnya lengkap sesuai Bagian 7 (angka utama, peringkat nasional, horizontal bar chart 5 jenis OPK, rincian Cagar Budaya, catatan kejujuran data SPKT, tombol Paspor Budaya, tombol share, dan tautan SPKT).
+    - Tombol "← Kembali ke peta", tombol silang tutup (&times;), keyboard shortcut `Esc`, dan pemilih dropdown provinsi lain (`select#select-pindah-prov`) tanpa reload halaman.
+    - 100% tahan interupsi dan klik ganda: tween berbalik dari progress posisi saat itu tanpa lompatan kasar.
+  - `web/src/sections/hero3d/panel-kanan.js`:
+    - Mengintegrasikan callback `onBukaModeDetail(provinsiAktif)` ke tombol "Buka Detail Budaya →" pada kartu compact.
+  - `web/src/sections/hero3d/jelajah3d.js`:
+    - Menginisialisasi `buatPengelolaModeDetail` dan menghubungkannya dengan `meshTerpilih`, `pengontrolBendera`, dan `panelKanan`.
+    - Mengisolasi loop render 3D saat mode detail aktif agar tidak terjadi perebutan transformasi posisi keping.
+    - Mengabaikan raycast/drag orbit kanvas selama mode detail aktif.
+  - `web/src/map/scales.js`:
+    - Mengekspor `GRADIEN_JENIS_CSS` (gradien pastel Kerajinan, Seni, Lisan, Pengetahuan, Adat, dan Cagar Budaya).
+  - `web/src/styles/sections.css`:
+    - Menambahkan aturan CSS lengkap untuk `.mode-detail-overlay`, `.cangkang-detail-wadah`, `.cangkang-topbar`, `.cangkang-3kolom-grid`, `.cangkang-kolom--kiri`, `.cangkang-kolom--tengah`, `.kartu-gambar2`, `.cangkang-kolom--kanan`, dukungan tema malam/siang, dan media query responsif mobile (< 960px & < 600px).
+- **Hasil:**
+  - Klik "Buka Detail Budaya" pada panel mana pun berhasil mentransisikan keping 3D ke kolom kiri dan membuka tata letak 3 kolom dengan lancar.
+  - Klik "← Kembali ke peta" atau tombol `Esc` mengembalikan keping pulau ke koordinat asalnya di peta Indonesia secara presisi, lalu menampilkan kembali bendera dan panel compact.
+  - Transisi keluar-masuk tahan interupsi (tidak glitch saat ditekan berulang).
+  - `npm run build` sukses 100% (0 error).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+## [2026-10-13] Penyempurnaan Mode Detail: Perbaikan Bug Animasi Kembali ke Peta, Relief & Tekstur Detail Keping 3D, Interaksi Drag 360°, dan Pelebaran Kolom Arsip Budaya
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - **Perbaikan Definitif Bug Animasi Kembali ke Peta:** Menghilangkan ketergantungan re-parenting `scene.attach` / `parentAsli.attach` yang rentan desinkronisasi. Keping pulau kini tetap berada di bawah parent aslinya (`grupProvinsi`), posisi dan orientasi target dikonversi langsung ke local space parent via `worldToLocal`, dan lerp animasi beroperasi murni antara `posAsalLokal` (di daratan kepulauan Indonesia) dan `posTargetLokal`. Saat kembali ke peta, keping dijamin mendarat 100% presisi dan mulus di pulau asalnya di atas papan laut tanpa resiko melayang di luar peta.
+    - **Perbaikan Fatal Bug `rotTargetKiri`:** Menghapus referensi variabel tak terdefinisi di loop per-frame yang sebelumnya menyebabkan runtime exception dan membekukan render Three.js.
+    - **Interaksi Drag Orbit 360° pada Keping:** Mengaktifkan event listener pointer drag (`pointerdown`, `pointermove`, `pointerup`, `pointercancel`) pada panggung kiri (`.cangkang-kiri-viewarea`). Pengguna kini dapat memutar bebas keping 3D secara 360° horizontal dan melakukan tilt kemiringan vertikal secara responsif dengan spring inertia damping yang mulus.
+    - **Tombol Reset Sudut:** Menambahkan tombol `↺ Reset` di bawah keping untuk mengembalikan orientasi ke aerial view awal kapan saja.
+    - **Aksen Garis Batas Emas (`EdgesGeometry`):** Menambahkan `LineSegments` kontur emas halus (`0xFFE082`) ber-opacity dinamis di sekeliling pulau aktif saat mode detail untuk mempertegas batas wilayah geografis dan lekukan kepulauan.
+  - `web/src/sections/hero3d/build-provinces.js`:
+    - **Peningkatan Tekstur & Bump Map Prosedural:** Meningkatkan resolusi kanvas tekstur topografi dari 512×512 menjadi 1024×1024 dengan garis kontur elevasi bukit yang lebih rapat, serat tenun arsir mikro, dan bintik kanopi vegetasi khatulistiwa.
+    - Menambahkan `dapatkanBumpMapTopografi()` dan mengaitkannya ke `bumpMap` dan `bumpScale: 0.024` pada `MeshStandardMaterial` keping, menghasilkan permukaan pulau yang memiliki kedalaman relief fisik 3D nyata saat disinari cahaya lampu tropis.
+  - `web/src/styles/sections.css`:
+    - **Pelebaran Kolom Arsip Budaya:** Memperbesar ukuran kolom tengah dari `minmax(310px, 340px)` menjadi `minmax(380px, 420px)` (`grid-template-columns: 1fr minmax(380px, 420px) minmax(270px, 310px)`). Kolom kiri tetap menjadi porsi panggung terlebar (`1fr`), sedangkan kartu arsip budaya di kolom tengah kini tampil jauh lebih lega, proporsional, dan nyaman dibaca.
+    - Menyesuaikan dimensi `.kartu-gambar2`: frame foto bertambah tinggi (`max-height: 155px`), padding `14px 16px`, judul `1.1rem`, dan paragraf ringkasan 3 baris.
+    - Menambahkan styling interaksi `.cangkang-kiri-viewarea` (`cursor: grab / grabbing`), hint visual interaksi, dan tombol `.btn-reset-keping`.
+- **Hasil:**
+  - Keping Kalimantan Tengah (dan semua provinsi) kini kembali secara presisi ke daratan aslinya di atas papan laut tanpa tertinggal melayang.
+  - Keping 3D di panggung kiri dapat diputar interaktif 360° oleh pengguna dengan mouse atau layar sentuh.
+  - Visual keping pulau tampak tajam, kaya tekstur, memiliki relief elevasi bukit/sungai dengan bump map, serta dipertegas garis kontur batas emas.
+  - Kolom arsip budaya di tengah lebih lega dan megah.
+
+## [2026-10-13] Revisi Mode Detail: Keping Provinsi Statis Top-Down POV dari Atas, Tekstur Peta Fisik Atlas Geografi Asli, dan Pembersihan UI
+- **Dibuat/diubah:**
+  - `web/src/map/tekstur-atlas.js`:
+    - Membuat modul generator tekstur kartografi fisik resolusi tinggi ($1024 \times 1024$).
+    - Dilengkapi gradasi hipsometrik bentang alam khatulistiwa (pesisir hijau zamrud `#589437`, perbukitan oker zaitun `#B5A548`, lereng terakota `#874623`, puncak kaldera vulkanik gelap `#4B2312`).
+    - Hillshading 3D (pencahayaan relief Barat Laut NW 315° standar kartografi USGS/NatGeo).
+    - Jaringan alur sungai biru safir berliku (`rgba(56, 115, 175, 0.78)`) dan danau kaldera toska.
+    - Garis kontur topografi ketinggian konsentris tajam dan grid koordinat bujur/lintang kartografi.
+    - Grayscale Bump Map selaras ($1024 \times 1024$) untuk kedalaman relief fisik.
+  - `web/src/sections/hero3d/build-provinces.js`:
+    - Normalisasi atribut UV pada `geomAkhir` ke rentang $[0, 1]$ berdasarkan `boundingBox` lokal keping: $u = (v_x - \min X) / \text{lebar}X$, $v = (\max Z - v_z) / \text{tinggi}Z$.
+    - Tekstur peta fisik menempel pas membungkus daratan pulau tanpa pengulangan ubin acak (`repeat(1.0, 1.0)`).
+    - Konfigurasi material keping: `color: 0xffffff`, `bumpScale: 0.035`, `roughness: 0.46` agar tekstur fisik terpancar penuh.
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - **Orientasi Statis Top-Down POV dari Atas:** Pose keping diatur tepat tegak lurus menghadap kamera dari atas:
+      `dummy.lookAt(camera.position); dummy.rotateX(Math.PI * 0.5);`
+      Permukaan atas pulau (`+Y`) menghadap lurus ke kamera, arah Utara (`-Z`) tegak lurus ke atas layar, dan Timur (`+X`) ke kanan layar, menyerupai peta atlas 2D kartografi yang kaya kedalaman 3D.
+    - Menghilangkan kontrol putar drag pointer dan tombol reset pada panggung kiri agar visual keping tetap statis dan presisi.
+    - **Penghapusan Opsi Pilihan Provinsi:** Elemen `<select id="select-pindah-prov">` dan pendukungnya di kanan topbar dihapus sepenuhnya sesuai permintaan pengguna.
+  - `web/src/styles/sections.css`:
+    - Membersihkan CSS kontrol putar/drag pada `.cangkang-kiri-viewarea`.
+- **Hasil:**
+  - Keping provinsi kini tampil statis, tegak lurus menghadap layar dari atas (POV aerial view) seperti peta kartografi atlas geografi.
+  - Permukaan keping kaya tekstur peta fisik asli (pantai hijau, perbukitan oker, pegunungan vulkanik, alur sungai biru, dan kontur topografi tajam).
+  - Pilihan dropdown provinsi di kanan atas telah ditiadakan.
+  - `npm run build` sukses 100% (0 error).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
+## [2026-10-13] Revisi Mode Detail: Reposisi Keping ke Tengah Panggung Bebas, Perbesaran Skala Keping (2x Lebih Megah), dan Pembatasan Tekstur Atlas Khusus Keping Terpilih
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/build-provinces.js`:
+    - Material awal seluruh 38 provinsi di tampilan normal diorama dikembalikan ke tampilan low-poly flat-shaded murni (`map: null`, `bumpMap: null`, `flatShading: true`, `roughness: 0.82`, `metalness: 0.02`) sesuai warna aslinya (`warnaNatural` / `warnaData`). Tampilan awal peta kepulauan Indonesia kini 100% bersih, rapi, dan estetis tanpa tekstur yang menumpuk di kondisi normal.
+    - Tekstur atlas dan bump map disimpan secara privat di `mesh.userData.teksturAtlas` dan `mesh.userData.bumpMapAtlas` sehingga siap dipanggil kapan saja keping masuk ke mode detail.
+  - `web/src/sections/hero3d/build-scene.js`:
+    - Memperbaiki `aturModeWarna` agar mode natural menggunakan warna hijau/zamrud alami `warnaNaturalHex` yang konsisten dengan `warnaNormal`.
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - **Fungsi `terapkanTeksturAtlas(mesh, aktif)`:** Tekstur peta fisik atlas resolusi tinggi, bump map kedalaman, dan smooth shading **HANYA diterapkan pada keping provinsi saat masuk ke Mode Detail** (`buka()`). Saat pengguna menutup detail (`tutup()`) atau berganti ke provinsi lain, keping secara otomatis dikembalikan ke material normal diorama (flat shaded, tanpa tekstur).
+    - **Reposisi Keping ke Tengah Panggung (Bebas Hambatan):** Menghitung koordinat horizontal `ndcX` secara dinamis berdasarkan area terbuka panggung kiri antara batas kanan kartu wilayah administratif (lebar ~290px) dan batas kiri kolom arsip budaya. Keping tidak lagi menumpuk di sisi paling kiri layar, melainkan bertengger pas di tengah panggung visual yang lapang.
+    - **Perbesaran Skala Keping Target (Patokan Ukuran 1.70 & Jarak 2.40):** Ukuran keping ditingkatkan hingga **2x lebih besar** (`patokanUkuran` dinaikkan dari `0.80` ke `1.70`, batas maksimum skala dinaikkan dari `2.2` ke `4.5`, jarak kamera didekatkan ke `2.40`). Seluruh relief bukit, lembah, alur sungai, dan garis pantai kini tampil megah, mendominasi panggung visual kiri dengan sangat jelas dan tajam.
+    - **Listener Window Resize Responsif:** Mengatur ulang ukuran dan posisi keping secara otomatis ketika jendela browser diubah ukurannya atau dimaksimalkan.
+- **Hasil:**
+  - Tampilan normal peta kepulauan Indonesia kembali bersih low-poly flat shaded tanpa tekstur yang mengganggu.
+  - Saat provinsi dibuka di mode detail, keping bertransformasi menjadi peta fisik atlas detail, berukuran 2x lebih besar, dan posisinya berada tepat di tengah area panggung kiri (tidak mepet ke tepi kiri layar lagi).
+  - Saat kembali ke peta, keping mendarat dan kembali ke tampilan normal pulau diorama.
+  - `npm run build` sukses 100% (0 error).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
+## [2026-10-13] Kalibrasi Presisi: Ukuran Keping Proporsional "PAS" (Bebas Overflow & Tabrakan Kartu)
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - Mengganti pembagian skala kasar `patokanUkuran` dengan sistem kalkulasi proyeksi perspektif pixel matematis (`targetPx = Math.min(ruangTinggi * 0.56, ruangLebar * 0.62, 390)`).
+    - Skala keping Three.js dihitung tepat dari frustum kamera: `worldSizeTarget = targetPx * (frustumH / winH)` sehingga dimensi terluar keping selalu berproyeksi tepat $\le 390\text{ px}$ di layar.
+    - Menghilangkan total bug overflow: keping kini memiliki jarak aman (margin) $\ge 100\text{ px}$ ke topbar, $\ge 80\text{ px}$ ke kartu wilayah administratif kiri-bawah, dan $\ge 120\text{ px}$ ke kolom arsip budaya.
+- **Hasil:**
+  - Keping Kalimantan Selatan (dan semua provinsi) kini tampil pas, proporsional, dan elegan di panggung visual kiri tanpa menabrak atau tertutup elemen antarmuka apa pun.
+  - `npm run build` sukses 100% (0 error).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
+## [2026-10-13] Mode Detail: Peta 3D Indonesia Tetap Ada di Latar (Agak Buram) & Visual Jejak Keping Asal Terangkat
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - **Peta 3D Latar Tetap Hadir (TIDAK Ditenggelamkan):** Menghilangkan kode yang sebelumnya menenggelamkan pulau-pulau lain ke bawah permukaan laut (`m.position.y = yAsal - p * 0.22`). Seluruh pulau lain kini tetap berada kokoh di ketinggian aslinya di atas papan laut.
+    - **Efek "Agak Buram" / Temaram Atmosferik:** Opasitas pulau-pulau lain diatur ke tingkat lembut yang elegan (`opacity: Math.max(0.42, 1.0 - p * 0.58)`), papan laut tetap solid (`opacity: 0.85`), dan awan tetap melayang di langit (`opacity: 0.40`). Seluruh gugusan kepulauan Indonesia tetap terlihat jelas dan megah sebagai latar belakang alami diorama.
+    - **Visual "Bagian yang Terambil Terlihat Jelas" (`meshCetakanAsal`):** Membuat cetakan / socket siluet keping di lokasi koordinat asalnya di peta Indonesia saat keping terangkat ke depan:
+      1. Dasar cekungan siluet gelap berbayang (`0x0A1428`, `opacity: 0.72`) di atas papan laut.
+      2. Garis kontur siluet bercahaya cyan / biru safir (`#38BDF8`, `opacity: 0.90`) di sekeliling batas wilayah asal.
+      Pengunjung kini dapat melihat dengan sangat jelas rongga/slot tempat keping tersebut terangkat dari peta kepulauan Indonesia.
+    - **Pembersihan Bersih (Clean Disposal):** Saat mode detail ditutup atau berganti provinsi, cetakan keping asal dibersihkan dari scene Three.js dan memori di-*dispose* tanpa kebocoran.
+- **Hasil:**
+  - Peta 3D Indonesia tidak lagi hilang atau lenyap saat mode detail dibuka, melainkan tetap hadir di latar belakang dengan nuansa temaram yang lembut.
+  - Bagian/slot wilayah yang kepingnya terambil terlihat sangat jelas dan dramatis dengan siluet kontur cyan bercahaya di peta nusantara.
+  - `npm run build` sukses 100% (0 error).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
+## [2026-10-13] Perbaikan Kritis Bug: Tekstur Menempel di Peta Normal & Penghapusan Tidak Sengaja Buffer Geometry
+- **Temuan Masalah:**
+  - Di Three.js, memutasi `material.map = null` dan `material.needsUpdate = true` pada material PBR yang sedang di-render tidak secara andal merevert shader GLSL kembali ke *flat-shading*, sehingga tekstur peta tetap terikat di WebGL state setelah mode detail ditutup.
+  - Pada fungsi pembersihan `meshCetakanAsal`, pemanggilan `traverse` memicu `child.geometry?.dispose()` pada `meshDasarSlot` yang berbagi geometri dengan `meshAktif.geometry`. Hal ini mendispose buffer vertex asli keping provinsi dari VRAM GPU, menyebabkan raycasting dan handler klik membeku/error, sehingga keping pulau tertinggal dalam keadaan terangkat dan bertekstur di peta normal.
+- **Dibuat/diubah:**
+  - `web/src/sections/hero3d/build-provinces.js`:
+    - Membuat dua instansiasi material terpisah per provinsi: `materialNormal` (murni flat-shaded low-poly tanpa map/bump) dan `materialAtlas` (bertekstur peta fisik PBR).
+    - Disimpan di `mesh.userData.materialNormal` dan `mesh.userData.materialAtlas`.
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - `terapkanTeksturAtlas(mesh, aktif)` kini langsung menukar *material instance* (`mesh.material = materialAtlas` vs `mesh.material = materialNormal`). Pergantian material bersifat instan, 100% bebas dari cache miss shader, dan menjamin keping di peta normal TIDAK PERNAH memiliki tekstur.
+    - Membuat fungsi `bersihkanCetakanAsal()` yang secara selektif HANYA mendispose geometri garis `EdgesGeometry` yang dibuat khusus, dan TIDAK PERNAH menyentuh atau mendispose geometri daratan pulau asli.
+  - `web/src/sections/hero3d/build-scene.js`:
+    - Sinkronisasi perubahan warna mode natural/data pada `materialNormal`.
+- **Hasil:**
+  - Keping di peta normal kembali 100% hijau *flat-shaded* bersih saat mode detail ditutup.
+  - Tidak ada lagi tekstur yang menempel atau pulau yang tertinggal melayang di peta normal.
+  - Geometri pulau tetap utuh di memori GPU, raycasting dan navigasi klik antar pulau berjalan lancar tanpa error.
+  - `npm run build` sukses 100% (0 error).
+  - `node tools/validate.mjs` lolos 100% (0 error).
