@@ -194,18 +194,21 @@
   width: calc(100% - 2rem);
   max-width: 680px;
   max-height: 88vh;
-  background-color: var(--kertas);
-  color: var(--tinta);
-  border: 1px solid var(--garis-terang);
+  background-color: #1A1613;
+  color: #F5F0EB;
+  border: 1px solid rgba(230, 177, 74, 0.35);
   border-radius: var(--r-lg);
   padding: 0;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
   overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .dialog-modal::backdrop {
-  background-color: rgba(20, 17, 15, 0.78);
-  backdrop-filter: blur(4px);
+  background-color: rgba(14, 11, 9, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .dialog-kepala {
@@ -214,14 +217,19 @@
   justify-content: space-between;
   gap: var(--ruang-3);
   padding: var(--ruang-4);
-  border-bottom: 1px solid var(--garis-terang);
-  background-color: var(--kertas-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #241D19;
 }
 
 .dialog-judul {
   font-family: var(--font-display);
   font-size: 1.35rem;
-  color: var(--tinta);
+  color: var(--kertas);
+}
+
+.dialog-judul:focus,
+.dialog-judul:focus-visible {
+  outline: none;
 }
 
 .tombol-tutup-dialog {
@@ -231,14 +239,25 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--r-sm);
-  border: 1px solid var(--garis-terang);
-  color: var(--tinta);
-  background-color: var(--kertas);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--kertas);
+  background-color: #2A231E;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all var(--dur-cepat);
+}
+
+.tombol-tutup-dialog svg {
+  width: 20px;
+  height: 20px;
 }
 
 .tombol-tutup-dialog:hover {
-  background-color: var(--tinta);
-  color: var(--kertas);
+  background-color: var(--aksen);
+  color: #14110F;
+  border-color: var(--aksen);
 }
 
 .dialog-isi {
@@ -248,21 +267,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--ruang-4);
+  color: var(--kertas);
 }
 
-@media (min-width: 640px) {
-  .dialog-kepala {
-    padding: var(--ruang-4) var(--ruang-5);
-  }
+.dialog-isi p {
+  color: var(--kertas-redup);
+  line-height: 1.6;
+}
 
-  .dialog-isi {
-    padding: var(--ruang-5);
-  }
+.dialog-isi strong {
+  color: var(--kertas);
 }
 
 .dialog-isi h3 {
   font-size: 1.1rem;
-  color: var(--tinta);
+  color: var(--aksen);
   margin-bottom: var(--ruang-1);
 }
 
@@ -272,7 +291,77 @@
   display: flex;
   flex-direction: column;
   gap: var(--ruang-2);
-  color: var(--tinta-2);
+  color: var(--kertas-redup);
+}
+
+.dialog-kaki {
+  padding: var(--ruang-3) var(--ruang-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #241D19;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   Dukungan Mode Terang (Light Mode) untuk Dialog Modal
+   ========================================================================== */
+[data-tema="terang"] .dialog-modal {
+  background-color: #FFFFFF;
+  color: #1C1917;
+  border: 1px solid rgba(184, 115, 20, 0.35);
+  box-shadow: 0 24px 64px rgba(40, 30, 20, 0.18), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+[data-tema="terang"] .dialog-modal::backdrop {
+  background-color: rgba(30, 24, 20, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-tema="terang"] .dialog-kepala {
+  background-color: #F8F3EA;
+  border-bottom: 1px solid rgba(184, 115, 20, 0.2);
+}
+
+[data-tema="terang"] .dialog-judul {
+  color: #1C1917;
+}
+
+[data-tema="terang"] .tombol-tutup-dialog {
+  background-color: #FFFFFF;
+  color: #1C1917;
+  border: 1px solid rgba(184, 115, 20, 0.3);
+}
+
+[data-tema="terang"] .tombol-tutup-dialog:hover {
+  background-color: #1C1917;
+  color: #FFFFFF;
+  border-color: #1C1917;
+}
+
+[data-tema="terang"] .dialog-isi {
+  color: #1C1917;
+}
+
+[data-tema="terang"] .dialog-isi p {
+  color: #4A423A;
+}
+
+[data-tema="terang"] .dialog-isi strong {
+  color: #1C1917;
+}
+
+[data-tema="terang"] .dialog-isi h3 {
+  color: #B87314 !important;
+}
+
+[data-tema="terang"] .dialog-daftar {
+  color: #4A423A;
+}
+
+[data-tema="terang"] .dialog-kaki {
+  background-color: #F8F3EA;
+  border-top: 1px solid rgba(184, 115, 20, 0.2);
 }
 
 /* Toast Umpan Balik */
