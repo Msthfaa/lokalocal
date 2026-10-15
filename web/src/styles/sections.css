@@ -5561,6 +5561,7 @@ body.tema-siang .nav-loading-kartun {
   opacity: 0;
   transform: scale(0.90);
   pointer-events: none;
+  display: none !important;
 }
 
 .nav-kartun-animasi {

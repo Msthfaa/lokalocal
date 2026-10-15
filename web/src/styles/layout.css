@@ -62,6 +62,16 @@
 }
 
 /* Bagian 1: Logo Merek di Kiri (Terpisah Mandiri) */
+.nav-kiri {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ruang-3);
+  justify-self: start;
+  flex-shrink: 0;
+  min-height: 40px;
+}
+
 .nav-merek {
   pointer-events: auto;
   display: inline-flex;
@@ -330,7 +340,8 @@
     align-items: center;
   }
 
-  .nav-merek {
+  .nav-merek,
+  .nav-kiri {
     justify-self: start;
   }
 

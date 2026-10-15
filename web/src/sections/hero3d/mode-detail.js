@@ -346,17 +346,20 @@ export function buatPengelolaModeDetail({
       if (parent) {
         parent.updateMatrixWorld(true);
 
-        // Interpolasi posisi di ruang dunia (World Space) secara absolut
-        const curWorldPos = posAsalWorld.clone().lerp(posTargetWorld, p);
-        meshAktif.position.copy(parent.worldToLocal(curWorldPos));
-
-        // Interpolasi rotasi di ruang dunia (World Space)
-        const curQuatWorld = quatAsalWorld.clone().slerp(quatTargetWorld, p);
+        // Posisi dan orientasi slot keping di diorama pada ruang dunia (World Space) di frame saat ini
+        const slotWorldPos = parent.localToWorld(posAsalLokal.clone());
         const parentQuatWorld = new Quaternion();
         parent.getWorldQuaternion(parentQuatWorld);
-        meshAktif.quaternion.copy(parentQuatWorld.invert().multiply(curQuatWorld));
 
-        // Lerp skala
+        // Interpolasi posisi di ruang dunia: dari slot diorama (p = 0) ke target tampilan detail (p = 1)
+        const curWorldPos = slotWorldPos.lerp(posTargetWorld, p);
+        meshAktif.position.copy(parent.worldToLocal(curWorldPos));
+
+        // Interpolasi rotasi di ruang dunia: dari orientasi slot diorama (p = 0) ke target tampilan detail (p = 1)
+        const curQuatWorld = parentQuatWorld.clone().slerp(quatTargetWorld, p);
+        meshAktif.quaternion.copy(parentQuatWorld.clone().invert().multiply(curQuatWorld));
+
+        // Lerp skala keping
         const skalaKini = 1.0 + (skalaTarget - 1.0) * p;
         meshAktif.scale.setScalar(skalaKini);
       }
@@ -626,11 +629,31 @@ export function buatPengelolaModeDetail({
       onComplete: () => {
         state = 'peta';
 
+        // Pulihkan seluruh mesh pulau lain ke kondisi solid normal
+        for (let i = 0; i < daftarMeshLain.length; i++) {
+          const m = daftarMeshLain[i];
+          if (m.material) {
+            m.material.transparent = false;
+            m.material.opacity = 1.0;
+          }
+        }
+        if (matLaut) {
+          matLaut.transparent = false;
+          matLaut.opacity = 1.0;
+        }
+        for (let i = 0; i < daftarAwan.length; i++) {
+          const awan = daftarAwan[i];
+          if (awan.material) {
+            awan.material.opacity = 1.0;
+          }
+        }
+
         // Pastikan keping 100% tepat kembali ke posisi, rotasi, dan skala asalnya
         if (meshAktif) {
           meshAktif.position.copy(posAsalLokal);
           meshAktif.rotation.set(0, 0, 0);
           meshAktif.scale.set(1, 1, 1);
+          meshAktif.layers.set(0);
 
           // Kembalikan material keping terpilih ke kondisi normal diorama (flat shaded, tanpa tekstur)
           terapkanTeksturAtlas(meshAktif, false);
@@ -645,8 +668,10 @@ export function buatPengelolaModeDetail({
 
         bersihkanCetakanAsal();
 
-        updatePoseVisual(0);
+        domOverlay.style.opacity = '0';
+        domOverlay.classList.remove('is-tampil');
         domOverlay.classList.add('is-tersembunyi');
+        domOverlay.style.pointerEvents = 'none';
 
         if (typeof onSelesaiTutup === 'function') {
           onSelesaiTutup();
@@ -685,6 +710,7 @@ export function buatPengelolaModeDetail({
       meshAktif.position.copy(posAsalLokal);
       meshAktif.scale.setScalar(1.0);
       meshAktif.rotation.set(0, 0, 0);
+      meshAktif.layers.set(0);
       terapkanTeksturAtlas(meshAktif, false);
       if (meshAktif.material) {
         meshAktif.material.emissive?.set('#000000');

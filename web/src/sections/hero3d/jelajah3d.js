@@ -325,7 +325,33 @@ export function inisialisasiJelajah3D({
     });
   }
 
-  function perbaruiUkuran() {
+  /**
+   * Menghitung dan memperbarui target posisi & orientasi kamera berdasarkan zoomLevel dan status pilihan pulau.
+   * @param {boolean} [langsung=false] - Jika true, kamera langsung diset tanpa animasi lerp.
+   */
+  function perbaruiTargetKamera(langsung = false) {
+    if (meshTerpilih && provTerpilihData) {
+      const worldPusat = new Vector3();
+      meshTerpilih.getWorldPosition(worldPusat);
+      cameraTargetPos.set(
+        cameraBasePos.x + worldPusat.x * 0.40,
+        cameraBasePos.y * 0.94,
+        cameraBasePos.z * 0.88 + worldPusat.z * 0.35
+      );
+      cameraTargetLookAt.set(worldPusat.x * 0.70, worldPusat.y + 0.08, worldPusat.z * 0.70);
+    } else {
+      cameraTargetPos.copy(cameraBasePos);
+      cameraTargetLookAt.set(0, 0.12, 0);
+    }
+
+    if (langsung) {
+      camera.position.copy(cameraTargetPos);
+      cameraCurrentLookAt.copy(cameraTargetLookAt);
+      camera.lookAt(cameraCurrentLookAt);
+    }
+  }
+
+  function perbaruiUkuran(langsung = false) {
     if (!wadahEl || !renderer) return;
     const lebar = wadahEl.clientWidth || window.innerWidth;
     const tinggi = wadahEl.clientHeight || window.innerHeight;
@@ -336,14 +362,13 @@ export function inisialisasiJelajah3D({
     camera.updateProjectionMatrix();
 
     cameraBasePos = hitungPosisiKameraFit(aspect, zoomLevel);
-    camera.position.copy(cameraBasePos);
-    camera.lookAt(0, 0.12, 0);
+    perbaruiTargetKamera(langsung);
 
     renderer.setSize(lebar, tinggi, false);
     pengontrolBendera.perbaruiPosisi();
   }
 
-  perbaruiUkuran();
+  perbaruiUkuran(true);
 
   // Event pointer / mouse / touch
   function onPointerDown(e) {
@@ -454,8 +479,7 @@ export function inisialisasiJelajah3D({
         meshTerpilih = null;
         provTerpilihData = null;
       }
-      cameraTargetPos.copy(cameraBasePos);
-      cameraTargetLookAt.set(0, -0.05, 0);
+      perbaruiTargetKamera(false);
       pengontrolBendera.sembunyikan();
       panelKanan.sembunyikan();
     }
@@ -499,15 +523,7 @@ export function inisialisasiJelajah3D({
     }
 
     // Arahkan kamera secara dinamis dan mulus ke pulau/daerah yang dipilih di ruang dunia
-    const worldPusat = new Vector3();
-    mesh.getWorldPosition(worldPusat);
-
-    cameraTargetPos.set(
-      cameraBasePos.x + worldPusat.x * 0.40,
-      cameraBasePos.y * 0.94,
-      cameraBasePos.z * 0.88 + worldPusat.z * 0.35
-    );
-    cameraTargetLookAt.set(worldPusat.x * 0.70, worldPusat.y + 0.08, worldPusat.z * 0.70);
+    perbaruiTargetKamera(false);
     pengontrolBendera.tampilkan(provData, mesh);
 
     // Tampilkan Floating Side Card di kanan layar
@@ -547,6 +563,10 @@ export function inisialisasiJelajah3D({
         // Spring Lerp halus untuk elevasi posisi setiap keping provinsi
         for (const m of elemenAdegan.daftarProvinsiMesh) {
           const u = m.userData;
+          if (u?.pusatAsal) {
+            m.position.x = u.pusatAsal.x;
+            m.position.z = u.pusatAsal.z;
+          }
           const targetY = (u.targetY ?? u.pusatAsal.y) + (u.offsetTerpilih || 0) + (u.offsetHover || 0);
           m.position.y += (targetY - m.position.y) * 0.14;
         }
@@ -588,12 +608,13 @@ export function inisialisasiJelajah3D({
       // Lerp kamera halus ke target posisi daerah yang dipilih (jika mode detail tidak aktif)
       const modeDetailAktif = pengelolaDetail && typeof pengelolaDetail.isAktif === 'function' && pengelolaDetail.isAktif();
       if (!modeDetailAktif) {
-        if (!kurangiGerakan) {
-          camera.position.lerp(cameraTargetPos, 0.055);
-          cameraCurrentLookAt.lerp(cameraTargetLookAt, 0.055);
+        if (!kurangiGerak) {
+          camera.position.lerp(cameraTargetPos, 0.085);
+          cameraCurrentLookAt.lerp(cameraTargetLookAt, 0.085);
           camera.lookAt(cameraCurrentLookAt);
         } else {
           camera.position.copy(cameraTargetPos);
+          cameraCurrentLookAt.copy(cameraTargetLookAt);
           camera.lookAt(cameraTargetLookAt);
         }
       }
@@ -647,7 +668,16 @@ export function inisialisasiJelajah3D({
   // Kontrol Zoom presisi (dibatasi minimum 72% / 0.90 agar saat zoom out diorama tetap proporsional & kaya)
   function aturZoom(faktor) {
     zoomLevel = Math.max(0.90, Math.min(2.25, faktor));
-    perbaruiUkuran();
+    const lebar = wadahEl?.clientWidth || window.innerWidth;
+    const tinggi = wadahEl?.clientHeight || window.innerHeight;
+    const aspect = lebar > 0 && tinggi > 0 ? lebar / tinggi : 1.6;
+
+    camera.aspect = aspect;
+    camera.updateProjectionMatrix();
+
+    cameraBasePos = hitungPosisiKameraFit(aspect, zoomLevel);
+    perbaruiTargetKamera(false);
+
     const persen = Math.round((zoomLevel / 1.25) * 100);
     if (typeof onZoomUbah === 'function') {
       onZoomUbah(persen);
@@ -658,8 +688,7 @@ export function inisialisasiJelajah3D({
   function resetRotasi() {
     targetRotY = 0;
     currentRotY = 0;
-    cameraTargetPos.copy(cameraBasePos);
-    cameraTargetLookAt.set(0, -0.05, 0);
+    perbaruiTargetKamera(false);
   }
 
   function toggleModeWaktu() {

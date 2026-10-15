@@ -19,6 +19,7 @@ import { inisialisasiTema } from './ui/tema.js';
 import { inisialisasiBacksound } from './ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from './ui/footer.js';
 import { tampilkanToast } from './ui/toast.js';
+import { inisialisasiTiraiWayang } from './ui/tirai-wayang.js';
 
 import { inisialisasiBagianHero } from './sections/hero.js';
 import { inisialisasiBagianNyala } from './sections/nyala.js';
@@ -333,6 +334,21 @@ function inisialisasiBentoEditorial() {
 }
 
 function init() {
+  // Pasang Tirai Pembuka Sinematik 2 Wayang Gunungan & Montase Budaya (3 Detik)
+  inisialisasiTiraiWayang({
+    paksaTampil: true,
+    onSelesai: () => {
+      requestAnimationFrame(() => {
+        segarkanScrollTrigger();
+      });
+    }
+  });
+
+  // Ekspos fungsi global untuk memutar ulang pengantar wayang kapan saja bila diinginkan
+  window.tontonTiraiWayang = () => {
+    inisialisasiTiraiWayang({ paksaTampil: true });
+  };
+
   inisialisasiTema();
   inisialisasiBacksound();
 
