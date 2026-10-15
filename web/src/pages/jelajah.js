@@ -9,11 +9,11 @@ import '../styles/layout.css';
 import '../styles/components.css';
 import '../styles/sections.css';
 
-import { muatDataAwal, jadwalkanMuatDataLengkap } from '../data/loader.js';
+import { muatDataAwal, muatDataLengkap, jadwalkanMuatDataLengkap } from '../data/loader.js';
 import { inisialisasiNavigasi } from '../ui/nav.js';
 import { inisialisasiTema } from '../ui/tema.js';
 import { inisialisasiBacksound } from '../ui/audio.js';
-import { inisialisasiDialogTentang, inisialisasiDialogTentangKami } from '../ui/footer.js';
+import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { inisialisasiDialogRekaman } from '../ui/dialog-rekaman.js';
 import { buatPengelolaPaspor } from '../features/paspor.js';
 import { inisialisasiJelajah3D } from '../sections/hero3d/jelajah3d.js';
@@ -73,6 +73,8 @@ async function mulaiHalamanJelajah() {
     if (dialogRekamanKontrol && meta?.tanggal_ambil_terformat) {
       dialogRekamanKontrol.aturTanggalAmbil(meta.tanggal_ambil_terformat);
     }
+
+    perbaruiAtribusiFooter(meta);
 
     const proyeksi = buatProyeksiIndonesia(geoProvinsi);
     loaderLucu.aturProgres(72, 'Membangkitkan relief 3D & menyiapkan kapal Pinisi...');
@@ -156,18 +158,16 @@ async function mulaiHalamanJelajah() {
       });
     });
 
-    // Jadwalkan pemuatan data lengkap (budaya.clean.json) secara asinkron
-    jadwalkanMuatDataLengkap(
-      null,
-      ({ budaya }) => {
+    // Muat data lengkap (budaya.clean.json) secara langsung untuk kartu bendera & tradisi
+    muatDataLengkap()
+      .then(({ budaya }) => {
         if (kontroler3D && typeof kontroler3D.aturDaftarBudaya === 'function') {
           kontroler3D.aturDaftarBudaya(budaya);
         }
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.warn('Gagal memuat katalog lengkap untuk kartu bendera:', err);
-      }
-    );
+      });
 
   } catch (err) {
     console.error('Gagal memuat data awal jelajah 3D:', err);

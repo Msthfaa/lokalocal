@@ -105,12 +105,36 @@ export function inisialisasiJelajah3D({
 
   const { scene, grupUtama, aturModeWarna, aturModeWaktu, getModeWaktu, pengontrolLangit } = elemenAdegan;
 
-  // Kamera diorama: zoomLevel 1.25 dengan radiusTargetDasar 3.6 memberikan kepulauan yang sangat dekat, besar, dan megah
+  const kurangiGerakan = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Kamera diorama: zoomLevel 1.25 memberikan kepulauan yang dekat, besar, dan megah
   let zoomLevel = 1.25;
   const camera = new PerspectiveCamera(34, 1, 0.1, 50);
   let cameraBasePos = hitungPosisiKameraFit(1.6, zoomLevel);
-  camera.position.copy(cameraBasePos);
-  camera.lookAt(0, 0.12, 0);
+
+  // Vektor target kamera untuk transisi mulus ke wilayah yang dipilih
+  let cameraTargetPos = cameraBasePos.clone();
+  let cameraTargetLookAt = new Vector3(0, 0.12, 0);
+  let cameraCurrentLookAt = new Vector3(0, 0.12, 0);
+
+  // Animasi Fly-In masuk anggun dari angkasa saat membuka 3D
+  let animMasukAktif = !kurangiGerakan;
+  let waktuMulaiMasuk = performance.now();
+  const durasiMasukMs = 1950;
+  let camPosAwalMasuk = new Vector3();
+
+  if (animMasukAktif) {
+    camPosAwalMasuk.set(cameraBasePos.x * 0.15, cameraBasePos.y * 2.35, cameraBasePos.z * 2.15);
+    camera.position.copy(camPosAwalMasuk);
+    camera.lookAt(0, -0.5, 0);
+    cameraCurrentLookAt.set(0, -0.5, 0);
+    if (grupUtama) {
+      grupUtama.position.y = -0.32; // Kepulauan terangkat naik anggun dari lautan
+    }
+  } else {
+    camera.position.copy(cameraBasePos);
+    camera.lookAt(0, 0.12, 0);
+  }
 
   // Simpan data budaya lokal dan fungsi pencarian akurat
   let dataBudayaLokal = Array.isArray(daftarBudaya) ? daftarBudaya : [];
@@ -187,6 +211,19 @@ export function inisialisasiJelajah3D({
       if (meshTerpilih) {
         pengelolaDetail.buka(provData, meshTerpilih);
       }
+    },
+    onTutup: () => {
+      if (meshTerpilih) {
+        meshTerpilih.userData.offsetTerpilih = 0;
+        if (meshTerpilih.material) {
+          meshTerpilih.material.emissive.set('#000000');
+          meshTerpilih.material.emissiveIntensity = 0;
+        }
+        meshTerpilih = null;
+      }
+      // Kembalikan fokus kamera ke tengah diorama
+      cameraTargetPos.copy(cameraBasePos);
+      cameraTargetLookAt.set(0, 0.12, 0);
     }
   });
 
@@ -423,6 +460,8 @@ export function inisialisasiJelajah3D({
         meshTerpilih = null;
         provTerpilihData = null;
       }
+      cameraTargetPos.copy(cameraBasePos);
+      cameraTargetLookAt.set(0, -0.05, 0);
       pengontrolBendera.sembunyikan();
       panelKanan.sembunyikan();
     }
@@ -465,7 +504,14 @@ export function inisialisasiJelajah3D({
       mesh.material.emissiveIntensity = 0.55;
     }
 
-    // Tancapkan tiang bendera 3D emas di pulau
+    // Arahkan kamera secara dinamis dan mulus ke pulau/daerah yang dipilih
+    const pusatMesh = mesh.position;
+    cameraTargetPos.set(
+      cameraBasePos.x + pusatMesh.x * 0.45,
+      cameraBasePos.y * 0.94,
+      cameraBasePos.z * 0.88 + pusatMesh.z * 0.4
+    );
+    cameraTargetLookAt.set(pusatMesh.x * 0.72, pusatMesh.y + 0.08, pusatMesh.z * 0.72);
     pengontrolBendera.tampilkan(provData, mesh);
 
     // Tampilkan Floating Side Card di kanan layar
@@ -554,6 +600,53 @@ export function inisialisasiJelajah3D({
     } finally {
       idRaf = window.requestAnimationFrame(loop);
     }
+    // Tangani animasi masuk pembuka (fly-in drone) jika aktif
+    if (animMasukAktif) {
+      const deltaMs = sekarang - waktuMulaiMasuk;
+      const progress = Math.min(1, Math.max(0, deltaMs / durasiMasukMs));
+      const t = 1 - Math.pow(1 - progress, 3);
+
+      camera.position.lerpVectors(camPosAwalMasuk, cameraTargetPos, t);
+      cameraCurrentLookAt.lerpVectors(new Vector3(0, -0.5, 0), cameraTargetLookAt, t);
+      camera.lookAt(cameraCurrentLookAt);
+
+      if (grupUtama) {
+        grupUtama.position.y = -0.32 * (1 - t);
+      }
+
+      if (progress >= 1) {
+        animMasukAktif = false;
+        if (grupUtama) grupUtama.position.y = 0;
+      }
+    } else {
+      // Lerp kamera halus ke target posisi daerah yang dipilih (jika mode detail tidak aktif)
+      const modeDetailAktif = pengelolaDetail && typeof pengelolaDetail.apakahAktif === 'function' && pengelolaDetail.apakahAktif();
+      if (!modeDetailAktif) {
+        if (!kurangiGerakan) {
+          camera.position.lerp(cameraTargetPos, 0.055);
+          cameraCurrentLookAt.lerp(cameraTargetLookAt, 0.055);
+          camera.lookAt(cameraCurrentLookAt);
+        } else {
+          camera.position.copy(cameraTargetPos);
+          camera.lookAt(cameraTargetLookAt);
+        }
+      }
+    }
+
+    // Perbarui posisi kartu bendera mengikuti proyeksi 3D
+    pengontrolBendera.perbaruiPosisi();
+
+    try {
+      if (pengelolaDetail && typeof pengelolaDetail.apakahAktif === 'function' && pengelolaDetail.apakahAktif()) {
+        pengelolaDetail.renderKhusus(renderer, scene, camera);
+      } else {
+        renderer.render(scene, camera);
+      }
+    } catch (errLoop) {
+      console.warn('Kendala render frame diorama:', errLoop);
+    } finally {
+      idRaf = window.requestAnimationFrame(loop);
+    }
   }
 
   function mulaiLoop() {
@@ -603,6 +696,8 @@ export function inisialisasiJelajah3D({
   function resetRotasi() {
     targetRotY = 0;
     currentRotY = 0;
+    cameraTargetPos.copy(cameraBasePos);
+    cameraTargetLookAt.set(0, -0.05, 0);
   }
 
   function toggleModeWaktu() {

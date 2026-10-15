@@ -5866,4 +5866,624 @@ body.tema-siang .tautan-spkt-resmi {
   }
 }
 
+/* ==========================================================================
+   Header Hero Kuis & Pilihan Wilayah Interaktif
+   ========================================================================== */
+.kuis-hero-kepala {
+  text-align: center;
+  margin-bottom: var(--ruang-5);
+  position: relative;
+}
 
+.kicker-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--aksen);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: var(--ruang-2);
+}
+
+.kicker-bintang {
+  color: var(--aksen);
+  animation: bintangKelip 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes bintangKelip {
+  0% { opacity: 0.4; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 6px var(--aksen)); }
+}
+
+.kuis-judul-megah {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--kertas);
+  line-height: 1.15;
+  margin: 0 0 var(--ruang-2) 0;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+}
+
+.kuis-subjudul-elegan {
+  max-width: 680px;
+  margin: 0 auto var(--ruang-4) auto;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: var(--kertas-redup);
+  line-height: 1.5;
+}
+
+.kuis-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: var(--ruang-4);
+}
+
+.kuis-hero-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(30, 24, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--kertas);
+  font-size: 0.85rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all var(--dur-cepat);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.kuis-hero-stat-chip strong {
+  color: var(--aksen);
+}
+
+.kuis-hero-stat-chip:hover {
+  background: rgba(45, 36, 30, 0.95);
+  border-color: rgba(230, 177, 74, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.kuis-hero-stat-chip.is-aktif {
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.25), rgba(200, 90, 50, 0.2));
+  border-color: var(--aksen);
+  box-shadow: 0 0 16px rgba(230, 177, 74, 0.35);
+  color: #FFF;
+}
+
+/* Deretan Pill Wilayah Interaktif */
+.kuis-wilayah-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.kuis-wilayah-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(25, 20, 17, 0.82);
+  border: 1px solid rgba(75, 62, 53, 0.65);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: #DCD2C6;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.kuis-wilayah-pill:hover {
+  background: rgba(45, 35, 29, 0.95);
+  border-color: rgba(230, 177, 74, 0.65);
+  color: #FFF;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45), 0 0 10px rgba(230, 177, 74, 0.25);
+}
+
+.kuis-wilayah-pill:focus-visible {
+  outline: 2px solid var(--aksen);
+  outline-offset: 2px;
+}
+
+.kuis-wilayah-pill.is-aktif {
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.28), rgba(200, 90, 50, 0.22));
+  border-color: var(--aksen);
+  color: #FFF;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(230, 177, 74, 0.4), 0 4px 12px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Banner Topik Aktif di dalam Kartu Kuis */
+.kuis-topik-badge-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(230, 177, 74, 0.1);
+  border: 1px solid rgba(230, 177, 74, 0.3);
+  border-radius: var(--r-sm);
+  padding: 0.45rem 0.85rem;
+  margin-bottom: var(--ruang-3);
+  font-size: 0.825rem;
+  color: var(--kertas);
+  animation: fadeInDown 0.3s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.kuis-topik-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--aksen);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kuis-topik-nama {
+  color: var(--kertas);
+  font-weight: 700;
+}
+
+.kuis-topik-total {
+  font-size: 0.75rem;
+  color: var(--kertas-redup);
+}
+
+/* ==========================================================================
+   Overlay Kartu Bendera & Karakteristik Ciri Khas Budaya 3D Diorama
+   ========================================================================== */
+.diorama-bendera-kartu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  background: rgba(20, 17, 15, 0.96);
+  border: 1px solid var(--aksen);
+  border-radius: var(--r-md);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(230, 177, 74, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  width: 390px;
+  max-width: 92vw;
+  max-height: 82vh;
+  overflow-y: auto;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translate3d(-50%, -100%, 0) scale(0.92);
+  transition: opacity 0.22s var(--ease-keluar), transform 0.22s var(--ease-keluar);
+}
+
+.diorama-bendera-kartu::-webkit-scrollbar {
+  width: 5px;
+}
+.diorama-bendera-kartu::-webkit-scrollbar-thumb {
+  background: rgba(230, 177, 74, 0.35);
+  border-radius: 4px;
+}
+
+.diorama-bendera-kartu[hidden] {
+  display: none !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+.diorama-bendera-kartu.is-muncul {
+  opacity: 1;
+}
+
+.diorama-bendera-kartu::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid var(--aksen);
+}
+
+.diorama-bendera-kartu.posisi-bawah::after {
+  bottom: auto;
+  top: -9px;
+  border-top: none;
+  border-bottom: 9px solid var(--aksen);
+}
+
+.bendera-pita-kiri {
+  width: 8px;
+  flex-shrink: 0;
+  background-color: var(--aksen);
+}
+
+.bendera-konten {
+  flex: 1;
+  padding: 0.95rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bendera-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.bendera-judul-grup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bendera-badge-baris {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bendera-badge-kode {
+  font-family: monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--aksen);
+  letter-spacing: 0.06em;
+}
+
+.bendera-julukan-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--aksen);
+  background: rgba(230, 177, 74, 0.12);
+  border: 1px solid rgba(230, 177, 74, 0.35);
+  border-radius: 999px;
+  padding: 1px 8px;
+  letter-spacing: 0.02em;
+}
+
+.bendera-nama-prov {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--kertas);
+  line-height: 1.2;
+}
+
+.bendera-tombol-tutup {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--kertas-redup);
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  border-radius: var(--r-sm);
+  transition: all var(--dur-cepat);
+  flex-shrink: 0;
+}
+
+.bendera-tombol-tutup:hover,
+.bendera-tombol-tutup:focus-visible {
+  background: rgba(200, 90, 50, 0.3);
+  color: var(--kertas);
+  border-color: var(--aksen);
+}
+
+.bendera-status-bar {
+  font-size: 0.8125rem;
+  color: var(--kertas-redup);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--garis);
+}
+
+.bendera-status-bar.is-kosong {
+  color: #C0A892;
+  font-style: italic;
+}
+
+.bendera-total-angka {
+  color: var(--aksen);
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.bendera-status-titik {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #6A6258;
+}
+
+.bendera-seksi {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bendera-seksi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bendera-seksi-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--kertas-redup);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bendera-seksi-jumlah {
+  font-size: 0.72rem;
+  color: var(--aksen);
+  font-weight: 600;
+}
+
+/* Seksi Khasanah Ciri Khas Budaya Daerah */
+.bendera-seksi-cirikhas {
+  background: rgba(28, 22, 18, 0.75);
+  border: 1px solid rgba(230, 177, 74, 0.25);
+  border-radius: var(--r-sm);
+  padding: 0.65rem 0.75rem;
+}
+
+.bendera-grid-cirikhas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.bendera-cirikhas-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cirikhas-ikon {
+  font-size: 1.05rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cirikhas-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cirikhas-judul {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--aksen);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cirikhas-isi {
+  margin: 0;
+  font-size: 0.775rem;
+  color: var(--kertas);
+  line-height: 1.35;
+}
+
+.bendera-cirikhas-filosofi {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  background: rgba(230, 177, 74, 0.08);
+  border-left: 2px solid var(--aksen);
+  padding: 0.4rem 0.55rem;
+  border-radius: 0 var(--r-xs) var(--r-xs) 0;
+  font-size: 0.73rem;
+  color: #E2D3B8;
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+.cirikhas-filosofi-ikon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.bendera-rincian-kategori {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.bendera-chip-kategori {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.725rem;
+  background: rgba(40, 33, 29, 0.75);
+  border: 1px solid rgba(74, 62, 54, 0.7);
+  padding: 2px 7px;
+  border-radius: 999px;
+  color: var(--kertas);
+}
+
+.bendera-titik-warna {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bendera-kabupaten-teks {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--kertas);
+  line-height: 1.35;
+}
+
+/* Daftar Tradisi Unggulan di Bendera */
+.bendera-daftar-tradisi {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bendera-item-tradisi-kartu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: rgba(28, 23, 19, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-sm);
+  padding: 0.5rem 0.65rem;
+  transition: all var(--dur-cepat);
+}
+
+.bendera-item-tradisi-kartu:hover {
+  border-color: rgba(230, 177, 74, 0.45);
+  background: rgba(35, 28, 23, 0.95);
+  transform: translateX(2px);
+}
+
+.bendera-tradisi-kiri {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.bendera-tradisi-chip {
+  align-self: flex-start;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+  letter-spacing: 0.02em;
+}
+
+.bendera-tradisi-nama-teks {
+  margin: 0;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--kertas);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bendera-tradisi-cuplikan {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--kertas-redup);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bendera-btn-detail {
+  flex-shrink: 0;
+  background: rgba(230, 177, 74, 0.14);
+  border: 1px solid rgba(230, 177, 74, 0.35);
+  color: var(--aksen);
+  font-size: 0.725rem;
+  font-weight: 600;
+  border-radius: var(--r-xs);
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all var(--dur-cepat);
+}
+
+.bendera-btn-detail:hover {
+  background: var(--aksen);
+  color: var(--malam);
+  border-color: var(--aksen);
+}
+
+.bendera-catatan-kosong {
+  font-size: 0.78rem;
+  color: var(--kertas-redup);
+  line-height: 1.45;
+  background: rgba(30, 26, 23, 0.7);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--garis);
+}
+
+.bendera-footer-aksi {
+  margin-top: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bendera-tombol-paspor {
+  width: 100%;
+  min-height: 40px;
+  background: linear-gradient(135deg, var(--aksen), #D99B35);
+  color: var(--malam);
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: transform var(--dur-cepat), filter var(--dur-cepat);
+}
+
+.bendera-tombol-paspor:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.bendera-tombol-paspor.is-terkumpul {
+  background: rgba(127, 176, 122, 0.25);
+  color: #A4D4A0;
+  border: 1px solid #7FB07A;
+  cursor: default;
+}

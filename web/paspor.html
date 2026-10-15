@@ -28,6 +28,35 @@
         } catch (e) {}
       })();
     </script>
+
+    <!-- Style Kritis Baseline & Anti-FOUC (Mencegah Layar Putih & SVG Raksasa) -->
+    <style>
+      :root { color-scheme: dark; }
+      html, body {
+        background-color: #14110f !important;
+        color: #f5f0eb;
+        margin: 0;
+        min-height: 100vh;
+      }
+      .skip-link {
+        position: absolute;
+        top: -999px;
+        left: -999px;
+      }
+      .nav-merek-ikon {
+        width: 24px !important;
+        height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+        flex-shrink: 0;
+      }
+    </style>
+
+    <!-- Muat Stylesheet Inti di Head -->
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/layout.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+    <link rel="stylesheet" href="/src/styles/sections.css" />
   </head>
   <body>
     <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
@@ -35,7 +64,7 @@
     <header id="header-utama" class="header-utama">
       <nav class="wadah nav-bar" aria-label="Navigasi utama">
         <a href="./index.html" class="nav-merek">
-          <svg class="nav-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg class="nav-merek-ikon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px;" aria-hidden="true">
             <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
             <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
           </svg>
@@ -149,18 +178,45 @@
       </section>
     </main>
 
-    <!-- Dialog Tentang Data -->
-    <dialog id="dialog-tentang" class="dialog-tentang" aria-labelledby="dialog-tentang-judul">
-      <div class="dialog-tentang-kartu">
-        <header class="dialog-tentang-header">
-          <h2 id="dialog-tentang-judul" style="font-family: var(--font-display);">Tentang Data &amp; Metodologi</h2>
-          <button type="button" id="dialog-tentang-tutup" class="tombol-tutup-dialog" aria-label="Tutup informasi data">
-            &times;
-          </button>
-        </header>
-        <div class="dialog-tentang-badan">
+    <!-- Dialog Tentang Data & Keterbatasan -->
+    <dialog id="dialog-tentang" class="dialog-modal" aria-labelledby="dialog-tentang-judul">
+      <div class="dialog-kepala">
+        <h2 id="dialog-tentang-judul" class="dialog-judul" tabindex="-1">
+          Tentang Data &amp; Keterbatasan
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-tentang"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog tentang data"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <div id="dialog-atribusi-dinamis">
           <p>
-            Situs <strong>Lokalocal</strong> menggunakan data publik dari Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan Republik Indonesia (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">spkt.kemenbud.go.id</a>).
+            Sumber resmi: SPKT – Sistem Pendataan Kebudayaan Terpadu, Kementerian Kebudayaan RI
+            (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">https://spkt.kemenbud.go.id</a>),
+            diambil pada 9 Oktober 2026.
+          </p>
+        </div>
+
+        <div class="kotak-catatan-jujur">
+          <strong>Disclaimer:</strong> Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+        </div>
+
+        <div>
+          <h3>Keterbatasan Data (Transparansi)</h3>
+          <ul id="daftar-keterbatasan-data" class="dialog-daftar"></ul>
+        </div>
+
+        <div>
+          <h3>Tentang Pembuat</h3>
+          <p style="color: var(--tinta-2);">
+            Disusun untuk Lomba Pembuatan Website bertema Sosial Budaya — menyajikan data terbuka menjadi pengalaman bercerita yang jujur dan mudah dijelajahi.
           </p>
         </div>
       </div>
@@ -212,13 +268,39 @@
     </dialog>
 
     <footer class="footer-utama">
-      <div class="wadah footer-konten">
-        <p id="footer-atribusi" class="footer-atribusi">
-          Data: SPKT – Kementerian Kebudayaan RI, per <span data-tanggal-ambil>9 Oktober 2026</span>.
-        </p>
-        <p class="footer-hak-cipta">
-          &copy; 2026 Lokalocal. Dibuat untuk Lomba Pemrograman Web.
-        </p>
+      <div class="wadah">
+        <div class="footer-grid">
+          <div class="footer-kolom">
+            <p class="footer-judul" id="footer-judul-situs">Lokalocal</p>
+            <p>
+              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah,
+              sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
+            </p>
+            <div class="footer-atribusi" id="footer-atribusi-dinamis">
+              Data:
+              <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">
+                SPKT – Kementerian Kebudayaan RI
+              </a>, diambil <span data-tanggal-ambil>9 Oktober 2026</span>
+            </div>
+          </div>
+
+          <div class="footer-kolom">
+            <p class="label-kecil">Transparansi &amp; Pernyataan</p>
+            <p>
+              Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+            </p>
+            <div>
+              <button type="button" id="footer-tombol-tentang" class="tombol tombol--garis">
+                Baca tentang data &amp; keterbatasan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-catatan-bawah">
+          <span>Pesan inti: "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."</span>
+          <span>Data statis lokal • Menghormati prefers-reduced-motion</span>
+        </div>
       </div>
     </footer>
 

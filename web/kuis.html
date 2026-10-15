@@ -28,6 +28,35 @@
         } catch (e) {}
       })();
     </script>
+
+    <!-- Style Kritis Baseline & Anti-FOUC (Mencegah Layar Putih & SVG Raksasa) -->
+    <style>
+      :root { color-scheme: dark; }
+      html, body {
+        background-color: #14110f !important;
+        color: #f5f0eb;
+        margin: 0;
+        min-height: 100vh;
+      }
+      .skip-link {
+        position: absolute;
+        top: -999px;
+        left: -999px;
+      }
+      .nav-merek-ikon {
+        width: 24px !important;
+        height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+        flex-shrink: 0;
+      }
+    </style>
+
+    <!-- Muat Stylesheet Inti di Head (Mencegah FOUC saat Pindah Halaman) -->
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/layout.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+    <link rel="stylesheet" href="/src/styles/sections.css" />
   </head>
   <body>
     <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
@@ -35,7 +64,7 @@
     <header id="header-utama" class="header-utama">
       <nav class="wadah nav-bar" aria-label="Navigasi utama">
         <a href="./index.html" class="nav-merek">
-          <svg class="nav-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg class="nav-merek-ikon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px;" aria-hidden="true">
             <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
             <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
           </svg>
@@ -118,13 +147,51 @@
       <!-- Halaman Kuis Budaya -->
       <section class="bagian" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
         <div class="wadah">
-          <div class="bagian-kepala">
-            <p class="kicker">Uji Wawasan Nusantara</p>
-            <h1>Kuis Budaya Nusantara</h1>
-            <p class="bagian-subjudul">
-              Seberapa kenal kamu dengan tradisi, seni, bahasa, dan fakta pencatatan budaya Indonesia?
-              Jawab 5 soal acak yang disusun dari catatan riil Kementerian Kebudayaan.
+          <div class="bagian-kepala kuis-hero-kepala">
+            <div class="kicker-glow">
+              <span class="kicker-bintang">✦</span>
+              <span>ARENA UJI WAWASAN NUSANTARA</span>
+              <span class="kicker-bintang">✦</span>
+            </div>
+            <h1 class="kuis-judul-megah">Kuis Budaya Nusantara</h1>
+            <p class="bagian-subjudul kuis-subjudul-elegan">
+              Seberapa tajam kamu mengenali tradisi, seni, bahasa, ritual, dan fakta pencatatan warisan budaya di seluruh Nusantara?
             </p>
+            <div class="kuis-hero-stats" role="group" aria-label="Pilihan Tantangan Kuis">
+              <button type="button" class="kuis-hero-stat-chip kuis-stat-btn is-aktif" data-kategori="semua" aria-label="Mode 205 Tradisi Terkurasi Nasional">
+                🏛️ <strong>205</strong> Tradisi Terkurasi
+              </button>
+              <button type="button" class="kuis-hero-stat-chip kuis-stat-btn" data-kategori="provinsi" aria-label="Mode Ragam 38 Provinsi">
+                🗺️ <strong>38</strong> Provinsi
+              </button>
+              <button type="button" class="kuis-hero-stat-chip kuis-stat-btn" data-kategori="fakta_data" aria-label="Mode 8 Tantangan Data">
+                ⚡ <strong>8</strong> Tantangan Data
+              </button>
+            </div>
+
+            <div class="kuis-wilayah-pills" role="tablist" aria-label="Cakupan Wilayah Budaya Nusantara">
+              <button type="button" class="kuis-wilayah-pill is-aktif" data-kategori="semua" role="tab" aria-selected="true">
+                🇮🇩 Semua Nusantara
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="sumatera" role="tab" aria-selected="false">
+                🌿 Sumatera • Gadang &amp; Tenun
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="jawa" role="tab" aria-selected="false">
+                🏛️ Jawa • Candi &amp; Wayang
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="kalimantan" role="tab" aria-selected="false">
+                🛶 Kalimantan • Dayak &amp; Mandau
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="sulawesi" role="tab" aria-selected="false">
+                ⛵ Sulawesi • Tongkonan &amp; Pinisi
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="bali_nusa" role="tab" aria-selected="false">
+                🌊 Bali &amp; Nusa Tenggara
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="maluku_papua" role="tab" aria-selected="false">
+                🦜 Maluku &amp; Papua
+              </button>
+            </div>
           </div>
 
           <div style="max-width: 860px; margin-inline: auto;">
@@ -149,37 +216,71 @@
       </section>
     </main>
 
-    <!-- Dialog Popover Rekaman Lengkap -->
-    <dialog id="dialog-rekaman" class="dialog-rekaman" aria-labelledby="dialog-rekaman-judul">
-      <div class="dialog-rekaman-kartu">
-        <header class="dialog-rekaman-header">
-          <div>
-            <span id="dialog-rekaman-kategori" class="chip-jenis"></span>
-            <h2 id="dialog-rekaman-judul" style="margin-top: var(--ruang-2); font-family: var(--font-display);"></h2>
-            <p id="dialog-rekaman-lokasi" style="color: var(--kertas-redup); font-size: var(--teks-kecil);"></p>
-          </div>
-          <button type="button" id="dialog-rekaman-tutup" class="tombol-tutup-dialog" aria-label="Tutup detail rekaman">
-            &times;
-          </button>
-        </header>
-        <div class="dialog-rekaman-badan">
-          <div id="dialog-rekaman-deskripsi" class="dialog-rekaman-deskripsi"></div>
-        </div>
+    <!-- Dialog Detail Rekaman Budaya -->
+    <dialog id="dialog-rekaman" class="dialog-modal" aria-labelledby="dialog-rekaman-judul">
+      <div id="dialog-rekaman-pola" class="dialog-rekaman-pola" aria-hidden="true"></div>
+      <div class="dialog-kepala">
+        <h2 id="dialog-rekaman-judul" class="dialog-judul" tabindex="-1">
+          Detail Catatan Budaya
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-rekaman"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog rekaman budaya"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <div id="dialog-rekaman-meta" class="daftar-chip"></div>
+        <div id="dialog-rekaman-kabupaten" hidden></div>
+        <div id="dialog-rekaman-deskripsi"></div>
+        <div id="dialog-rekaman-sumber" class="dialog-rekaman-kaki"></div>
       </div>
     </dialog>
 
-    <!-- Dialog Tentang Data -->
-    <dialog id="dialog-tentang" class="dialog-tentang" aria-labelledby="dialog-tentang-judul">
-      <div class="dialog-tentang-kartu">
-        <header class="dialog-tentang-header">
-          <h2 id="dialog-tentang-judul" style="font-family: var(--font-display);">Tentang Data &amp; Metodologi</h2>
-          <button type="button" id="dialog-tentang-tutup" class="tombol-tutup-dialog" aria-label="Tutup informasi data">
-            &times;
-          </button>
-        </header>
-        <div class="dialog-tentang-badan">
+    <!-- Dialog Tentang Data & Keterbatasan -->
+    <dialog id="dialog-tentang" class="dialog-modal" aria-labelledby="dialog-tentang-judul">
+      <div class="dialog-kepala">
+        <h2 id="dialog-tentang-judul" class="dialog-judul" tabindex="-1">
+          Tentang Data &amp; Keterbatasan
+        </h2>
+        <button
+          type="button"
+          id="tombol-tutup-tentang"
+          class="tombol-tutup-dialog"
+          aria-label="Tutup dialog tentang data"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="dialog-isi">
+        <div id="dialog-atribusi-dinamis">
           <p>
-            Situs <strong>Lokalocal</strong> menggunakan data publik dari Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan Republik Indonesia (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">spkt.kemenbud.go.id</a>).
+            Sumber resmi: SPKT – Sistem Pendataan Kebudayaan Terpadu, Kementerian Kebudayaan RI
+            (<a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">https://spkt.kemenbud.go.id</a>),
+            diambil pada 9 Oktober 2026.
+          </p>
+        </div>
+
+        <div class="kotak-catatan-jujur">
+          <strong>Disclaimer:</strong> Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+        </div>
+
+        <div>
+          <h3>Keterbatasan Data (Transparansi)</h3>
+          <ul id="daftar-keterbatasan-data" class="dialog-daftar"></ul>
+        </div>
+
+        <div>
+          <h3>Tentang Pembuat</h3>
+          <p style="color: var(--tinta-2);">
+            Disusun untuk Lomba Pembuatan Website bertema Sosial Budaya — menyajikan data terbuka menjadi pengalaman bercerita yang jujur dan mudah dijelajahi.
           </p>
         </div>
       </div>
@@ -231,13 +332,39 @@
     </dialog>
 
     <footer class="footer-utama">
-      <div class="wadah footer-konten">
-        <p id="footer-atribusi" class="footer-atribusi">
-          Data: SPKT – Kementerian Kebudayaan RI, per <span data-tanggal-ambil>9 Oktober 2026</span>.
-        </p>
-        <p class="footer-hak-cipta">
-          &copy; 2026 Lokalocal. Dibuat untuk Lomba Pemrograman Web.
-        </p>
+      <div class="wadah">
+        <div class="footer-grid">
+          <div class="footer-kolom">
+            <p class="footer-judul" id="footer-judul-situs">Lokalocal</p>
+            <p>
+              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah,
+              sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
+            </p>
+            <div class="footer-atribusi" id="footer-atribusi-dinamis">
+              Data:
+              <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">
+                SPKT – Kementerian Kebudayaan RI
+              </a>, diambil <span data-tanggal-ambil>9 Oktober 2026</span>
+            </div>
+          </div>
+
+          <div class="footer-kolom">
+            <p class="label-kecil">Transparansi &amp; Pernyataan</p>
+            <p>
+              Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+            </p>
+            <div>
+              <button type="button" id="footer-tombol-tentang" class="tombol tombol--garis">
+                Baca tentang data &amp; keterbatasan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-catatan-bawah">
+          <span>Pesan inti: "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."</span>
+          <span>Data statis lokal • Menghormati prefers-reduced-motion</span>
+        </div>
       </div>
     </footer>
 
