@@ -197,6 +197,17 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body) {
       pesanEl.style.opacity = '1';
       pesanEl.style.transform = 'translateY(0)';
     }
+
+    // Sinkronkan ke maskot kartun penunggu di navbar
+    const navKartunPesan = document.getElementById('nav-kartun-pesan');
+    const navKartunPersen = document.getElementById('nav-kartun-persen');
+    if (navKartunPersen) {
+      navKartunPersen.textContent = `${target}%`;
+    }
+    if (pesanKustom && navKartunPesan) {
+      const pesanRingkas = pesanKustom.length > 26 ? pesanKustom.slice(0, 24) + '...' : pesanKustom;
+      navKartunPesan.textContent = pesanRingkas;
+    }
   }
 
   /**
@@ -215,13 +226,26 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body) {
 
     aturProgres(100, pesanPenutup);
 
-    // Beri jeda manis 400ms agar mata pengguna melihat 100% dan pesan sukses
+    // Animasi maskot kartun navbar melambai gembira
+    const navKartun = document.getElementById('nav-loading-kartun');
+    const navKartunPesan = document.getElementById('nav-kartun-pesan');
+    if (navKartunPesan) {
+      navKartunPesan.textContent = 'Siap Berlayar! ⛵✨';
+    }
+    if (navKartun) {
+      navKartun.classList.add('is-selesai');
+    }
+
+    // Beri jeda manis 450ms agar mata pengguna melihat 100% dan pesan sukses
     setTimeout(() => {
       elemenLoader.classList.add('is-selesai');
 
       setTimeout(() => {
         elemenLoader.setAttribute('aria-hidden', 'true');
         elemenLoader.style.display = 'none';
+        if (navKartun) {
+          navKartun.style.display = 'none';
+        }
         if (typeof onSelesai === 'function') {
           onSelesai();
         }

@@ -11,7 +11,7 @@ import '../styles/sections.css';
 
 import { muatDataAwal, muatDataLengkap, jadwalkanMuatDataLengkap } from '../data/loader.js';
 import { inisialisasiNavigasi } from '../ui/nav.js';
-import { inisialisasiTema } from '../ui/tema.js';
+import { inisialisasiTema, ambilTemaSaatIni } from '../ui/tema.js';
 import { inisialisasiBacksound } from '../ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { inisialisasiDialogRekaman } from '../ui/dialog-rekaman.js';
@@ -31,9 +31,22 @@ async function mulaiHalamanJelajah() {
   inisialisasiTema();
   inisialisasiBacksound();
 
-  // Pasang tema Siang secara langsung sejak awal agar tidak ada kedipan hitam
-  document.body.classList.add('tema-siang');
-  document.body.classList.remove('tema-malam');
+  // Sinkronisasi tema awal dengan pilihan pengguna di navbar
+  const temaAwal = ambilTemaSaatIni();
+  const adalahSiangAwal = temaAwal === 'terang';
+  document.body.classList.toggle('tema-siang', adalahSiangAwal);
+  document.body.classList.toggle('tema-malam', !adalahSiangAwal);
+
+  // Dengarkan perubahan tema dari tombol bulan/matahari di navbar
+  window.addEventListener('lokalocal-ganti-tema', (e) => {
+    const temaKini = e.detail?.tema;
+    const adalahSiang = temaKini === 'terang';
+    document.body.classList.toggle('tema-siang', adalahSiang);
+    document.body.classList.toggle('tema-malam', !adalahSiang);
+    if (kontroler3D && typeof kontroler3D.aturModeWaktu === 'function') {
+      kontroler3D.aturModeWaktu(adalahSiang ? 'siang' : 'malam');
+    }
+  });
 
   // Tampilkan layar muat interaktif & animasi lucu Nusantara
   const loaderLucu = inisialisasiLoaderLucu();
@@ -111,6 +124,9 @@ async function mulaiHalamanJelajah() {
     }
 
     if (kontroler3D) {
+      if (typeof kontroler3D.aturModeWaktu === 'function') {
+        kontroler3D.aturModeWaktu(adalahSiangAwal ? 'siang' : 'malam');
+      }
       // Peta 3D berhasil aktif: pasang interaksi Floating HUD
       pasangKontrolHud(kontroler3D);
     } else if (wadahPeta && geoProvinsi) {
@@ -181,7 +197,7 @@ async function mulaiHalamanJelajah() {
 }
 
 /**
- * Memasang interaksi tombol-tombol pada Floating HUD
+ * Memasang interaksi tombol-tombol pada Floating HUD Zoom
  * @param {object} kontroler
  */
 function pasangKontrolHud(kontroler) {
@@ -191,9 +207,6 @@ function pasangKontrolHud(kontroler) {
   const btnZoomOut = document.getElementById('hud-zoom-out');
   const btnZoomReset = document.getElementById('hud-zoom-reset');
   const btnResetPutar = document.getElementById('hud-reset-putar');
-  const btnModeWaktu = document.getElementById('hud-mode-waktu');
-  const ikonModeWaktu = document.getElementById('hud-mode-waktu-ikon');
-  const labelModeWaktu = document.getElementById('hud-mode-waktu-label');
 
   function perbaruiLabelZoom(persen) {
     if (btnZoomReset) {
@@ -202,26 +215,6 @@ function pasangKontrolHud(kontroler) {
       btnZoomReset.setAttribute('title', `Atur Ulang Zoom Kamera (Sekarang ${nilaiPersen}%)`);
     }
   }
-
-  function terapkanTemaWaktu(mode) {
-    const adalahSiang = mode === 'siang';
-    document.body.classList.toggle('tema-siang', adalahSiang);
-    document.body.classList.toggle('tema-malam', !adalahSiang);
-
-    if (labelModeWaktu) {
-      labelModeWaktu.textContent = adalahSiang ? 'Siang Hari' : 'Malam Hari';
-    }
-    if (ikonModeWaktu) {
-      ikonModeWaktu.textContent = adalahSiang ? '☀️' : '🌙';
-    }
-    if (btnModeWaktu) {
-      btnModeWaktu.classList.toggle('is-mode-malam', !adalahSiang);
-      btnModeWaktu.classList.toggle('is-mode-siang', adalahSiang);
-    }
-  }
-
-  // Terapkan tema awal Siang (Matahari aktif)
-  terapkanTemaWaktu(kontroler.getModeWaktu ? kontroler.getModeWaktu() : 'siang');
 
   // Inisialisasi teks zoom awal (100%)
   perbaruiLabelZoom();
@@ -249,13 +242,6 @@ function pasangKontrolHud(kontroler) {
 
   if (btnResetPutar) {
     btnResetPutar.addEventListener('click', () => kontroler.resetRotasi());
-  }
-
-  if (btnModeWaktu) {
-    btnModeWaktu.addEventListener('click', () => {
-      const modeBaru = kontroler.toggleModeWaktu();
-      terapkanTemaWaktu(modeBaru);
-    });
   }
 }
 

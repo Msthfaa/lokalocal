@@ -62,11 +62,13 @@ export function buatPengelolaModeDetail({
   let provAktif = null;
   let meshAktif = null;
 
-  // Transformasi asal & target keping terpilih (dalam sistem koordinat lokal grupProvinsi)
+  // Transformasi asal & target keping terpilih (dalam sistem koordinat lokal & dunia)
   const posAsalLokal = new Vector3();
   const quatAsalLokal = new Quaternion(0, 0, 0, 1);
-  const posTargetLokal = new Vector3();
-  const quatTargetLokal = new Quaternion();
+  const posAsalWorld = new Vector3();
+  const quatAsalWorld = new Quaternion();
+  const posTargetWorld = new Vector3();
+  const quatTargetWorld = new Quaternion();
   let skalaTarget = 1.0;
 
   // Interaksi putar bebas 360° pada keping terpilih
@@ -218,10 +220,12 @@ export function buatPengelolaModeDetail({
     if (!mesh) return;
     if (aktif && mesh.userData?.materialAtlas) {
       mesh.material = mesh.userData.materialAtlas;
+      mesh.material.side = 2; // DoubleSide
       mesh.material.emissive.setHex(0x000000);
       mesh.material.emissiveIntensity = 0;
     } else if (mesh.userData?.materialNormal) {
       mesh.material = mesh.userData.materialNormal;
+      mesh.material.side = 2; // DoubleSide
       const warnaAsal = mesh.userData.warnaNormal || mesh.userData.warnaNatural;
       if (warnaAsal) {
         mesh.material.color.copy(warnaAsal);
@@ -256,13 +260,14 @@ export function buatPengelolaModeDetail({
    * dan tidak menabrak kolom tengah.
    */
   function hitungTargetKiri(mesh) {
+    if (!mesh) return;
     const adalahPonsel = window.innerWidth < 768;
     const winW = window.innerWidth;
     const winH = window.innerHeight;
 
-    // Default fallback jika DOM belum terhitung
-    let ndcX = adalahPonsel ? 0.0 : -0.25;
-    let ndcY = adalahPonsel ? 0.48 : 0.08;
+    // Default target NDC di area pandang kolom kiri
+    let ndcX = adalahPonsel ? 0.0 : -0.32;
+    let ndcY = adalahPonsel ? 0.45 : 0.08;
     let targetPx = adalahPonsel ? Math.min(winW * 0.70, 260) : 380;
 
     const kolomKiriEl = domOverlay.querySelector('.cangkang-kolom--kiri');
@@ -272,29 +277,17 @@ export function buatPengelolaModeDetail({
       const rectKanvas = kanvasEl.getBoundingClientRect();
       if (rectKanvas.width > 0 && rectKanvas.height > 0) {
         if (!adalahPonsel) {
-          // Kartu administratif berada di pojok kiri bawah (lebar ~290px).
-          // Area terbuka bebas horizontal: antara sisi kanan kartu wilayah dan kolom tengah:
-          const batasKiriAman = rectKiri.left + Math.min(rectKiri.width * 0.30, 310);
-          const batasKananAman = rectKiri.right - 28;
-
-          // Ruang bebas yang tersedia
-          const ruangLebar = Math.max(220, batasKananAman - batasKiriAman);
-          const topbarH = 68;
-          const ruangTinggi = Math.max(220, winH - topbarH - 40);
-
-          // Ukuran pixel target yang PAS:
-          // Mengambil 56% dari ruang tinggi terbuka dan max 62% dari ruang lebar, dibatasi 390px
-          targetPx = Math.min(ruangTinggi * 0.56, ruangLebar * 0.62, 390);
-
-          // Posisi tengah horizontal dan vertikal yang seimbang
-          const pixelX = (batasKiriAman + batasKananAman) * 0.5;
-          const pixelY = topbarH + ruangTinggi * 0.42;
+          const viewAreaEl = domOverlay.querySelector('.cangkang-kiri-viewarea');
+          const rectView = viewAreaEl ? viewAreaEl.getBoundingClientRect() : rectKiri;
+          const pixelX = rectView.left + rectView.width * 0.5;
+          const pixelY = rectView.top + rectView.height * 0.48;
 
           ndcX = ((pixelX - rectKanvas.left) / rectKanvas.width) * 2 - 1;
           ndcY = -(((pixelY - rectKanvas.top) / rectKanvas.height) * 2 - 1);
+          targetPx = Math.min(rectView.width * 0.72, rectView.height * 0.72, 380);
         } else {
           ndcX = 0.0;
-          ndcY = 0.48;
+          ndcY = 0.45;
           targetPx = Math.min(winW * 0.68, winH * 0.30, 260);
         }
       }
@@ -305,13 +298,7 @@ export function buatPengelolaModeDetail({
 
     const dir = targetNDC.sub(camera.position).normalize();
     const jarak = adalahPonsel ? 2.80 : 2.70; // Jarak proporsional di depan lensa kamera
-    const posTargetWorld = camera.position.clone().add(dir.multiplyScalar(jarak));
-
-    // Konversi posisi target ke koordinat lokal parent (grupProvinsi)
-    const parent = mesh.parent || elemenAdegan?.grupProvinsi || grupUtama;
-    parent.updateMatrixWorld(true);
-    posTargetLokal.copy(posTargetWorld);
-    parent.worldToLocal(posTargetLokal);
+    posTargetWorld.copy(camera.position).add(dir.multiplyScalar(jarak));
 
     // Hitung ukuran target Three.js di dunia 3D agar persis sesuai targetPx di layar
     const fovRad = ((camera.fov || 34) * Math.PI) / 180;
@@ -334,12 +321,7 @@ export function buatPengelolaModeDetail({
     dummy.lookAt(camera.position);
     dummy.rotateX(Math.PI * 0.5); // Tepat 90 derajat top-down POV dari atas tanpa kemiringan miring
     dummy.updateMatrixWorld(true);
-    const quatTargetWorld = dummy.quaternion.clone();
-
-    // Konversi ke koordinat lokal parent
-    const quatParentWorld = new Quaternion();
-    parent.getWorldQuaternion(quatParentWorld);
-    quatTargetLokal.copy(quatParentWorld.clone().invert().multiply(quatTargetWorld));
+    quatTargetWorld.copy(dummy.quaternion);
   }
 
   // Sinkronisasi posisi keping jika jendela diubah ukurannya saat mode detail aktif
@@ -358,17 +340,26 @@ export function buatPengelolaModeDetail({
    * Fungsi murni yang menerapkan seluruh pose visual berdasarkan nilai p in [0, 1]
    */
   function updatePoseVisual(p) {
-    // 1. Transformasi keping pulau terpilih (di ruang lokal grupProvinsi)
+    // 1. Transformasi keping pulau terpilih (di ruang dunia, diproyeksikan ke ruang lokal parent)
     if (meshAktif) {
-      // Lerp posisi dari koordinat lokal asal ke panggung kiri
-      meshAktif.position.lerpVectors(posAsalLokal, posTargetLokal, p);
+      const parent = meshAktif.parent || elemenAdegan?.grupProvinsi || grupUtama;
+      if (parent) {
+        parent.updateMatrixWorld(true);
 
-      // Lerp skala
-      const skalaKini = 1.0 + (skalaTarget - 1.0) * p;
-      meshAktif.scale.setScalar(skalaKini);
+        // Interpolasi posisi di ruang dunia (World Space) secara absolut
+        const curWorldPos = posAsalWorld.clone().lerp(posTargetWorld, p);
+        meshAktif.position.copy(parent.worldToLocal(curWorldPos));
 
-      // Slerp quaternion rotasi menuju pose top-down aerial view statis menghadap layar
-      meshAktif.quaternion.slerpQuaternions(quatAsalLokal, quatTargetLokal, p);
+        // Interpolasi rotasi di ruang dunia (World Space)
+        const curQuatWorld = quatAsalWorld.clone().slerp(quatTargetWorld, p);
+        const parentQuatWorld = new Quaternion();
+        parent.getWorldQuaternion(parentQuatWorld);
+        meshAktif.quaternion.copy(parentQuatWorld.invert().multiply(curQuatWorld));
+
+        // Lerp skala
+        const skalaKini = 1.0 + (skalaTarget - 1.0) * p;
+        meshAktif.scale.setScalar(skalaKini);
+      }
 
       // Garis kontur aksen emas
       if (garisAksen && garisAksen.material) {
@@ -434,11 +425,6 @@ export function buatPengelolaModeDetail({
       }
     }
 
-    // 5. Rotasi grup utama (kembalikan goyangan ke 0 saat mode detail)
-    if (grupUtama) {
-      grupUtama.rotation.y *= (1.0 - p * 0.12);
-    }
-
     // 6. Sinkronisasi opasitas & visibility DOM overlay
     domOverlay.style.opacity = String(p);
     if (p > 0.01) {
@@ -479,13 +465,16 @@ export function buatPengelolaModeDetail({
       // Terapkan tekstur peta fisik atlas HANYA pada keping terpilih saat masuk ke mode detail
       terapkanTeksturAtlas(meshAktif, true);
 
-      // Simpan posisi asal lokal di dalam grupProvinsi
+      // Simpan posisi asal lokal dan dunia di dalam grupProvinsi & adegan
       if (mesh.userData?.pusatAsal) {
         posAsalLokal.copy(mesh.userData.pusatAsal);
       } else {
         posAsalLokal.copy(mesh.position);
       }
       quatAsalLokal.set(0, 0, 0, 1);
+
+      mesh.getWorldPosition(posAsalWorld);
+      mesh.getWorldQuaternion(quatAsalWorld);
 
       // Reset rotasi interaktif
       targetRotasiInteraktifX = 0;
@@ -576,6 +565,14 @@ export function buatPengelolaModeDetail({
 
       state = 'masuk';
       const durasi = apakahKurangiGerak() ? 0.2 : 1.4;
+
+      if (grupUtama) {
+        gsap.to(grupUtama.rotation, {
+          y: 0,
+          duration: durasi,
+          ease: 'power3.inOut'
+        });
+      }
 
       tweenProgress = gsap.to(detailProgress, {
         val: 1,
