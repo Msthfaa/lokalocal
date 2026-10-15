@@ -117,23 +117,13 @@ export function inisialisasiJelajah3D({
   let cameraTargetLookAt = new Vector3(0, 0.12, 0);
   let cameraCurrentLookAt = new Vector3(0, 0.12, 0);
 
-  // Animasi Fly-In masuk anggun dari angkasa saat membuka 3D
-  let animMasukAktif = !kurangiGerakan;
-  let waktuMulaiMasuk = performance.now();
-  const durasiMasukMs = 1950;
-  let camPosAwalMasuk = new Vector3();
-
-  if (animMasukAktif) {
-    camPosAwalMasuk.set(cameraBasePos.x * 0.15, cameraBasePos.y * 2.35, cameraBasePos.z * 2.15);
-    camera.position.copy(camPosAwalMasuk);
-    camera.lookAt(0, -0.5, 0);
-    cameraCurrentLookAt.set(0, -0.5, 0);
-    if (grupUtama) {
-      grupUtama.position.y = -0.32; // Kepulauan terangkat naik anggun dari lautan
-    }
-  } else {
-    camera.position.copy(cameraBasePos);
-    camera.lookAt(0, 0.12, 0);
+  // Posisi kamera awal mantap dan fokus di tengah kepulauan nusantara
+  let animMasukAktif = false;
+  camera.position.copy(cameraBasePos);
+  camera.lookAt(0, 0.12, 0);
+  cameraCurrentLookAt.set(0, 0.12, 0);
+  if (grupUtama) {
+    grupUtama.position.y = 0;
   }
 
   // Simpan data budaya lokal dan fungsi pencarian akurat
@@ -589,38 +579,8 @@ export function inisialisasiJelajah3D({
         elemenAdegan.pengontrolMaritim.update(tDetik);
       }
 
-      // Render: gunakan renderKhusus saat mode detail aktif agar latar belakang peta ter-blur lembut
-      if (pengelolaDetail && typeof pengelolaDetail.renderKhusus === 'function') {
-        pengelolaDetail.renderKhusus(renderer, scene, camera);
-      } else {
-        renderer.render(scene, camera);
-      }
-    } catch (errLoop) {
-      console.warn('Kendala render frame diorama:', errLoop);
-    } finally {
-      idRaf = window.requestAnimationFrame(loop);
-    }
-    // Tangani animasi masuk pembuka (fly-in drone) jika aktif
-    if (animMasukAktif) {
-      const deltaMs = sekarang - waktuMulaiMasuk;
-      const progress = Math.min(1, Math.max(0, deltaMs / durasiMasukMs));
-      const t = 1 - Math.pow(1 - progress, 3);
-
-      camera.position.lerpVectors(camPosAwalMasuk, cameraTargetPos, t);
-      cameraCurrentLookAt.lerpVectors(new Vector3(0, -0.5, 0), cameraTargetLookAt, t);
-      camera.lookAt(cameraCurrentLookAt);
-
-      if (grupUtama) {
-        grupUtama.position.y = -0.32 * (1 - t);
-      }
-
-      if (progress >= 1) {
-        animMasukAktif = false;
-        if (grupUtama) grupUtama.position.y = 0;
-      }
-    } else {
       // Lerp kamera halus ke target posisi daerah yang dipilih (jika mode detail tidak aktif)
-      const modeDetailAktif = pengelolaDetail && typeof pengelolaDetail.apakahAktif === 'function' && pengelolaDetail.apakahAktif();
+      const modeDetailAktif = pengelolaDetail && typeof pengelolaDetail.isAktif === 'function' && pengelolaDetail.isAktif();
       if (!modeDetailAktif) {
         if (!kurangiGerakan) {
           camera.position.lerp(cameraTargetPos, 0.055);
@@ -631,13 +591,9 @@ export function inisialisasiJelajah3D({
           camera.lookAt(cameraTargetLookAt);
         }
       }
-    }
 
-    // Perbarui posisi kartu bendera mengikuti proyeksi 3D
-    pengontrolBendera.perbaruiPosisi();
-
-    try {
-      if (pengelolaDetail && typeof pengelolaDetail.apakahAktif === 'function' && pengelolaDetail.apakahAktif()) {
+      // Render: gunakan renderKhusus saat mode detail aktif agar latar belakang peta ter-blur lembut
+      if (pengelolaDetail && typeof pengelolaDetail.isAktif === 'function' && pengelolaDetail.isAktif()) {
         pengelolaDetail.renderKhusus(renderer, scene, camera);
       } else {
         renderer.render(scene, camera);
