@@ -165,6 +165,10 @@ export function inisialisasiJelajah3D({
       // Sembunyikan bendera dan floating card compact saat masuk mode detail
       pengontrolBendera.sembunyikan();
       panelKanan.sembunyikan();
+      targetRotY = 0;
+      currentRotY = 0;
+      cameraTargetPos.copy(cameraBasePos);
+      cameraTargetLookAt.set(0, 0.12, 0);
     },
     onSelesaiTutup: () => {
       // Kembalikan bendera dan floating card compact saat kembali ke peta
@@ -494,14 +498,16 @@ export function inisialisasiJelajah3D({
       mesh.material.emissiveIntensity = 0.55;
     }
 
-    // Arahkan kamera secara dinamis dan mulus ke pulau/daerah yang dipilih
-    const pusatMesh = mesh.position;
+    // Arahkan kamera secara dinamis dan mulus ke pulau/daerah yang dipilih di ruang dunia
+    const worldPusat = new Vector3();
+    mesh.getWorldPosition(worldPusat);
+
     cameraTargetPos.set(
-      cameraBasePos.x + pusatMesh.x * 0.45,
+      cameraBasePos.x + worldPusat.x * 0.40,
       cameraBasePos.y * 0.94,
-      cameraBasePos.z * 0.88 + pusatMesh.z * 0.4
+      cameraBasePos.z * 0.88 + worldPusat.z * 0.35
     );
-    cameraTargetLookAt.set(pusatMesh.x * 0.72, pusatMesh.y + 0.08, pusatMesh.z * 0.72);
+    cameraTargetLookAt.set(worldPusat.x * 0.70, worldPusat.y + 0.08, worldPusat.z * 0.70);
     pengontrolBendera.tampilkan(provData, mesh);
 
     // Tampilkan Floating Side Card di kanan layar
@@ -719,6 +725,7 @@ export function inisialisasiJelajah3D({
     getZoomPersen: () => Math.round((zoomLevel / 1.25) * 100),
     resetRotasi,
     toggleModeWaktu,
+    aturModeWaktu,
     setModeWaktu: aturModeWaktu,
     getModeWaktu,
     toggleModeWarna,

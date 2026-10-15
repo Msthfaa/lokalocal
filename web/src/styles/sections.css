@@ -568,21 +568,30 @@ body.tema-malam .jelajah-wadah-fullscreen::before {
   text-decoration: underline;
 }
 
-/* Floating HUD Kanan Bawah: Toolbar Kontrol Peta */
+/* Floating HUD Kanan Bawah: Toolbar Zoom Kontrol Peta (Mengambang Aman di Atas Audio) */
 .jelajah-hud-kanan-bawah {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
-  z-index: 40;
+  bottom: 84px;
+  right: 24px;
+  z-index: 90;
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(20, 17, 15, 0.85);
+  background: rgba(20, 17, 15, 0.88);
   border: 1px solid rgba(230, 177, 74, 0.35);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(10px);
-  padding: 4px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 4px 6px;
   border-radius: var(--r-bulat);
+  transition: transform var(--dur-cepat), bottom var(--dur-cepat);
+}
+
+@media (max-width: 640px) {
+  .jelajah-hud-kanan-bawah {
+    bottom: 74px;
+    right: 16px;
+  }
 }
 
 .hud-btn {
@@ -5515,6 +5524,171 @@ body.tema-siang .tautan-spkt-resmi {
 
   .cangkang-select-prov {
     max-width: 140px;
+  }
+}
+
+/* ==========================================================================
+   Maskot Kartun Lucu Penunggu Loading di Navbar
+   ========================================================================== */
+.halaman-fullscreen-body .header-utama {
+  z-index: 10005 !important;
+}
+
+.nav-loading-kartun {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 14, 12, 0.78);
+  border: 1px solid rgba(230, 177, 74, 0.35);
+  border-radius: 9999px;
+  padding: 4px 12px 4px 6px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  margin: 0 10px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  user-select: none;
+}
+
+[data-tema="terang"] .nav-loading-kartun,
+body.tema-siang .nav-loading-kartun {
+  background: rgba(255, 255, 255, 0.90);
+  border-color: rgba(184, 115, 20, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.nav-loading-kartun.is-selesai {
+  opacity: 0;
+  transform: scale(0.90);
+  pointer-events: none;
+}
+
+.nav-kartun-animasi {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-kartun-chibi {
+  transform-origin: 24px 34px;
+  animation: navKartunGoyang 1.6s ease-in-out infinite alternate;
+}
+
+.nav-kartun-bayangan {
+  transform-origin: 24px 42px;
+  animation: navKartunBayang 1.6s ease-in-out infinite alternate;
+}
+
+.nav-kartun-mata {
+  transform-origin: 24px 34px;
+  animation: navKartunKedip 3.2s infinite;
+}
+
+.nav-kartun-teropong {
+  transform-origin: 31px 28px;
+  animation: navKartunTeropong 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes navKartunGoyang {
+  0% {
+    transform: translateY(0px) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(-3.5px) rotate(4deg);
+  }
+}
+
+@keyframes navKartunBayang {
+  0% {
+    transform: scale(1);
+    opacity: 0.22;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0.12;
+  }
+}
+
+@keyframes navKartunKedip {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes navKartunTeropong {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(8deg);
+  }
+}
+
+.nav-kartun-info {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--kertas);
+  white-space: nowrap;
+}
+
+[data-tema="terang"] .nav-kartun-info,
+body.tema-siang .nav-kartun-info {
+  color: #1C1917;
+}
+
+.nav-kartun-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-kartun-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--aksen);
+  box-shadow: 0 0 6px var(--aksen);
+  animation: navTitikDenyut 1s ease-in-out infinite alternate;
+}
+
+@keyframes navTitikDenyut {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.nav-kartun-persen {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--aksen);
+  background: rgba(230, 177, 74, 0.16);
+  border: 1px solid rgba(230, 177, 74, 0.35);
+  border-radius: 9999px;
+  padding: 1px 7px;
+}
+
+@media (max-width: 640px) {
+  .nav-loading-kartun {
+    margin: 0 4px;
+    padding: 3px 8px 3px 4px;
+  }
+  .nav-kartun-label {
+    display: none;
   }
 }
 
