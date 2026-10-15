@@ -29,14 +29,23 @@
       })();
     </script>
 
-    <!-- Style Kritis Baseline & Anti-FOUC (Mencegah Layar Putih & SVG Raksasa) -->
+    <!-- Style Kritis Baseline & Anti-FOUC (Mendukung Mode Gelap & Terang Seketika) -->
     <style>
       :root { color-scheme: dark; }
+      [data-tema="terang"] { color-scheme: light; }
       html, body {
-        background-color: #14110f !important;
-        color: #f5f0eb;
         margin: 0;
         min-height: 100vh;
+      }
+      html:not([data-tema="terang"]),
+      html:not([data-tema="terang"]) body {
+        background-color: #0E0B09;
+        color: #f5f0eb;
+      }
+      [data-tema="terang"],
+      [data-tema="terang"] body {
+        background-color: #FAF6EE;
+        color: #1C1917;
       }
       .skip-link {
         position: absolute;
@@ -58,11 +67,11 @@
     <link rel="stylesheet" href="/src/styles/components.css" />
     <link rel="stylesheet" href="/src/styles/sections.css" />
   </head>
-  <body>
+  <body class="halaman-paspor-body">
     <a href="#konten-utama" class="skip-link">Lompat ke konten utama</a>
 
     <header id="header-utama" class="header-utama">
-      <nav class="wadah nav-bar" aria-label="Navigasi utama">
+      <nav class="nav-bar" aria-label="Navigasi utama">
         <a href="./index.html" class="nav-merek">
           <svg class="nav-merek-ikon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px;" aria-hidden="true">
             <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
@@ -145,9 +154,9 @@
       </div>
 
       <!-- Halaman Paspor Budaya -->
-      <section class="bagian" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
+      <section class="bagian bagian-paspor-interaktif" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
         <div class="wadah">
-          <div class="bagian-kepala">
+          <div class="bagian-kepala paspor-hero-kepala">
             <p class="kicker">Koleksi Penjelajah Budaya</p>
             <h1>Paspor Budaya Nusantara</h1>
             <p class="bagian-subjudul">
@@ -161,7 +170,7 @@
             <div id="s7-panel-paspor" class="s7-panel-kartu" style="min-height: 480px;" aria-live="polite"></div>
 
             <!-- Navigasi Tambahan -->
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--ruang-3); margin-top: var(--ruang-6); padding: var(--ruang-4); background: var(--malam-2); border: 1px solid var(--garis); border-radius: var(--r-md);">
+            <div class="paspor-nav-bawah-kotak">
               <div>
                 <strong style="color: var(--kertas);">Ingin menambah stempel baru?</strong>
                 <p style="color: var(--kertas-redup); font-size: var(--teks-kecil); margin-top: 4px;">

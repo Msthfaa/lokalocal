@@ -46,10 +46,10 @@ export function inisialisasiBagianPaspor({
     const judulGrup = document.createElement('div');
     const kicker = document.createElement('p');
     kicker.className = 'label-kecil';
-    kicker.textContent = 'Koleksi Stempel Jelajah';
+    kicker.textContent = 'Lembar Koleksi';
 
     const h3 = document.createElement('h3');
-    h3.textContent = 'Paspor Budaya Nusantara';
+    h3.textContent = 'Koleksi 38 Stempel Wilayah';
 
     const ket = document.createElement('p');
     ket.style.fontSize = 'var(--teks-kecil)';

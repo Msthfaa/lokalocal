@@ -489,10 +489,12 @@ main {
    Footer Utama Modern Sinematik
    ========================================================================== */
 .footer-utama {
-  background-color: #000000;
-  background: #000000;
+  background-color: rgba(14, 11, 9, 0.65);
+  background: rgba(14, 11, 9, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: none !important;
-  border-top: none !important;
+  border-top: 1px solid rgba(212, 160, 23, 0.24) !important;
   border-bottom: none !important;
   padding-block: var(--ruang-6) var(--ruang-5);
   color: var(--kertas-redup);
@@ -503,12 +505,14 @@ main {
 }
 
 [data-tema="terang"] .footer-utama {
-  background-color: #ffffff;
-  background: #ffffff;
+  background-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: none !important;
-  border-top: none !important;
+  border-top: 1px solid rgba(184, 115, 20, 0.28) !important;
   border-bottom: none !important;
-  color: #4A453E;
+  color: #382E25;
 }
 
 .footer-utama > .wadah {
@@ -516,22 +520,9 @@ main {
   z-index: 2;
 }
 
-/* Gradasi Transisi Halus di Bagian Atas Footer (dari Penutup) */
+/* Hilangkan sekat gradasi solid agar transisi kaca bersih dan tembus pandang */
 .footer-utama::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-[data-tema="terang"] .footer-utama::before {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.6) 40%, transparent 100%);
+  display: none;
 }
 
 .footer-grid-modern {
@@ -603,7 +594,9 @@ main {
 }
 
 [data-tema="terang"] .footer-deskripsi {
-  color: #5C554B;
+  color: #382E25;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.85);
 }
 
 .footer-atribusi-modern {
@@ -619,9 +612,11 @@ main {
 }
 
 [data-tema="terang"] .footer-atribusi-modern {
-  background: #FFFFFF;
-  border-color: #E2D9CD;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(184, 115, 20, 0.3);
+  box-shadow: 0 4px 14px rgba(40, 25, 15, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .footer-atribusi-ikon {
@@ -762,7 +757,9 @@ main {
 }
 
 [data-tema="terang"] .footer-transparansi-teks {
-  color: #5C554B;
+  color: #382E25;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.85);
 }
 
 .footer-tombol-grup {
@@ -790,10 +787,12 @@ main {
 }
 
 [data-tema="terang"] .footer-tombol-kaca {
-  background: #FFFFFF;
-  border-color: #E2D9CD;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(184, 115, 20, 0.32);
   color: #1C1917;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .footer-tombol-kaca:hover {
