@@ -95,18 +95,42 @@ export function inisialisasiJelajah3D({
 
   const { scene, grupUtama, aturModeWarna } = elemenAdegan;
 
+  const kurangiGerakan = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Kamera diorama berskala dekat (faktorZoom = 1.25 - 1.35) agar kepulauan tampil megah
   let zoomLevel = 1.30;
   const camera = new PerspectiveCamera(34, 1, 0.1, 50);
   let cameraBasePos = hitungPosisiKameraFit(1.6, zoomLevel);
-  camera.position.copy(cameraBasePos);
-  camera.lookAt(0, -0.05, 0);
+
+  // Vektor target kamera untuk transisi mulus ke wilayah yang dipilih
+  let cameraTargetPos = cameraBasePos.clone();
+  let cameraTargetLookAt = new Vector3(0, -0.05, 0);
+  let cameraCurrentLookAt = new Vector3(0, -0.05, 0);
+
+  // Animasi Fly-In masuk anggun dari angkasa saat membuka 3D
+  let animMasukAktif = !kurangiGerakan;
+  let waktuMulaiMasuk = performance.now();
+  const durasiMasukMs = 1950;
+  let camPosAwalMasuk = new Vector3();
+
+  if (animMasukAktif) {
+    camPosAwalMasuk.set(cameraBasePos.x * 0.15, cameraBasePos.y * 2.35, cameraBasePos.z * 2.15);
+    camera.position.copy(camPosAwalMasuk);
+    camera.lookAt(0, -0.5, 0);
+    cameraCurrentLookAt.set(0, -0.5, 0);
+    if (grupUtama) {
+      grupUtama.position.y = -0.32; // Kepulauan terangkat naik anggun dari lautan
+    }
+  } else {
+    camera.position.copy(cameraBasePos);
+    camera.lookAt(0, -0.05, 0);
+  }
 
   // Simpan data budaya lokal dan fungsi pencarian
   let dataBudayaLokal = Array.isArray(daftarBudaya) ? daftarBudaya : [];
 
   function ambilBudayaProvinsi(kode) {
-    return dataBudayaLokal.filter(b => String(b.provinsi_kode) === String(kode));
+    return dataBudayaLokal.filter(b => String(b.kode_provinsi || b.provinsi_kode) === String(kode));
   }
 
   // Pasang Pengontrol Bendera 3D
@@ -121,7 +145,16 @@ export function inisialisasiJelajah3D({
     },
     onBukaDetailRekaman,
     onCatatStempel,
-    ambilBudayaProvinsi
+    ambilBudayaProvinsi,
+    onTutup: () => {
+      if (meshTerpilih) {
+        meshTerpilih.position.y = meshTerpilih.userData.pusatAsal.y;
+        meshTerpilih = null;
+      }
+      // Kembalikan fokus kamera ke tengah diorama
+      cameraTargetPos.copy(cameraBasePos);
+      cameraTargetLookAt.set(0, -0.05, 0);
+    }
   });
 
   // State interaksi drag putar diorama
@@ -236,6 +269,8 @@ export function inisialisasiJelajah3D({
         meshTerpilih.position.y = meshTerpilih.userData.pusatAsal.y;
         meshTerpilih = null;
       }
+      cameraTargetPos.copy(cameraBasePos);
+      cameraTargetLookAt.set(0, -0.05, 0);
       pengontrolBendera.sembunyikan();
     }
   }
@@ -256,6 +291,15 @@ export function inisialisasiJelajah3D({
     }
     meshTerpilih = mesh;
     mesh.position.y = mesh.userData.pusatAsal.y + 0.12;
+
+    // Arahkan kamera secara dinamis dan mulus ke pulau/daerah yang dipilih
+    const pusatMesh = mesh.position;
+    cameraTargetPos.set(
+      cameraBasePos.x + pusatMesh.x * 0.45,
+      cameraBasePos.y * 0.94,
+      cameraBasePos.z * 0.88 + pusatMesh.z * 0.4
+    );
+    cameraTargetLookAt.set(pusatMesh.x * 0.72, pusatMesh.y + 0.08, pusatMesh.z * 0.72);
 
     pengontrolBendera.tampilkan(provData, mesh);
 
@@ -278,6 +322,36 @@ export function inisialisasiJelajah3D({
     if (grupUtama) {
       // Goyangan halus idle yang sangat lembut
       grupUtama.rotation.y = currentRotY + Math.sin(tDetik * 0.35) * 0.012;
+    }
+
+    // Tangani animasi masuk pembuka (fly-in drone) jika aktif
+    if (animMasukAktif) {
+      const deltaMs = sekarang - waktuMulaiMasuk;
+      const progress = Math.min(1, Math.max(0, deltaMs / durasiMasukMs));
+      const t = 1 - Math.pow(1 - progress, 3);
+
+      camera.position.lerpVectors(camPosAwalMasuk, cameraTargetPos, t);
+      cameraCurrentLookAt.lerpVectors(new Vector3(0, -0.5, 0), cameraTargetLookAt, t);
+      camera.lookAt(cameraCurrentLookAt);
+
+      if (grupUtama) {
+        grupUtama.position.y = -0.32 * (1 - t);
+      }
+
+      if (progress >= 1) {
+        animMasukAktif = false;
+        if (grupUtama) grupUtama.position.y = 0;
+      }
+    } else {
+      // Lerp kamera halus ke target posisi daerah yang dipilih
+      if (!kurangiGerakan) {
+        camera.position.lerp(cameraTargetPos, 0.055);
+        cameraCurrentLookAt.lerp(cameraTargetLookAt, 0.055);
+        camera.lookAt(cameraCurrentLookAt);
+      } else {
+        camera.position.copy(cameraTargetPos);
+        camera.lookAt(cameraTargetLookAt);
+      }
     }
 
     // Perbarui posisi kartu bendera mengikuti proyeksi 3D
@@ -321,6 +395,8 @@ export function inisialisasiJelajah3D({
   function resetRotasi() {
     targetRotY = 0;
     currentRotY = 0;
+    cameraTargetPos.copy(cameraBasePos);
+    cameraTargetLookAt.set(0, -0.05, 0);
   }
 
   function toggleModeWarna() {

@@ -30,7 +30,7 @@ async function mulaiHalamanPaspor() {
     const dataAwal = await muatDataAwal();
     const { provinsi, meta } = dataAwal;
 
-    perbaruiAtribusiFooter(meta?.tanggal_ambil_terformat);
+    perbaruiAtribusiFooter(meta);
 
     inisialisasiBagianPaspor({
       daftarProvinsi: provinsi,

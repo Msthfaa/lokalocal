@@ -8,7 +8,7 @@ import '../styles/layout.css';
 import '../styles/components.css';
 import '../styles/sections.css';
 
-import { muatDataAwal } from '../data/loader.js';
+import { muatDataAwal, muatDataLengkap } from '../data/loader.js';
 import { inisialisasiNavigasi } from '../ui/nav.js';
 import { inisialisasiDialogTentang, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { inisialisasiBagianKuis } from '../sections/kuis.js';
@@ -36,9 +36,9 @@ async function mulaiHalamanKuis() {
       dialogRekamanKontrol.aturTanggalAmbil(meta.tanggal_ambil_terformat);
     }
 
-    perbaruiAtribusiFooter(meta?.tanggal_ambil_terformat);
+    perbaruiAtribusiFooter(meta);
 
-    inisialisasiBagianKuis({
+    const kontrolKuis = inisialisasiBagianKuis({
       daftarProvinsi: provinsi,
       statistik,
       saatLihatProvinsiDiPeta: (kode) => {
@@ -50,6 +50,54 @@ async function mulaiHalamanKuis() {
         }
       }
     });
+
+    // Pasang Event Listener Tombol Pilihan Wilayah & Fakta Kuis
+    const daftarTombolTopik = document.querySelectorAll('.kuis-wilayah-pill, .kuis-stat-btn');
+    daftarTombolTopik.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const kategori = btn.dataset.kategori;
+        const label = btn.textContent.trim();
+        if (!kategori || !kontrolKuis) return;
+
+        // Perbarui status aktif visual di semua tombol terkait
+        daftarTombolTopik.forEach((b) => {
+          const cocok = b.dataset.kategori === kategori;
+          b.classList.toggle('is-aktif', cocok);
+          if (b.hasAttribute('aria-selected')) {
+            b.setAttribute('aria-selected', cocok ? 'true' : 'false');
+          }
+        });
+
+        kontrolKuis.gantiKategori(kategori, label);
+
+        // Gulir halus ke panel kuis
+        const panelKuis = document.getElementById('s7-panel-kuis');
+        if (panelKuis) {
+          panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+
+    // Pemuatan data budaya lengkap untuk bank soal 205 tradisi nyata
+    muatDataLengkap()
+      .then(({ budaya }) => {
+        if (kontrolKuis && budaya) {
+          kontrolKuis.terimaDataLengkap({ budaya });
+        }
+      })
+      .catch((err) => {
+        console.warn('Peringatan memuat katalog lengkap kuis:', err);
+      });
+
+    // Tangani parameter URL jika ada (misal ?topik=sumatera)
+    const params = new URLSearchParams(window.location.search);
+    const topikUrl = params.get('topik') || params.get('kategori');
+    if (topikUrl) {
+      const targetBtn = document.querySelector(`.kuis-wilayah-pill[data-kategori="${topikUrl}"]`);
+      if (targetBtn) {
+        setTimeout(() => targetBtn.click(), 100);
+      }
+    }
   } catch (err) {
     console.error('Gagal memuat data kuis:', err);
     const bannerError = document.getElementById('banner-error-data');

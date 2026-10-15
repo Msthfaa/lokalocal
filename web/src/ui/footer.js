@@ -52,9 +52,10 @@ export function inisialisasiDialogTentang() {
 export function perbaruiAtribusiFooter(meta) {
   if (!meta) return;
 
-  const tanggalTerformat = meta.tanggal_ambil_terformat || '9 Oktober 2026';
-  const urlSumber = meta.url_sumber || 'https://spkt.kemenbud.go.id';
-  const namaSumber = meta.sumber || 'SPKT – Sistem Pendataan Kebudayaan Terpadu, Kementerian Kebudayaan RI';
+  const metaObj = typeof meta === 'string' ? { tanggal_ambil_terformat: meta } : meta;
+  const tanggalTerformat = metaObj.tanggal_ambil_terformat || '9 Oktober 2026';
+  const urlSumber = metaObj.url_sumber || 'https://spkt.kemenbud.go.id';
+  const namaSumber = metaObj.sumber || 'SPKT – Sistem Pendataan Kebudayaan Terpadu, Kementerian Kebudayaan RI';
 
   const wadahAtribusiFooter = document.getElementById('footer-atribusi-dinamis');
   if (wadahAtribusiFooter) {

@@ -1,0 +1,15 @@
+{
+  "name": "lokalocal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Atlas Budaya Indonesia - Lokalocal",
+  "scripts": {
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "preview": "npm --prefix web run preview",
+    "sync-data": "npm --prefix web run sync-data",
+    "audit": "node tools/audit.mjs",
+    "clean": "node tools/clean.mjs",
+    "validate": "node tools/validate.mjs"
+  }
+}

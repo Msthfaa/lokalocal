@@ -324,3 +324,33 @@
   - **Proporsi Sempurna:** Pulau-pulau kecil tidak lagi mencuat seperti pilar tinggi, dan papan laut diorama menyangga kepulauan nusantara dengan anggun tanpa menenggelamkan pulau.
   - Build produksi lolos dengan **0 error dan 0 warning**.
 
+## [2026-10-14] Filter Wilayah Soal Kuis Nusantara & Animasi Kamera Fly-in 3D Diorama Budaya
+- **Dibuat/diubah:**
+  - `web/src/features/kuis.js` (menambahkan pemetaan wilayah `PETA_WILAYAH_KODE`, fungsi `buatSoalKhasWilayah` untuk topik regional & fakta data, serta parameter `kategori` pada `buatSesiKuis` agar soal yang dihasilkan spesifik sesuai pulau/wilayah yang diklik)
+  - `web/src/sections/kuis.js` (menambahkan state `kategoriAktif` & `labelKategoriAktif`, metode `gantiKategori`, banner indikator topik aktif di header kuis, dan toast notifikasi perubahan topik)
+  - `web/src/pages/kuis.js` (menghubungkan event klik seluruh pill wilayah & tombol stat ke `kontrolKuis.gantiKategori`, update kelas aktif visual `.is-aktif`, pemuatan data lengkap langsung tanpa delay, dan dukungan parameter URL `?topik=...`)
+  - `web/kuis.html` (mengubah tag span statis menjadi tombol pill interaktif yang dapat diklik untuk memilih wilayah Sumatera, Jawa, Kalimantan, Sulawesi, Bali & Nusa Tenggara, Maluku & Papua, serta tombol stat 205 Tradisi, 38 Provinsi, dan 8 Tantangan Data)
+  - `web/src/sections/hero3d/jelajah3d.js` (menambahkan animasi kamera masuk *fly-in drone* dari angkasa menuju kepulauan nusantara saat membuka halaman 3D, animasi fokus/kemudi kamera dinamis menuju koordinat pulau/daerah yang dipilih pengguna, perbaikan pencarian `kode_provinsi` agar tradisi SPKT tampil utuh, dan reset posisi kamera saat menutup kartu bendera)
+  - `web/src/sections/hero3d/bendera.js` (integrasi basis data `CIRI_KHAS_PROVINSI` 38 provinsi: julukan daerah, arsitektur adat, seni & tradisi khas, kuliner & kriya, filosofi leluhur, serta kartu tradisi SPKT nyata dengan tag kategori dan tombol baca kisah)
+  - `web/src/data/ciri-khas-provinsi.js` (basis data khasanah ciri khas budaya autentik untuk seluruh 38 provinsi di Indonesia)
+  - `web/src/styles/sections.css` (penataan gaya visual pill tombol wilayah kuis, glowing highlight `.is-aktif`, banner topik kuis, serta komponen kartu bendera dan grid khasanah budaya daerah 3D)
+  - `CHANGELOG.md`
+- **Hasil:**
+  - **Filter Kuis Berfungsi Penuh:** Mengklik tombol pill (mis. *🌿 Sumatera*, *🏛️ Jawa*, *🛶 Kalimantan*, *⛵ Sulawesi*, *🌊 Bali & Nusa Tenggara*, *🦜 Maluku & Papua*, dsb.) langsung mengganti topik kuis secara real-time dan menghasilkan 6–8 soal yang 100% relevan dengan kebudayaan dan fakta pencatatan di pulau tersebut.
+  - **Animasi Kamera Fly-in 3D:** Saat membuka halaman Jelajah 3D, kamera meluncur anggun dari sudut atas langit menuju kepulauan Nusantara seiring keping pulau terangkat anggun dari atas permukaan laut.
+  - **Fokus Kamera & Ciri Khas Budaya Daerah:** Mengklik suatu daerah di peta 3D secara otomatis mengarahkan dan memfokuskan kamera ke pulau tersebut, serta menampilkan kartu panji bendera berisi julukan daerah, 4 pilar khasanah budaya (Arsitektur Adat, Seni & Tradisi, Kuliner & Kriya, Filosofi), dan tradisi riil SPKT yang dapat diklik untuk membaca cerita lengkapnya.
+  - Build produksi Vite lolos dengan **0 error dan 0 warning**.
+
+## [2026-10-14] Perbaikan Cacat: FOUC Layar Putih Kuis & Standarisasi Dialog Modal Tentang Data
+- **Dibuat/diubah:**
+  - `web/kuis.html`: Menambahkan baseline `<style>` anti-FOUC (`background-color: #14110f !important`) dan `<link rel="stylesheet">` langsung di `<head>` untuk mencegah jeda rendering tanpa gaya (layar putih polos font default); menstandarisasi `#dialog-tentang` dan `#dialog-rekaman` memakai kelas modal `.dialog-modal`, `id="tombol-tutup-tentang"` dan `id="tombol-tutup-rekaman"`; serta menyinkronkan footer lengkap dengan atribusi dinamis.
+  - `web/paspor.html`: Menstandarisasi `#dialog-tentang` menggunakan kelas modal `.dialog-modal` dan tombol tutup `id="tombol-tutup-tentang"`, serta memperbarui footer standar.
+  - `web/jelajah.html`: Menstandarisasi `#dialog-tentang` dan `#dialog-rekaman` dengan `.dialog-modal` dan tombol tutup berkelas dialog standar.
+  - `web/src/ui/footer.js`: Memperbarui fungsi `perbaruiAtribusiFooter(meta)` agar fleksibel menerima parameter `meta` baik berupa objek maupun string tanggal sehingga tidak pernah mengalami error `undefined`.
+  - `web/src/pages/kuis.js` & `web/src/pages/paspor.js` & `web/src/pages/jelajah.js`: Menyinkronkan pemanggilan `perbaruiAtribusiFooter(meta)` agar dialog tentang data dan footer selalu memuat atribusi resmi dan tanggal dinamis.
+- **Hasil:**
+  - **Layar Putih Unstyled (FOUC) Hilang Total:** Berpindah atau me-refresh ke halaman Kuis kini langsung menampilkan tema gelap elegan dengan font modern tanpa pernah berkedip ke tampilan putih polos bawaan browser.
+  - **Dialog "Tentang Data" Rapi & Berfungsi:** Mengklik "Tentang data" di navigasi atas maupun footer kini membuka modal dialog kertas elegan (.dialog-modal) di tengah layar dengan latar belakang gelap blur, teks keterbatasan transparan yang rapi, dan tombol tutup `[X]` yang berfungsi normal.
+  - Build produksi Vite sukses tanpa error dan tanpa warning.
+
+
