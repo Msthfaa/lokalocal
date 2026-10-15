@@ -5867,6 +5867,38 @@ body.tema-siang .tautan-spkt-resmi {
 }
 
 /* ==========================================================================
+   Latar Budaya Nusantara & Tata Letak Halaman Kuis (Dark & Light Mode)
+   ========================================================================== */
+.halaman-kuis-body {
+  position: relative;
+  background-color: #0E0B09;
+  background-image:
+    linear-gradient(180deg, rgba(14, 11, 9, 0.32) 0%, rgba(14, 11, 9, 0.05) 25%, rgba(14, 11, 9, 0.38) 60%, rgba(14, 11, 9, 0.88) 100%),
+    url('/assets/bg-budaya-kuis.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.bagian-kuis-interaktif {
+  background: transparent !important;
+  position: relative;
+}
+
+[data-tema="terang"] .halaman-kuis-body {
+  background-color: #FAF6EE;
+  background-image:
+    linear-gradient(180deg, rgba(250, 246, 238, 0.32) 0%, rgba(250, 246, 238, 0.05) 25%, rgba(250, 246, 238, 0.4) 60%, rgba(250, 246, 238, 0.92) 100%),
+    url('/assets/bg-budaya-kuis-light.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ==========================================================================
    Header Hero Kuis & Pilihan Wilayah Interaktif
    ========================================================================== */
 .kuis-hero-kepala {
@@ -5888,9 +5920,17 @@ body.tema-siang .tautan-spkt-resmi {
   margin-bottom: var(--ruang-2);
 }
 
+[data-tema="terang"] .kicker-glow {
+  color: #B87314;
+}
+
 .kicker-bintang {
   color: var(--aksen);
   animation: bintangKelip 2.4s ease-in-out infinite alternate;
+}
+
+[data-tema="terang"] .kicker-bintang {
+  color: #B87314;
 }
 
 @keyframes bintangKelip {
@@ -5908,12 +5948,22 @@ body.tema-siang .tautan-spkt-resmi {
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
 }
 
+[data-tema="terang"] .kuis-judul-megah {
+  color: #1C1917;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.85);
+}
+
 .kuis-subjudul-elegan {
   max-width: 680px;
   margin: 0 auto var(--ruang-4) auto;
   font-size: clamp(0.95rem, 1.6vw, 1.1rem);
   color: var(--kertas-redup);
   line-height: 1.5;
+}
+
+[data-tema="terang"] .kuis-subjudul-elegan {
+  color: #554A40;
+  font-weight: 500;
 }
 
 .kuis-hero-stats {
@@ -5957,6 +6007,33 @@ body.tema-siang .tautan-spkt-resmi {
   border-color: var(--aksen);
   box-shadow: 0 0 16px rgba(230, 177, 74, 0.35);
   color: #FFF;
+}
+
+/* Mode Terang: Stat Chips */
+[data-tema="terang"] .kuis-hero-stat-chip {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(184, 115, 20, 0.25);
+  color: #2E2824;
+  box-shadow: 0 4px 14px rgba(40, 30, 20, 0.06);
+}
+
+[data-tema="terang"] .kuis-hero-stat-chip strong {
+  color: #B87314;
+}
+
+[data-tema="terang"] .kuis-hero-stat-chip:hover {
+  background: #FFFFFF;
+  border-color: rgba(184, 115, 20, 0.6);
+  box-shadow: 0 6px 18px rgba(184, 115, 20, 0.15);
+  transform: translateY(-2px);
+}
+
+[data-tema="terang"] .kuis-hero-stat-chip.is-aktif {
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.22), rgba(200, 90, 50, 0.16));
+  border-color: #B87314;
+  color: #1C1917;
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(184, 115, 20, 0.25);
 }
 
 /* Deretan Pill Wilayah Interaktif */
@@ -6007,6 +6084,147 @@ body.tema-siang .tautan-spkt-resmi {
   font-weight: 700;
   box-shadow: 0 0 18px rgba(230, 177, 74, 0.4), 0 4px 12px rgba(0, 0, 0, 0.5);
   transform: translateY(-1px);
+}
+
+/* Mode Terang: Pill Wilayah */
+[data-tema="terang"] .kuis-wilayah-pill {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(195, 180, 165, 0.75);
+  color: #3C332A;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-tema="terang"] .kuis-wilayah-pill:hover {
+  background: #FFFFFF;
+  border-color: #B87314;
+  color: #1C1917;
+  box-shadow: 0 4px 14px rgba(184, 115, 20, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+[data-tema="terang"] .kuis-wilayah-pill.is-aktif {
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.28), rgba(200, 90, 50, 0.18));
+  border-color: #B87314;
+  color: #1C1917;
+  font-weight: 700;
+  box-shadow: 0 0 16px rgba(184, 115, 20, 0.3), 0 4px 10px rgba(40, 30, 20, 0.08);
+}
+
+/* Mode Terang: Panel Kartu Kuis (#s7-panel-kuis) */
+[data-tema="terang"] #s7-panel-kuis.s7-panel-kartu {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(184, 115, 20, 0.24);
+  box-shadow: 0 16px 40px rgba(40, 30, 20, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+[data-tema="terang"] .kuis-kepala {
+  border-bottom-color: rgba(184, 115, 20, 0.18);
+}
+
+[data-tema="terang"] .kuis-kepala h3 {
+  color: #1C1917;
+}
+
+[data-tema="terang"] .kuis-pertanyaan {
+  color: #1C1917;
+}
+
+[data-tema="terang"] .kuis-petunjuk {
+  background-color: #F4EFE6;
+  border-left: 3px solid #B87314;
+  color: #2E2824;
+}
+
+[data-tema="terang"] .kuis-petunjuk .label-kecil {
+  color: #B87314;
+  font-weight: 700;
+}
+
+[data-tema="terang"] .kuis-pilihan-tombol {
+  background-color: #FFFFFF;
+  border: 1px solid #DED4C7;
+  color: #1C1917;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+[data-tema="terang"] .kuis-pilihan-tombol:hover:not(:disabled) {
+  background-color: #FFFDF9;
+  border-color: #B87314;
+  box-shadow: 0 4px 14px rgba(184, 115, 20, 0.15);
+}
+
+[data-tema="terang"] .kuis-pilihan-tombol.is-benar {
+  border-color: #2D6A4F;
+  background-color: rgba(45, 106, 79, 0.12);
+  color: #1B4332;
+}
+
+[data-tema="terang"] .kuis-pilihan-tombol.is-salah {
+  border-color: #B86214;
+  background-color: rgba(184, 98, 20, 0.12);
+  color: #7F3B08;
+}
+
+[data-tema="terang"] .kuis-pilihan-ket {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: inherit;
+}
+
+[data-tema="terang"] .kuis-umpan-balik {
+  background-color: #FFFFFF;
+  border-color: #DED4C7;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+[data-tema="terang"] .kuis-umpan-balik.is-benar {
+  border-color: #2D6A4F;
+}
+
+[data-tema="terang"] .kuis-umpan-balik.is-salah {
+  border-color: #B86214;
+}
+
+[data-tema="terang"] .kuis-umpan-judul {
+  color: #1C1917;
+}
+
+[data-tema="terang"] .kuis-skor-akhir {
+  background-color: #FFFFFF;
+  border: 1px solid #B87314;
+  box-shadow: 0 8px 24px rgba(184, 115, 20, 0.12);
+}
+
+/* Kotak Navigasi Bawah Kuis */
+.kuis-nav-bawah-kotak {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ruang-3);
+  margin-top: var(--ruang-6);
+  padding: var(--ruang-4);
+  background: rgba(25, 20, 17, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--garis);
+  border-radius: var(--r-md);
+}
+
+[data-tema="terang"] .kuis-nav-bawah-kotak {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(184, 115, 20, 0.22);
+  box-shadow: 0 8px 24px rgba(40, 30, 20, 0.06);
+}
+
+[data-tema="terang"] .kuis-nav-bawah-kotak strong {
+  color: #1C1917 !important;
+}
+
+[data-tema="terang"] .kuis-nav-bawah-kotak p {
+  color: #554A40 !important;
 }
 
 /* Banner Topik Aktif di dalam Kartu Kuis */
