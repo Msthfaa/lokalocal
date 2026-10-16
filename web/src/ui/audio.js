@@ -18,7 +18,6 @@ export const DAFTAR_PUTAR_BACKSOUND = [
     judul: 'Ampar-Ampar Pisang',
     daerah: 'Kalimantan Selatan',
     durasi: '1:37',
-    ikon: '🍌',
     sumber: './audio/ampar-ampar-pisang.mp3'
   },
   {
@@ -27,7 +26,6 @@ export const DAFTAR_PUTAR_BACKSOUND = [
     judul: 'Kicir-Kicir',
     daerah: 'DKI Jakarta',
     durasi: '3:27',
-    ikon: '🎡',
     sumber: './audio/kicir-kicir.mp3'
   },
   {
@@ -36,7 +34,6 @@ export const DAFTAR_PUTAR_BACKSOUND = [
     judul: 'Bungong Jeumpa',
     daerah: 'Aceh',
     durasi: '2:31',
-    ikon: '🌺',
     sumber: './audio/bungong-jeumpa.mp3'
   },
   {
@@ -45,7 +42,6 @@ export const DAFTAR_PUTAR_BACKSOUND = [
     judul: 'Soleram',
     daerah: 'Riau',
     durasi: '2:03',
-    ikon: '🌙',
     sumber: './audio/soleram.mp3'
   },
   {
@@ -54,7 +50,6 @@ export const DAFTAR_PUTAR_BACKSOUND = [
     judul: 'Yamko Rambe Yamko',
     daerah: 'Papua',
     durasi: '2:06',
-    ikon: '🏹',
     sumber: './audio/yamko-rambe-yamko.mp3'
   }
 ];
@@ -71,6 +66,7 @@ let statusSedangMemutar = false;
 let widgetEl = null;
 let popupEl = null;
 let interaksiPertamaTerjadi = false;
+let volumeSebelumMute = VOLUME_DEFAULT;
 
 /**
  * Menginisialisasi pemutar backsound dan menyematkan kontrol mengambang ke halaman.
@@ -206,14 +202,6 @@ function putarLaguBerikutnya() {
 }
 
 /**
- * Beralih ke lagu sebelumnya.
- */
-function putarLaguSebelumnya() {
-  const prevIdx = (indeksAktif - 1 + DAFTAR_PUTAR_BACKSOUND.length) % DAFTAR_PUTAR_BACKSOUND.length;
-  putarLaguIndex(prevIdx);
-}
-
-/**
  * Menyetel volume audio dan menyimpannya.
  * @param {number} vol
  */
@@ -278,7 +266,7 @@ function bangunWidgetUI(audio) {
           aria-label="Lagu Berikutnya"
           title="Lagu Berikutnya"
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M5 4l10 8-10 8V4zm11 0h3v16h-3V4z"/>
           </svg>
         </button>
@@ -291,7 +279,7 @@ function bangunWidgetUI(audio) {
           aria-label="Daftar Putar"
           title="Daftar Putar & Volume"
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
             <line x1="3" y1="6" x2="21" y2="6"/>
             <line x1="3" y1="12" x2="21" y2="12"/>
             <line x1="3" y1="18" x2="21" y2="18"/>
@@ -304,22 +292,34 @@ function bangunWidgetUI(audio) {
     <div class="audio-popup-panel" id="audio-popup-panel" hidden>
       <div class="audio-popup-header">
         <div class="audio-popup-header-teks">
-          <span class="audio-popup-badge">BACKSOUND NUSANTARA</span>
-          <h4 class="audio-popup-judul">Lagu Daerah Indonesia</h4>
+          <span class="audio-popup-badge">ARSIP AUDIO NUSANTARA</span>
+          <h4 class="audio-popup-judul">Lagu Tradisional Daerah</h4>
         </div>
         <button
           type="button"
           class="audio-popup-tutup"
           id="audio-popup-tutup"
           aria-label="Tutup Panel Lagu"
+          title="Tutup Panel"
         >
-          ✕
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
         </button>
       </div>
 
-      <!-- Kontrol Volume Lembut -->
+      <!-- Kontrol Slider Volume Lembut -->
       <div class="audio-volume-wadah">
-        <span class="audio-volume-ikon" id="audio-volume-ikon" aria-hidden="true">🔉</span>
+        <button
+          type="button"
+          class="audio-volume-mute-btn"
+          id="audio-volume-mute-btn"
+          aria-label="Bisukan atau nyalakan suara"
+          title="Bisukan / Nyalakan suara"
+        >
+          <span class="audio-volume-svg-ikon" id="audio-volume-svg-ikon"></span>
+        </button>
         <label for="audio-volume-slider" class="sr-only">Volume Backsound</label>
         <input
           type="range"
@@ -327,7 +327,7 @@ function bangunWidgetUI(audio) {
           class="audio-volume-slider"
           min="0"
           max="1"
-          step="0.02"
+          step="0.01"
           value="${audio.volume}"
           title="Atur Volume Backsound (lembut)"
         />
@@ -338,10 +338,21 @@ function bangunWidgetUI(audio) {
       <ul class="audio-playlist-list" id="audio-playlist-list" role="list">
         ${DAFTAR_PUTAR_BACKSOUND.map(
           (track, idx) => `
-          <li class="audio-playlist-item ${idx === indeksAktif ? 'aktif' : ''}" data-index="${idx}">
-            <button type="button" class="audio-track-btn" data-index="${idx}">
-              <span class="audio-track-nomor">${track.nomor}</span>
-              <span class="audio-track-ikon" aria-hidden="true">${track.ikon}</span>
+          <li class="audio-playlist-item ${idx === indeksAktif ? 'aktif' : ''} ${statusSedangMemutar && idx === indeksAktif ? 'sedang-putar' : ''}" data-index="${idx}">
+            <button type="button" class="audio-track-btn" data-index="${idx}" aria-label="Putar lagu ${track.judul} dari ${track.daerah}">
+              <div class="audio-track-status-box">
+                <span class="audio-track-nomor">${String(track.nomor).padStart(2, '0')}</span>
+                <span class="audio-track-play-icon" aria-hidden="true">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                  </svg>
+                </span>
+                <span class="audio-track-eq" aria-hidden="true">
+                  <span class="eq-mini-bar b1"></span>
+                  <span class="eq-mini-bar b2"></span>
+                  <span class="eq-mini-bar b3"></span>
+                </span>
+              </div>
               <div class="audio-track-detail">
                 <span class="audio-track-judul">${track.judul}</span>
                 <span class="audio-track-daerah">${track.daerah}</span>
@@ -373,6 +384,7 @@ function bangunWidgetUI(audio) {
   const tombolTutupPopup = document.getElementById('audio-popup-tutup');
   const sliderVolume = document.getElementById('audio-volume-slider');
   const playlistList = document.getElementById('audio-playlist-list');
+  const tombolMute = document.getElementById('audio-volume-mute-btn');
 
   tombolToggle.addEventListener('click', () => {
     if (audio.paused) {
@@ -409,13 +421,33 @@ function bangunWidgetUI(audio) {
     aturVolumeAudio(v);
   });
 
+  if (tombolMute) {
+    tombolMute.addEventListener('click', () => {
+      if (audio.volume > 0) {
+        volumeSebelumMute = audio.volume;
+        aturVolumeAudio(0);
+      } else {
+        aturVolumeAudio(volumeSebelumMute > 0 ? volumeSebelumMute : VOLUME_DEFAULT);
+      }
+    });
+  }
+
   // Klik salah satu lagu di daftar putar
   playlistList.addEventListener('click', (e) => {
     const btn = e.target.closest('.audio-track-btn');
     if (btn) {
       const idx = parseInt(btn.dataset.index, 10);
       if (!Number.isNaN(idx)) {
-        putarLaguIndex(idx);
+        if (idx === indeksAktif) {
+          // Toggle play/pause lagu saat ini
+          if (audio.paused) {
+            audio.play().catch(() => {});
+          } else {
+            audio.pause();
+          }
+        } else {
+          putarLaguIndex(idx);
+        }
       }
     }
   });
@@ -435,6 +467,7 @@ function bangunWidgetUI(audio) {
     }
   });
 
+  perbaruiSliderVolume(audio.volume);
   perbaruiTampilanUI();
 }
 
@@ -466,24 +499,51 @@ function perbaruiTampilanUI() {
 
   // Perbarui item aktif di playlist
   playlistItems.forEach((item, idx) => {
-    item.classList.toggle('aktif', idx === indeksAktif);
+    const adalahAktif = idx === indeksAktif;
+    item.classList.toggle('aktif', adalahAktif);
+    item.classList.toggle('sedang-putar', adalahAktif && statusSedangMemutar);
   });
 }
 
 /**
- * Memperbarui angka persentase volume pada UI slider.
+ * Memperbarui angka persentase volume pada UI slider dan SVG ikon.
  * @param {number} vol
  */
 function perbaruiSliderVolume(vol) {
   const slider = document.getElementById('audio-volume-slider');
   const persenEl = document.getElementById('audio-volume-persen');
-  const ikonEl = document.getElementById('audio-volume-ikon');
+  const ikonWrap = document.getElementById('audio-volume-svg-ikon');
 
-  if (slider) slider.value = String(vol);
+  if (slider) {
+    slider.value = String(vol);
+    slider.style.setProperty('--vol-persen', `${Math.round(vol * 100)}%`);
+  }
   if (persenEl) persenEl.textContent = `${Math.round(vol * 100)}%`;
-  if (ikonEl) {
-    if (vol === 0) ikonEl.textContent = '🔇';
-    else if (vol < 0.4) ikonEl.textContent = '🔉';
-    else ikonEl.textContent = '🔊';
+
+  if (ikonWrap) {
+    if (vol === 0) {
+      ikonWrap.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      `;
+    } else if (vol < 0.4) {
+      ikonWrap.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+      `;
+    } else {
+      ikonWrap.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+      `;
+    }
   }
 }

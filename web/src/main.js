@@ -308,15 +308,20 @@ async function jalankanPemuatanData(paksaUlang = false) {
  */
 function inisialisasiBentoEditorial() {
 
-  const kartuBersejarah = [
+  const kartuKoleksiBeranda = [
     { id: 'kartu-bento-borobudur', query: 'Borobudur' },
     { id: 'kartu-bento-rotterdam', query: 'Rotterdam' },
     { id: 'kartu-bento-mulawarman', query: 'Mulawarman' },
     { id: 'kartu-bento-maimun', query: 'Maimun' },
     { id: 'kartu-bento-kudus', query: 'Kudus' },
+    { id: 'kartu-top5-angklung', query: 'Angklung' },
+    { id: 'kartu-top5-wayang', query: 'Wayang' },
+    { id: 'kartu-top5-batik', query: 'Batik' },
+    { id: 'kartu-top5-gamelan', query: 'Gamelan' },
+    { id: 'kartu-top5-saman', query: 'Saman' },
   ];
 
-  kartuBersejarah.forEach(({ id, query }) => {
+  kartuKoleksiBeranda.forEach(({ id, query }) => {
     const el = document.getElementById(id);
     if (el) {
       const navigasi = () => {

@@ -18,3 +18,8 @@ Thumbs.db
 
 # Backup folders
 backup-removed/
+
+# Agent & AI tool scaffolding
+.agents/
+.claude/
+skills-lock.json

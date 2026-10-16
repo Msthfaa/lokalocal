@@ -109,24 +109,24 @@
   min-width: 42px;
   min-height: 42px;
   padding: var(--ruang-2);
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(230, 177, 74, 0.3);
   color: var(--kertas);
-  background: rgba(18, 16, 14, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(18, 15, 13, 0.9) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.15s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .tombol-menu-ponsel:hover {
   border-color: var(--aksen);
   color: var(--aksen);
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(230, 177, 74, 0.15) !important;
 }
 
-/* Bagian 2: Isi Tautan Navigasi (Kapsul Mengambang di Tengah) */
+/* Bagian 2: Isi Tautan Navigasi */
 .nav-daftar {
   display: none;
 }
@@ -139,12 +139,12 @@
   right: 1rem;
   bottom: auto;
   max-height: calc(100vh - 6rem);
-  background: rgba(18, 16, 14, 0.95);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: var(--r-lg);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  background: rgba(18, 15, 13, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(230, 177, 74, 0.28);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   padding: var(--ruang-4);
@@ -159,11 +159,11 @@
   display: inline-flex;
   align-items: center;
   min-height: 38px;
-  padding: var(--ruang-2) var(--ruang-4);
+  padding: var(--ruang-2) var(--ruang-3);
   border-radius: 9999px;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--kertas-redup);
   text-decoration: none;
   background: transparent;
   border: none;
@@ -174,17 +174,18 @@
 
 .nav-tautan:hover {
   color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 .nav-tautan[aria-current="page"] {
-  color: #12100e;
-  background-color: #ffffff;
+  color: #14110F;
+  background-color: var(--aksen);
   font-weight: 700;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 9999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* Bagian 3: Tombol Aksi "Jelajah 3D" di Kanan (Kapsul Mandiri Terpisah) */
+/* Bagian 3: Tombol Aksi "Jelajah 3D" & Tema di Kanan */
 .nav-aksi-kanan {
   display: none;
 }
@@ -193,16 +194,17 @@
   pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 1.3rem;
+  gap: 0.5rem;
+  padding: 0.45rem 1.25rem;
+  min-height: 40px;
   border-radius: 9999px;
-  background: rgba(18, 16, 14, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, rgba(26, 21, 18, 0.50) 0%, rgba(14, 11, 9, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   color: #ffffff;
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -210,20 +212,20 @@
 }
 
 .nav-tombol-aksi:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(230, 177, 74, 0.25) !important;
+  border-color: var(--aksen);
+  color: var(--aksen-hover);
   transform: translateY(-1px);
 }
 
-.nav-panah-mini {
-  display: inline-block;
-  font-size: 0.9rem;
-  line-height: 1;
+.nav-tombol-aksi svg {
+  color: var(--aksen);
+  flex-shrink: 0;
   transition: transform 0.15s ease;
 }
 
-.nav-tombol-aksi:hover .nav-panah-mini {
-  transform: translate(2px, -2px);
+.nav-tombol-aksi:hover svg {
+  transform: scale(1.1);
 }
 
 /* Tombol Ganti Tema (Dark / Light Mode) */
@@ -232,25 +234,37 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 9999px;
-  background: rgba(18, 16, 14, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  color: #ffffff;
-  font-size: 1.05rem;
+  background: linear-gradient(135deg, rgba(26, 21, 18, 0.50) 0%, rgba(14, 11, 9, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  color: var(--aksen);
   cursor: pointer;
   padding: 0;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, color 0.15s ease;
 }
 
 .nav-tombol-tema:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(230, 177, 74, 0.25) !important;
+  border-color: var(--aksen);
+  color: var(--aksen-hover);
   transform: translateY(-1px);
+}
+
+.nav-ikon-tema {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.nav-tombol-tema:hover .nav-ikon-tema {
+  transform: rotate(15deg) scale(1.08);
 }
 
 /* Tampilan Ikon Bulan & Matahari */
@@ -269,67 +283,71 @@
 
 /* ==========================================================================
    Penyesuaian Navigasi & Elemen pada Mode Terang (Light Mode)
-   Transparansi 30% & Blur Identik dengan Mode Gelap
    ========================================================================== */
 [data-tema="terang"] .tombol-menu-ponsel {
-  background: rgba(255, 255, 255, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(190%);
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.50) !important;
   color: #1C1917;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 [data-tema="terang"] .nav-tombol-tema {
-  background: rgba(255, 255, 255, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #1C1917;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(190%);
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.50) !important;
+  color: #B87314;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 [data-tema="terang"] .nav-tombol-tema:hover {
-  background: rgba(255, 255, 255, 0.45) !important;
-  border-color: rgba(255, 255, 255, 0.65);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.35) 100%) !important;
+  border-color: #B87314;
 }
 
 [data-tema="terang"] .nav-tombol-aksi {
-  background: rgba(255, 255, 255, 0.3) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(190%);
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.50) !important;
   color: #1C1917;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 [data-tema="terang"] .nav-tombol-aksi:hover {
-  background: rgba(255, 255, 255, 0.45) !important;
-  border-color: rgba(255, 255, 255, 0.65);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.35) 100%) !important;
+  border-color: #B87314;
+  color: #B87314;
 }
 
 [data-tema="terang"] .nav-daftar.terbuka {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%);
+  backdrop-filter: blur(18px) saturate(190%);
+  -webkit-backdrop-filter: blur(18px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
 [data-tema="terang"] .nav-tautan {
   color: #1C1917;
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 [data-tema="terang"] .nav-tautan:hover {
-  color: #000000;
-  background-color: rgba(255, 255, 255, 0.35);
+  color: #B87314;
+  background-color: rgba(255, 255, 255, 0.45);
 }
 
 [data-tema="terang"] .nav-tautan[aria-current="page"] {
   color: #FFFFFF;
-  background-color: #1C1917;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: #B87314;
+  border-radius: 9999px;
+  box-shadow: 0 2px 10px rgba(184, 115, 20, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 /* Tampilan Desktop (>= 880px): Ketiga Bagian Terpisah Rapi Mandiri */
@@ -349,7 +367,7 @@
     display: none;
   }
 
-  /* Kapsul Tengah Mandiri */
+  /* Bar Navigasi Tengah Mandiri */
   .nav-daftar,
   .nav-daftar.terbuka {
     justify-self: center;
@@ -359,14 +377,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0.32rem 0.45rem;
-    gap: 0.2rem;
-    background: rgba(18, 16, 14, 0.3) !important;
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.4rem;
+    gap: 0.25rem;
+    background: linear-gradient(135deg, rgba(26, 21, 18, 0.50) 0%, rgba(14, 11, 9, 0.20) 100%) !important;
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 9999px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
     overflow: visible;
     list-style: none;
     margin: 0;
@@ -374,17 +392,18 @@
 
   [data-tema="terang"] .nav-daftar,
   [data-tema="terang"] .nav-daftar.terbuka {
-    background: rgba(255, 255, 255, 0.3) !important;
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%) !important;
+    backdrop-filter: blur(14px) saturate(190%);
+    -webkit-backdrop-filter: blur(14px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.50) !important;
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
   }
 
   .nav-tautan {
     font-size: 0.84rem;
-    min-height: 35px;
-    padding: 0.35rem 1rem;
+    min-height: 34px;
+    padding: 0.35rem 0.85rem;
   }
 
   /* Tombol Kanan Mandiri (Toggle Tema + Jelajah 3D) */
@@ -489,28 +508,26 @@ main {
    Footer Utama Modern Sinematik
    ========================================================================== */
 .footer-utama {
-  background-color: rgba(14, 11, 9, 0.65);
-  background: rgba(14, 11, 9, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: #000000;
+  background: #000000;
   border: none !important;
-  border-top: 1px solid rgba(212, 160, 23, 0.24) !important;
+  border-top: none !important;
   border-bottom: none !important;
   padding-block: var(--ruang-6) var(--ruang-5);
   color: var(--kertas-redup);
   font-size: var(--teks-kecil);
   position: relative;
   overflow: hidden;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 [data-tema="terang"] .footer-utama {
-  background-color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: none !important;
-  border-top: 1px solid rgba(184, 115, 20, 0.28) !important;
+  border-top: none !important;
   border-bottom: none !important;
   color: #382E25;
 }
@@ -565,7 +582,6 @@ main {
   width: 28px;
   height: 28px;
   color: var(--aksen);
-  filter: drop-shadow(0 0 10px rgba(230, 177, 74, 0.4));
   transition: transform 0.3s ease;
 }
 
@@ -596,7 +612,6 @@ main {
 [data-tema="terang"] .footer-deskripsi {
   color: #382E25;
   font-weight: 500;
-  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.85);
 }
 
 .footer-atribusi-modern {
@@ -604,19 +619,21 @@ main {
   align-items: flex-start;
   gap: 0.85rem;
   padding: 1rem 1.15rem;
-  background: rgba(22, 19, 16, 0.65);
-  border: 1px solid rgba(230, 177, 74, 0.28);
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(26, 21, 18, 0.50) 0%, rgba(14, 11, 9, 0.20) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   margin-top: 0.25rem;
 }
 
 [data-tema="terang"] .footer-atribusi-modern {
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(184, 115, 20, 0.3);
-  box-shadow: 0 4px 14px rgba(40, 25, 15, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(246, 241, 231, 0.65) 100%);
+  border: 1px solid rgba(184, 115, 20, 0.22);
+  box-shadow: 0 4px 16px rgba(40, 25, 15, 0.04);
+  backdrop-filter: blur(14px) saturate(190%);
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
 }
 
 .footer-atribusi-ikon {
@@ -704,45 +721,52 @@ main {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .footer-menu-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
   color: var(--kertas-redup);
   text-decoration: none;
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 500;
+  padding: 0.15rem 0;
   transition: color 0.2s ease, transform 0.2s ease;
   width: fit-content;
 }
 
-.footer-menu-bullet {
-  font-size: 0.65rem;
-  color: var(--aksen);
-  transition: transform 0.2s ease;
+.footer-menu-link::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--aksen);
+  margin-right: 0.65rem;
+  opacity: 0.45;
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
 }
 
-[data-tema="terang"] .footer-menu-bullet {
-  color: #B87314;
+[data-tema="terang"] .footer-menu-link::before {
+  background: #B87314;
 }
 
 .footer-menu-link:hover {
   color: #FFFFFF;
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 [data-tema="terang"] .footer-menu-link:hover {
   color: #1C1917;
 }
 
-.footer-menu-link:hover .footer-menu-bullet {
-  transform: scale(1.3);
+.footer-menu-link:hover::before {
+  opacity: 1;
+  transform: scale(1.4);
 }
 
-/* Kolom 3: Transparansi */
+/* Kolom 3: Transparansi & Kurasi Aksi */
 .footer-kolom-transparansi {
   display: flex;
   flex-direction: column;
@@ -759,53 +783,107 @@ main {
 [data-tema="terang"] .footer-transparansi-teks {
   color: #382E25;
   font-weight: 500;
-  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.85);
 }
 
+.footer-aksi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.footer-aksi-tombol {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.95rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  color: var(--kertas-redup);
+  font-family: var(--font-isi);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.footer-aksi-tombol svg {
+  color: var(--aksen);
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-aksi-tombol:hover {
+  background: rgba(230, 177, 74, 0.08);
+  border-color: rgba(230, 177, 74, 0.35);
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+.footer-aksi-tombol:hover svg {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+[data-tema="terang"] .footer-aksi-tombol {
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #4A4036;
+}
+
+[data-tema="terang"] .footer-aksi-tombol svg {
+  color: #B87314;
+}
+
+[data-tema="terang"] .footer-aksi-tombol:hover {
+  background: rgba(184, 115, 20, 0.08);
+  border-color: rgba(184, 115, 20, 0.35);
+  color: #1C1917;
+}
+
+/* Kompatibilitas dengan elemen tombol lama */
 .footer-tombol-grup {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .footer-tombol-kaca {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.65rem 1rem;
+  gap: 0.65rem;
+  padding: 0.45rem 0.95rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 9999px;
-  background: rgba(22, 19, 16, 0.6);
-  border: 1px solid rgba(230, 177, 74, 0.32);
-  color: var(--kertas);
+  color: var(--kertas-redup);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  backdrop-filter: blur(8px);
   transition: all 0.2s ease;
-  text-align: left;
   width: fit-content;
 }
 
 [data-tema="terang"] .footer-tombol-kaca {
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(184, 115, 20, 0.32);
-  color: #1C1917;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #4A4036;
 }
 
 .footer-tombol-kaca:hover {
-  border-color: var(--aksen);
-  background: rgba(230, 177, 74, 0.12);
-  color: var(--aksen);
-  transform: translateY(-2px);
+  border-color: rgba(230, 177, 74, 0.35);
+  background: rgba(230, 177, 74, 0.08);
+  color: #FFFFFF;
+  transform: translateX(2px);
 }
 
 [data-tema="terang"] .footer-tombol-kaca:hover {
-  border-color: #B87314;
-  color: #B87314;
-  box-shadow: 0 4px 12px rgba(184, 115, 20, 0.12);
+  border-color: rgba(184, 115, 20, 0.35);
+  background: rgba(184, 115, 20, 0.08);
+  color: #1C1917;
 }
 
 /* Baris Bawah Footer */
@@ -824,9 +902,25 @@ main {
   border-top-color: #E2D9CD;
 }
 
+.footer-bawah-kiri {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer-hak-cipta {
+  font-size: 0.78rem;
+  color: var(--kertas-redup);
+  margin: 0;
+}
+
+[data-tema="terang"] .footer-hak-cipta {
+  color: #6B6155;
+}
+
 .footer-kutipan {
   font-style: italic;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: var(--aksen);
   margin: 0;
 }
@@ -835,27 +929,50 @@ main {
   color: #B87314;
 }
 
-.footer-teknis-chips {
+.footer-bawah-kanan {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.footer-chip {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.2rem 0.55rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.footer-ke-atas-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   color: var(--kertas-redup);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
 }
 
-[data-tema="terang"] .footer-chip {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.08);
+.footer-ke-atas-link:hover {
+  color: var(--aksen);
+  border-color: rgba(230, 177, 74, 0.35);
+  background: rgba(230, 177, 74, 0.08);
+  transform: translateY(-2px);
+}
+
+.footer-ke-atas-link svg {
+  transition: transform 0.2s ease;
+}
+
+.footer-ke-atas-link:hover svg {
+  transform: translateY(-2px);
+}
+
+[data-tema="terang"] .footer-ke-atas-link {
+  border-color: rgba(0, 0, 0, 0.1);
   color: #5C554B;
+}
+
+[data-tema="terang"] .footer-ke-atas-link:hover {
+  color: #B87314;
+  border-color: rgba(184, 115, 20, 0.35);
+  background: rgba(184, 115, 20, 0.08);
 }
 
 /* Fallback kompatibilitas halaman lain */

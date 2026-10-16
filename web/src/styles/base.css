@@ -24,11 +24,13 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scrollbar-gutter: stable;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+    transition: none !important;
   }
 }
 
@@ -42,6 +44,13 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none !important;
+  }
 }
 
 /* Tipografi */
