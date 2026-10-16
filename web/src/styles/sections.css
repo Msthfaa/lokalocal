@@ -4469,6 +4469,8 @@ body.tema-siang .hud-atribusi-teks {
    ========================================================================== */
 
 /* 1. Latar Belakang & Teks Utama */
+[data-tema="terang"] .jelajah-layar-penuh-main,
+[data-tema="terang"] .jelajah-wadah-fullscreen,
 body.tema-siang.halaman-fullscreen-body,
 body.tema-siang .jelajah-layar-penuh-main,
 body.tema-siang .jelajah-wadah-fullscreen {
@@ -4477,6 +4479,8 @@ body.tema-siang .jelajah-wadah-fullscreen {
   transition: background 0.6s var(--ease-keluar), color 0.4s ease;
 }
 
+[data-tema="gelap"] .jelajah-layar-penuh-main,
+[data-tema="gelap"] .jelajah-wadah-fullscreen,
 body.tema-malam.halaman-fullscreen-body,
 body.tema-malam .jelajah-layar-penuh-main,
 body.tema-malam .jelajah-wadah-fullscreen {
@@ -4485,8 +4489,8 @@ body.tema-malam .jelajah-wadah-fullscreen {
   transition: background 0.6s var(--ease-keluar), color 0.4s ease;
 }
 
-
 /* 3. Floating HUD Adaptif Siang */
+[data-tema="terang"] .hud-pill-petunjuk,
 body.tema-siang .hud-pill-petunjuk {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -4494,6 +4498,7 @@ body.tema-siang .hud-pill-petunjuk {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
+[data-tema="terang"] .hud-status-ringkas,
 body.tema-siang .hud-status-ringkas {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -4501,31 +4506,37 @@ body.tema-siang .hud-status-ringkas {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
+[data-tema="terang"] .hud-atribusi-teks,
 body.tema-siang .hud-atribusi-teks {
   background: rgba(255, 255, 255, 0.85);
   color: #57534E;
 }
 
+[data-tema="terang"] .jelajah-hud-kanan-bawah,
 body.tema-siang .jelajah-hud-kanan-bawah {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
 }
 
+[data-tema="terang"] .hud-btn,
 body.tema-siang .hud-btn {
   color: #1C1917;
 }
 
+[data-tema="terang"] .hud-btn:hover,
 body.tema-siang .hud-btn:hover {
   background: rgba(230, 177, 74, 0.18);
   color: #B8860B;
 }
 
+[data-tema="terang"] .hud-separator,
 body.tema-siang .hud-separator {
   background: rgba(0, 0, 0, 0.12);
 }
 
 /* 4. Floating Card Kanan Siang (Light Glassmorphism Theme) */
+[data-tema="terang"] .jelajah-kartu-kanan,
 body.tema-siang .jelajah-kartu-kanan {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(217, 155, 53, 0.35);
@@ -4533,39 +4544,47 @@ body.tema-siang .jelajah-kartu-kanan {
   color: #1C1917;
 }
 
+[data-tema="terang"] .kartu-nama-prov,
 body.tema-siang .kartu-nama-prov {
   color: #1C1917;
 }
 
+[data-tema="terang"] .kartu-badge-peringkat,
 body.tema-siang .kartu-badge-peringkat {
   background: rgba(0, 0, 0, 0.06);
   color: #57534E;
 }
 
+[data-tema="terang"] .kartu-compact-status,
 body.tema-siang .kartu-compact-status {
   border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
+[data-tema="terang"] .kartu-teks-status,
 body.tema-siang .kartu-teks-status {
   color: #57534E;
 }
 
+[data-tema="terang"] .kartu-angka-total,
 body.tema-siang .kartu-angka-total {
   color: #B8860B;
 }
 
+[data-tema="terang"] .kartu-chip-mini,
 body.tema-siang .kartu-chip-mini {
   background: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.1);
   color: #1C1917;
 }
 
+[data-tema="terang"] .kartu-catatan-refleksi,
 body.tema-siang .kartu-catatan-refleksi {
   background: rgba(245, 240, 230, 0.9);
   color: #57534E;
   border-left-color: #D99B35;
 }
 
+[data-tema="terang"] .kartu-btn-paspor-mini,
 body.tema-siang .kartu-btn-paspor-mini {
   background: rgba(245, 245, 245, 0.9);
   border-color: rgba(0, 0, 0, 0.15);

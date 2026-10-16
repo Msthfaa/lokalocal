@@ -34,7 +34,7 @@ const WARNA_TEPI_MALAM = '#2A3B72';
  * @returns {{ mesh: Mesh, posisiVertexAsal: Float32Array, matLaut: MeshStandardMaterial, matTepi: MeshStandardMaterial }}
  */
 function bangunPapanLautDiorama() {
-  const radius = 5.3;
+  const radius = 6.2;
   const tinggi = 0.22;
   const segmenRadial = 64;
 

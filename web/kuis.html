@@ -18,8 +18,11 @@
       content="Tebak asal tradisi, cagar budaya, dan fakta pencatatan nusantara di arena kuis interaktif Lokalocal."
     />
     <meta property="og:image" content="./og-image.svg" />
-    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      // Teruskan akses langsung ke shell SPA terpadu (seamless single-page app)
+      window.location.replace('./index.html#kuis' + (window.location.search || ''));
+    </script>
     <script>
       (function () {
         try {

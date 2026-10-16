@@ -155,8 +155,10 @@
     </header>
 
     <main id="konten-utama" tabindex="-1">
-      <div class="wadah">
-        <div id="banner-error-data" class="banner-error" role="alert" hidden>
+      <!-- 1. TAMPILAN BERANDA CERITA BUDAYA (DEFAULT AKTIF) -->
+      <div id="view-cerita" class="spa-view is-aktif">
+        <div class="wadah">
+          <div id="banner-error-data" class="banner-error" role="alert" hidden>
           <p class="banner-error-judul" id="banner-error-judul">Gagal memuat data budaya</p>
           <p id="banner-error-pesan">
             Kami mengalami kendala saat membaca berkas data lokal. Pastikan berkas data tersedia.
@@ -699,10 +701,9 @@
           </div>
         </div>
       </section>
-    </main>
 
-    <!-- Footer Utama Sinematik dengan Atribusi Wajib -->
-    <footer class="footer-utama">
+      <!-- Footer Utama Sinematik dengan Atribusi Wajib -->
+      <footer class="footer-utama">
       <div class="wadah">
         <div class="footer-grid-modern">
           <!-- Kolom 1: Merek & Misi -->
@@ -813,6 +814,119 @@
         </div>
       </div>
     </footer>
+    </div>
+    <!-- /#view-cerita -->
+
+
+
+    <!-- 3. TAMPILAN PASPOR BUDAYA -->
+    <div id="view-paspor" class="spa-view" hidden style="display: none;">
+      <section class="bagian bagian-paspor-interaktif" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
+        <div class="wadah">
+          <div class="bagian-kepala paspor-hero-kepala">
+            <p class="kicker">Koleksi Penjelajah Budaya</p>
+            <h1>Paspor Budaya Nusantara</h1>
+            <p class="bagian-subjudul">
+              Buku paspor digital untuk mencatat jejak langkahmu menelusuri kekayaan tradisi 38 provinsi Indonesia.
+              Kumpulkan stempel, cap stempel penjaga data, dan raih gelar kehormatan.
+            </p>
+          </div>
+
+          <div style="max-width: 860px; margin-inline: auto;">
+            <!-- Wadah Komponen Paspor Budaya -->
+            <div id="s7-panel-paspor" class="s7-panel-kartu" style="min-height: 480px;" aria-live="polite"></div>
+
+            <!-- Navigasi Tambahan -->
+            <div class="paspor-nav-bawah-kotak">
+              <div>
+                <strong style="color: var(--kertas);">Ingin menambah stempel baru?</strong>
+                <p style="color: var(--kertas-redup); font-size: var(--teks-kecil); margin-top: 4px;">
+                  Buka halaman Jelajah dan klik provinsi pada peta 3D atau baca kartu cerita untuk mendapatkan stempel.
+                </p>
+              </div>
+              <div style="display: flex; gap: var(--ruang-2);">
+                <a href="#jelajah" class="tombol tombol--utama">Jelajahi Peta 3D &rarr;</a>
+                <a href="#kuis" class="tombol tombol--garis">Uji Wawasan di Kuis &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 4. TAMPILAN KUIS BUDAYA -->
+    <div id="view-kuis" class="spa-view" hidden style="display: none;">
+      <section class="bagian bagian-kuis-interaktif" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
+        <div class="wadah">
+          <div class="bagian-kepala kuis-hero-kepala">
+            <div class="kicker-glow">
+              <span class="kicker-bintang">✦</span>
+              <span>ARENA UJI WAWASAN NUSANTARA</span>
+              <span class="kicker-bintang">✦</span>
+            </div>
+            <h1 class="kuis-judul-megah">Kuis Budaya Nusantara</h1>
+            <p class="bagian-subjudul kuis-subjudul-elegan">
+              Seberapa tajam kamu mengenali tradisi, seni, bahasa, ritual, dan fakta pencatatan warisan budaya di seluruh Nusantara?
+            </p>
+            <div class="kuis-hero-stats" role="group" aria-label="Pilihan Tantangan Kuis">
+              <button type="button" class="kuis-hero-stat-chip kuis-stat-btn is-aktif" data-kategori="semua" aria-label="Mode 205 Tradisi Terkurasi Nasional">
+                🏛️ <strong>205</strong> Tradisi Terkurasi
+              </button>
+              <button type="button" class="kuis-hero-stat-chip kuis-stat-btn" data-kategori="provinsi" aria-label="Mode Ragam 38 Provinsi">
+                🗺️ <strong>38</strong> Provinsi
+              </button>
+              <button type="button" class="kuis-hero-stat-chip kuis-stat-btn" data-kategori="fakta_data" aria-label="Mode 8 Tantangan Data">
+                ⚡ <strong>8</strong> Tantangan Data
+              </button>
+            </div>
+
+            <div class="kuis-wilayah-pills" role="tablist" aria-label="Cakupan Wilayah Budaya Nusantara">
+              <button type="button" class="kuis-wilayah-pill is-aktif" data-kategori="semua" role="tab" aria-selected="true">
+                🇮🇩 Semua Nusantara
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="sumatera" role="tab" aria-selected="false">
+                🌿 Sumatera • Gadang &amp; Tenun
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="jawa" role="tab" aria-selected="false">
+                🏛️ Jawa • Candi &amp; Wayang
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="kalimantan" role="tab" aria-selected="false">
+                🛶 Kalimantan • Dayak &amp; Mandau
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="sulawesi" role="tab" aria-selected="false">
+                ⛵ Sulawesi • Tongkonan &amp; Pinisi
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="bali_nusa" role="tab" aria-selected="false">
+                🌊 Bali &amp; Nusa Tenggara
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="maluku_papua" role="tab" aria-selected="false">
+                🦜 Maluku &amp; Papua
+              </button>
+            </div>
+          </div>
+
+          <div style="max-width: 860px; margin-inline: auto;">
+            <!-- Wadah Komponen Kuis Interaktif -->
+            <div id="s7-panel-kuis" class="s7-panel-kartu" style="min-height: 480px;" aria-live="polite"></div>
+
+            <!-- Navigasi Tambahan -->
+            <div class="kuis-nav-bawah-kotak">
+              <div>
+                <strong style="color: var(--kertas);">Mau tahu cerita lengkap budaya di atas?</strong>
+                <p style="color: var(--kertas-redup); font-size: var(--teks-kecil); margin-top: 4px;">
+                  Buka halaman Jelajah untuk membaca arsip lengkap dan melihat posisinya di Peta 3D Nusantara.
+                </p>
+              </div>
+              <div style="display: flex; gap: var(--ruang-2);">
+                <a href="#jelajah" class="tombol tombol--utama">Buka Peta Jelajah 3D &rarr;</a>
+                <a href="#paspor" class="tombol tombol--garis">Cek Stempel di Paspor &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 
     <!-- Dialog Detail Rekaman Budaya -->
     <dialog id="dialog-rekaman" class="dialog-modal" aria-labelledby="dialog-rekaman-judul">

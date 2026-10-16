@@ -27,6 +27,9 @@ import { inisialisasiBagianKonsentrasi } from './sections/konsentrasi.js';
 import { inisialisasiBagianGelap } from './sections/gelap.js';
 import { inisialisasiBagianJelajah } from './sections/jelajah.js';
 import { inisialisasiBagianKisah } from './sections/kisah.js';
+import { buatProyeksiIndonesia } from './map/projection.js';
+import { SpaRouter } from './router/spa-router.js';
+import { muatDataLengkap } from './data/loader.js';
 
 let dialogRekamanKontrol = null;
 let janjiDialogRekaman = null;
@@ -34,6 +37,8 @@ let kontrolJelajah = null;
 let kontrolKisah = null;
 let kontrolKuis = null;
 let pengelolaPaspor = null;
+let kontroler3D = null;
+let spaRouter = null;
 let dataLengkapCache = null;
 let tanggalAmbilCache = null;
 const antreanStempel = [];
@@ -105,8 +110,10 @@ async function muatFiturInteraktifS7S8({ provinsi, statistik }) {
     daftarProvinsi: provinsi,
     pengelolaPaspor,
     saatKlikPetakProvinsi: (kode) => {
-      if (kontrolJelajah) {
-        kontrolJelajah.pilihProvinsiDariLuar(kode);
+      if (spaRouter) {
+        spaRouter.navigasiKe('jelajah', { provinsi: kode });
+      } else {
+        window.location.href = `./jelajah.html?provinsi=${kode}&mendarat=1`;
       }
     }
   });
@@ -115,14 +122,18 @@ async function muatFiturInteraktifS7S8({ provinsi, statistik }) {
     daftarProvinsi: provinsi,
     statistik,
     saatLihatProvinsiDiPeta: (kode) => {
-      if (kontrolJelajah) {
-        kontrolJelajah.pilihProvinsiDariLuar(kode);
+      if (spaRouter) {
+        spaRouter.navigasiKe('jelajah', { provinsi: kode });
+      } else {
+        window.location.href = `./jelajah.html?provinsi=${kode}&mendarat=1`;
       }
     },
     saatBukaDetailRekaman: (rekaman, pemicuEl) => {
       bukaDetailRekamanDinamis(rekaman, pemicuEl);
     }
   });
+
+  pasangFilterKuis(kontrolKuis);
 
   if (dataLengkapCache && kontrolKuis) {
     kontrolKuis.terimaDataLengkap(dataLengkapCache);
@@ -133,6 +144,37 @@ async function muatFiturInteraktifS7S8({ provinsi, statistik }) {
     totalProvinsi: provinsi.length || 38
   });
 }
+
+/**
+ * Memasang listener filter kategori & piliah wilayah pada kuis
+ */
+function pasangFilterKuis(kontroler) {
+  const daftarTombolTopik = document.querySelectorAll('.kuis-wilayah-pill, .kuis-stat-btn');
+  daftarTombolTopik.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const kategori = btn.dataset.kategori;
+      const label = btn.textContent.trim();
+      if (!kategori || !kontroler) return;
+
+      daftarTombolTopik.forEach((b) => {
+        const cocok = b.dataset.kategori === kategori;
+        b.classList.toggle('is-aktif', cocok);
+        if (b.hasAttribute('aria-selected')) {
+          b.setAttribute('aria-selected', cocok ? 'true' : 'false');
+        }
+      });
+
+      kontroler.gantiKategori(kategori, label);
+
+      const panelKuis = document.getElementById('s7-panel-kuis');
+      if (panelKuis) {
+        panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
+}
+
+
 
 /**
  * Merender data tahap awal ke bagian S1–S8 dan memperbarui atribusi footer.
@@ -170,10 +212,10 @@ function renderDataAwalKeHalaman(dataAwal) {
   if (document.getElementById('peta-menyala')) {
     inisialisasiBagianNyala(dataAwal, {
       saatKlikProvinsi: (kode) => {
-        if (kontrolJelajah) {
-          kontrolJelajah.pilihProvinsiDariLuar(kode);
+        if (spaRouter) {
+          spaRouter.navigasiKeJelajahDedicated({ provinsi: kode });
         } else {
-          window.location.href = `./jelajah.html?provinsi=${encodeURIComponent(kode)}`;
+          window.location.href = `./jelajah.html?provinsi=${kode}&mendarat=1`;
         }
       }
     });
@@ -184,10 +226,10 @@ function renderDataAwalKeHalaman(dataAwal) {
   if (document.getElementById('provinsi-gelap')) {
     inisialisasiBagianGelap(dataAwal, {
       saatPilihProvinsiKeJelajah: (kode) => {
-        if (kontrolJelajah) {
-          kontrolJelajah.pilihProvinsiDariLuar(kode);
+        if (spaRouter) {
+          spaRouter.navigasiKeJelajahDedicated({ provinsi: kode });
         } else {
-          window.location.href = `./jelajah.html?provinsi=${encodeURIComponent(kode)}`;
+          window.location.href = `./jelajah.html?provinsi=${kode}&mendarat=1`;
         }
       }
     });
@@ -212,8 +254,28 @@ function renderDataAwalKeHalaman(dataAwal) {
     }
   });
 
+  // Muat katalog data lengkap di background untuk bank soal kuis
+  muatDataLengkap()
+    .then(({ budaya }) => {
+      if (budaya) {
+        dataLengkapCache = { budaya };
+        if (kontrolKuis && typeof kontrolKuis.terimaDataLengkap === 'function') {
+          kontrolKuis.terimaDataLengkap({ budaya });
+        }
+      }
+    })
+    .catch(() => {});
+
   // Muat fitur S7 & S8 secara dinamis
   muatFiturInteraktifS7S8({ provinsi, statistik });
+
+  // Cek apakah URL awal meminta halaman selain cerita (misal #paspor atau #kuis)
+  if (spaRouter) {
+    const tampilanAwal = spaRouter.dapatkanTampilanDariUrl();
+    if (tampilanAwal !== 'cerita') {
+      spaRouter.navigasiKe(tampilanAwal, { updateUrl: false });
+    }
+  }
 
   // Segarkan perhitungan ScrollTrigger setelah peta dan font terpasang
   segarkanScrollTrigger();
@@ -320,7 +382,12 @@ function inisialisasiBentoEditorial() {
     const el = document.getElementById(id);
     if (el) {
       const navigasi = () => {
-        window.location.href = `./jelajah.html?q=${encodeURIComponent(query)}`;
+        if (spaRouter) {
+          spaRouter.navigasiKe('jelajah');
+        }
+        if (kontrolJelajah && typeof kontrolJelajah.aturPencarian === 'function') {
+          kontrolJelajah.aturPencarian(query);
+        }
       };
       el.addEventListener('click', navigasi);
       el.addEventListener('keydown', (e) => {
@@ -372,6 +439,14 @@ function init() {
     bukaDialogTentangKami: (pemicu) => dialogTentangKami.buka(pemicu),
     halamanAktif: 'cerita'
   });
+
+  // Inisialisasi SPA Router Utama
+  spaRouter = new SpaRouter({
+    saatGantiTampilan: () => {
+      segarkanScrollTrigger();
+    }
+  });
+
   inisialisasiTombolBagikan();
   inisialisasiBentoEditorial();
 
@@ -386,4 +461,5 @@ function init() {
 }
 
 init();
+
 

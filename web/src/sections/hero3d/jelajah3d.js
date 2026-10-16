@@ -10,7 +10,7 @@ import {
   Vector3,
   Vector2,
   Raycaster,
-  PCFSoftShadowMap,
+  PCFShadowMap,
   SRGBColorSpace,
   Color
 } from 'three';
@@ -77,7 +77,7 @@ export function inisialisasiJelajah3D({
 
   if (!adalahPonsel) {
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = PCFSoftShadowMap;
+    renderer.shadowMap.type = PCFShadowMap;
   }
 
   const kanvas = renderer.domElement;
@@ -100,16 +100,16 @@ export function inisialisasiJelajah3D({
     proyeksi,
     modeWarna: modeWarnaAktif,
     aktifkanBayangan: !adalahPonsel,
-    sembunyikanMaritimAwal: true
+    sembunyikanMaritimAwal: false
   });
 
   const { scene, grupUtama, aturModeWarna, aturModeWaktu, getModeWaktu, pengontrolLangit } = elemenAdegan;
 
   const kurangiGerakan = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Kamera diorama: zoomLevel 1.25 memberikan kepulauan yang dekat, besar, dan megah
-  let zoomLevel = 1.25;
-  const camera = new PerspectiveCamera(34, 1, 0.1, 50);
+  // Kamera diorama: zoomLevel 1.0 memberikan kepulauan yang pas, lapang, dan megah
+  let zoomLevel = 1.0;
+  const camera = new PerspectiveCamera(34, 1, 0.1, 80);
   let cameraBasePos = hitungPosisiKameraFit(1.6, zoomLevel);
 
   // Vektor target kamera untuk transisi mulus ke wilayah yang dipilih
@@ -120,8 +120,8 @@ export function inisialisasiJelajah3D({
   // Posisi kamera awal mantap dan fokus di tengah kepulauan nusantara
   let animMasukAktif = false;
   camera.position.copy(cameraBasePos);
-  camera.lookAt(0, 0.12, 0);
-  cameraCurrentLookAt.set(0, 0.12, 0);
+  camera.lookAt(cameraTargetLookAt);
+  cameraCurrentLookAt.copy(cameraTargetLookAt);
   if (grupUtama) {
     grupUtama.position.y = 0;
   }
@@ -252,22 +252,22 @@ export function inisialisasiJelajah3D({
     return ra - rb;
   });
 
-  let animasiMasukSelesai = Boolean(kurangiGerak);
+  let animasiMasukSelesai = false;
   let animasiMasukSedangBerjalan = false;
 
-  // Kondisi awal sebelum animasi masuk: sembunyikan keping jika bukan reduced-motion
-  if (!kurangiGerak) {
-    for (const m of elemenAdegan.daftarProvinsiMesh) {
-      const u = m.userData;
-      m.scale.set(0, 0, 0);
-      u.targetY = u.pusatAsal.y - 0.45;
-      m.position.y = u.pusatAsal.y - 0.45;
+  // Pastikan posisi awal keping provinsi selalu stabil dan tampak di permukaan
+  for (const m of elemenAdegan.daftarProvinsiMesh) {
+    const u = m.userData;
+    m.scale.set(1, 1, 1);
+    if (u?.pusatAsal) {
+      u.targetY = u.pusatAsal.y;
+      m.position.set(u.pusatAsal.x, u.pusatAsal.y, u.pusatAsal.z);
     }
   }
 
   /**
-   * Memicu animasi dramatis dan imut: satu per satu keping pulau muncul
-   * membal elastis dari laut, mulai dari pusat kepulauan menyebar ke Sabang & Merauke.
+   * Memicu animasi dramatis dan imut: gelombang membal elastis pulau
+   * dari pusat kepulauan menyebar ke Sabang & Merauke saat pesawat mendarat.
    */
   function mulaiAnimasiMasuk() {
     if (animasiMasukSelesai || animasiMasukSedangBerjalan) return;
@@ -279,11 +279,6 @@ export function inisialisasiJelajah3D({
     }
 
     if (kurangiGerak) {
-      for (const m of elemenAdegan.daftarProvinsiMesh) {
-        m.scale.set(1, 1, 1);
-        m.userData.targetY = m.userData.pusatAsal.y;
-        m.position.y = m.userData.pusatAsal.y;
-      }
       animasiMasukSelesai = true;
       animasiMasukSedangBerjalan = false;
       return;
@@ -295,33 +290,41 @@ export function inisialisasiJelajah3D({
       const targetY = u.pusatAsal.y;
       const rNorm = u.rNorm ?? (idx / n);
 
-      // Delay bergelombang: pulau tengah (Kalimantan, Sulawesi, Jawa) muncul duluan,
+      // Delay bergelombang: pulau tengah (Kalimantan, Sulawesi, Jawa) membal duluan,
       // lalu menyebar keluar secara radial hingga ke Aceh & Papua
-      const delay = 0.05 + rNorm * 0.92 + (idx / n) * 0.18;
+      const delay = 0.04 + rNorm * 0.45 + (idx / n) * 0.08;
 
-      // Pop-up skala membal elastis (0 -> 1)
-      gsap.to(mesh.scale, {
-        x: 1,
-        y: 1,
-        z: 1,
-        duration: 0.72,
-        delay,
-        ease: 'back.out(2.2)'
-      });
+      // Pop-up skala membal elastis (0.7 -> 1)
+      gsap.fromTo(
+        mesh.scale,
+        { x: 0.7, y: 0.7, z: 0.7 },
+        {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.55,
+          delay,
+          ease: 'back.out(2.2)'
+        }
+      );
 
-      // Angkat posisi keping dari bawah permukaan air ke daratan normal
-      gsap.to(u, {
-        targetY: targetY,
-        duration: 0.80,
-        delay,
-        ease: 'back.out(1.6)',
-        onComplete: () => {
-          if (idx === n - 1) {
-            animasiMasukSelesai = true;
-            animasiMasukSedangBerjalan = false;
+      // Angkat posisi keping dengan efek membal lembut
+      gsap.fromTo(
+        u,
+        { targetY: targetY - 0.28 },
+        {
+          targetY: targetY,
+          duration: 0.65,
+          delay,
+          ease: 'back.out(1.8)',
+          onComplete: () => {
+            if (idx === n - 1) {
+              animasiMasukSelesai = true;
+              animasiMasukSedangBerjalan = false;
+            }
           }
         }
-      });
+      );
     });
   }
 
@@ -353,8 +356,8 @@ export function inisialisasiJelajah3D({
 
   function perbaruiUkuran(langsung = false) {
     if (!wadahEl || !renderer) return;
-    const lebar = wadahEl.clientWidth || window.innerWidth;
-    const tinggi = wadahEl.clientHeight || window.innerHeight;
+    const lebar = wadahEl.clientWidth > 0 ? wadahEl.clientWidth : window.innerWidth;
+    const tinggi = wadahEl.clientHeight > 0 ? wadahEl.clientHeight : window.innerHeight;
     if (lebar <= 0 || tinggi <= 0) return;
 
     const aspect = lebar / tinggi;
@@ -665,11 +668,11 @@ export function inisialisasiJelajah3D({
 
   mulaiLoop();
 
-  // Kontrol Zoom presisi (dibatasi minimum 72% / 0.90 agar saat zoom out diorama tetap proporsional & kaya)
+  // Kontrol Zoom presisi (rentang 70% s.d. 200%, default 100% pada zoomLevel 1.0)
   function aturZoom(faktor) {
-    zoomLevel = Math.max(0.90, Math.min(2.25, faktor));
-    const lebar = wadahEl?.clientWidth || window.innerWidth;
-    const tinggi = wadahEl?.clientHeight || window.innerHeight;
+    zoomLevel = Math.max(0.70, Math.min(2.0, faktor));
+    const lebar = wadahEl?.clientWidth > 0 ? wadahEl.clientWidth : window.innerWidth;
+    const tinggi = wadahEl?.clientHeight > 0 ? wadahEl.clientHeight : window.innerHeight;
     const aspect = lebar > 0 && tinggi > 0 ? lebar / tinggi : 1.6;
 
     camera.aspect = aspect;
@@ -678,7 +681,7 @@ export function inisialisasiJelajah3D({
     cameraBasePos = hitungPosisiKameraFit(aspect, zoomLevel);
     perbaruiTargetKamera(false);
 
-    const persen = Math.round((zoomLevel / 1.25) * 100);
+    const persen = Math.round(zoomLevel * 100);
     if (typeof onZoomUbah === 'function') {
       onZoomUbah(persen);
     }
@@ -748,10 +751,10 @@ export function inisialisasiJelajah3D({
     mulaiAnimasiMasuk,
     pilihProvinsi,
     aturZoom,
-    zoomIn: () => aturZoom(zoomLevel + 0.1875),
-    zoomOut: () => aturZoom(zoomLevel - 0.1875),
-    zoomReset: () => aturZoom(1.25),
-    getZoomPersen: () => Math.round((zoomLevel / 1.25) * 100),
+    zoomIn: () => aturZoom(zoomLevel + 0.15),
+    zoomOut: () => aturZoom(zoomLevel - 0.15),
+    zoomReset: () => aturZoom(1.0),
+    getZoomPersen: () => Math.round(zoomLevel * 100),
     resetRotasi,
     toggleModeWaktu,
     aturModeWaktu,
@@ -781,6 +784,9 @@ export function inisialisasiJelajah3D({
       }
     },
     getZoom: () => zoomLevel,
-    getModeWarna: () => modeWarnaAktif
+    getModeWarna: () => modeWarnaAktif,
+    jedaRender: hentikanLoop,
+    lanjutkanRender: mulaiLoop,
+    perbaruiUkuran
   };
 }

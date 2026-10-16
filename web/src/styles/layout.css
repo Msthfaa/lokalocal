@@ -901,3 +901,27 @@ main {
   justify-content: space-between;
   gap: var(--ruang-3);
 }
+
+/* ==========================================================================
+   SPA (Single Page Application) Container & Views
+   ========================================================================== */
+.spa-view {
+  width: 100%;
+  position: relative;
+  will-change: opacity;
+}
+
+.spa-view[hidden] {
+  display: none !important;
+}
+
+body.halaman-fullscreen-body #view-cerita,
+body.halaman-fullscreen-body #view-paspor,
+body.halaman-fullscreen-body #view-kuis {
+  display: none !important;
+}
+
+body.halaman-fullscreen-body #view-jelajah {
+  display: block !important;
+}
+

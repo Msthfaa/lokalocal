@@ -1,0 +1,206 @@
+/**
+ * transisi-pesawat.css — Gaya Visual Animasi Pesawat Kartun Budaya Nusantara
+ * Digunakan untuk transisi sinematik antar halaman menuju Peta 3D Jelajah.
+ */
+
+.transisi-pesawat-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99998; /* Tepat di bawah dialog modal tertinggi, di atas seluruh halaman */
+  pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.transisi-pesawat-overlay.is-aktif {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto; /* Tangkap klik agar tidak ada klik ganda saat transisi */
+}
+
+/* Flash kilau lembut saat ganti halaman */
+.pesawat-kilau-layar {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 230, 160, 0.45) 0%,
+    rgba(14, 165, 233, 0.15) 50%,
+    transparent 80%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Wadah Pesawat yang Digerakkan GSAP */
+.pesawat-wadah-aktor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 160px;
+  z-index: 10;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.35));
+}
+
+/* Baling-Baling Berputar Cepat */
+.pesawat-baling-grup {
+  transform-origin: 195px 82px;
+  animation: balingBalingPutar 0.12s linear infinite;
+}
+
+@keyframes balingBalingPutar {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 0.95;
+  }
+  50% {
+    transform: rotateX(90deg);
+    opacity: 0.45;
+  }
+  100% {
+    transform: rotateX(180deg);
+    opacity: 0.95;
+  }
+}
+
+/* Bendera Merah Putih Mini Berkibar di Ekor */
+.pesawat-bendera-ekor {
+  transform-origin: 32px 42px;
+  animation: benderaKibarPesawat 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes benderaKibarPesawat {
+  0% {
+    transform: skewY(-4deg) scaleY(0.96);
+  }
+  100% {
+    transform: skewY(6deg) scaleY(1.04);
+  }
+}
+
+/* Kedip Mata Maskot Kartun Si Kembara */
+.pesawat-mata-chibi {
+  transform-origin: center;
+  animation: kedipMataChibi 3.2s infinite;
+}
+
+@keyframes kedipMataChibi {
+  0%, 94%, 100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* Lambaian Tangan Maskot */
+.pesawat-tangan-lambai {
+  transform-origin: 104px 58px;
+  animation: lambaiTanganPesawat 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes lambaiTanganPesawat {
+  0% {
+    transform: rotate(-12deg);
+  }
+  100% {
+    transform: rotate(18deg);
+  }
+}
+
+/* Jejak Asap Knalpot Chibi & Partikel Awan */
+.pesawat-jejak-asap-wadah {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.pesawat-asap-partikel {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 248, 230, 0.6) 60%, transparent 100%);
+  filter: blur(1.5px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Letupan Bintang Emas saat Mendarat di Pulau */
+.pesawat-touchdown-wadah {
+  position: absolute;
+  pointer-events: none;
+  z-index: 8;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.pesawat-touchdown-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #facc15;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+/* Banner Mini Ucapan Mendarat */
+.pesawat-teks-mendarat {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  background: rgba(28, 25, 23, 0.82);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(250, 204, 21, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.pesawat-teks-mendarat-titik {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #facc15;
+  box-shadow: 0 0 10px #facc15;
+  animation: denyutTitikPesawat 1.2s infinite;
+}
+
+@keyframes denyutTitikPesawat {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.7;
+  }
+}

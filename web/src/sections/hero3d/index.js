@@ -13,7 +13,7 @@ import {
   Vector3,
   Vector2,
   Raycaster,
-  PCFSoftShadowMap,
+  PCFShadowMap,
   SRGBColorSpace
 } from 'three';
 import { bangunAdeganDiorama } from './build-scene.js';
@@ -33,18 +33,31 @@ export function hitungPosisiKameraFit(aspect, faktorZoom = 1) {
   const fovVertikalRad = (34 * Math.PI) / 180;
   const fovHorizontalRad = 2 * Math.atan(Math.tan(fovVertikalRad / 2) * aspect);
 
-  // Jika aspect >= 1.3 (layar lebar), radius target 3.6 unit agar pulau tampak dekat, besar, dan megah
-  const adalahLayarLebar = aspect >= 1.3;
-  const radiusTargetDasar = adalahLayarLebar ? 3.6 : (aspect >= 1.0 ? 3.7 : 3.9);
+  // Penyesuaian radius target dasar berdasarkan aspek layar agar 38 provinsi selalu pas
+  let radiusTargetDasar = 3.6;
+  if (aspect < 0.8) {
+    // Ponsel potret ramping (misal 390x844 atau 360x800)
+    radiusTargetDasar = 5.8;
+  } else if (aspect < 1.0) {
+    // Layar tablet potret / persegi
+    radiusTargetDasar = 4.5;
+  } else if (aspect < 1.3) {
+    // Layar tablet lanskap / laptop kecil
+    radiusTargetDasar = 3.8;
+  } else {
+    // Desktop layar lebar (aspect >= 1.3)
+    radiusTargetDasar = 3.6;
+  }
+
   const radiusTarget = radiusTargetDasar / faktorZoom;
 
   const jarakVert = radiusTarget / Math.tan(fovVertikalRad / 2);
   const jarakHoriz = radiusTarget / Math.tan(fovHorizontalRad / 2);
   const jarak = Math.max(jarakVert, jarakHoriz);
 
-  // Sudut kamera 31 derajat dari horizontal: sudut 3/4 isometrik yang seimbang
-  // kepulauan terlihat dekat dan detail, serta matahari & bulan melayang nyaman di langit
-  const sudutElevasi = (31 * Math.PI) / 180;
+  // Sudut kamera 46 derajat dari horizontal: sudut 3/4 isometrik udara yang seimbang
+  // kepulauan terlihat lapang, relief 3D dan pulau-pulau tampak luas, jelas, dan mudah dijelajahi
+  const sudutElevasi = (46 * Math.PI) / 180;
   const y = jarak * Math.sin(sudutElevasi);
   const z = jarak * Math.cos(sudutElevasi);
 
@@ -200,7 +213,7 @@ export function inisialisasiHero3D({
   // Bayangan hanya aktif di desktop
   if (!adalahPonsel) {
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = PCFSoftShadowMap;
+    renderer.shadowMap.type = PCFShadowMap;
   }
 
   const kanvas = renderer.domElement;

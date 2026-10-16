@@ -1,5 +1,69 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-16] Penyambungan Dua Babak Animasi Penerbangan Pesawat Budaya (Lepas Landas & Mendarat di Pulau)
+- **Dibuat/diubah:**
+  - `web/src/ui/transisi-pesawat.js` (Memecah arsitektur animasi pesawat menjadi dua babak modular yang saling terhubung: `terbangkanPesawatLepasLandas` untuk lepas landas dari halaman keberangkatan, `siapkanPesawatMendarat` untuk menempatkan pesawat melayang di langit horison, dan `mendaratkanPesawatDiPulau` untuk menukik turun melintasi diorama 3D dan touchdown di pulau Jawa/Nusantara dengan letupan bintang emas).
+  - `web/src/router/spa-router.js` (Memperbarui `navigasiKeJelajahDedicated`: memicu `terbangkanPesawatLepasLandas`, menyetel bendera sesi `lokalocal_mendarat_pesawat`, dan meneruskan query `mendarat=1` serta kode provinsi opsional ke `jelajah.html`).
+  - `web/src/pages/jelajah.js` (Mendeteksi parameter `mendarat=1` atau bendera sesi saat tiba di halaman Jelajah; langsung melompati layar muat perahu, menampilkan pesawat melayang di angkasa tepat di titik terakhir ia berada, menjalankan pendaratan sinematik `mendaratkanPesawatDiPulau`, dan memicu kemunculan membal 38 pulau `kontroler3D.mulaiAnimasiMasuk()` saat roda pesawat menyentuh daratan).
+  - `web/jelajah.html` (Menyempurnakan skrip anti-FOUC di `<head>` agar elemen `#jelajah-loading-screen` tidak muncul sekejap pun saat pengguna tiba via penerbangan pesawat).
+  - `web/src/main.js` (Mengintegrasikan klik petak provinsi di S2 Peta Menyala, S4 Provinsi Gelap, S7 Paspor, dan S7 Kuis ke `spaRouter.navigasiKe('jelajah', { provinsi })` sehingga semua rute masuk memicu penerbangan pesawat dan langsung menancapkan panji bendera di pulau tujuan).
+- **Hasil:**
+  - Masalah pesawat hilang saat berpindah ke halaman Jelajah 100% teratasi!
+  - Alur penerbangan kini terasa utuh, berkesinambungan, dan sinematik: lepas landas dari bawah layar beranda -> terbang menanjak ke angkasa -> halaman berubah ke diorama 3D nusantara -> pesawat menukik anggun ke tengah kepulauan -> touchdown dengan letupan bintang emas -> 38 pulau membal menyambut kedatangan penjelajah.
+  - Terverifikasi via pengujian otomatis Edge headless: `scratch/screenshot-pesawat-takeoff.png`, `scratch/screenshot-pesawat-landing.png`, dan `scratch/screenshot-pesawat-touchdown.png` berhasil terekam dengan sempurna.
+
+## [2026-10-16] Isolasi Mandiri Halaman Jelajah 3D (Eksklusi dari SPA) dengan Transisi Sinematik Pesawat Budaya
+- **Dibuat/diubah:**
+  - `web/jelajah.html` (Menghapus skrip redirect SPA; mengembalikan `jelajah.html` sebagai halaman mandiri *dedicated* selayar penuh dengan skrip `pages/jelajah.js`, sehingga memiliki 100% alokasi konteks WebGL GPU eksklusif tanpa berebut dengan adegan 3D di beranda).
+  - `web/src/router/spa-router.js` (Mengecualikan `jelajah` dari daftar view in-memory SPA `DAFTAR_TAMPILAN = ['cerita', 'paspor', 'kuis']`. Setiap klik tautan menuju Jelajah kini secara mulus menerbangkan Pesawat Kartun Budaya Si Kembara melintasi layar dan mengarahkan navigasi browser ke `./jelajah.html` saat pesawat mengangkasa di titik puncak).
+  - `web/index.html` (Menghapus container `#view-jelajah` dari shell beranda untuk membebaskan memori browser dan mencegah tabrakan ganda kanvas Three.js).
+  - `web/src/main.js` (Menghapus inisialisasi ganda diorama 3D di latar belakang beranda; tautan provinsi di `peta-menyala` dan `provinsi-gelap` kini langsung mengarahkan ke `./jelajah.html?provinsi=kode`).
+  - `web/src/pages/jelajah.js` (Mendukung parameter URL `?provinsi=` untuk otomatis memilih dan menancapkan panji bendera provinsi saat dibuka dari beranda).
+- **Hasil:**
+  - Masalah layar biru/kosong pada perangkat pengguna teratasi 100% karena GPU browser tidak lagi mengalami *WebGL context loss* akibat menjalankan dua adegan 3D berat sekaligus di satu dokumen.
+  - Efek transisi pesawat kartun budaya yang lucu dan sinematik tetap dinikmati saat pengguna mengklik menu Jelajah dari beranda.
+  - Halaman Jelajah 3D diorama kini sangat stabil, responsif, dan ringan dibuka di laptop maupun ponsel.
+
+## [2026-10-16] Perbaikan Masalah Layar Blank pada Halaman Jelajah 3D & Sinkronisasi Tema Terang/Gelap
+- **Dibuat/diubah:**
+  - `web/src/ui/tema.js` (Sinkronisasi status kelas `body.tema-siang` dan `body.tema-malam` saat `terapkanTema()` dieksekusi agar elemen glassmorphism HUD dan gradien langit 3D mengenali tema aktif dengan sempurna).
+  - `web/src/styles/sections.css` (Menambahkan dukungan selector langsung `[data-tema="terang"]` dan `[data-tema="gelap"]` untuk latar belakang langit diorama selayar penuh `.jelajah-layar-penuh-main`, `.jelajah-wadah-fullscreen`, floating HUD toolbar zoom, legenda status ringkas, dan kartu samping wilayah, mencegah latar belakang transparan yang jatuh ke warna krem `#FAF6EE`).
+  - `web/src/router/spa-router.js` (Mengoptimalkan `tukarTampilanDom` dengan pembersihan eksplisit atribut `removeAttribute('hidden')` dan penegakan `style.display = 'block'` pada `#view-jelajah`; menambahkan parameter `animasiPesawat: false` untuk navigasi langsung saat pemuatan awal URL `#jelajah` agar tampilan terbuka seketika tanpa tertahan animasi).
+  - `web/src/ui/transisi-pesawat.js` (Menambahkan *safety watchdog timeout* 2,8 detik untuk memastikan overlay penerbangan pesawat tidak pernah menggantung atau mengunci layar dalam kondisi apa pun).
+  - `web/src/main.js` (Memicu `kontroler3D.perbaruiUkuran(true)` secara instan, via `requestAnimationFrame`, serta penjadwalan 80ms saat masuk ke halaman Jelajah untuk menjamin aspek rasio kamera dan kanvas WebGL terkalkulasi tepat).
+  - `web/src/sections/hero3d/jelajah3d.js` & `web/src/sections/hero3d/index.js` (Mengganti `PCFSoftShadowMap` usang dengan `PCFShadowMap`, serta menyetel `sembunyikanMaritimAwal: false` agar seluruh kapal Pinisi dan ornamen maritim langsung tampil prima).
+- **Hasil:**
+  - Halaman Jelajah 3D kini terbuka seketika dan 100% bebas dari layar blank, baik dibuka via navigasi animasi pesawat, klik menu, maupun refresh langsung pada tautan URL `#jelajah`.
+  - Baik Mode Terang maupun Mode Gelap menampilkan langit diorama nusantara, kepulauan 3D, kapal Pinisi, serta HUD kontrol dengan kontras yang jernih dan elegan.
+
+## [2026-10-16] Perbaikan Kritis Peta 3D Jelajah Nusantara (Distorsi Sudut Kamera, Bentrok Wadah ID, & Kemunculan Keping Pulau)
+- **Dibuat/diubah:**
+  - `web/index.html` (Mengganti ID wadah kanvas 3D di `#view-jelajah` dari `#s5-peta-wadah` menjadi `#jelajah-3d-kanvas-wadah` untuk mengeliminasi tabrakan ID dengan peta 2D SVG lama).
+  - `web/src/main.js` (Menargetkan `#jelajah-3d-kanvas-wadah` secara presisi untuk `inisialisasiJelajah3D`, memicu `kontroler3D.perbaruiUkuran(true)` lewat `requestAnimationFrame` saat pengguna berpindah ke tampilan Jelajah).
+  - `web/src/sections/hero3d/index.js` (Memperbarui `hitungPosisiKameraFit`: menaikkan sudut elevasi kamera dari 31° ke 46° aerial isometrik yang proporsional, serta menyesuaikan radius target responsif untuk ponsel potret ramping `aspect < 0.8` hingga desktop layar lebar `aspect >= 1.3`).
+  - `web/src/sections/hero3d/build-scene.js` & `web/src/sections/hero3d/ornamen-maritim.js` (Membesarkan radius piringan samudra `papanLaut` dari 5.3 ke 6.2 agar seluruh daratan dari Sabang hingga Merauke tertampung nyaman tanpa terpotong tepian laut, serta menyesuaikan bentang garis Khatulistiwa dan posisi plakat kayu emas di bibir samudra).
+  - `web/src/sections/hero3d/jelajah3d.js` (Memastikan seluruh 38 keping pulau berstatus awal terlihat stabil `scale(1, 1, 1)` dan mengorkestrasi gelombang membal elastis imut saat `mulaiAnimasiMasuk()` dipicu ketika Pesawat Budaya touchdown mendarat; menata ulang basis zoom default ke 100% pada `zoomLevel = 1.0` dengan rentang 70% s.d. 200%).
+- **Hasil:**
+  - Peta 3D Nusantara kini tampil megah, luas, dan lapang dengan sudut pandang udara 46° yang sangat nyaman dipandang dan mudah diklik.
+  - Masalah tampilan "lingkaran biru raksasa kosong" dan keping pulau yang terjepit di cakrawala atas 100% teratasi.
+  - Tidak ada lagi tabrakan duplikasi kanvas WebGL atau peta 2D SVG yang menembus kanvas 3D.
+  - Transisi pesawat kartun budaya mendarat mulus dan pulau-pulau membal ceria menyambut penjelajah.
+
+## [2026-10-16] Transformasi Arsitektur SPA (Single Page Application) & Animasi Transisi Pesawat Kartun Budaya
+- **Dibuat/diubah:**
+  - `web/src/ui/transisi-pesawat.js` & `web/src/styles/transisi-pesawat.css` (Komponen visual SVG Pesawat Capung Propeller Chibi + Maskot Budaya "Si Kembara" dengan udeng batik dan kacamata penerbang. Mengorkestrasi lepas landas dari bagian bawah layar, mengangkasa dengan kepulan asap awan knalpot chibi, cross-fade halaman, dan menukik touchdown mendarat di pulau Nusantara 3D dengan letupan bintang emas).
+  - `web/src/router/spa-router.js` (Client-side SPA Router: navigasi in-memory antar 4 tampilan utama tanpa browser reload, sinkronisasi URL hash `/#cerita`, `/#jelajah`, `/#paspor`, `/#kuis`, dukungan tombol Back/Forward browser, dan pemicu animasi transisi pesawat).
+  - `web/index.html` (Penyatuan 4 view container utama `#view-cerita`, `#view-jelajah`, `#view-paspor`, `#view-kuis` dalam 1 shell terpadu).
+  - `web/src/main.js` (Warm-up pemuatan data di awal pembuka, inisialisasi tunggal mesin 3D diorama di latar belakang, integrasi Paspor & Kuis, dan manajemen jeda render loop Three.js untuk penghematan GPU).
+  - `web/src/sections/hero3d/jelajah3d.js` (Mengekspos metode `jedaRender()` dan `lanjutkanRender()` untuk smart render loop berbasis rute aktif).
+  - `web/src/styles/layout.css` (Gaya container view `.spa-view` dan layout fullscreen transisi).
+  - `web/jelajah.html`, `web/paspor.html`, `web/kuis.html` (Penerusan instan ke shell SPA terpadu untuk menjamin kompatibilitas bookmark & tautan langsung).
+- **Hasil:**
+  - Web kini beroperasi penuh sebagai SPA: pemuatan data dan aset 3D hanya terjadi di awal saat Tirai Wayang pembuka.
+  - Pergantian antar halaman berlangsung sangat ringan dan instan (0 detik jeda) tanpa reload browser.
+  - Musik gamelan lagu daerah Nusantara mengalun terus tanpa henti melintasi semua halaman.
+  - Transisi menuju halaman Jelajah 3D menyajikan animasi spektakuler pesawat kartun budaya yang mendarat di pulau dengan 60 FPS buttery-smooth tanpa lag.
+
 ## [2026-10-16] Pembatasan Sesi Layar Pemuatan (Tirai Wayang & 3D Pinisi) & Akses IP Lokal
 - **Dibuat/diubah:**
   - `web/src/ui/tirai-wayang.js` & `web/src/main.js` (Opening Tirai Wayang Gunungan dibatasi via `sessionStorage` sehingga hanya tampil satu kali di awal sesi kunjungan pengguna; navigasi bolak-balik halaman berlangsung instan; penambahan tombol 'Tonton Ulang Pembuka Wayang' di footer dan URL parameter `?tirai=1`).

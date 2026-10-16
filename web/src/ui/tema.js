@@ -31,6 +31,10 @@ export function ambilTemaSaatIni() {
 export function terapkanTema(tema) {
   const temaFinal = tema === 'terang' ? 'terang' : 'gelap';
   document.documentElement.setAttribute('data-tema', temaFinal);
+  if (document.body) {
+    document.body.classList.toggle('tema-siang', temaFinal === 'terang');
+    document.body.classList.toggle('tema-malam', temaFinal === 'gelap');
+  }
 
   try {
     localStorage.setItem(KUNCI_STORAGE, temaFinal);

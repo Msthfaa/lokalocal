@@ -22,6 +22,7 @@ import { apakahBisaMemuat3D } from '../sections/hero3d/fallback.js';
 import { renderPetaSvg } from '../map/render.js';
 import { pasangInteraksiPeta } from '../map/interactions.js';
 import { inisialisasiLoaderLucu } from '../ui/loader-lucu.js';
+import { siapkanPesawatMendarat, mendaratkanPesawatDiPulau } from '../ui/transisi-pesawat.js';
 
 let dialogRekamanKontrol = null;
 let pengelolaPaspor = null;
@@ -48,6 +49,23 @@ async function mulaiHalamanJelajah() {
     }
   });
 
+  // Cek apakah tiba dengan penerbangan pesawat kartun budaya
+  const urlParams = new URLSearchParams(window.location.search);
+  const adalahMendarat =
+    urlParams.get('mendarat') === '1' ||
+    sessionStorage.getItem('lokalocal_mendarat_pesawat') === '1';
+
+  try {
+    sessionStorage.removeItem('lokalocal_mendarat_pesawat');
+  } catch {
+    // Abaikan
+  }
+
+  // Jika tiba dengan pesawat, langsung siapkan pesawat di angkasa di atas pulau
+  if (adalahMendarat) {
+    siapkanPesawatMendarat();
+  }
+
   // Cek apakah Peta 3D sudah pernah dimuat di sesi kunjungan ini
   const KUNCI_SESI_PETA3D = 'lokalocal_peta3d_dimuat';
   let peta3dSudahDimuat = false;
@@ -62,9 +80,9 @@ async function mulaiHalamanJelajah() {
     window.location &&
     (window.location.search.includes('loader=1') || window.location.search.includes('reset=1'));
 
-  const lewatiLoader = peta3dSudahDimuat && !paksaLoader;
+  const lewatiLoader = (peta3dSudahDimuat || adalahMendarat) && !paksaLoader;
 
-  // Tampilkan layar muat interaktif & animasi lucu Nusantara (hanya saat pertama kali di sesi ini)
+  // Tampilkan layar muat interaktif & animasi lucu Nusantara (hanya saat pertama kali di sesi ini dan bukan saat mendarat)
   const loaderLucu = inisialisasiLoaderLucu(document.body, { lewati: lewatiLoader });
   if (!lewatiLoader) {
     loaderLucu.aturProgres(18, 'Membaca arsip kebudayaan Nusantara...');
@@ -94,7 +112,9 @@ async function mulaiHalamanJelajah() {
   dialogRekamanKontrol = inisialisasiDialogRekaman();
   pengelolaPaspor = buatPengelolaPaspor();
 
-  const wadahPeta = document.getElementById('s5-peta-wadah');
+  const wadahPeta =
+    document.getElementById('jelajah-3d-kanvas-wadah') ||
+    document.getElementById('s5-peta-wadah');
 
   try {
     const dataAwal = await muatDataAwal();
@@ -177,8 +197,18 @@ async function mulaiHalamanJelajah() {
       });
     }
 
-    // Tuntaskan layar muat lucu secara halus
-    if (!lewatiLoader) {
+    // Tuntaskan layar muat dan jalankan pendaratan pesawat jika relevan
+    if (adalahMendarat) {
+      loaderLucu.selesai();
+      // Jalankan pendaratan sinematik pesawat kartun budaya di pulau Nusantara
+      mendaratkanPesawatDiPulau({
+        onTouchdown: () => {
+          if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
+            kontroler3D.mulaiAnimasiMasuk();
+          }
+        }
+      });
+    } else if (!lewatiLoader) {
       loaderLucu.aturProgres(92, 'Menyalakan lentera laut & mengibarkan bendera...');
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -211,6 +241,15 @@ async function mulaiHalamanJelajah() {
       .catch((err) => {
         console.warn('Gagal memuat katalog lengkap untuk kartu bendera:', err);
       });
+
+    // Cek parameter URL untuk pemilihan provinsi langsung
+    const provParam = urlParams.get('provinsi');
+    if (provParam && kontroler3D && typeof kontroler3D.pilihProvinsi === 'function') {
+      const jedaBuka = adalahMendarat ? 1350 : (lewatiLoader ? 250 : 800);
+      setTimeout(() => {
+        kontroler3D.pilihProvinsi(provParam);
+      }, jedaBuka);
+    }
 
   } catch (err) {
     console.error('Gagal memuat data awal jelajah 3D:', err);

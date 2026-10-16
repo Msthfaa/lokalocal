@@ -240,7 +240,7 @@ function bangunCincinKhatulistiwa() {
   // Garis utama khatulistiwa bercahaya emas halus membentang melintasi piringan laut
   const points = [];
   const segmen = 60;
-  const lebarBentang = 10.4;
+  const lebarBentang = 12.2;
   for (let i = 0; i <= segmen; i++) {
     const x = -lebarBentang / 2 + (i / segmen) * lebarBentang;
     points.push(new Vector3(x, yKhatulistiwa, zKhatulistiwa));
@@ -305,11 +305,11 @@ function bangunCincinKhatulistiwa() {
   });
 
   const plakatKiri = new Mesh(geoPlakat, matPlakat);
-  plakatKiri.position.set(-4.95, yKhatulistiwa + 0.01, zKhatulistiwa);
+  plakatKiri.position.set(-5.85, yKhatulistiwa + 0.01, zKhatulistiwa);
   grup.add(plakatKiri);
 
   const plakatKanan = new Mesh(geoPlakat, matPlakat);
-  plakatKanan.position.set(4.95, yKhatulistiwa + 0.01, zKhatulistiwa);
+  plakatKanan.position.set(5.85, yKhatulistiwa + 0.01, zKhatulistiwa);
   grup.add(plakatKanan);
 
   return { grup, matGaris, matGarisBawah, matRingTugu };

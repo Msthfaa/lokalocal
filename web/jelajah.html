@@ -17,9 +17,8 @@
       property="og:description"
       content="Peta 3D interaktif 38 provinsi Indonesia selayar penuh dengan bendera detail budaya dan koleksi tradisi SPKT."
     />
-    <meta property="og:image" content="./og-image.svg" />
-    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
     <script>
       (function () {
         try {
@@ -67,10 +66,12 @@
 
     <script>
       try {
+        var params = new URLSearchParams(window.location.search);
+        var adalahMendarat = params.get('mendarat') === '1' || sessionStorage.getItem('lokalocal_mendarat_pesawat') === '1';
         if (
-          sessionStorage.getItem('lokalocal_peta3d_dimuat') === 'true' &&
-          !window.location.search.includes('loader=1') &&
-          !window.location.search.includes('reset=1')
+          (adalahMendarat || sessionStorage.getItem('lokalocal_peta3d_dimuat') === 'true') &&
+          !params.get('loader') &&
+          !params.get('reset')
         ) {
           document.documentElement.classList.add('peta3d-sudah-pernah-dimuat');
         }
