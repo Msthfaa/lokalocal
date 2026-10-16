@@ -60,33 +60,6 @@ async function mulaiHalamanKuis() {
       }
     });
 
-    // Pasang Event Listener Tombol Pilihan Wilayah & Fakta Kuis
-    const daftarTombolTopik = document.querySelectorAll('.kuis-wilayah-pill, .kuis-stat-btn');
-    daftarTombolTopik.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const kategori = btn.dataset.kategori;
-        const label = btn.textContent.trim();
-        if (!kategori || !kontrolKuis) return;
-
-        // Perbarui status aktif visual di semua tombol terkait
-        daftarTombolTopik.forEach((b) => {
-          const cocok = b.dataset.kategori === kategori;
-          b.classList.toggle('is-aktif', cocok);
-          if (b.hasAttribute('aria-selected')) {
-            b.setAttribute('aria-selected', cocok ? 'true' : 'false');
-          }
-        });
-
-        kontrolKuis.gantiKategori(kategori, label);
-
-        // Gulir halus ke panel kuis
-        const panelKuis = document.getElementById('s7-panel-kuis');
-        if (panelKuis) {
-          panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      });
-    });
-
     // Pemuatan data budaya lengkap untuk bank soal 205 tradisi nyata
     muatDataLengkap()
       .then(({ budaya }) => {

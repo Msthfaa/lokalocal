@@ -83,18 +83,28 @@ export function perbaruiAtribusiFooter(meta) {
 
   const wadahAtribusiFooter = document.getElementById('footer-atribusi-dinamis');
   if (wadahAtribusiFooter) {
-    wadahAtribusiFooter.textContent = '';
+    const tautanEmas = wadahAtribusiFooter.querySelector('.footer-tautan-emas');
+    const badgeTanggal = wadahAtribusiFooter.querySelector('#footer-tanggal-ambil, .footer-tanggal-badge');
 
-    const teksAwal = document.createTextNode('Data: ');
-    const tautan = document.createElement('a');
-    tautan.href = urlSumber;
-    tautan.target = '_blank';
-    tautan.rel = 'noopener noreferrer';
-    tautan.textContent = 'SPKT – Kementerian Kebudayaan RI';
+    if (tautanEmas) {
+      tautanEmas.href = urlSumber;
+      if (badgeTanggal) {
+        badgeTanggal.textContent = `diambil ${tanggalTerformat}`;
+      }
+    } else {
+      wadahAtribusiFooter.textContent = '';
 
-    const teksTanggal = document.createTextNode(`, diambil ${tanggalTerformat}`);
+      const teksAwal = document.createTextNode('Data: ');
+      const tautan = document.createElement('a');
+      tautan.href = urlSumber;
+      tautan.target = '_blank';
+      tautan.rel = 'noopener noreferrer';
+      tautan.textContent = 'SPKT – Kementerian Kebudayaan RI';
 
-    wadahAtribusiFooter.append(teksAwal, tautan, teksTanggal);
+      const teksTanggal = document.createTextNode(`, diambil ${tanggalTerformat}`);
+
+      wadahAtribusiFooter.append(teksAwal, tautan, teksTanggal);
+    }
   }
 
   const wadahAtribusiDialog = document.getElementById('dialog-atribusi-dinamis');

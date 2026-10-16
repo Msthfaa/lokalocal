@@ -21,3 +21,8 @@ backup-removed/
 
 # Scratch & test scripts
 scratch/
+
+# Agent & AI tool scaffolding
+.agents/
+.claude/
+skills-lock.json

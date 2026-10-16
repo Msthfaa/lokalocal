@@ -63,6 +63,133 @@
   - Pergantian antar halaman berlangsung sangat ringan dan instan (0 detik jeda) tanpa reload browser.
   - Musik gamelan lagu daerah Nusantara mengalun terus tanpa henti melintasi semua halaman.
   - Transisi menuju halaman Jelajah 3D menyajikan animasi spektakuler pesawat kartun budaya yang mendarat di pulau dengan 60 FPS buttery-smooth tanpa lag.
+## [2026-10-16] Transformasi Anti-Slop & Redesain Audio Player Backsound Nusantara
+- **Dibuat/diubah:**
+  - `web/src/ui/audio.js`:
+    - **Eliminasi Emoji Budaya Klise**: Menghapus seluruh emoji generatif AI slop (`🍌` untuk Ampar-Ampar Pisang, `🎡` bianglala karnaval untuk Kicir-Kicir, `🌺` kembang sepatu untuk Bungong Jeumpa, `🌙` bulan sabit untuk Soleram, dan `🏹` busur untuk Yamko Rambe Yamko).
+    - **Indikator Track Interaktif (Play / Equalizer)**: Menggantikan emoji dengan sistem status lagu proporsional: nomor urut 2 digit (`01`, `02`, ...), ikon `▶` halus saat hover, dan visualizer mini-equalizer 3-batang (`.eq-mini-bar`) yang berdenyut hidup saat lagu aktif berputar.
+    - **Kontrol Volume SVG & Tombol Mute**: Menghapus karakter emoji speaker (`🔉`, `🔊`, `🔇`) dan menggantinya dengan tombol ikon speaker SVG interaktif yang dapat diklik untuk toggle mute/unmute seketika.
+    - **Ikon Tutup SVG**: Mengganti karakter teks mentah `✕` dengan tombol tutup bulat SVG modern.
+  - `web/src/styles/components.css`:
+    - **Scrollbar Elegan Ramping**: Mengganti scrollbar abu-abu tebal bawaan OS Windows dengan *custom glass scrollbar* tipis (5px) beraksen emas transparan tanpa tombol panah kaku.
+    - **Eliminasi Outline Kapsul Lonjong 9999px**: Mengubah radius tombol lagu aktif dari kapsul lonjong ekstrem (`9999px`) menjadi kartu persegi melengkung modern (`14px`) yang selaras dengan bahasa desain kaca Lokalocal.
+    - **Slider Volume Kustom**: Memberikan styling slider modern dengan fill progress dinamis bergradasi emas (`--vol-persen`), bulatan thumb putih bersih dengan cincin aksen, serta elevasi bayangan luar yang lembut.
+    - **Panel Kaca Transparan 80% & 50% Lapisan Kaca**: Memperhalus `.audio-popup-panel` dengan lebar proporsional 340px, latar kaca `rgba(20, 16, 13, 0.65)` / `rgba(255, 255, 255, 0.70)`, blur 16px, dan tanpa bayangan dalam.
+- **Hasil:**
+  - Pemutar audio Backsound Nusantara kini tampil selayaknya pemutar musik kuratorial berstandar studio / museum kontemporer, bebas dari emoji AI slop, dan berfungsi responsif di desktop maupun ponsel.
+  - Build produksi dan validasi data lolos 100% tanpa error.
+
+## [2026-10-16] Transformasi Anti-Slop & Redesain Editorial Paspor Budaya (paspor.html)
+- **Dibuat/diubah:**
+  - `web/paspor.html`:
+    - Mengganti teks kicker dengan identitas buku kuratorial (`Buku Dokumentasi Perjalanan`).
+    - Menambahkan strip spesifikasi paspor (`.paspor-info-strip`) dengan data terformat (38 Provinsi Terdaftar • 05 Tingkat Gelar Kehormatan • 02 Kategori Cap Dokumen).
+  - `web/src/sections/paspor.js`:
+    - **Sistem Gelar Kehormatan Nyata (5 Level)**: Mengimplementasikan gelar kehormatan kurator (`Penjelajah Mula`, `Pengembara Tradisi`, `Perekam Jejak Budaya`, `Penjaga Narasi Nusantara`, `Kurator Agung Nusantara`) yang dihitung dinamis dari stempel terkumpul.
+    - **Kartu Identitas Paspor (`.paspor-identitas-kartu`)**: Menghadirkan layout layaknya halaman identitas dokumen resmi dengan lambang paspor, rincian stempel SPKT vs Penjaga Cerita, serta progres bar presisi bergradasi emas.
+    - **Bilah Filter Wilayah Geografis (`.paspor-filter-bar`)**: Membagi 38 provinsi ke dalam 6 gugus pulau (Sumatera, Jawa, Bali & Nusa, Kalimantan, Sulawesi, Maluku & Papua) dengan penghitung capaian stempel per wilayah (`terkumpul/total`), menghilangkan kebosanan grid 38 kotak repetitif.
+    - **Eliminasi Wireframe & Pemotongan Teks**:
+      - Mengganti kotak kosong berangka kode BPS menjadi *embossed watermark seal* elegan dengan teks status terpatri `BELUM TERCAP`.
+      - Memperlebar lebar petak grid menjadi `minmax(92px, 1fr)` dan mengizinkan nama provinsi tampil hingga 3 baris sehingga tidak ada lagi pemotongan kasar ber-ellipsis (`Kepulauan Bangka...`).
+    - **Kaki Paspor Fungsional**: Menghadirkan baris aksi lengkap dengan tombol pintas *Jelajahi Peta 3D*, *Salin Lembar Paspor*, dan tombol reset dengan konfirmasi 2 langkah yang aman.
+  - `web/src/styles/sections.css`:
+    - Mengeliminasi seluruh efek kabur teks (`text-shadow`) pada judul dan subjudul paspor.
+    - Menerapkan efek kaca 80% tembus pandang & 50% lapisan warna kaca (`rgba(24, 20, 17, 0.5)` / `rgba(255, 255, 255, 0.5)` dengan `backdrop-filter: blur(12px)`) dan sudut melengkung 28px pada `.paspor-hero-kepala`, `#s7-panel-paspor`, dan `.paspor-nav-bawah-kotak`.
+    - Menghapus bayangan dalam (`inset`) serta menjamin kontras teks tajam dan bersih pada tema gelap maupun terang.
+- **Hasil:**
+  - Halaman paspor kini memiliki identitas visual buku paspor fisik yang berwibawa, interaktif, rapi, dan bebas dari kesan wireframe buatan AI.
+  - Build produksi dan validasi data lolos 100% tanpa error.
+
+## [2026-10-16] Transformasi Anti-Slop & Redesain Editorial Halaman Kuis Interaktif (kuis.html)
+- **Dibuat/diubah:**
+  - `web/kuis.html`:
+    - Mengeliminasi ornamen bintang kelip AI slop (`✦`, `.kicker-bintang`, `.kicker-glow`).
+    - Menghapus 10 tombol pil wilayah dengan emoji generatif (`🏛️`, `⚡`, `🛶`, dll.) yang sebelumnya tidak berfungsi di kuis.
+    - Menambahkan strip briefing tantangan kuratorial (`.kuis-info-strip` dengan nomor bab `01`, `02`, `03`).
+  - `web/src/pages/kuis.js`:
+    - Menghapus event listener mati untuk pil wilayah yang sebelumnya memanggil fungsi non-eksisten `kontrolKuis.gantiKategori`.
+  - `web/src/sections/kuis.js`:
+    - Mengganti teks pembuka generik dengan 3 pilar uji objektif (Asal Usul Geografis, Klasifikasi OPK, dan Realitas Data Terbuka).
+    - Memperkenalkan bilah progres bersegmen 8 langkah (`.kuis-segmen-bar` & `.kuis-segmen-item`) dengan indikator langkah aktif dan terlewati.
+    - Mengubah kotak petunjuk menjadi kutipan arsip resmi SPKT otentik (`.kuis-kotak-arsip`) berlatar parchment/espresso tanpa elemen dekoratif berlebihan.
+    - Menambahkan penanda abjad (`A`, `B`, `C`, `D`) pada setiap kartu opsi jawaban (`.kuis-opsi-huruf`) serta status badge penegasan (`Tercatat Benar` / `Pilihanmu`).
+    - Menata ulang kotak umpan balik (`.kuis-umpan-kartu`) dengan status ikon minimalis dan tombol aksi langsung (Lihat Peta 3D, Baca Kisah Arsip, Soal Berikutnya).
+    - Merancang layar hasil akhir yang elegan: cincin persentase skor kuratorial, narasi evaluasi objektif, dan 3 kartu penemuan budaya yang ditemui di sesi kuis lengkap dengan tombol penjelajahan langsung.
+  - `web/src/styles/sections.css`:
+    - Mengeliminasi animasi kelip bintang (`@keyframes bintangKelip`), pil kapsul lonjong `999px`, serta efek kabur teks (`text-shadow: 0 1px 6px ...`).
+    - Menerapkan efek kaca 80% tembus pandang & 50% lapisan kaca pada seluruh modul kuis (`.kuis-hero-kepala`, `#s7-panel-kuis`, `.kuis-nav-bawah-kotak`) dengan sudut lengkung 28px yang selaras dengan tombol audio nusantara.
+    - Menghapus seluruh bayangan dalam (`inset`) baik pada tema gelap maupun tema terang, menjaga kontras teks tajam dan berwibawa (WCAG AA ≥ 4.5:1).
+- **Hasil:**
+  - Halaman kuis kini tampil selayaknya ruang audit kuratorial museum berstandar tinggi, bebas dari elemen slop, dan berfungsi interaktif secara penuh dengan pembacaan langsung dari 493 rekaman data bersih SPKT.
+  - Build produksi lolos 100% dan verifikasi data lolos tanpa error.
+
+## [2026-10-16] Penyatuan Halaman Penuh (Seamless Single Canvas) & Eliminasi Sekat Gradasi Gelap
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Menghapus elemen sekat gradasi horizontal (`::before` dan `::after`) pada `.editorial-section` dan `.penutup-section` yang sebelumnya menciptakan pita hitam tebal (*black gradient band*) di tengah halaman yang memisahkan modul editorial dan bagian penutup.
+    - Menyatukan latar belakang `.editorial-section`, `.penutup-section`, dan `.footer-utama` menjadi satu kanvas utuh tanpa batas atau garis pemisah (`border: none !important`), baik pada mode gelap (`#000000`) maupun mode terang (`#ffffff`).
+    - Menyelaraskan durasi transisi latar belakang menjadi `0.35s ease`.
+  - `web/src/styles/base.css`:
+    - Menambahkan transisi halus `transition: background-color 0.35s ease, color 0.35s ease` pada `html` dan `body` dengan proteksi `prefers-reduced-motion: reduce`.
+  - `web/src/styles/layout.css`:
+    - Menyelaraskan transisi warna latar pada `.footer-utama` ke `0.35s ease`.
+- **Hasil:**
+  - Halaman beranda kini menyatu 100% dari bagian atas hingga bawah tanpa pita pemisah gelap buatan. Seluruh perpindahan section mengalir mulus (*seamless bleed*) sebagai satu halaman langsung, dan transisi beralih tema (gelap ↔ terang) berjalan serempak dan halus di seluruh elemen halaman.
+  - Build produksi dan validasi data lolos 100% tanpa error.
+
+## [2026-10-16] Penghapusan Total Inner Shadow (Inset Rim / Bevel) Mode Terang & Gelap
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Menghapus semua `inset 0 1px ...` pada bilah navigasi (`.nav-daftar`), tombol aksi navigasi (`.nav-tombol-aksi`), tombol pengalih tema (`.nav-tombol-tema`), menu navigasi ponsel (`.tombol-menu-ponsel`, `.nav-daftar.terbuka`), dan kartu atribusi footer (`.footer-atribusi-modern`) pada mode terang maupun gelap.
+  - `web/src/styles/components.css`:
+    - Menghapus bayangan dalam `inset` pada kartu metrik beranda (`.kartu-metrik`), kartu cerita katalog (`.kartu-cerita`), dan kapsul audio nusantara (`.audio-kapsul`).
+  - `web/src/styles/sections.css`:
+    - Menghapus bayangan dalam `inset` pada tombol CTA sekunder hero (`.hero-cta-sekunder`), kartu scrollytelling (`.s2-kartu-langkah`, `.s3-kartu-panel`, `.s4-kartu-detail-kosong`), kartu bento grid beranda (`.bento-kartu`), kuratorial tag (`.kuratorial-tag-grup`), kartu destinasi (`.destinasi-kartu`), kartu akbar penutup (`.penutup-kartu-akbar`), pilar aksi (`.penutup-pilar-kartu`), kotak jejak paspor (`.penutup-jejak-kotak`), panel halaman paspor (`#s7-panel-paspor.s7-panel-kartu`, `.paspor-hero-kepala`, `.paspor-nav-bawah-kotak`), serta panel halaman kuis (`#s7-panel-kuis.s7-panel-kartu`, `.kuis-hero-kepala`, `.kuis-nav-bawah-kotak`).
+- **Hasil:**
+  - Seluruh efek *embossed rim / bevel highlight* buatan AI slop di tepi dalam kartu dan tombol berhasil dihilangkan sepenuhnya pada mode terang maupun mode gelap. Permukaan kaca kini tampak bersih, rata, natural, dan modern dengan elevasi bayangan luar (*outer drop-shadow*) yang proporsional.
+  - Build produksi lolos 100% dan verifikasi data bersih valid tanpa error.
+
+## [2026-10-16] Penyatuan Warna Footer (Putih Solid) & Penghapusan Garis Pemisah
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Mengubah latar belakang `.footer-utama` pada tema terang menjadi putih solid penuh (`#ffffff !important`) sehingga menyatu 100% tanpa perbedaan warna dengan latar bagian penutup di atasnya.
+    - Menghapus garis pemisah horizontal atas (`border-top: none !important`), menciptakan transisi mulus dan bersih (*seamless bleed*) dari section penutup ke footer.
+    - Pada tema gelap, `.footer-utama` diselaraskan ke latar hitam pekat murni (`#000000`) tanpa garis pemisah atas.
+    - Menyesuaikan kartu atribusi modern (`.footer-atribusi-modern`) di tema terang dengan latar gradasi hangat lembut dan garis tepi aksen halus agar tetap kontras dan terdefinisi elegan di atas kanvas putih footer.
+- **Hasil:**
+  - Area footer kini tampil bersih, menyatu sempurna dengan bagian penutup tanpa sekat garis maupun diskrepansi warna.
+  - Build produksi dan server lokal berjalan mulus tanpa peringatan atau error.
+
+## [2026-10-16] Penyesuaian Spesifik Kaca: 80% Tembus Pandang & 50% Lapisan Kaca (Glassmorphism)
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Menyesuaikan gradasi transparansi navbar (`.nav-daftar`), tombol aksi navigasi (`.nav-tombol-aksi`), tombol ganti tema (`.nav-tombol-tema`), menu drawer ponsel (`.nav-daftar.terbuka`), dan kartu atribusi footer (`.footer-atribusi-modern`) secara tepat menjadi tembus pandang 80% (alpha 0.20 pada badan utama) dan ketebalan lapisan warna kaca 50% (alpha 0.50 pada sudut kilau pantulan atas):
+      - Mode Terang: `linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%)` dengan garis tepi kaca `border: 1px solid rgba(255, 255, 255, 0.50)`.
+      - Mode Gelap: `linear-gradient(135deg, rgba(26, 21, 18, 0.50) 0%, rgba(14, 11, 9, 0.20) 100%)` dengan garis tepi kaca `border: 1px solid rgba(255, 255, 255, 0.15)`.
+  - `web/src/styles/sections.css`:
+    - Mengaplikasikan formula presisi 80% tembus pandang dan 50% lapisan kaca pada `.hero-cta-sekunder`, kartu bento beranda (`.bento-kartu`), kuratorial tag (`.kuratorial-tag-grup`), kartu destinasi (`.destinasi-kartu`), kartu scrollytelling (`.s2-kartu-langkah`, `.s3-kartu-panel`, `.s4-kartu-detail-kosong`), kartu akbar penutup (`.penutup-kartu-akbar`), kartu pilar aksi (`.penutup-pilar-kartu`), dan kotak jejak interaktif (`.penutup-jejak-kotak`).
+  - `web/src/styles/components.css`:
+    - Menyeragamkan kartu metrik (`.kartu-metrik`), kartu cerita katalog (`.kartu-cerita`), dan kapsul audio musik (`.audio-kapsul`) ke formula 80% tembus pandang dan 50% lapisan kaca.
+- **Hasil:**
+  - Efek tembus pandang kaca terlihat sangat transparan dan elegan (80% objek di belakang kartu terlihat jelas), sementara kilau permukaan kaca (50%) dan garis tepi pembiasan cahaya tetap membingkai konten dengan tegas tanpa mengorbankan keterbacaan teks sedikit pun.
+  - Build produksi lolos 100% dan dev server berjalan lancar via HMR.
+
+## [2026-10-16] Eliminasi Pola AI Slop: Redesain Beranda, Navbar, dan Footer Kuratorial
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Navbar: Mengganti radius kapsul lonjong (`9999px`) menjadi sistem token struktural `var(--r-md)` (8px) dan `var(--r-sm)` (6px); mengganti efek kaca jenuh AI (`blur(16px) saturate(180%)`) menjadi backdrop semi-transparan berbobot natural dengan border halus; menambahkan styling SVG presisi untuk tombol ganti tema (`.ikon-bulan` dan `.ikon-matahari`).
+    - Footer: Menghilangkan ornamen bintang dekoratif klise `✦` pada tautan navigasi dan menggantinya dengan pseudo-element dot minimalis; mengubah tumpukan tombol balok kaca di kolom transparansi menjadi daftar aksi kuratorial teks yang rapi (`.footer-aksi-list` & `.footer-aksi-tombol`); menghapus filter neon drop-shadow pada logo dan text-shadow buram di tema terang; memperkaya baris bawah footer (`.footer-bawah-modern`) dengan hak cipta resmi, kutipan budaya, dan tombol kembali ke atas (`.footer-ke-atas-link`).
+  - `web/src/styles/sections.css`:
+    - Beranda (Hero & Bento Grid): Mengganti badge pil lonjong generatif dengan tag kuratorial editorial nusantara (`.kuratorial-tag-grup` dengan `.kuratorial-nomor` dan `.kuratorial-kategori`); membersihkan gradasi kuning pekat menjadi warna aksen solid berbobot; merapikan kartu pilar penutup dengan radius konsisten `var(--r-md)`.
+  - `web/src/ui/footer.js`:
+    - Membuat fungsi `perbaruiAtribusiFooter` menjaga struktur DOM kartu atribusi modern (`.footer-atribusi-modern`) tanpa mereset elemen ikon dan teks saat memperbarui tautan SPKT serta tanggal pengambilan data.
+  - `web/index.html`, `web/jelajah.html`, `web/paspor.html`, `web/kuis.html`:
+    - Navbar: Mengganti karakter emoji mentah (`🌙` dan `☀️`) pada tombol tema dengan ikon SVG; mengganti karakter panah `↗` / `→` pada tombol aksi navigasi dengan ikon SVG terstruktur (kubus 3D / buku cerita).
+    - Footer: Menyeragamkan seluruh halaman ke struktur 3-kolom kuratorial modern bebas AI slop dan memastikan 0 karakter em dash (`—`).
+- **Hasil:**
+  - Tampilan visual website Lokalocal meningkat ke standar desain kuratorial editorial profesional, terbebas dari artefak AI slop (tidak ada kapsul lonjong berlebihan, tidak ada bintang klise, tidak ada neon glow artifisial, dan tipografi tajam tanpa bayangan kabur).
+  - Validasi data `node tools/validate.mjs` lolos 100% (0 error), build produksi `npm run build` sukses dalam 2.61 detik, dan server Vite aktif responsif di background.
+>>>>>>> origin/main
 
 ## [2026-10-16] Pembatasan Sesi Layar Pemuatan (Tirai Wayang & 3D Pinisi) & Akses IP Lokal
 - **Dibuat/diubah:**
@@ -73,6 +200,59 @@
   - Pengalaman penjelajahan antar halaman (Cerita <-> Jelajah 3D <-> Paspor <-> Kuis) menjadi instan tanpa jeda loading berulang.
   - Sesi baru atau browser baru tetap menampilkan animasi pembuka dan loader maskot secara utuh.
   - Aplikasi dapat dibuka secara lancar di perangkat seluler melalui IP lokal.
+
+## [2026-10-15] Penyesuaian Menyeluruh: Panel Kuis, Paspor, dan Kotak Navigasi Bawah Menjadi Transparan (True Glassmorphism)
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengubah seluruh kartu konten utama dan kotak navigasi bawah menjadi transparan tembus pandang (*true translucent glass*):
+      - **Panel Kuis (`#s7-panel-kuis.s7-panel-kartu`):** Diubah dari putih padat 92% menjadi **42% transparan** (`background: rgba(255, 255, 255, 0.42)`), dengan *blur* optik 8px dan *inset glass sheen*.
+      - **Panel Paspor (`#s7-panel-paspor.s7-panel-kartu`):** Diubah dari putih padat 92% menjadi **42% transparan** (`rgba(255, 255, 255, 0.42)`), dengan petak stempel dan blok progres semi-transparan.
+      - **Kotak Navigasi Bawah (`.kuis-nav-bawah-kotak` & `.paspor-nav-bawah-kotak`):** Diubah dari putih padat 90% menjadi **42% transparan** (`rgba(255, 255, 255, 0.42)`).
+      - **Elemen Dalam Kuis:** Petunjuk kuis (`rgba 0.70`), tombol pilihan (`rgba 0.68`), dan kartu skor akhir (`rgba 0.70`) kini memiliki transparansi kaca senada.
+      - **Mode Gelap:** Menerapkan transparansi mewah yang seimbang (`background: rgba(24, 20, 17, 0.45)`).
+    - Memastikan keterbacaan teks 100% terjaga tajam melalui *micro-halo text shadow* dan warna teks kontras tinggi.
+- **Panel Footer (`.footer-utama`):** Diubah dari putih padat `#ffffff` menjadi **transparan kaca 35% (`background: rgba(255, 255, 255, 0.35)`)** dengan blur optik 10px dan border atas emas lembut (`border-top: 1px solid rgba(184, 115, 20, 0.28)`), menghilangkan sekat gradasi solid, serta membuat kotak atribusi data (`.footer-atribusi-modern`) dan tombol dialog (`.footer-tombol-kaca`) menjadi widget kaca transparan yang tembus pandang.
+- **Hasil:**
+  - Menjawab langsung permintaan pengguna: seluruh halaman dari ujung atas (hero) hingga ujung paling bawah (footer) kini **100% tembus pandang secara elegan dan mulus tanpa ada satu pun balok putih padat yang memotong ilustrasi budaya**.
+
+## [2026-10-15] Perbaikan Mode Siang / Terang untuk Dialog Tentang Data, Tentang Kami, dan Halaman Paspor
+- **Dibuat/diubah:**
+  - `web/src/styles/components.css`:
+    - Memperbaiki `background-color` pada `.dialog-modal` yang sebelumnya keliru menggunakan `var(--kertas)` (sehingga saat mode terang aktif, modal menjadi hitam pekat `#1C1917` dengan teks hitam).
+    - Menerapkan arsitektur tema penuh untuk `.dialog-modal`: latar putih bersih dengan border emas hangat dan teks kontras tinggi di mode terang (`[data-tema="terang"]`), serta dark glassmorphism di mode gelap.
+    - Menghilangkan outline fokus yang mencolok pada judul dialog (`.dialog-judul:focus { outline: none; }`).
+    - Menyelaraskan tombol tutup dialog (`.tombol-tutup-dialog`) dengan tipografi dan hover kontras tinggi di kedua mode.
+  - `web/paspor.html`:
+    - Menyelaraskan baseline anti-FOUC di `<head>` agar mendukung mode terang seketika tanpa `!important` statis pada warna gelap.
+    - Menghapus kelas `wadah` pada tag `<nav>` sehingga bilah navigasi atas selaras menjadi 3 kapsul mengambang (Floating Glassmorphism).
+    - Menambahkan kelas `halaman-paspor-body`, `bagian-paspor-interaktif`, dan `paspor-nav-bawah-kotak`.
+  - `web/src/styles/sections.css`:
+    - Menautkan ilustrasi Budaya Nusantara yang jernih dan megah (`bg-budaya-kuis.jpg` di mode gelap dan `bg-budaya-kuis-light.jpg` di mode terang) pada `.halaman-paspor-body`.
+    - Menerapkan styling lengkap mode terang untuk seluruh elemen paspor: judul hero, subjudul, kicker, panel kartu `#s7-panel-paspor`, blok progres, petak stempel 38 provinsi, catatan penyimpanan, dan kotak navigasi bawah.
+  - `web/index.html` & `web/jelajah.html`:
+    - Penyelarasan baseline anti-FOUC di `<head>` agar konsisten dan mendukung pergantian tema seketika tanpa `!important` statis.
+- **Hasil:**
+  - Dialog "Tentang Data & Keterbatasan" dan "Tentang Lokalocal & Pengembang" kini tampil anggun, bersih, dan berlatar putih dengan teks yang terbaca jelas di Mode Siang / Terang.
+  - Halaman "Paspor Budaya Nusantara" kini tampil megah dengan latar Budaya Nusantara yang jernih dan teks yang kontras tajam (tidak ada lagi teks hitam di atas latar hitam).
+
+## [2026-10-15] Pemulihan Latar Budaya Nusantara & Penyelarasan Mode Gelap / Terang Halaman Kuis
+- **Dibuat/diubah:**
+  - `web/public/assets/bg-budaya-kuis-light.jpg`:
+    - Dihasilkan aset kembar resmi bernuansa perkamen emas (*warm ivory royal parchment*) dengan komposisi budaya yang 100% identik dengan versi malam: siluet Rumah Gadang Minang, Candi Borobudur & Prambanan, Rumah Adat Tongkonan Toraja, Kapal Pinisi, Wayang Kulit, dan awan Batik Megamendung.
+  - `web/kuis.html`:
+    - Memulihkan dan menyelaraskan penanganan tema anti-FOUC di `<head>` agar mendukung seketika baik mode gelap maupun terang tanpa mengunci layar secara hardcode (`!important` statis dihapus).
+    - Menghapus kelas `wadah` pada tag `<nav>` di bilah navigasi atas (navbar) sehingga susunan 3 kapsul mengambang (Floating Glassmorphism: logo merek, menu halaman, dan aksi kanan) menjadi 100% identik dan selaras dengan halaman Cerita (`index.html`).
+    - Menambahkan kelas `halaman-kuis-body` pada `<body>` dan `bagian-kuis-interaktif` pada `<section>` arena kuis.
+    - Mengganti inline-style kotak navigasi bawah menjadi kelas terstruktur `kuis-nav-bawah-kotak`.
+  - `web/src/styles/sections.css`:
+    - Mengeliminasi penumpukan ganda (*double-layer stacking*) yang sebelumnya menimpa gambar latar pada `body` sekaligus `section`.
+    - Mengurangi kepekatan gradasi gelap dan terang dari 85%–98% menjadi gradasi lembut (0%–35%) sehingga seluruh ilustrasi budaya (Rumah Gadang, Candi, Tongkonan, Pinisi, Wayang) tampil **sangat jelas, tajam, dan hidup** di mode gelap maupun mode terang.
+    - Menautkan `/assets/bg-budaya-kuis.jpg` untuk Mode Gelap dan `/assets/bg-budaya-kuis-light.jpg` untuk Mode Terang.
+    - Mengimplementasikan aturan styling lengkap mode terang (`[data-tema="terang"]`) untuk seluruh elemen kuis: judul, subjudul, chip filter statistik, pill filter wilayah nusantara, kartu pertanyaan kuis (`#s7-panel-kuis`), petunjuk, opsi pilihan, umpan balik jawaban, kartu skor akhir, dan kotak navigasi bawah dengan kontras tinggi (memenuhi standar aksesibilitas WCAG AAA).
+- **Hasil:**
+  - Latar belakang ilustrasi Budaya Nusantara kini tampil **sangat jelas, megah, dan kontras sempurna** baik di Mode Gelap maupun Mode Terang (tidak lagi redup, gelap gulita, atau memudar tertutup gradasi).
+  - Pengguna dapat beralih antara Mode Gelap (Dark Mode) dan Mode Terang (Light Mode) dengan mulus melalui tombol toggle tema (🌙 / ☀️) di bilah navigasi kuis seperti halnya pada halaman Cerita.
+  - Seluruh kode di luar cakupan halaman/navbar kuis tetap utuh dan tidak tersentuh sesuai batasan pengguna.
 
 ## [2026-10-14] Perbaikan Tampilan Pulau & Animasi Masuk Membal Sinkron (Pulau & Kapal Pinisi)
 - **Dibuat/diubah:**

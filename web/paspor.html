@@ -137,12 +137,28 @@
             aria-label="Ganti mode terang atau gelap"
             title="Ganti mode terang/gelap"
           >
-            <span class="ikon-bulan" aria-hidden="true">🌙</span>
-            <span class="ikon-matahari" aria-hidden="true">☀️</span>
+            <svg class="nav-ikon-tema ikon-bulan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="nav-ikon-tema ikon-matahari" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
           </button>
           <a href="./jelajah.html" class="nav-tombol-aksi" title="Buka Peta 3D Nusantara">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
             <span>Jelajah 3D</span>
-            <span class="nav-panah-mini" aria-hidden="true">↗</span>
           </a>
         </div>
       </nav>
@@ -160,12 +176,28 @@
       <section class="bagian bagian-paspor-interaktif" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
         <div class="wadah">
           <div class="bagian-kepala paspor-hero-kepala">
-            <p class="kicker">Koleksi Penjelajah Budaya</p>
-            <h1>Paspor Budaya Nusantara</h1>
-            <p class="bagian-subjudul">
+            <p class="kicker">Buku Dokumentasi Perjalanan</p>
+            <h1 class="paspor-judul-megah">Paspor Budaya Nusantara</h1>
+            <p class="bagian-subjudul paspor-subjudul-elegan">
               Buku paspor digital untuk mencatat jejak langkahmu menelusuri kekayaan tradisi 38 provinsi Indonesia.
-              Kumpulkan stempel, cap stempel penjaga data, dan raih gelar kehormatan.
+              Kumpulkan stempel resmi, sematkan cap kepedulian penjaga data, dan raih gelar kehormatan kurator nusantara.
             </p>
+            <div class="paspor-info-strip" role="group" aria-label="Spesifikasi Paspor Budaya">
+              <span class="paspor-info-item">
+                <span class="paspor-info-nomor">38</span>
+                <span>Provinsi Terdaftar</span>
+              </span>
+              <span class="paspor-info-pemisah" aria-hidden="true">•</span>
+              <span class="paspor-info-item">
+                <span class="paspor-info-nomor">05</span>
+                <span>Tingkat Gelar Kehormatan</span>
+              </span>
+              <span class="paspor-info-pemisah" aria-hidden="true">•</span>
+              <span class="paspor-info-item">
+                <span class="paspor-info-nomor">02</span>
+                <span>Kategori Cap Dokumen</span>
+              </span>
+            </div>
           </div>
 
           <div style="max-width: 860px; margin-inline: auto;">
@@ -228,7 +260,7 @@
         <div>
           <h3>Tentang Pembuat</h3>
           <p style="color: var(--tinta-2);">
-            Disusun untuk Lomba Pembuatan Website bertema Sosial Budaya — menyajikan data terbuka menjadi pengalaman bercerita yang jujur dan mudah dijelajahi.
+            Disusun untuk Lomba Pembuatan Website bertema Sosial Budaya: menyajikan data terbuka menjadi pengalaman bercerita yang jujur dan mudah dijelajahi.
           </p>
         </div>
       </div>
@@ -246,7 +278,9 @@
           class="tombol-tutup-dialog"
           aria-label="Tutup dialog tentang kami"
         >
-          &times;
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
         </button>
       </div>
       <div class="dialog-isi">
@@ -279,39 +313,111 @@
       </div>
     </dialog>
 
+    <!-- Footer Utama Sinematik dengan Atribusi Wajib -->
     <footer class="footer-utama">
       <div class="wadah">
-        <div class="footer-grid">
-          <div class="footer-kolom">
-            <p class="footer-judul" id="footer-judul-situs">Lokalocal</p>
-            <p>
-              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah,
-              sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
+        <div class="footer-grid-modern">
+          <!-- Kolom 1: Merek & Misi -->
+          <div class="footer-kolom-merek">
+            <a href="#pembuka" class="footer-merek-link">
+              <svg class="footer-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
+                <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
+              </svg>
+              <span class="footer-merek-nama" id="footer-judul-situs">Lokalocal</span>
+            </a>
+            <p class="footer-deskripsi">
+              Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah, sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.
             </p>
-            <div class="footer-atribusi" id="footer-atribusi-dinamis">
-              Data:
-              <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer">
-                SPKT – Kementerian Kebudayaan RI
-              </a>, diambil <span data-tanggal-ambil>9 Oktober 2026</span>
+            <div class="footer-atribusi-modern" id="footer-atribusi-dinamis">
+              <div class="footer-atribusi-ikon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <div class="footer-atribusi-teks">
+                <span class="footer-atribusi-label">Sumber Data Resmi:</span>
+                <div class="footer-atribusi-baris">
+                  <a href="https://spkt.kemenbud.go.id" target="_blank" rel="noopener noreferrer" class="footer-tautan-emas">
+                    SPKT Kementerian Kebudayaan RI ↗
+                  </a>
+                  <span id="footer-tanggal-ambil" class="footer-tanggal-badge">diambil 9 Oktober 2026</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="footer-kolom">
-            <p class="label-kecil">Transparansi &amp; Pernyataan</p>
-            <p>
-              Situs ini dibuat sebagai karya lomba dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
+          <!-- Kolom 2: Navigasi Halaman -->
+          <div class="footer-kolom-nav">
+            <p class="footer-kicker">Navigasi Utama</p>
+            <ul class="footer-menu-list">
+              <li>
+                <a href="./index.html" class="footer-menu-link">
+                  <span>Beranda Cerita</span>
+                </a>
+              </li>
+              <li>
+                <a href="./jelajah.html" class="footer-menu-link">
+                  <span>Jelajah Katalog 3D</span>
+                </a>
+              </li>
+              <li>
+                <a href="./paspor.html" class="footer-menu-link">
+                  <span>Paspor Budaya</span>
+                </a>
+              </li>
+              <li>
+                <a href="./kuis.html" class="footer-menu-link">
+                  <span>Kuis Kebudayaan</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Kolom 3: Transparansi & Kurasi Aksi -->
+          <div class="footer-kolom-transparansi">
+            <p class="footer-kicker">Transparansi &amp; Pernyataan</p>
+            <p class="footer-transparansi-teks">
+              Situs ini dibuat sebagai karya lomba eksplorasi teknologi dan tidak resmi, tidak berafiliasi dengan Kementerian Kebudayaan RI.
             </p>
-            <div>
-              <button type="button" id="footer-tombol-tentang" class="tombol tombol--garis">
-                Baca tentang data &amp; keterbatasan
+            <div class="footer-aksi-list">
+              <button type="button" id="footer-tombol-tentang" class="footer-aksi-tombol">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>Baca Tentang Data &amp; Keterbatasan</span>
+              </button>
+              <button type="button" id="footer-tombol-tentang-kami" class="footer-aksi-tombol">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Tentang Pengembang</span>
               </button>
             </div>
           </div>
         </div>
 
-        <div class="footer-catatan-bawah">
-          <span>Pesan inti: "Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."</span>
-          <span>Data statis lokal • Menghormati prefers-reduced-motion</span>
+        <div class="footer-bawah-modern">
+          <div class="footer-bawah-kiri">
+            <p class="footer-hak-cipta">&copy; 2026 Lokalocal &bull; Karya Eksplorasi Sosial Budaya Indonesia</p>
+            <p class="footer-kutipan">
+              &ldquo;Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.&rdquo;
+            </p>
+          </div>
+          <div class="footer-bawah-kanan">
+            <a href="#header-utama" class="footer-ke-atas-link" aria-label="Kembali ke atas halaman">
+              <span>Kembali ke atas</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 15l-6-6-6 6"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

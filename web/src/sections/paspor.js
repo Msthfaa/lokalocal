@@ -1,5 +1,6 @@
 /**
  * paspor.js (section) — Antarmuka bagian S7 Paspor Budaya (38 Stempel Provinsi)
+ * Redesain Editorial Anti-Slop: Lembaran Paspor Geografis & Gelar Kehormatan Kuratorial.
  * Sesuai WEB_SPEC.md Bagian 8.1 & Bagian 7.2 (A-11).
  */
 
@@ -7,6 +8,52 @@ import { buatStempelProvinsiSvg } from '../patterns/generate.js';
 import { formatAngka } from '../util/format.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 import { tampilkanToast } from '../ui/toast.js';
+
+const GUGUS_WILAYAH = [
+  { id: 'semua', label: 'Semua', kodeSet: null },
+  { id: 'sumatera', label: 'Sumatera', kodeSet: new Set(['11', '12', '13', '14', '15', '16', '17', '18', '19', '21']) },
+  { id: 'jawa', label: 'Jawa', kodeSet: new Set(['31', '32', '33', '34', '35', '36']) },
+  { id: 'bali-nusa', label: 'Bali & Nusa', kodeSet: new Set(['51', '52', '53']) },
+  { id: 'kalimantan', label: 'Kalimantan', kodeSet: new Set(['61', '62', '63', '64', '65']) },
+  { id: 'sulawesi', label: 'Sulawesi', kodeSet: new Set(['71', '72', '73', '74', '75', '76']) },
+  { id: 'maluku-papua', label: 'Maluku & Papua', kodeSet: new Set(['81', '82', '91', '92', '93', '94', '95', '96']) }
+];
+
+function hitungGelarPaspor(jumlahTerkumpul, totalProvinsi) {
+  if (jumlahTerkumpul === 0) {
+    return {
+      gelar: 'Penjelajah Mula',
+      tingkat: 'Level 1',
+      deskripsi: 'Buku paspor baru dibuka. Jelajahi peta 3D untuk mengukir stempel pertamamu.'
+    };
+  }
+  if (jumlahTerkumpul <= 9) {
+    return {
+      gelar: 'Pengembara Tradisi',
+      tingkat: 'Level 2',
+      deskripsi: 'Jejak langkah awalmu mulai terhimpun di lembaran arsip kebudayaan nusantara.'
+    };
+  }
+  if (jumlahTerkumpul <= 24) {
+    return {
+      gelar: 'Perekam Jejak Budaya',
+      tingkat: 'Level 3',
+      deskripsi: 'Lebih dari seperempat nusantara telah kamu telusuri dan resapi dengan tekun.'
+    };
+  }
+  if (jumlahTerkumpul < totalProvinsi) {
+    return {
+      gelar: 'Penjaga Narasi Nusantara',
+      tingkat: 'Level 4',
+      deskripsi: 'Hampir seluruh penjuru nusantara telah terhimpun lengkap dalam dokumen paspormu.'
+    };
+  }
+  return {
+    gelar: 'Kurator Agung Nusantara',
+    tingkat: 'Level 5 (Paripurna)',
+    deskripsi: 'Lengkap 38/38 provinsi! Seluruh warisan dan kepedulian budaya telah terpatri abadi.'
+  };
+}
 
 /**
  * Menginisialisasi UI Paspor Budaya di bagian S7.
@@ -25,6 +72,7 @@ export function inisialisasiBagianPaspor({
   if (!wadahUtama || !pengelolaPaspor) return null;
 
   const petaNamaProv = new Map(daftarProvinsi.map((p) => [String(p.kode), p.nama]));
+  let filterWilayahAktif = 'semua';
   let sedangKonfirmasiReset = false;
 
   function render(infoPerubahan = null) {
@@ -36,57 +84,77 @@ export function inisialisasiBagianPaspor({
 
     const jumlahBiasa = kodeTerkumpul.filter((k) => semuaStempel[k]?.jenis !== 'penjaga').length;
     const jumlahPenjaga = kodeTerkumpul.filter((k) => semuaStempel[k]?.jenis === 'penjaga').length;
+    const infoGelar = hitungGelarPaspor(jumlahTerkumpul, totalProvinsi);
 
     wadahUtama.textContent = '';
 
-    // 1. Kepala Kartu Paspor
-    const kepala = document.createElement('div');
-    kepala.className = 'paspor-kepala';
+    // =========================================================================
+    // 1. Kartu Identitas Paspor (Passport Identity Card / Buku Dokumen)
+    // =========================================================================
+    const kartuIdentitas = document.createElement('div');
+    kartuIdentitas.className = 'paspor-identitas-kartu';
 
-    const judulGrup = document.createElement('div');
-    const kicker = document.createElement('p');
-    kicker.className = 'label-kecil';
-    kicker.textContent = 'Lembar Koleksi';
+    const barisAtasId = document.createElement('div');
+    barisAtasId.className = 'paspor-identitas-baris-atas';
 
-    const h3 = document.createElement('h3');
-    h3.textContent = 'Koleksi 38 Stempel Wilayah';
+    const grupMerek = document.createElement('div');
+    grupMerek.className = 'paspor-identitas-merek-grup';
+    grupMerek.innerHTML = `
+      <span class="paspor-identitas-lambang">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      </span>
+      <div>
+        <p class="paspor-identitas-sublabel">Dokumen Resmi Penjelajah Kebudayaan</p>
+        <h3 class="paspor-identitas-judul">Lembar Paspor 38 Wilayah</h3>
+      </div>
+    `;
 
-    const ket = document.createElement('p');
-    ket.style.fontSize = 'var(--teks-kecil)';
-    ket.style.color = 'var(--kertas-redup)';
-    ket.style.marginTop = '4px';
-    ket.textContent =
-      'Buka panel provinsi di peta Jelajah untuk mengumpulkan stempel provinsi berdata, atau tandai kepedulianmu pada provinsi yang belum tercatat untuk meraih stempel "Penjaga Cerita".';
+    const badgeGelar = document.createElement('div');
+    badgeGelar.className = 'paspor-gelar-badge';
+    badgeGelar.innerHTML = `
+      <span class="paspor-gelar-tingkat">${infoGelar.tingkat}</span>
+      <strong class="paspor-gelar-nama">${infoGelar.gelar}</strong>
+    `;
 
-    judulGrup.append(kicker, h3, ket);
-    kepala.appendChild(judulGrup);
-    wadahUtama.appendChild(kepala);
+    barisAtasId.append(grupMerek, badgeGelar);
 
-    // 2. Catatan jika localStorage tidak tersedia (WEB_SPEC.md 8.1)
-    if (!pengelolaPaspor.apakahStorageTersedia()) {
-      const catatanStorage = document.createElement('p');
-      catatanStorage.className = 'paspor-catatan-storage';
-      catatanStorage.setAttribute('role', 'status');
-      catatanStorage.textContent = 'Progres tidak tersimpan di perangkat ini (penyimpanan lokal tidak tersedia).';
-      wadahUtama.appendChild(catatanStorage);
-    }
+    const narasiGelar = document.createElement('p');
+    narasiGelar.className = 'paspor-identitas-deskripsi';
+    narasiGelar.textContent = infoGelar.deskripsi;
 
-    // 3. Bar Progres "{n} dari 38 provinsi dijelajahi"
+    // Baris Metrik & Progres Bar Emas
     const blokProgres = document.createElement('div');
     blokProgres.className = 'paspor-progres-blok';
 
     const barisInfoProgres = document.createElement('div');
     barisInfoProgres.className = 'paspor-progres-info';
 
-    const teksProgres = document.createElement('strong');
-    teksProgres.textContent = `${formatAngka(jumlahTerkumpul)} dari ${formatAngka(totalProvinsi)} provinsi dijelajahi`;
+    const teksKoleksi = document.createElement('div');
+    teksKoleksi.className = 'paspor-progres-teks-kiri';
+    teksKoleksi.innerHTML = `
+      <strong class="paspor-angka-besar">${formatAngka(jumlahTerkumpul)}</strong>
+      <span class="paspor-penyebut">/${formatAngka(totalProvinsi)} Provinsi Terhimpun</span>
+      <span class="paspor-persen-badge">${persen}%</span>
+    `;
 
-    const teksRincian = document.createElement('span');
-    teksRincian.style.fontSize = '0.8125rem';
-    teksRincian.style.color = 'var(--kertas-redup)';
-    teksRincian.textContent = `${formatAngka(jumlahBiasa)} Tercatat • ${formatAngka(jumlahPenjaga)} Penjaga Cerita`;
+    const teksRincian = document.createElement('div');
+    teksRincian.className = 'paspor-progres-rincian';
+    teksRincian.innerHTML = `
+      <span class="paspor-rincian-item is-tercatat">
+        <span class="paspor-titik-status" aria-hidden="true"></span>
+        <strong>${formatAngka(jumlahBiasa)}</strong> Stempel SPKT
+      </span>
+      <span class="paspor-rincian-item is-penjaga">
+        <span class="paspor-titik-status" aria-hidden="true"></span>
+        <strong>${formatAngka(jumlahPenjaga)}</strong> Penjaga Cerita
+      </span>
+    `;
 
-    barisInfoProgres.append(teksProgres, teksRincian);
+    barisInfoProgres.append(teksKoleksi, teksRincian);
 
     const trekBar = document.createElement('div');
     trekBar.className = 'paspor-progres-trek';
@@ -102,40 +170,105 @@ export function inisialisasiBagianPaspor({
     trekBar.appendChild(isiBar);
 
     blokProgres.append(barisInfoProgres, trekBar);
-    wadahUtama.appendChild(blokProgres);
+    kartuIdentitas.append(barisAtasId, narasiGelar, blokProgres);
+    wadahUtama.appendChild(kartuIdentitas);
 
-    // 4. Banner Perayaan jika 38/38 selesai
+    // =========================================================================
+    // 2. Banner Status Storage (Bila localStorage dinonaktifkan peramban)
+    // =========================================================================
+    if (!pengelolaPaspor.apakahStorageTersedia()) {
+      const catatanStorage = document.createElement('p');
+      catatanStorage.className = 'paspor-catatan-storage';
+      catatanStorage.setAttribute('role', 'status');
+      catatanStorage.textContent = 'Progres disimpan sementara di sesi ini (penyimpanan lokal peramban dinonaktifkan).';
+      wadahUtama.appendChild(catatanStorage);
+    }
+
+    // =========================================================================
+    // 3. Banner Perayaan jika 38/38 Lengkap
+    // =========================================================================
     if (jumlahTerkumpul >= totalProvinsi) {
       const perayaan = document.createElement('div');
-      perayaan.className = 'kotak-catatan-jujur';
-      perayaan.innerHTML = '';
-
-      const pRayakan = document.createElement('p');
-      const strongR = document.createElement('strong');
-      strongR.textContent = 'Lengkap 38/38 Provinsi! ';
-      pRayakan.append(
-        strongR,
-        document.createTextNode(
-          'Kamu telah menelusuri seluruh provinsi — baik yang sudah tercatat maupun yang masih menunggu didokumentasikan. '
-        )
-      );
-
-      const tautanPenutup = document.createElement('a');
-      tautanPenutup.href = '#penutup';
-      tautanPenutup.textContent = 'Lanjut ke bagian penutup ↓';
-      pRayakan.appendChild(tautanPenutup);
-
-      perayaan.appendChild(pRayakan);
+      perayaan.className = 'paspor-banner-lengkap';
+      perayaan.innerHTML = `
+        <div class="paspor-lengkap-ikon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="paspor-lengkap-konten">
+          <strong>Lengkap Paripurna 38/38 Provinsi Nusantara!</strong>
+          <p>Kamu telah membuktikan kepedulian tinggi dengan menelusuri setiap sudut tradisi tercatat dan menyuarakan daerah yang belum terdata.</p>
+        </div>
+      `;
       wadahUtama.appendChild(perayaan);
     }
 
-    // 5. Kisi 38 Petak Stempel Provinsi
+    // =========================================================================
+    // 4. Bilah Filter Wilayah Geografis (Gugus Pulau Nusantara)
+    // =========================================================================
+    const barFilter = document.createElement('div');
+    barFilter.className = 'paspor-filter-bar';
+    barFilter.setAttribute('role', 'tablist');
+    barFilter.setAttribute('aria-label', 'Filter gugus wilayah kepulauan');
+
+    GUGUS_WILAYAH.forEach((gugus) => {
+      const btnTab = document.createElement('button');
+      btnTab.type = 'button';
+      btnTab.className = `paspor-filter-tab ${filterWilayahAktif === gugus.id ? 'is-aktif' : ''}`;
+      btnTab.setAttribute('role', 'tab');
+      btnTab.setAttribute('aria-selected', String(filterWilayahAktif === gugus.id));
+
+      // Hitung jumlah stempel terkumpul di gugus ini
+      let totalGugus = 0;
+      let terkumpulGugus = 0;
+
+      if (gugus.kodeSet === null) {
+        totalGugus = totalProvinsi;
+        terkumpulGugus = jumlahTerkumpul;
+      } else {
+        daftarProvinsi.forEach((p) => {
+          if (gugus.kodeSet.has(p.kode)) {
+            totalGugus++;
+            if (semuaStempel[p.kode]) {
+              terkumpulGugus++;
+            }
+          }
+        });
+      }
+
+      btnTab.innerHTML = `
+        <span class="paspor-tab-label">${gugus.label}</span>
+        <span class="paspor-tab-counter">${terkumpulGugus}/${totalGugus}</span>
+      `;
+
+      btnTab.addEventListener('click', () => {
+        if (filterWilayahAktif !== gugus.id) {
+          filterWilayahAktif = gugus.id;
+          render();
+        }
+      });
+
+      barFilter.appendChild(btnTab);
+    });
+
+    wadahUtama.appendChild(barFilter);
+
+    // =========================================================================
+    // 5. Kisi Petak Stempel 38 Wilayah (Responsif & Proporsional)
+    // =========================================================================
+    const gugusAktifObj = GUGUS_WILAYAH.find((g) => g.id === filterWilayahAktif) || GUGUS_WILAYAH[0];
+    const provinsiTerfilter = gugusAktifObj.kodeSet === null
+      ? daftarProvinsi
+      : daftarProvinsi.filter((p) => gugusAktifObj.kodeSet.has(p.kode));
+
     const kisi = document.createElement('div');
     kisi.className = 'paspor-kisi-38';
     kisi.setAttribute('role', 'list');
-    kisi.setAttribute('aria-label', 'Daftar 38 petak stempel provinsi');
+    kisi.setAttribute('aria-label', `Daftar stempel wilayah untuk ${gugusAktifObj.label}`);
 
-    for (const prov of daftarProvinsi) {
+    provinsiTerfilter.forEach((prov) => {
       const dataStempel = semuaStempel[prov.kode];
       const sudahDapat = Boolean(dataStempel);
       const jenisStempel = dataStempel?.jenis || 'biasa';
@@ -153,12 +286,12 @@ export function inisialisasiBagianPaspor({
       const statusLabel = sudahDapat
         ? jenisStempel === 'penjaga'
           ? 'stempel Penjaga Cerita terkumpul'
-          : 'stempel provinsi tercatat terkumpul'
+          : 'stempel resmi SPKT terkumpul'
         : adalahBelumTercatat
         ? 'belum dikunjungi (belum tercatat di SPKT)'
         : 'belum dikunjungi';
 
-      petak.setAttribute('aria-label', `${prov.nama}: ${statusLabel}. Klik untuk membuka di peta Jelajah.`);
+      petak.setAttribute('aria-label', `${prov.nama}: ${statusLabel}. Klik untuk membuka di peta Jelajah 3D.`);
 
       const bungkusVisual = document.createElement('div');
       bungkusVisual.className = 'paspor-petak-visual';
@@ -171,10 +304,15 @@ export function inisialisasiBagianPaspor({
         });
         bungkusVisual.appendChild(svgStempel);
       } else {
-        const lingkaranKosong = document.createElement('span');
-        lingkaranKosong.className = 'paspor-lingkaran-kosong';
-        lingkaranKosong.textContent = prov.kode;
-        bungkusVisual.appendChild(lingkaranKosong);
+        // Watermark Seal Elegan (Bukan sekadar dashed box wireframe kosong)
+        const watermarkSeal = document.createElement('div');
+        watermarkSeal.className = 'paspor-stempel-watermark';
+        watermarkSeal.innerHTML = `
+          <span class="paspor-watermark-cincin" aria-hidden="true"></span>
+          <span class="paspor-watermark-kode">${prov.kode}</span>
+          <span class="paspor-watermark-status">BELUM TERCAP</span>
+        `;
+        bungkusVisual.appendChild(watermarkSeal);
       }
 
       const labelNama = document.createElement('span');
@@ -182,6 +320,14 @@ export function inisialisasiBagianPaspor({
       labelNama.textContent = prov.nama;
 
       petak.append(bungkusVisual, labelNama);
+
+      // Badge status kecil penjelajah
+      if (sudahDapat) {
+        const badgeCap = document.createElement('span');
+        badgeCap.className = `paspor-tag-status ${jenisStempel === 'penjaga' ? 'is-penjaga' : 'is-tercatat'}`;
+        badgeCap.textContent = jenisStempel === 'penjaga' ? 'Penjaga' : 'Tercatat';
+        petak.appendChild(badgeCap);
+      }
 
       petak.addEventListener('click', () => {
         if (typeof saatKlikPetakProvinsi === 'function') {
@@ -195,7 +341,7 @@ export function inisialisasiBagianPaspor({
 
       kisi.appendChild(petak);
 
-      // Animasi A-11 jika petak ini baru saja mendapatkan stempel
+      // Animasi timbul saat stempel baru saja diperoleh
       if (
         infoPerubahan &&
         infoPerubahan.aksi === 'tambah' &&
@@ -205,44 +351,82 @@ export function inisialisasiBagianPaspor({
       ) {
         gsap.fromTo(
           bungkusVisual,
-          { scale: 1.4, rotation: -8 },
-          { scale: 1, rotation: 0, duration: 0.5, ease: 'back.out(1.6)' }
+          { scale: 1.35, rotation: -6 },
+          { scale: 1, rotation: 0, duration: 0.45, ease: 'back.out(1.8)' }
         );
       }
-    }
+    });
 
     wadahUtama.appendChild(kisi);
 
-    // 6. Kaki Paspor: Tombol Reset dengan Konfirmasi
+    // =========================================================================
+    // 6. Kaki Paspor: Navigasi Aksi Lengkap & Reset dengan Konfirmasi Aman
+    // =========================================================================
     const kaki = document.createElement('div');
     kaki.className = 'paspor-kaki';
+
+    const barisAksiKiri = document.createElement('div');
+    barisAksiKiri.className = 'paspor-kaki-grup-kiri';
+
+    const btnBukaPeta = document.createElement('a');
+    btnBukaPeta.href = './jelajah.html';
+    btnBukaPeta.className = 'tombol tombol--utama paspor-kaki-btn';
+    btnBukaPeta.innerHTML = '<span>Jelajahi Peta 3D</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+
+    const btnSalinStatus = document.createElement('button');
+    btnSalinStatus.type = 'button';
+    btnSalinStatus.className = 'tombol tombol--garis paspor-kaki-btn';
+    btnSalinStatus.innerHTML = '<span>Salin Lembar Paspor</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+    btnSalinStatus.addEventListener('click', async () => {
+      const teksShare = `Paspor Budaya Nusantara Lokalocal: ${jumlahTerkumpul}/38 provinsi terkumpul dengan gelar '${infoGelar.gelar}' (${infoGelar.tingkat}). Budaya Indonesia tidak sedikit, yang sedikit adalah yang sudah tercatat.`;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Paspor Budaya Nusantara — Lokalocal',
+            text: teksShare,
+            url: window.location.href
+          });
+          return;
+        } catch {
+          // lanjut ke clipboard
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(`${teksShare} — ${window.location.href}`);
+        tampilkanToast('Status Paspor Budaya berhasil disalin ke papan klip.');
+      } catch {
+        tampilkanToast('Salin tautan dari bilah alamat browser.');
+      }
+    });
+
+    barisAksiKiri.append(btnBukaPeta, btnSalinStatus);
+
+    const barisAksiKanan = document.createElement('div');
+    barisAksiKanan.className = 'paspor-kaki-grup-kanan';
 
     if (jumlahTerkumpul > 0) {
       if (!sedangKonfirmasiReset) {
         const btnReset = document.createElement('button');
         btnReset.type = 'button';
-        btnReset.className = 'tombol tombol--garis';
+        btnReset.className = 'tombol tombol--garis paspor-tombol-reset';
         btnReset.textContent = 'Mulai ulang paspor';
         btnReset.addEventListener('click', () => {
           sedangKonfirmasiReset = true;
           render();
         });
-        kaki.appendChild(btnReset);
+        barisAksiKanan.appendChild(btnReset);
       } else {
         const grupKonfirmasi = document.createElement('div');
-        grupKonfirmasi.style.display = 'flex';
-        grupKonfirmasi.style.flexWrap = 'wrap';
-        grupKonfirmasi.style.alignItems = 'center';
-        grupKonfirmasi.style.gap = 'var(--ruang-2)';
+        grupKonfirmasi.className = 'paspor-konfirmasi-reset-kotak';
 
         const teksTanya = document.createElement('span');
-        teksTanya.style.fontSize = 'var(--teks-kecil)';
+        teksTanya.className = 'paspor-konfirmasi-teks';
         teksTanya.textContent = 'Hapus semua stempel dan mulai dari 0?';
 
         const btnYa = document.createElement('button');
         btnYa.type = 'button';
-        btnYa.className = 'tombol tombol--utama';
-        btnYa.textContent = 'Ya, mulai ulang';
+        btnYa.className = 'tombol tombol--utama paspor-btn-konfirmasi-ya';
+        btnYa.textContent = 'Ya, reset';
         btnYa.addEventListener('click', () => {
           sedangKonfirmasiReset = false;
           pengelolaPaspor.resetPaspor();
@@ -251,7 +435,7 @@ export function inisialisasiBagianPaspor({
 
         const btnBatal = document.createElement('button');
         btnBatal.type = 'button';
-        btnBatal.className = 'tombol tombol--garis';
+        btnBatal.className = 'tombol tombol--garis paspor-btn-konfirmasi-batal';
         btnBatal.textContent = 'Batal';
         btnBatal.addEventListener('click', () => {
           sedangKonfirmasiReset = false;
@@ -259,20 +443,15 @@ export function inisialisasiBagianPaspor({
         });
 
         grupKonfirmasi.append(teksTanya, btnYa, btnBatal);
-        kaki.appendChild(grupKonfirmasi);
+        barisAksiKanan.appendChild(grupKonfirmasi);
       }
-    } else {
-      const petunjukAwal = document.createElement('span');
-      petunjukAwal.style.fontSize = '0.8125rem';
-      petunjukAwal.style.color = 'var(--kertas-redup)';
-      petunjukAwal.textContent = 'Klik petak provinsi mana pun untuk mulai menjelajah dan mengumpulkan stempel pertama.';
-      kaki.appendChild(petunjukAwal);
     }
 
+    kaki.append(barisAksiKiri, barisAksiKanan);
     wadahUtama.appendChild(kaki);
   }
 
-  // Langganan perubahan stempel
+  // Langganan perubahan stempel paspor
   pengelolaPaspor.langganan((_stempel, info) => {
     render(info);
 
