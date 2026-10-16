@@ -17,13 +17,40 @@ const PESAN_LUCU_NUSANTARA = [
   'Merajut terumbu karang bawah laut... hati-hati terantuk ya! 🐠🌊'
 ];
 
+const KUNCI_SESI_PETA3D = 'lokalocal_peta3d_dimuat';
+
 /**
  * Membuat dan mengontrol antarmuka layar muat animasi lucu
  * @param {HTMLElement} [wadahInduk=document.body]
+ * @param {object} [opsi]
+ * @param {boolean} [opsi.lewati=false]
  * @returns {object} Kontroler: aturProgres, getProgres, selesai, hancurkan
  */
-export function inisialisasiLoaderLucu(wadahInduk = document.body) {
+export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = false } = {}) {
   let elemenLoader = document.getElementById('jelajah-loading-screen');
+  const navKartun = document.getElementById('nav-loading-kartun');
+
+  if (lewati) {
+    if (elemenLoader) {
+      elemenLoader.style.display = 'none';
+      elemenLoader.setAttribute('aria-hidden', 'true');
+    }
+    if (navKartun) {
+      navKartun.style.display = 'none';
+    }
+    return {
+      aturProgres: () => {},
+      getProgres: () => 100,
+      selesai: (_pesan, cb) => {
+        if (typeof cb === 'function') cb();
+      },
+      hancurkan: () => {
+        if (elemenLoader && elemenLoader.parentNode) {
+          elemenLoader.parentNode.removeChild(elemenLoader);
+        }
+      }
+    };
+  }
 
   if (!elemenLoader) {
     elemenLoader = document.createElement('div');
@@ -218,6 +245,12 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body) {
   function selesai(pesanPenutup = 'Nusantara siap dijelajahi! Selamat berlayar ⛵✨', onSelesai) {
     if (sudahSelesai) return;
     sudahSelesai = true;
+
+    try {
+      sessionStorage.setItem(KUNCI_SESI_PETA3D, 'true');
+    } catch {
+      // Abaikan jika browser membatasi storage
+    }
 
     if (intervalPesan) {
       clearInterval(intervalPesan);

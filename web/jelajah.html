@@ -59,7 +59,23 @@
         max-height: 24px !important;
         flex-shrink: 0;
       }
+      .peta3d-sudah-pernah-dimuat #jelajah-loading-screen,
+      .peta3d-sudah-pernah-dimuat #nav-loading-kartun {
+        display: none !important;
+      }
     </style>
+
+    <script>
+      try {
+        if (
+          sessionStorage.getItem('lokalocal_peta3d_dimuat') === 'true' &&
+          !window.location.search.includes('loader=1') &&
+          !window.location.search.includes('reset=1')
+        ) {
+          document.documentElement.classList.add('peta3d-sudah-pernah-dimuat');
+        }
+      } catch (e) {}
+    </script>
 
     <!-- Muat Stylesheet Inti di Head -->
     <link rel="stylesheet" href="/src/styles/base.css" />

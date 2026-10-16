@@ -48,9 +48,27 @@ async function mulaiHalamanJelajah() {
     }
   });
 
-  // Tampilkan layar muat interaktif & animasi lucu Nusantara
-  const loaderLucu = inisialisasiLoaderLucu();
-  loaderLucu.aturProgres(18, 'Membaca arsip kebudayaan Nusantara...');
+  // Cek apakah Peta 3D sudah pernah dimuat di sesi kunjungan ini
+  const KUNCI_SESI_PETA3D = 'lokalocal_peta3d_dimuat';
+  let peta3dSudahDimuat = false;
+  try {
+    peta3dSudahDimuat = sessionStorage.getItem(KUNCI_SESI_PETA3D) === 'true';
+  } catch {
+    // Abaikan
+  }
+
+  const paksaLoader =
+    typeof window !== 'undefined' &&
+    window.location &&
+    (window.location.search.includes('loader=1') || window.location.search.includes('reset=1'));
+
+  const lewatiLoader = peta3dSudahDimuat && !paksaLoader;
+
+  // Tampilkan layar muat interaktif & animasi lucu Nusantara (hanya saat pertama kali di sesi ini)
+  const loaderLucu = inisialisasiLoaderLucu(document.body, { lewati: lewatiLoader });
+  if (!lewatiLoader) {
+    loaderLucu.aturProgres(18, 'Membaca arsip kebudayaan Nusantara...');
+  }
 
   const dialogTentangKontrol = inisialisasiDialogTentang();
   const dialogTentangKamiKontrol = inisialisasiDialogTentangKami();
@@ -159,20 +177,29 @@ async function mulaiHalamanJelajah() {
       });
     }
 
-    // Tuntaskan layar muat lucu secara halus begitu frame pertama ter-render
-    loaderLucu.aturProgres(92, 'Menyalakan lentera laut & mengibarkan bendera...');
-    requestAnimationFrame(() => {
+    // Tuntaskan layar muat lucu secara halus
+    if (!lewatiLoader) {
+      loaderLucu.aturProgres(92, 'Menyalakan lentera laut & mengibarkan bendera...');
       requestAnimationFrame(() => {
-        loaderLucu.selesai('Nusantara sudah matang dan siap dijelajahi! Selamat berlayar ⛵✨');
+        requestAnimationFrame(() => {
+          loaderLucu.selesai('Nusantara sudah matang dan siap dijelajahi! Selamat berlayar ⛵✨');
 
-        // Memicu kemunculan dramatis 38 pulau satu per satu membal dari tengah nusantara
-        if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
-          setTimeout(() => {
-            kontroler3D.mulaiAnimasiMasuk();
-          }, 450);
-        }
+          // Memicu kemunculan dramatis 38 pulau satu per satu membal dari tengah nusantara
+          if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
+            setTimeout(() => {
+              kontroler3D.mulaiAnimasiMasuk();
+            }, 450);
+          }
+        });
       });
-    });
+    } else {
+      loaderLucu.selesai();
+      if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
+        setTimeout(() => {
+          kontroler3D.mulaiAnimasiMasuk();
+        }, 120);
+      }
+    }
 
     // Muat data lengkap (budaya.clean.json) secara langsung untuk kartu bendera & tradisi
     muatDataLengkap()

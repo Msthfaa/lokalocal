@@ -17,13 +17,38 @@ import '../styles/tirai-wayang.css';
 const URL_WAYANG_KIRI = './assets/wayang-gunungan-kiri.png';
 const URL_WAYANG_KANAN = './assets/wayang-gunungan-kanan.png';
 
+const KUNCI_SESI_TIRAI = 'lokalocal_tirai_dilihat';
+
 /**
  * Menginisialisasi Tirai Pembuka Wayang Gunungan Emas Nusantara
  * @param {object} [opsi]
  * @param {Function} [opsi.onSelesai]
- * @param {boolean} [opsi.paksaTampil=true]
+ * @param {boolean} [opsi.paksaTampil=false]
  */
-export function inisialisasiTiraiWayang({ onSelesai, paksaTampil = true } = {}) {
+export function inisialisasiTiraiWayang({ onSelesai, paksaTampil = false } = {}) {
+  // Cek apakah parameter url meminta tampil paksa (misal ?tirai=1 atau ?opening=1)
+  const cekUrlPaksa =
+    typeof window !== 'undefined' &&
+    window.location &&
+    (window.location.search.includes('tirai=1') || window.location.search.includes('opening=1'));
+
+  let sudahDilihat = false;
+  try {
+    sudahDilihat = sessionStorage.getItem(KUNCI_SESI_TIRAI) === 'true';
+  } catch {
+    // Abaikan jika browser membatasi storage (misal sandboxed iframe)
+  }
+
+  // Jika sudah dilihat di sesi ini dan tidak dipaksa tampil, langsung selesaikan tanpa memunculkan tirai
+  if (!paksaTampil && !cekUrlPaksa && sudahDilihat) {
+    if (typeof onSelesai === 'function') {
+      onSelesai();
+    }
+    return {
+      buka: () => {}
+    };
+  }
+
   // Bersihkan overlay lama jika ada
   const overlayLama = document.getElementById('tirai-wayang-overlay');
   if (overlayLama) {
@@ -307,6 +332,12 @@ export function inisialisasiTiraiWayang({ onSelesai, paksaTampil = true } = {}) 
   window.addEventListener('keydown', onKeyDown, { once: true });
 
   function selesaikanTirai() {
+    try {
+      sessionStorage.setItem(KUNCI_SESI_TIRAI, 'true');
+    } catch {
+      // Abaikan jika browser private mode / storage terbatas
+    }
+
     sedangMembuka = true;
     document.body.style.overflow = overflowAsal;
     overlay.classList.add('is-tersembunyi');

@@ -334,9 +334,9 @@ function inisialisasiBentoEditorial() {
 }
 
 function init() {
-  // Pasang Tirai Pembuka Sinematik 2 Wayang Gunungan & Montase Budaya (3 Detik)
+  // Pasang Tirai Pembuka Sinematik Wayang Gunungan (Hanya saat awal masuk per sesi)
   inisialisasiTiraiWayang({
-    paksaTampil: true,
+    paksaTampil: false,
     onSelesai: () => {
       requestAnimationFrame(() => {
         segarkanScrollTrigger();
@@ -348,6 +348,14 @@ function init() {
   window.tontonTiraiWayang = () => {
     inisialisasiTiraiWayang({ paksaTampil: true });
   };
+
+  const btnTontonTirai = document.getElementById('footer-tombol-tonton-tirai');
+  if (btnTontonTirai) {
+    btnTontonTirai.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.tontonTiraiWayang();
+    });
+  }
 
   inisialisasiTema();
   inisialisasiBacksound();

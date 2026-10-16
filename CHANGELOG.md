@@ -1,5 +1,15 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-16] Pembatasan Sesi Layar Pemuatan (Tirai Wayang & 3D Pinisi) & Akses IP Lokal
+- **Dibuat/diubah:**
+  - `web/src/ui/tirai-wayang.js` & `web/src/main.js` (Opening Tirai Wayang Gunungan dibatasi via `sessionStorage` sehingga hanya tampil satu kali di awal sesi kunjungan pengguna; navigasi bolak-balik halaman berlangsung instan; penambahan tombol 'Tonton Ulang Pembuka Wayang' di footer dan URL parameter `?tirai=1`).
+  - `web/src/ui/loader-lucu.js`, `web/src/pages/jelajah.js`, & `web/jelajah.html` (Layar muat Kapal Pinisi 3D dibatasi per sesi via `sessionStorage` dengan mekanisme zero-FOUC fast-pass; kunjungan berikutnya langsung membuka adegan 3D tanpa modal kartu loading; URL parameter `?loader=1` untuk memicu ulang secara manual).
+  - `web/vite.config.js` & `web/package.json` (Konfigurasi `--host` Vite agar web dapat diakses via IP jaringan lokal / WiFi untuk pengujian mobile).
+- **Hasil:**
+  - Pengalaman penjelajahan antar halaman (Cerita <-> Jelajah 3D <-> Paspor <-> Kuis) menjadi instan tanpa jeda loading berulang.
+  - Sesi baru atau browser baru tetap menampilkan animasi pembuka dan loader maskot secara utuh.
+  - Aplikasi dapat dibuka secara lancar di perangkat seluler melalui IP lokal.
+
 ## [2026-10-14] Perbaikan Tampilan Pulau & Animasi Masuk Membal Sinkron (Pulau & Kapal Pinisi)
 - **Dibuat/diubah:**
   - `web/src/sections/hero3d/ornamen-maritim.js` (Perbaikan evaluasi kurva pelayaran Catmull-Rom agar aman dari nilai negatif; penambahan parameter `sembunyikanAwal: true` dan implementasi `mulaiAnimasiMasuk()` untuk 3 kapal Pinisi: kapal disembunyikan di awal, lalu menyembul membal keluar dari air laut bertahap seirama dengan penyebaran pulau: Pinisi Flores/Makassar di tengah t=0.25s, Pinisi Laut Jawa di barat-tengah t=0.55s, Flagship Sabang-Merauke t=0.85s, dan Kompas Mawar di t=0.35s).
