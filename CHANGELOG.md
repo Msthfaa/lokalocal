@@ -1,5 +1,27 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Transisi Menyeluruh Tema (Dark/Light Mode) & Animasi Dialog "Tentang Data" dan "Tentang Kami"
+- **Dibuat/diubah:**
+  - `web/src/ui/tema.js`:
+    - Mengintegrasikan View Transitions API (`document.startViewTransition`) dengan ekspansi lingkaran (*circular reveal*) dari koordinat tombol/klik kursor, menyatukan seluruh kanvas 1 halaman tanpa tearing atau keterpisahan elemen saat beralih antara mode gelap dan terang.
+    - Menambahkan fallback transisi terkoordinasi secara global (`.tema-transisi-aktif`) untuk peramban yang belum mendukung View Transitions API.
+    - Menghormati preferensi aksesibilitas `prefers-reduced-motion: reduce`.
+  - `web/src/styles/base.css`:
+    - Menambahkan aturan CSS View Transitions (`::view-transition-old(root)`, `::view-transition-new(root)`) dengan `z-index` terkontrol.
+    - Menambahkan kelas transisi tema terpadu (`.tema-transisi-aktif`) untuk menyelaraskan durasi warna, latar, batas, dan bayangan seluruh kontainer secara serentak.
+    - Menghapus deklarasi transisi terpisah pada elemen individu `html` dan `body` yang sebelumnya memicu desinkronisasi visual.
+  - `web/src/styles/components.css`:
+    - Menambahkan animasi masuk (*entrance*) `.dialog-modal[open]` (`modal-masuk`: skala 0.92 ke 1.0, translasi Y 20px ke 0) dengan kurva pegas halus `cubic-bezier(0.16, 1, 0.3, 1)` berdurasi 0.35s.
+    - Menambahkan animasi latar belakang `::backdrop` (`backdrop-masuk`: fade blur bertahap dari 0px ke 8px).
+    - Menambahkan animasi keluar (*exit*) `.dialog-modal.dialog-keluar` (`modal-keluar`: skala 1.0 ke 0.94, translasi Y 14px, fade out) berdurasi 0.25s.
+  - `web/src/util/a11y.js`:
+    - Memperbarui `pasangPerilakuDialog` untuk mengelola siklus hidup transisi keluar dialog sebelum `dialogEl.close()` dijalankan secara native.
+    - Mengintersep event `cancel` (tombol ESC keyboard) dan klik backdrop agar memainkan animasi penutupan yang lembut dan elegan sebelum dialog ditutup dan fokus dikembalikan ke tombol pemicu.
+- **Hasil:**
+  - Perpindahan mode gelap dan mode terang kini terasa menyatu utuh dalam satu halaman (*seamless single-surface transition*), tanpa keterpisahan elemen maupun kedipan latar belakang.
+  - Dialog "Tentang Data & Keterbatasan" serta "Tentang Lokalocal & Pengembang" (dan dialog detail rekaman budaya) membuka dan menutup dengan animasi halus, empuk, dan elegan (*Apple-grade motion*).
+  - Lolos uji validasi data (`validate.mjs`) dan `npm run build` sukses 100% tanpa error.
+
 ## [2026-10-18] Perluasan Latar Belakang Rumah Adat & Candi Nusantara ke Seluruh Halaman Bawah hingga Footer
 - **Dibuat/diubah:**
   - `web/src/styles/base.css`:
