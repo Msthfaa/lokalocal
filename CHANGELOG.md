@@ -1,5 +1,18 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Penerapan Kursor Kultural Gunungan Wayang Nusantara
+- **Dibuat/diubah:**
+  - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan.png`:
+    - Membuat aset kursor kustom berbentuk siluet Gunungan Wayang Kulit (Kayon) bertatahkan emas dengan geometri Pohon Hayat Kalpataru dan Gapura Paduraksa, di mana puncak tajuk (hotspot `x=16, y=0`) berfungsi sebagai penunjuk presisi tinggi.
+  - `web/public/assets/cursor-gunungan-pointer.svg` & `web/public/assets/cursor-gunungan-pointer.png`:
+    - Membuat varian kursor interaktif dengan pendaran aura emas berkilau (*radiant golden glow*) dan permata bintang pada puncak tajuk untuk menandakan elemen yang dapat diklik.
+  - `web/src/styles/base.css`:
+    - Menerapkan aturan kursor Gunungan Wayang pada `html` dan `body` untuk perangkat berpenunjuk halus (`@media (hover: hover) and (pointer: fine)`).
+    - Memastikan seluruh elemen interaktif (tombol, tautan, kartu bento, tab, peta, dan dialog) menggunakan kursor Gunungan Menyala Emas, serta menjaga kenyamanan seleksi teks (`cursor: text`) pada kolom input.
+- **Hasil:**
+  - Pengunjung di desktop/laptop kini disambut dengan kursor Gunungan Wayang khas keraton nusantara yang unik, anggun, dan bernilai kultural tinggi tanpa membebani perangkat seluler/layar sentuh.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` sukses 100% (0 error).
+
 ## [2026-10-18] Penyesuaian Transisi Memudar Murni (Fade Only) pada Tema & Dialog Modal
 - **Dibuat/diubah:**
   - `web/src/ui/tema.js`:

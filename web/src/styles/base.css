@@ -45,6 +45,75 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ==========================================================================
+   Kursor Kultural Gunungan Wayang Nusantara
+   Sesuai tema luhur kebudayaan Indonesia, kursor default dan interaktif di desktop
+   menggunakan siluet Gunungan Wayang (Kayon) bertatahkan emas.
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body {
+    cursor: url('/assets/cursor-gunungan.svg') 16 0,
+            url('/assets/cursor-gunungan.png') 16 0,
+            auto;
+  }
+
+  /* Elemen interaktif: Tautan, Tombol, Kartu, Tab, Kontrol Form */
+  a,
+  button,
+  [role="button"],
+  [role="tab"],
+  [role="link"],
+  summary,
+  select,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"],
+  [class*="tombol"],
+  [class*="btn"],
+  [class*="kartu"],
+  [class*="card"],
+  [class*="pill"],
+  [class*="chip"],
+  .kartu,
+  .kartu-cerita,
+  .tombol,
+  .nav-tautan,
+  .bento-card,
+  .kuis-opsi-btn,
+  .paspor-stempel-item,
+  .peta-jalur-provinsi,
+  .s2-daftar-item,
+  .s4-daftar-item,
+  .leaflet-interactive,
+  .dialog-modal button {
+    cursor: url('/assets/cursor-gunungan-pointer.svg') 16 0,
+            url('/assets/cursor-gunungan-pointer.png') 16 0,
+            pointer !important;
+  }
+
+  /* Pastikan elemen anak di dalam tombol/tautan mewarisi kursor pointer */
+  a *,
+  button *,
+  [role="button"] *,
+  [role="tab"] *,
+  [class*="tombol"] *,
+  .tombol * {
+    cursor: inherit !important;
+  }
+
+  /* Elemen teks tetap nyaman untuk seleksi pembaca */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  textarea {
+    cursor: text !important;
+  }
+}
+
+
 body:not(.halaman-fullscreen-body) {
   position: relative;
   background-color: #0E0B09;
