@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <!-- Gradien Emas Khas Keraton Nusantara -->
+    <linearGradient id="gunungan-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5C0"/>
+      <stop offset="30%" stop-color="#F3C350"/>
+      <stop offset="70%" stop-color="#C68924"/>
+      <stop offset="100%" stop-color="#6E3D06"/>
+    </linearGradient>
+
+    <!-- Gradien Inti Pohon Hayat -->
+    <linearGradient id="pohon-hayat" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#9C6215"/>
+      <stop offset="100%" stop-color="#3E1E03"/>
+    </linearGradient>
+
+    <!-- Bayangan tegas agar terbaca jelas di latar terang maupun gelap -->
+    <filter id="cursor-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.8" flood-color="#000000" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="0.5" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#cursor-shadow)">
+    <!-- Kontur Utama Siluet Gunungan Kayon -->
+    <!-- Puncak tajuk di (16, 1), mekar ke bahu kanan dan kiri, lalu gapit di bawah -->
+    <path d="M 16 1
+             C 18.5 5, 21.5 8.5, 24 13
+             C 25.8 16.5, 25 19.5, 25.8 23.5
+             L 24 25.5 L 18 25.5 L 18 31 L 14 31 L 14 25.5 L 8 25.5 L 6.2 23.5
+             C 7 19.5, 6.2 16.5, 8 13
+             C 10.5 8.5, 13.5 5, 16 1 Z"
+          fill="url(#gunungan-gold)"
+          stroke="#1E1003"
+          stroke-width="1.2"
+          stroke-linejoin="round"/>
+
+    <!-- Bingkai Tepi Tatahan Emas Dalam -->
+    <path d="M 16 3.5
+             C 18 7, 20.2 10, 22.2 13.8
+             C 23.5 16.5, 23 19, 23.8 22.5
+             L 22.2 24 L 9.8 24
+             C 10.6 19, 10.1 16.5, 11.4 13.8
+             C 13.4 10, 15.6 7, 16 3.5 Z"
+          fill="none"
+          stroke="#522C05"
+          stroke-width="0.6"
+          opacity="0.85"/>
+
+    <!-- Sumbu Meru / Batang Pohon Hayat Kalpataru -->
+    <path d="M 16 5 L 16 24"
+          stroke="url(#pohon-hayat)"
+          stroke-width="1.1"
+          stroke-linecap="round"/>
+
+    <!-- Cabang & Daun Pohon Hayat Kiri-Kanan -->
+    <!-- Tingkat 1 (Atas) -->
+    <path d="M 16 9 Q 13 11 11.5 13.5" fill="none" stroke="#482202" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M 16 9 Q 19 11 20.5 13.5" fill="none" stroke="#482202" stroke-width="0.8" stroke-linecap="round"/>
+
+    <!-- Tingkat 2 (Tengah) -->
+    <path d="M 16 13 Q 12 15.5 10 18" fill="none" stroke="#482202" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M 16 13 Q 20 15.5 22 18" fill="none" stroke="#482202" stroke-width="0.8" stroke-linecap="round"/>
+
+    <!-- Tingkat 3 (Bawah) -->
+    <path d="M 16 17 Q 12.5 19 10.5 21.5" fill="none" stroke="#482202" stroke-width="0.8" stroke-linecap="round"/>
+    <path d="M 16 17 Q 19.5 19 21.5 21.5" fill="none" stroke="#482202" stroke-width="0.8" stroke-linecap="round"/>
+
+    <!-- Gapura Paduraksa (Pintu Gerbang Suci di Bawah Pohon) -->
+    <path d="M 13.2 25.5 L 13.2 21.5 Q 16 19.8 18.8 21.5 L 18.8 25.5 Z"
+          fill="#2C1402"
+          stroke="#FFE082"
+          stroke-width="0.6"/>
+    <!-- Daun Pintu Gapura -->
+    <line x1="16" y1="20.8" x2="16" y2="25.5" stroke="#FFE082" stroke-width="0.5"/>
+
+    <!-- Mustaka Permata Puncak (Active Hotspot Indicator) -->
+    <circle cx="16" cy="1.6" r="1.3" fill="#FFFFFF" stroke="#8A4E02" stroke-width="0.5"/>
+    <circle cx="16" cy="1.6" r="0.6" fill="#FFE57F"/>
+  </g>
+</svg>

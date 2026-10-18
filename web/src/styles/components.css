@@ -201,7 +201,7 @@
   width: calc(100% - 2rem);
   max-width: 680px;
   max-height: 88vh;
-  background-color: rgba(26, 22, 19, 0.85);
+  background-color: rgba(26, 22, 19, 0.88);
   color: #F5F0EB;
   border: 1px solid rgba(230, 177, 74, 0.35);
   border-radius: 28px;
@@ -212,11 +212,80 @@
   -webkit-backdrop-filter: blur(20px);
 }
 
-.dialog-modal::backdrop {
+/* Animasi Masuk: Dialog membuka dengan efek memudar halus */
+.dialog-modal[open] {
+  animation: modal-masuk 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.dialog-modal[open]::backdrop {
   background-color: rgba(14, 11, 9, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  animation: backdrop-masuk 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+/* Animasi Keluar: Dialog menutup dengan efek memudar halus */
+.dialog-modal.dialog-keluar {
+  animation: modal-keluar 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+.dialog-modal.dialog-keluar::backdrop {
+  animation: backdrop-keluar 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes modal-masuk {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-keluar {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes backdrop-masuk {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes backdrop-keluar {
+  0% {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-modal[open],
+  .dialog-modal.dialog-keluar,
+  .dialog-modal[open]::backdrop,
+  .dialog-modal.dialog-keluar::backdrop {
+    animation: none !important;
+  }
+}
+
 
 .dialog-kepala {
   display: flex;

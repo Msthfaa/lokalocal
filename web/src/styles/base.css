@@ -24,7 +24,6 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scrollbar-gutter: stable;
-  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -44,7 +43,98 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ==========================================================================
+   Kursor Kultural Gunungan Wayang Nusantara
+   Sesuai tema luhur kebudayaan Indonesia, kursor default dan interaktif di desktop
+   menggunakan siluet Gunungan Wayang (Kayon) bertatahkan emas.
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body {
+    cursor: url('/assets/cursor-gunungan.svg') 16 0,
+            url('/assets/cursor-gunungan.png') 16 0,
+            auto;
+  }
+
+  /* Elemen interaktif: Tautan, Tombol, Kartu, Tab, Kontrol Form */
+  a,
+  button,
+  [role="button"],
+  [role="tab"],
+  [role="link"],
+  summary,
+  select,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"],
+  [class*="tombol"],
+  [class*="btn"],
+  [class*="kartu"],
+  [class*="card"],
+  [class*="pill"],
+  [class*="chip"],
+  .kartu,
+  .kartu-cerita,
+  .tombol,
+  .nav-tautan,
+  .bento-card,
+  .kuis-opsi-btn,
+  .paspor-stempel-item,
+  .peta-jalur-provinsi,
+  .s2-daftar-item,
+  .s4-daftar-item,
+  .leaflet-interactive,
+  .dialog-modal button {
+    cursor: url('/assets/cursor-gunungan-pointer.svg') 16 0,
+            url('/assets/cursor-gunungan-pointer.png') 16 0,
+            pointer !important;
+  }
+
+  /* Pastikan elemen anak di dalam tombol/tautan mewarisi kursor pointer */
+  a *,
+  button *,
+  [role="button"] *,
+  [role="tab"] *,
+  [class*="tombol"] *,
+  .tombol * {
+    cursor: inherit !important;
+  }
+
+  /* Elemen teks tetap nyaman untuk seleksi pembaca */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  textarea {
+    cursor: text !important;
+  }
+}
+
+
+body:not(.halaman-fullscreen-body) {
+  position: relative;
+  background-color: #0E0B09;
+  background-image:
+    linear-gradient(180deg, rgba(14, 11, 9, 0.38) 0%, rgba(14, 11, 9, 0.08) 22%, rgba(14, 11, 9, 0.35) 60%, rgba(14, 11, 9, 0.88) 100%),
+    url('/assets/bg-budaya-kuis.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+[data-tema="terang"] body:not(.halaman-fullscreen-body) {
+  background-color: #FAF6EE;
+  background-image:
+    linear-gradient(180deg, rgba(250, 246, 238, 0.40) 0%, rgba(250, 246, 238, 0.08) 22%, rgba(250, 246, 238, 0.35) 60%, rgba(250, 246, 238, 0.92) 100%),
+    url('/assets/bg-budaya-kuis-light.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -173,3 +263,61 @@ svg {
   letter-spacing: 0.08em;
   color: var(--aksen);
 }
+
+/* ==========================================================================
+   Transisi Tema (Dark Mode / Light Mode) — Menyeluruh 1 Halaman Mulus
+   ========================================================================== */
+
+/* View Transitions API (Chrome 111+, Edge 111+, Safari 18+) — Transisi memudar halus */
+::view-transition-old(root) {
+  animation: 0.35s cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 0.35s cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-in;
+}
+
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Fallback transisi memudar terpadu untuk browser tanpa View Transitions API */
+html.tema-transisi-aktif,
+html.tema-transisi-aktif body,
+html.tema-transisi-aktif header,
+html.tema-transisi-aktif main,
+html.tema-transisi-aktif footer,
+html.tema-transisi-aktif section,
+html.tema-transisi-aktif nav,
+html.tema-transisi-aktif .kartu,
+html.tema-transisi-aktif .nav-kontainer,
+html.tema-transisi-aktif .tombol,
+html.tema-transisi-aktif [class*="bagian"],
+html.tema-transisi-aktif [class*="footer"],
+html.tema-transisi-aktif [class*="dialog"] {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+  html.tema-transisi-aktif,
+  html.tema-transisi-aktif * {
+    transition: none !important;
+  }
+}
+

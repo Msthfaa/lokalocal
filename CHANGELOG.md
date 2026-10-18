@@ -24,6 +24,61 @@
   - Alur kuis kini sesuai dengan instruksi: pengguna dipandu memilih daerah yang diinginkan terlebih dahulu sebelum tantangan soal diluncurkan.
   - Build produksi Vite (`npm run build`) sukses tanpa error.
 
+## [2026-10-18] Penerapan Kursor Kultural Gunungan Wayang Nusantara
+- **Dibuat/diubah:**
+  - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan.png`:
+    - Membuat aset kursor kustom berbentuk siluet Gunungan Wayang Kulit (Kayon) bertatahkan emas dengan geometri Pohon Hayat Kalpataru dan Gapura Paduraksa, di mana puncak tajuk (hotspot `x=16, y=0`) berfungsi sebagai penunjuk presisi tinggi.
+  - `web/public/assets/cursor-gunungan-pointer.svg` & `web/public/assets/cursor-gunungan-pointer.png`:
+    - Membuat varian kursor interaktif dengan pendaran aura emas berkilau (*radiant golden glow*) dan permata bintang pada puncak tajuk untuk menandakan elemen yang dapat diklik.
+  - `web/src/styles/base.css`:
+    - Menerapkan aturan kursor Gunungan Wayang pada `html` dan `body` untuk perangkat berpenunjuk halus (`@media (hover: hover) and (pointer: fine)`).
+    - Memastikan seluruh elemen interaktif (tombol, tautan, kartu bento, tab, peta, dan dialog) menggunakan kursor Gunungan Menyala Emas, serta menjaga kenyamanan seleksi teks (`cursor: text`) pada kolom input.
+- **Hasil:**
+  - Pengunjung di desktop/laptop kini disambut dengan kursor Gunungan Wayang khas keraton nusantara yang unik, anggun, dan bernilai kultural tinggi tanpa membebani perangkat seluler/layar sentuh.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` sukses 100% (0 error).
+
+## [2026-10-18] Penyesuaian Transisi Memudar Murni (Fade Only) pada Tema & Dialog Modal
+- **Dibuat/diubah:**
+  - `web/src/ui/tema.js`:
+    - Mengganti animasi ekspansi lingkaran (*circular reveal*) menjadi transisi memudar murni (*pure opacity crossfade*) berdurasi 350ms menggunakan View Transitions API.
+  - `web/src/styles/base.css`:
+    - Menyelaraskan aturan View Transitions (`vt-fade-out` dan `vt-fade-in`) dan transisi fallback `.tema-transisi-aktif` agar seluruh halaman memudar lembut secara serentak tanpa efek geometris.
+  - `web/src/styles/components.css`:
+    - Menghilangkan efek perubahan skala (*scale transform*) dan pergeseran sumbu Y (`translateY`) pada dialog modal; kini pembukaan dan penutupan dialog modal (Tentang Data, Tentang Kami, Detail Rekaman) berlangsung murni memudar (*opacity fade-in/fade-out* 0.3s/0.25s).
+- **Hasil:**
+  - Efek transisi pada pergantian mode gelap/terang dan pembukaan/penutupan dialog modal kini murni memudar (*clean fade*), tenang, dan elegan sesuai preferensi pengguna.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` lulus 100%.
+
+## [2026-10-18] Transisi Menyeluruh Tema (Dark/Light Mode) & Animasi Dialog "Tentang Data" dan "Tentang Kami"
+- **Dibuat/diubah:**
+  - `web/src/ui/tema.js`:
+    - Mengintegrasikan View Transitions API (`document.startViewTransition`) untuk menyatukan seluruh kanvas 1 halaman tanpa tearing atau keterpisahan elemen saat beralih antara mode gelap dan terang.
+    - Menambahkan fallback transisi terkoordinasi secara global (`.tema-transisi-aktif`) untuk peramban yang belum mendukung View Transitions API.
+    - Menghormati preferensi aksesibilitas `prefers-reduced-motion: reduce`.
+  - `web/src/styles/base.css`:
+    - Menambahkan aturan CSS View Transitions (`::view-transition-old(root)`, `::view-transition-new(root)`).
+    - Menghapus deklarasi transisi terpisah pada elemen individu `html` dan `body` yang sebelumnya memicu desinkronisasi visual.
+  - `web/src/styles/components.css`:
+    - Menambahkan animasi masuk dan keluar dialog modal serta latar belakang `::backdrop`.
+  - `web/src/util/a11y.js`:
+    - Memperbarui `pasangPerilakuDialog` untuk mengelola siklus hidup transisi keluar dialog sebelum `dialogEl.close()` dijalankan secara native.
+    - Mengintersep event `cancel` (tombol ESC keyboard) dan klik backdrop agar memainkan animasi penutupan sebelum dialog ditutup.
+
+
+## [2026-10-18] Perluasan Latar Belakang Rumah Adat & Candi Nusantara ke Seluruh Halaman Bawah hingga Footer
+- **Dibuat/diubah:**
+  - `web/src/styles/base.css`:
+    - Menerapkan latar belakang arsitektur kultural tetap (*fixed background*) bergambar Rumah Gadang, siluet Candi Borobudur, dan Tongkonan Toraja berhiaskan awan mega mendung (`url('/assets/bg-budaya-kuis.jpg')` untuk tema gelap dan `url('/assets/bg-budaya-kuis-light.jpg')` untuk tema terang) pada `body:not(.halaman-fullscreen-body)`.
+  - `web/src/styles/sections.css`:
+    - Menjadikan `.editorial-section` dan `.penutup-section` transparan penuh (`background: transparent !important`) sehingga gambar rumah adat mengalir mulus tanpa terpotong kotak hitam/putih.
+    - Menyesuaikan gradien vinyet halus pada `.s1-pembuka::after` agar transisi keluar dari hero alam/pegunungan menuju siluet arsitektur budaya mengalir lembut (*seamless transition*).
+  - `web/src/styles/layout.css`:
+    - Menjadikan `.footer-utama` transparan penuh (`background: transparent !important`) tanpa garis pembatas, membuat pemandangan rumah adat nusantara membentang utuh hingga ujung terbawah halaman.
+- **Hasil:**
+  - Seluruh area halaman Beranda dari bawah Hero, melintasi Bento Grid tempat bersejarah, 5 tradisi UNESCO, modul penutup, hingga area footer kini memiliki satu latar belakang arsitektur nusantara yang megah, konsisten, dan elegan.
+  - Kartu-kartu kaca bento, kartu penutup, dan panel atribusi (80% tembus pandang) mengapung indah di depan latar kultural tanpa mengorbankan keterbacaan teks.
+>>>>>>> fe1e4da29ccc406c84428633efd936a88f249ec8
+
 ## [2026-10-18] Perbaikan Masalah Akses Halaman Paspor & Kuis (Eliminasi Error 'gsap is not defined')
 - **Dibuat/diubah:**
   - `web/src/router/spa-router.js`:
