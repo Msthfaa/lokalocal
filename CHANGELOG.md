@@ -189,7 +189,6 @@
 - **Hasil:**
   - Tampilan visual website Lokalocal meningkat ke standar desain kuratorial editorial profesional, terbebas dari artefak AI slop (tidak ada kapsul lonjong berlebihan, tidak ada bintang klise, tidak ada neon glow artifisial, dan tipografi tajam tanpa bayangan kabur).
   - Validasi data `node tools/validate.mjs` lolos 100% (0 error), build produksi `npm run build` sukses dalam 2.61 detik, dan server Vite aktif responsif di background.
->>>>>>> origin/main
 
 ## [2026-10-16] Pembatasan Sesi Layar Pemuatan (Tirai Wayang & 3D Pinisi) & Akses IP Lokal
 - **Dibuat/diubah:**
