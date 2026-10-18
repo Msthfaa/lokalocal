@@ -1,5 +1,14 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Penerapan Latar Belakang Rumah Adat & Candi Nusantara pada Area Kisah & Catatan Warisan (Bento Grid)
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - Mengganti latar belakang hitam pekat polos (`#000000` / `#ffffff`) pada `.editorial-section` dengan ilustrasi megah Rumah Gadang, siluet Candi Borobudur, dan Tongkonan Toraja berhiaskan awan mega mendung batik (`url('/assets/bg-budaya-kuis.jpg')` untuk mode gelap dan `url('/assets/bg-budaya-kuis-light.jpg')` untuk mode terang).
+    - Menerapkan gradasi pelindung kontras halus (`linear-gradient`) dengan bukaan lembut di area tengah agar kartu-kartu kaca bento grid (80% tembus pandang) tampak mengapung indah di depan latar arsitektur tradisional.
+- **Hasil:**
+  - Area Kisah & Catatan Warisan Tempat Bersejarah kini memiliki atmosfer kultural yang serasi dan harmonis dengan halaman Kuis dan Paspor.
+  - Teks judul, keterangan, dan kartu-kartu bento tetap kontras dan terbaca jelas (WCAG AAA).
+
 ## [2026-10-18] Perbaikan Masalah Akses Halaman Paspor & Kuis (Eliminasi Error 'gsap is not defined')
 - **Dibuat/diubah:**
   - `web/src/router/spa-router.js`:
