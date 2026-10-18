@@ -212,46 +212,42 @@
   -webkit-backdrop-filter: blur(20px);
 }
 
-/* Animasi Masuk: Dialog membuka dengan halus, empuk, dan elegan */
+/* Animasi Masuk: Dialog membuka dengan efek memudar halus */
 .dialog-modal[open] {
-  animation: modal-masuk 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modal-masuk 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .dialog-modal[open]::backdrop {
   background-color: rgba(14, 11, 9, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  animation: backdrop-masuk 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: backdrop-masuk 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Animasi Keluar: Dialog menutup dengan lembut sebelum disembunyikan */
+/* Animasi Keluar: Dialog menutup dengan efek memudar halus */
 .dialog-modal.dialog-keluar {
-  animation: modal-keluar 0.25s cubic-bezier(0.2, 0, 0, 1) forwards !important;
+  animation: modal-keluar 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
 .dialog-modal.dialog-keluar::backdrop {
-  animation: backdrop-keluar 0.25s cubic-bezier(0.2, 0, 0, 1) forwards !important;
+  animation: backdrop-keluar 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
 @keyframes modal-masuk {
   0% {
     opacity: 0;
-    transform: scale(0.92) translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
   }
 }
 
 @keyframes modal-keluar {
   0% {
     opacity: 1;
-    transform: scale(1) translateY(0);
   }
   100% {
     opacity: 0;
-    transform: scale(0.94) translateY(14px);
   }
 }
 
@@ -287,7 +283,6 @@
   .dialog-modal[open]::backdrop,
   .dialog-modal.dialog-keluar::backdrop {
     animation: none !important;
-    transform: none !important;
   }
 }
 

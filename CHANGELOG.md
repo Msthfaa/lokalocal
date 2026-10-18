@@ -1,26 +1,32 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Penyesuaian Transisi Memudar Murni (Fade Only) pada Tema & Dialog Modal
+- **Dibuat/diubah:**
+  - `web/src/ui/tema.js`:
+    - Mengganti animasi ekspansi lingkaran (*circular reveal*) menjadi transisi memudar murni (*pure opacity crossfade*) berdurasi 350ms menggunakan View Transitions API.
+  - `web/src/styles/base.css`:
+    - Menyelaraskan aturan View Transitions (`vt-fade-out` dan `vt-fade-in`) dan transisi fallback `.tema-transisi-aktif` agar seluruh halaman memudar lembut secara serentak tanpa efek geometris.
+  - `web/src/styles/components.css`:
+    - Menghilangkan efek perubahan skala (*scale transform*) dan pergeseran sumbu Y (`translateY`) pada dialog modal; kini pembukaan dan penutupan dialog modal (Tentang Data, Tentang Kami, Detail Rekaman) berlangsung murni memudar (*opacity fade-in/fade-out* 0.3s/0.25s).
+- **Hasil:**
+  - Efek transisi pada pergantian mode gelap/terang dan pembukaan/penutupan dialog modal kini murni memudar (*clean fade*), tenang, dan elegan sesuai preferensi pengguna.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` lulus 100%.
+
 ## [2026-10-18] Transisi Menyeluruh Tema (Dark/Light Mode) & Animasi Dialog "Tentang Data" dan "Tentang Kami"
 - **Dibuat/diubah:**
   - `web/src/ui/tema.js`:
-    - Mengintegrasikan View Transitions API (`document.startViewTransition`) dengan ekspansi lingkaran (*circular reveal*) dari koordinat tombol/klik kursor, menyatukan seluruh kanvas 1 halaman tanpa tearing atau keterpisahan elemen saat beralih antara mode gelap dan terang.
+    - Mengintegrasikan View Transitions API (`document.startViewTransition`) untuk menyatukan seluruh kanvas 1 halaman tanpa tearing atau keterpisahan elemen saat beralih antara mode gelap dan terang.
     - Menambahkan fallback transisi terkoordinasi secara global (`.tema-transisi-aktif`) untuk peramban yang belum mendukung View Transitions API.
     - Menghormati preferensi aksesibilitas `prefers-reduced-motion: reduce`.
   - `web/src/styles/base.css`:
-    - Menambahkan aturan CSS View Transitions (`::view-transition-old(root)`, `::view-transition-new(root)`) dengan `z-index` terkontrol.
-    - Menambahkan kelas transisi tema terpadu (`.tema-transisi-aktif`) untuk menyelaraskan durasi warna, latar, batas, dan bayangan seluruh kontainer secara serentak.
+    - Menambahkan aturan CSS View Transitions (`::view-transition-old(root)`, `::view-transition-new(root)`).
     - Menghapus deklarasi transisi terpisah pada elemen individu `html` dan `body` yang sebelumnya memicu desinkronisasi visual.
   - `web/src/styles/components.css`:
-    - Menambahkan animasi masuk (*entrance*) `.dialog-modal[open]` (`modal-masuk`: skala 0.92 ke 1.0, translasi Y 20px ke 0) dengan kurva pegas halus `cubic-bezier(0.16, 1, 0.3, 1)` berdurasi 0.35s.
-    - Menambahkan animasi latar belakang `::backdrop` (`backdrop-masuk`: fade blur bertahap dari 0px ke 8px).
-    - Menambahkan animasi keluar (*exit*) `.dialog-modal.dialog-keluar` (`modal-keluar`: skala 1.0 ke 0.94, translasi Y 14px, fade out) berdurasi 0.25s.
+    - Menambahkan animasi masuk dan keluar dialog modal serta latar belakang `::backdrop`.
   - `web/src/util/a11y.js`:
     - Memperbarui `pasangPerilakuDialog` untuk mengelola siklus hidup transisi keluar dialog sebelum `dialogEl.close()` dijalankan secara native.
-    - Mengintersep event `cancel` (tombol ESC keyboard) dan klik backdrop agar memainkan animasi penutupan yang lembut dan elegan sebelum dialog ditutup dan fokus dikembalikan ke tombol pemicu.
-- **Hasil:**
-  - Perpindahan mode gelap dan mode terang kini terasa menyatu utuh dalam satu halaman (*seamless single-surface transition*), tanpa keterpisahan elemen maupun kedipan latar belakang.
-  - Dialog "Tentang Data & Keterbatasan" serta "Tentang Lokalocal & Pengembang" (dan dialog detail rekaman budaya) membuka dan menutup dengan animasi halus, empuk, dan elegan (*Apple-grade motion*).
-  - Lolos uji validasi data (`validate.mjs`) dan `npm run build` sukses 100% tanpa error.
+    - Mengintersep event `cancel` (tombol ESC keyboard) dan klik backdrop agar memainkan animasi penutupan sebelum dialog ditutup.
+
 
 ## [2026-10-18] Perluasan Latar Belakang Rumah Adat & Candi Nusantara ke Seluruh Halaman Bawah hingga Footer
 - **Dibuat/diubah:**
