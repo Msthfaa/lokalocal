@@ -915,26 +915,50 @@
       <section class="bagian bagian-kuis-interaktif" style="padding-top: calc(var(--tinggi-nav) + var(--ruang-4)); min-height: 85vh;">
         <div class="wadah">
           <div class="bagian-kepala kuis-hero-kepala">
-            <p class="kicker">Evaluasi Pemahaman Budaya</p>
+            <div class="kicker-glow">
+              <span class="kicker-glow-dot">✦</span>
+              <span>ARENA UJI WAWASAN NUSANTARA</span>
+              <span class="kicker-glow-dot">✦</span>
+            </div>
             <h1 class="kuis-judul-megah">Kuis Budaya Nusantara</h1>
             <p class="bagian-subjudul kuis-subjudul-elegan">
-              Uji ketajaman wawasanmu mengenai tradisi, cagar budaya, sebaran geografis, dan fakta pencatatan warisan budaya di seluruh Nusantara.
+              Pilih zona wilayah budaya terlebih dahulu untuk menguji wawasanmu tentang tradisi, seni, kriya, dan fakta pencatatan data kebudayaan daerah.
             </p>
-            <div class="kuis-info-strip" role="group" aria-label="Struktur Tantangan Kuis">
-              <span class="kuis-info-item">
-                <span class="kuis-info-nomor">01</span>
-                <span>Sebaran 38 Provinsi</span>
-              </span>
-              <span class="kuis-info-pemisah" aria-hidden="true">•</span>
-              <span class="kuis-info-item">
-                <span class="kuis-info-nomor">02</span>
-                <span>Klasifikasi Objek Budaya</span>
-              </span>
-              <span class="kuis-info-pemisah" aria-hidden="true">•</span>
-              <span class="kuis-info-item">
-                <span class="kuis-info-nomor">03</span>
-                <span>Fakta Ketimpangan Data</span>
-              </span>
+
+            <div class="kuis-hero-stats" role="group" aria-label="Ringkasan Statistik Kuis Wilayah">
+              <div class="kuis-hero-stat-chip" id="stat-chip-tradisi">
+                🏛️ <strong id="stat-angka-tradisi">347</strong> <span>Tradisi Terkurasi</span>
+              </div>
+              <div class="kuis-hero-stat-chip" id="stat-chip-provinsi">
+                🗺️ <strong id="stat-angka-provinsi">38</strong> <span>Provinsi</span>
+              </div>
+              <div class="kuis-hero-stat-chip" id="stat-chip-soal">
+                ⚡ <strong id="stat-angka-soal">8</strong> <span>Tantangan Data</span>
+              </div>
+            </div>
+
+            <div class="kuis-wilayah-pills" role="tablist" aria-label="Cakupan Wilayah Budaya Nusantara">
+              <button type="button" class="kuis-wilayah-pill" data-kategori="sumatera" role="tab" aria-selected="false">
+                🌿 Sumatera • Gadang &amp; Tenun
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="jawa" role="tab" aria-selected="false">
+                🏛️ Jawa • Candi &amp; Wayang
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="kalimantan" role="tab" aria-selected="false">
+                🛶 Kalimantan • Dayak &amp; Mandau
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="sulawesi" role="tab" aria-selected="false">
+                ⛵ Sulawesi • Tongkonan &amp; Pinisi
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="bali_nusa" role="tab" aria-selected="false">
+                🌊 Bali &amp; Nusa Tenggara
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="maluku_papua" role="tab" aria-selected="false">
+                🦜 Maluku &amp; Papua
+              </button>
+              <button type="button" class="kuis-wilayah-pill" data-kategori="semua" role="tab" aria-selected="false">
+                🇮🇩 Semua Nusantara
+              </button>
             </div>
           </div>
 

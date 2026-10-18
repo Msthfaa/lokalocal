@@ -137,6 +137,21 @@ async function muatFiturInteraktifS7S8({ provinsi, statistik }) {
     kontrolKuis.terimaDataLengkap(dataLengkapCache);
   }
 
+  // Hubungkan tombol pill wilayah kuis
+  const daftarPillsKuis = document.querySelectorAll('.kuis-wilayah-pill');
+  daftarPillsKuis.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const kategori = pill.dataset.kategori;
+      if (!kategori || !kontrolKuis) return;
+      kontrolKuis.aturWilayah(kategori);
+
+      const panelKuis = document.getElementById('s7-panel-kuis');
+      if (panelKuis) {
+        panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
+
   inisialisasiBagianPenutup({
     pengelolaPaspor,
     totalProvinsi: provinsi.length || 38

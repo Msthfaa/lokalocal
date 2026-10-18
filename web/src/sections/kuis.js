@@ -1,14 +1,16 @@
 /**
  * kuis.js (section) — Antarmuka Kuis Interaktif 8 Soal Budaya Nusantara
- * Sesuai WEB_SPEC.md Bagian 8.2 & Kaidah Anti-Slop:
- * - Desain kuratorial bersih tanpa ornamen klise (tanpa bintang kelip, tanpa emoji acak).
+ * Sesuai arahan pengguna & WEB_SPEC.md:
+ * - Wajib memilih wilayah terlebih dahulu (tidak default ke semua wilayah).
+ * - Menampilkan grid pemilihan wilayah interaktif saat awal.
+ * - Soal-soal yang muncul dikurasi 100% sesuai daerah yang dipilih.
  * - Progress bar bersegmen 8 langkah yang jelas.
  * - Opsi jawaban terindeks abjad (A, B, C, D) dengan status feedback elegan.
  * - Kotak petunjuk arsip resmi SPKT berformat kutipan historis.
- * - Ringkasan akhir berbobot dengan 3 kartu tradisi penemuan baru.
+ * - Ringkasan akhir berbobot dengan 3 kartu tradisi penemuan baru dan pintasan coba wilayah lain.
  */
 
-import { buatSesiKuis } from '../features/kuis.js';
+import { buatSesiKuis, WILAYAH_CONFIG, dapatkanStatistikWilayah } from '../features/kuis.js';
 import { formatAngka } from '../util/format.js';
 import { tampilkanToast } from '../ui/toast.js';
 
@@ -35,6 +37,8 @@ export function inisialisasiBagianKuis({
   let daftarBudaya = [];
   let dataSiap = false;
 
+  // Nilai awal: null (wajib memilih wilayah terlebih dahulu)
+  let wilayahAktif = null;
   let statusLayar = 'awal'; // 'awal' | 'bermain' | 'hasil'
   let daftarSoal = [];
   let indeksSoalAktif = 0;
@@ -42,12 +46,34 @@ export function inisialisasiBagianKuis({
   let jawabanDipilih = null;
   let tradisiDitemui = [];
 
-  function mulaiSesiBaru() {
+  function perbaruiStatistikHero() {
+    const statWil = dapatkanStatistikWilayah(wilayahAktif || 'semua', daftarBudaya, daftarProvinsi);
+    const elTradisi = document.getElementById('stat-angka-tradisi');
+    const elProvinsi = document.getElementById('stat-angka-provinsi');
+    const elSoal = document.getElementById('stat-angka-soal');
+
+    if (elTradisi) elTradisi.textContent = formatAngka(statWil.jumlahTradisi);
+    if (elProvinsi) elProvinsi.textContent = formatAngka(statWil.jumlahProvinsi);
+    if (elSoal) elSoal.textContent = '8';
+  }
+
+  function mulaiSesiBaru(kategori = wilayahAktif) {
+    if (!kategori || !WILAYAH_CONFIG[kategori]) {
+      // Bila belum memilih wilayah, arahkan pengguna memilih terlebih dahulu
+      statusLayar = 'awal';
+      wilayahAktif = null;
+      render();
+      return;
+    }
+
     if (!dataSiap || daftarBudaya.length === 0) return;
+
+    wilayahAktif = kategori;
     daftarSoal = buatSesiKuis({
       budaya: daftarBudaya,
       provinsi: daftarProvinsi,
-      statistik
+      statistik,
+      wilayah: wilayahAktif
     });
     indeksSoalAktif = 0;
     skor = 0;
@@ -58,6 +84,24 @@ export function inisialisasiBagianKuis({
       .slice(0, 3);
     statusLayar = 'bermain';
     render();
+  }
+
+  function aturWilayah(kategori) {
+    if (!WILAYAH_CONFIG[kategori]) return;
+    wilayahAktif = kategori;
+
+    // Perbarui status aktif visual di tombol pill DOM
+    const pills = document.querySelectorAll('.kuis-wilayah-pill');
+    pills.forEach((p) => {
+      const cocok = p.dataset.kategori === kategori;
+      p.classList.toggle('is-aktif', cocok);
+      p.setAttribute('aria-selected', cocok ? 'true' : 'false');
+    });
+
+    perbaruiStatistikHero();
+
+    // Langsung mulai sesi bermain untuk wilayah yang baru dipilih
+    mulaiSesiBaru(kategori);
   }
 
   function pilihJawaban(opsiTeks) {
@@ -82,23 +126,49 @@ export function inisialisasiBagianKuis({
   }
 
   function dapatkanPesanHasil(skorAkhir, total) {
+    const infoWil = WILAYAH_CONFIG[wilayahAktif] || WILAYAH_CONFIG.semua;
     if (skorAkhir >= 7) {
-      return 'Ketajaman wawasanmu luar biasa. Kamu mengenali ragam budaya dan membaca pola pencatatan data Nusantara dengan sangat cermat.';
+      return `Ketajaman wawasanmu luar biasa! Kamu mengenali ragam budaya dan membaca pola pencatatan data ${infoWil.namaSingkat || infoWil.nama} dengan sangat cermat.`;
     }
     if (skorAkhir >= 4) {
-      return 'Pemahaman dasar yang sangat baik! Berbagai tradisi daerah yang unik kini semakin terekam jelas dalam ingatanmu.';
+      return `Pemahaman yang sangat baik! Berbagai tradisi daerah dan fakta data di ${infoWil.namaSingkat || infoWil.nama} kini terekam semakin jelas dalam ingatanmu.`;
     }
-    return 'Setiap jawaban adalah pintu penemuan baru. Terus telusuri katalog budaya untuk mengenal warisan Nusantara yang belum banyak diketahui.';
+    return `Setiap jawaban adalah pintu penemuan baru. Terus telusuri khasanah budaya ${infoWil.namaSingkat || infoWil.nama} untuk mengenal warisan Nusantara yang belum banyak diketahui.`;
   }
 
   function render(fokusKeUmpanBalik = false) {
     wadahUtama.textContent = '';
+    const infoWilayah = wilayahAktif ? WILAYAH_CONFIG[wilayahAktif] : null;
 
     // =========================================================================
-    // 1. Header Kartu Kuis (Kuratorial & Progress Bar Bersegmen)
+    // 1. Header Kartu Kuis (Banner Topik Wilayah + Metadata)
     // =========================================================================
     const kepala = document.createElement('div');
     kepala.className = 'kuis-kartu-kepala';
+
+    if (infoWilayah) {
+      // Banner Topik Wilayah Aktif
+      const bannerTopik = document.createElement('div');
+      bannerTopik.className = 'kuis-topik-badge-banner';
+      bannerTopik.setAttribute('role', 'status');
+      bannerTopik.innerHTML = `
+        <span class="kuis-topik-label">Cakupan Wilayah:</span>
+        <strong class="kuis-topik-nama">${infoWilayah.ikon} ${infoWilayah.nama}</strong>
+        <span class="kuis-topik-total">• 8 Pertanyaan Terkurasi SPKT</span>
+      `;
+      kepala.appendChild(bannerTopik);
+    } else {
+      // Banner Permintaan Memilih Wilayah Terlebih Dahulu
+      const bannerPilih = document.createElement('div');
+      bannerPilih.className = 'kuis-topik-badge-banner kuis-topik-badge-banner--pilih';
+      bannerPilih.setAttribute('role', 'status');
+      bannerPilih.innerHTML = `
+        <span class="kuis-topik-label">LANGKAH 1:</span>
+        <strong class="kuis-topik-nama">Pilih Zona Wilayah Budaya Terlebih Dahulu</strong>
+        <span class="kuis-topik-total">• 7 Pilihan Wilayah</span>
+      `;
+      kepala.appendChild(bannerPilih);
+    }
 
     const barisAtas = document.createElement('div');
     barisAtas.className = 'kuis-kartu-baris-atas';
@@ -106,7 +176,7 @@ export function inisialisasiBagianKuis({
     const infoKiri = document.createElement('div');
     infoKiri.className = 'kuis-kartu-meta-kiri';
 
-    if (statusLayar === 'bermain') {
+    if (statusLayar === 'bermain' && infoWilayah) {
       const soal = daftarSoal[indeksSoalAktif];
       const tagKategori = document.createElement('span');
       tagKategori.className = 'kuis-label-kategori';
@@ -123,25 +193,25 @@ export function inisialisasiBagianKuis({
       skorChip.className = 'kuis-lencana-skor-live';
       skorChip.innerHTML = `<span class="kuis-lencana-skor-label">Skor</span><span class="kuis-lencana-skor-angka">${skor}</span>`;
       barisAtas.appendChild(skorChip);
-    } else if (statusLayar === 'hasil') {
+    } else if (statusLayar === 'hasil' && infoWilayah) {
       const tagKategori = document.createElement('span');
       tagKategori.className = 'kuis-label-kategori';
       tagKategori.textContent = 'Evaluasi Akhir';
 
       const judulHasil = document.createElement('h3');
       judulHasil.className = 'kuis-kartu-judul';
-      judulHasil.textContent = 'Rangkuman Penelusuran Budaya';
+      judulHasil.textContent = `Hasil Kuis: ${infoWilayah.nama}`;
 
       infoKiri.append(tagKategori, judulHasil);
       barisAtas.appendChild(infoKiri);
     } else {
       const tagKategori = document.createElement('span');
       tagKategori.className = 'kuis-label-kategori';
-      tagKategori.textContent = 'Kurasi Terbuka SPKT';
+      tagKategori.textContent = 'Eksplorasi Terkurasi SPKT';
 
       const judulAwal = document.createElement('h3');
       judulAwal.className = 'kuis-kartu-judul';
-      judulAwal.textContent = 'Eksplorasi Wawasan 8 Soal';
+      judulAwal.textContent = 'Pilih Wilayah Terlebih Dahulu';
 
       infoKiri.append(tagKategori, judulAwal);
       barisAtas.appendChild(infoKiri);
@@ -175,7 +245,7 @@ export function inisialisasiBagianKuis({
     wadahUtama.appendChild(kepala);
 
     // =========================================================================
-    // 2. Layar Awal (Briefing & Pengenalan Tantangan)
+    // 2. Layar Awal: WAJIB PILIH WILAYAH TERLEBIH DAHULU
     // =========================================================================
     if (statusLayar === 'awal') {
       const badanAwal = document.createElement('div');
@@ -184,61 +254,51 @@ export function inisialisasiBagianKuis({
       const deskripsiAwal = document.createElement('p');
       deskripsiAwal.className = 'kuis-paragraf-pembuka';
       deskripsiAwal.textContent =
-        'Setiap pertanyaan diracik secara objektif dari data resmi Sistem Pendataan Kebudayaan Terpadu (SPKT) Kementerian Kebudayaan RI, menguji wawasan faktual tanpa asumsi atau tebakan fiktif.';
+        'Silakan tentukan zona wilayah kebudayaan Indonesia yang ingin kamu uji di bawah ini. Soal-soal yang muncul akan dikurasi secara spesifik berdasarkan tradisi, seni, kriya, dan realitas pencatatan data resmi SPKT di daerah pilihanmu:';
 
-      // Tiga Pilar Tantangan yang Diuji
-      const gridPilar = document.createElement('div');
-      gridPilar.className = 'kuis-pilar-awal-grid';
+      // Grid Kartu Pemilihan Wilayah Interaktif
+      const gridPilih = document.createElement('div');
+      gridPilih.className = 'kuis-pilih-wilayah-grid';
+      gridPilih.setAttribute('role', 'list');
+      gridPilih.setAttribute('aria-label', 'Daftar pilihan zona wilayah budaya');
 
-      const dataPilar = [
-        {
-          nomor: '01',
-          judul: 'Asal Usul Geografis',
-          isi: 'Mengenali provinsi asal tradisi dan warisan dari petunjuk ringkasan catatan sejarah.'
-        },
-        {
-          nomor: '02',
-          judul: 'Klasifikasi Objek Budaya',
-          isi: 'Membedakan kategori OPK (Kerajinan, Seni, Tradisi Lisan, Pengetahuan, dan Adat).'
-        },
-        {
-          nomor: '03',
-          judul: 'Realitas Data Terbuka',
-          isi: 'Mencermati sebaran pencatatan, konsentrasi wilayah, dan provinsi yang belum tercatat.'
-        }
-      ];
-
-      dataPilar.forEach((item) => {
-        const kartuPilar = document.createElement('div');
-        kartuPilar.className = 'kuis-pilar-item';
-        kartuPilar.innerHTML = `
-          <span class="kuis-pilar-nomor">${item.nomor}</span>
-          <h4 class="kuis-pilar-judul">${item.judul}</h4>
-          <p class="kuis-pilar-isi">${item.isi}</p>
+      Object.entries(WILAYAH_CONFIG).forEach(([kunci, cfg]) => {
+        const statW = dapatkanStatistikWilayah(kunci, daftarBudaya, daftarProvinsi);
+        const kartuW = document.createElement('button');
+        kartuW.type = 'button';
+        kartuW.className = 'kuis-pilih-wilayah-kartu';
+        kartuW.setAttribute('role', 'listitem');
+        kartuW.innerHTML = `
+          <div>
+            <div class="kuis-pilih-kartu-kepala">
+              <span class="kuis-pilih-kartu-ikon">${cfg.ikon}</span>
+              <h4 class="kuis-pilih-kartu-judul">${cfg.nama}</h4>
+            </div>
+            <p class="kuis-pilih-kartu-sub">${cfg.subjudul}</p>
+          </div>
+          <div class="kuis-pilih-kartu-kaki">
+            <span>${formatAngka(statW.jumlahTradisi)} Tradisi • ${statW.jumlahProvinsi} Prov</span>
+            <span class="kuis-pilih-kartu-panah">Mulai Kuis &rarr;</span>
+          </div>
         `;
-        gridPilar.appendChild(kartuPilar);
+        kartuW.addEventListener('click', () => {
+          aturWilayah(kunci);
+          const panelKuis = document.getElementById('s7-panel-kuis');
+          if (panelKuis) {
+            panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+        gridPilih.appendChild(kartuW);
       });
 
-      const barisAksiMulai = document.createElement('div');
-      barisAksiMulai.className = 'kuis-awal-aksi';
-
-      const btnMulai = document.createElement('button');
-      btnMulai.type = 'button';
-      btnMulai.className = 'tombol tombol--utama kuis-tombol-mulai';
-      btnMulai.disabled = !dataSiap;
-      btnMulai.innerHTML = dataSiap
-        ? '<span>Mulai Tantangan (8 Soal)</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-        : '<span>Menyiapkan bank data budaya...</span>';
-      btnMulai.addEventListener('click', () => mulaiSesiBaru());
-
-      const catatanData = document.createElement('span');
-      catatanData.className = 'kuis-awal-catatan';
-      catatanData.textContent = dataSiap
-        ? '• Bank data siap dari 493 catatan tervalidasi'
+      const catatanBawah = document.createElement('div');
+      catatanBawah.className = 'kuis-awal-catatan';
+      catatanBawah.style.marginTop = 'var(--ruang-2)';
+      catatanBawah.textContent = dataSiap
+        ? '• Kamu juga dapat memilih wilayah melalui tombol pill di atas'
         : '• Sedang membaca arsip lokal...';
 
-      barisAksiMulai.append(btnMulai, catatanData);
-      badanAwal.append(deskripsiAwal, gridPilar, barisAksiMulai);
+      badanAwal.append(deskripsiAwal, gridPilih, catatanBawah);
       wadahUtama.appendChild(badanAwal);
       return;
     }
@@ -378,82 +438,81 @@ export function inisialisasiBagianKuis({
             }
             const elJelajah = document.getElementById('jelajah');
             if (elJelajah) {
-              elJelajah.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              elJelajah.scrollIntoView({ behavior: 'smooth' });
             }
           });
           barisAksi.appendChild(btnLihatPeta);
         }
 
-        if (soal.rekamanTerkait && typeof saatBukaDetailRekaman === 'function') {
-          const btnDetail = document.createElement('button');
-          btnDetail.type = 'button';
-          btnDetail.className = 'tombol tombol--garis';
-          btnDetail.innerHTML = '<span>Baca Kisah Arsip</span>';
-          btnDetail.addEventListener('click', () => {
-            saatBukaDetailRekaman(soal.rekamanTerkait, btnDetail);
-          });
-          barisAksi.appendChild(btnDetail);
-        }
-
         const btnLanjut = document.createElement('button');
         btnLanjut.type = 'button';
-        btnLanjut.className = 'tombol tombol--utama kuis-tombol-lanjut';
-        btnLanjut.innerHTML =
-          indeksSoalAktif + 1 < daftarSoal.length
-            ? '<span>Soal Berikutnya</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-            : '<span>Lihat Hasil Evaluasi</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+        btnLanjut.className = 'tombol tombol--utama';
+        const adalahSoalTerakhir = indeksSoalAktif + 1 === daftarSoal.length;
+        btnLanjut.innerHTML = adalahSoalTerakhir
+          ? '<span>Lihat Evaluasi Akhir</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>'
+          : '<span>Pertanyaan Berikutnya</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
         btnLanjut.addEventListener('click', () => lanjutSoalBerikutnya());
-        barisAksi.appendChild(btnLanjut);
 
+        barisAksi.appendChild(btnLanjut);
         kotakUmpan.append(headerUmpan, teksPenjelasan, barisAksi);
         badanSoal.appendChild(kotakUmpan);
-
-        if (fokusKeUmpanBalik) {
-          window.requestAnimationFrame(() => {
-            kotakUmpan.focus();
-          });
-        }
       }
 
       wadahUtama.appendChild(badanSoal);
+
+      if (fokusKeUmpanBalik) {
+        window.requestAnimationFrame(() => {
+          const kotakUmpanBaru = wadahUtama.querySelector('.kuis-umpan-kartu');
+          if (kotakUmpanBaru) kotakUmpanBaru.focus();
+        });
+      }
       return;
     }
 
     // =========================================================================
-    // 4. Layar Hasil Akhir (Skor & 3 Penemuan Budaya Sesi Ini)
+    // 4. Layar Hasil (Skor, Refleksi Data, dan Tradisi Ditemukan)
     // =========================================================================
-    if (statusLayar === 'hasil') {
+    if (statusLayar === 'hasil' && infoWilayah) {
       const badanHasil = document.createElement('div');
       badanHasil.className = 'kuis-badan-konten';
       badanHasil.tabIndex = -1;
 
-      // Kartu Skor Editorial
+      // Papan Skor Utama
       const kartuSkor = document.createElement('div');
-      kartuSkor.className = 'kuis-hasil-skor-kartu';
+      kartuSkor.className = 'kuis-hasil-papan-skor';
 
-      const rasioSkor = Math.round((skor / daftarSoal.length) * 100);
+      const angkaSkor = document.createElement('div');
+      angkaSkor.className = 'kuis-hasil-angka-besar';
+      angkaSkor.innerHTML = `<span class="kuis-angka-skor-utama">${skor}</span><span class="kuis-angka-skor-pemisah">/</span><span class="kuis-angka-skor-total">${daftarSoal.length}</span>`;
 
-      kartuSkor.innerHTML = `
-        <div class="kuis-hasil-lingkaran-wrap">
-          <span class="kuis-hasil-angka">${formatAngka(skor)}<span class="kuis-hasil-penyebut">/${formatAngka(daftarSoal.length)}</span></span>
-          <span class="kuis-hasil-persen">${rasioSkor}% Tepat</span>
-        </div>
-        <div class="kuis-hasil-narasi">
-          <h4 class="kuis-hasil-tajuk">${skor >= 6 ? 'Wawasan Budaya yang Mengagumkan' : (skor >= 4 ? 'Apresiasi Budaya yang Terbina Baik' : 'Awal Penjelajahan Tradisi Nusantara')}</h4>
-          <p class="kuis-hasil-pesan">${dapatkanPesanHasil(skor, daftarSoal.length)}</p>
-        </div>
-      `;
+      const teksEvaluasi = document.createElement('div');
+      teksEvaluasi.className = 'kuis-hasil-evaluasi-teks';
 
+      const judulEvaluasi = document.createElement('h4');
+      judulEvaluasi.className = 'kuis-hasil-subjudul';
+      judulEvaluasi.textContent =
+        skor >= 7
+          ? `Wawasan ${infoWilayah.namaSingkat || infoWilayah.nama} Istimewa`
+          : skor >= 4
+          ? `Penjelajah ${infoWilayah.namaSingkat || infoWilayah.nama} Berpotensi`
+          : `Penemu Jejak Awal ${infoWilayah.namaSingkat || infoWilayah.nama}`;
+
+      const paragrafEvaluasi = document.createElement('p');
+      paragrafEvaluasi.className = 'kuis-hasil-paragraf';
+      paragrafEvaluasi.textContent = dapatkanPesanHasil(skor, daftarSoal.length);
+
+      teksEvaluasi.append(judulEvaluasi, paragrafEvaluasi);
+      kartuSkor.append(angkaSkor, teksEvaluasi);
       badanHasil.appendChild(kartuSkor);
 
-      // Tiga Tradisi yang Ditemui Selama Kuis
+      // Kartu 3 Catatan Tradisi yang Ditemui
       if (tradisiDitemui.length > 0) {
         const blokTradisi = document.createElement('div');
         blokTradisi.className = 'kuis-hasil-tradisi-blok';
 
         const labelTradisi = document.createElement('p');
         labelTradisi.className = 'label-kecil';
-        labelTradisi.textContent = '3 Catatan Budaya yang Kamu Temui di Sesi Ini:';
+        labelTradisi.textContent = `Catatan Budaya ${infoWilayah.namaSingkat || ''} yang Kamu Temui di Sesi Ini:`;
         blokTradisi.appendChild(labelTradisi);
 
         const listTradisi = document.createElement('div');
@@ -493,6 +552,32 @@ export function inisialisasiBagianKuis({
         badanHasil.appendChild(blokTradisi);
       }
 
+      // Pintasan Pilih Wilayah Lain di Akhir Sesi
+      const blokPilihLain = document.createElement('div');
+      blokPilihLain.className = 'kuis-hasil-wilayah-kotak';
+      blokPilihLain.innerHTML = `<span class="kuis-hasil-wilayah-label">Tantang Wawasan Wilayah Lain:</span>`;
+
+      const listWilayahCepat = document.createElement('div');
+      listWilayahCepat.className = 'kuis-hasil-wilayah-baris';
+
+      Object.entries(WILAYAH_CONFIG).forEach(([kunci, cfg]) => {
+        if (kunci === wilayahAktif) return;
+        const btnWil = document.createElement('button');
+        btnWil.type = 'button';
+        btnWil.className = 'kuis-hasil-wilayah-chip';
+        btnWil.innerHTML = `<span>${cfg.ikon} ${cfg.namaSingkat || cfg.nama}</span>`;
+        btnWil.addEventListener('click', () => {
+          aturWilayah(kunci);
+          const panelKuis = document.getElementById('s7-panel-kuis');
+          if (panelKuis) {
+            panelKuis.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+        listWilayahCepat.appendChild(btnWil);
+      });
+      blokPilihLain.appendChild(listWilayahCepat);
+      badanHasil.appendChild(blokPilihLain);
+
       // Baris Aksi Akhir
       const barisAksiHasil = document.createElement('div');
       barisAksiHasil.className = 'kuis-hasil-aksi-baris';
@@ -500,19 +585,34 @@ export function inisialisasiBagianKuis({
       const btnMainLagi = document.createElement('button');
       btnMainLagi.type = 'button';
       btnMainLagi.className = 'tombol tombol--utama';
-      btnMainLagi.innerHTML = '<span>Mainkan 8 Soal Baru</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>';
-      btnMainLagi.addEventListener('click', () => mulaiSesiBaru());
+      btnMainLagi.innerHTML = `<span>Mainkan 8 Soal Baru (${infoWilayah.namaSingkat || 'Wilayah'})</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>`;
+      btnMainLagi.addEventListener('click', () => mulaiSesiBaru(wilayahAktif));
+
+      const btnPilihUlang = document.createElement('button');
+      btnPilihUlang.type = 'button';
+      btnPilihUlang.className = 'tombol tombol--garis';
+      btnPilihUlang.innerHTML = '<span>Pilih Wilayah Lain &larr;</span>';
+      btnPilihUlang.addEventListener('click', () => {
+        wilayahAktif = null;
+        statusLayar = 'awal';
+        const pills = document.querySelectorAll('.kuis-wilayah-pill');
+        pills.forEach((p) => {
+          p.classList.remove('is-aktif');
+          p.setAttribute('aria-selected', 'false');
+        });
+        render();
+      });
 
       const btnBagikanSkor = document.createElement('button');
       btnBagikanSkor.type = 'button';
       btnBagikanSkor.className = 'tombol tombol--garis';
       btnBagikanSkor.innerHTML = '<span>Salin Hasil Kuis</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
       btnBagikanSkor.addEventListener('click', async () => {
-        const teksShare = `Aku menjawab tepat ${skor} dari ${daftarSoal.length} soal di Kuis Kebudayaan Lokalocal. Budaya Indonesia tidak sedikit, yang sedikit adalah yang sudah tercatat.`;
+        const teksShare = `Aku menjawab tepat ${skor} dari ${daftarSoal.length} soal di Kuis Kebudayaan Lokalocal untuk wilayah ${infoWilayah.nama}. Budaya Indonesia tidak sedikit, yang sedikit adalah yang sudah tercatat.`;
         if (navigator.share) {
           try {
             await navigator.share({
-              title: 'Hasil Kuis Budaya Lokalocal',
+              title: `Hasil Kuis Budaya ${infoWilayah.nama} - Lokalocal`,
               text: teksShare,
               url: window.location.href
             });
@@ -529,7 +629,7 @@ export function inisialisasiBagianKuis({
         }
       });
 
-      barisAksiHasil.append(btnMainLagi, btnBagikanSkor);
+      barisAksiHasil.append(btnMainLagi, btnPilihUlang, btnBagikanSkor);
       badanHasil.appendChild(barisAksiHasil);
       wadahUtama.appendChild(badanHasil);
 
@@ -544,6 +644,7 @@ export function inisialisasiBagianKuis({
   function terimaDataLengkap({ budaya = [] }) {
     daftarBudaya = budaya;
     dataSiap = true;
+    perbaruiStatistikHero();
     if (statusLayar === 'awal') {
       render();
     }
@@ -552,7 +653,9 @@ export function inisialisasiBagianKuis({
   render();
 
   return {
-    terimaDataLengkap
+    terimaDataLengkap,
+    aturWilayah,
+    mulaiSesiBaru,
+    dapatkanWilayahAktif: () => wilayahAktif
   };
 }
-

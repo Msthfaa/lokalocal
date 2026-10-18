@@ -71,6 +71,21 @@ async function mulaiHalamanKuis() {
         console.warn('Peringatan memuat katalog lengkap kuis:', err);
       });
 
+    // Hubungkan tombol pill wilayah ke kontrol kuis
+    const daftarPills = document.querySelectorAll('.kuis-wilayah-pill');
+    daftarPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const kategori = pill.dataset.kategori;
+        if (!kategori || !kontrolKuis) return;
+        kontrolKuis.aturWilayah(kategori);
+
+        const panelKuis = document.getElementById('s7-panel-kuis');
+        if (panelKuis) {
+          panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+
     // Tangani parameter URL jika ada (misal ?topik=sumatera)
     const params = new URLSearchParams(window.location.search);
     const topikUrl = params.get('topik') || params.get('kategori');

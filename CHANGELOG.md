@@ -1,5 +1,29 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Mode Kuis Wilayah Interaktif (Wajib Pilih Wilayah Terlebih Dahulu)
+- **Dibuat/diubah:**
+  - `web/index.html` & `web/kuis.html`:
+    - Mengintegrasikan kicker bercahaya (`.kicker-glow`) `✦ ARENA UJI WAWASAN NUSANTARA ✦`, subjudul penegasan pemilihan wilayah, serta deretan pill wilayah interaktif (tanpa default aktif agar pengguna memilih daerah terlebih dahulu).
+  - `web/src/sections/kuis.js`:
+    - Menetapkan status default `wilayahAktif = null` sehingga saat awal dibuka, kuis **tidak langsung memainkan semua wilayah**, melainkan mewajibkan pengguna memilih zona wilayah terlebih dahulu.
+    - Menghadirkan banner penegasan `LANGKAH 1: Pilih Zona Wilayah Budaya Terlebih Dahulu`.
+    - Menyediakan grid kartu pemilihan wilayah interaktif (`.kuis-pilih-wilayah-grid`) dengan 7 opsi wilayah lengkap:
+      1. 🌿 Sumatera • Gadang & Tenun
+      2. 🏛️ Jawa • Candi & Wayang
+      3. 🛶 Kalimantan • Dayak & Mandau
+      4. ⛵ Sulawesi • Tongkonan & Pinisi
+      5. 🌊 Bali & Nusa Tenggara
+      6. 🦜 Maluku & Papua
+      7. 🇮🇩 Semua Nusantara
+    - Begitu pengguna mengklik salah satu wilayah (baik lewat tombol pill atas maupun kartu wilayah di panel), kuis secara otomatis mengaktifkan wilayah tersebut dan langsung memulai 8 pertanyaan kuratorial yang 100% relevan dengan daerah tersebut.
+  - `web/src/main.js` & `web/src/pages/kuis.js`:
+    - Memasang pendengar event klik tombol pill wilayah baik pada shell navigasi SPA (`index.html`) maupun halaman terisolasi (`kuis.html`).
+  - `web/src/styles/sections.css`:
+    - Menambahkan styling responsif untuk `.kuis-pilih-wilayah-grid` dan `.kuis-pilih-wilayah-kartu` dengan efek kaca buram transparan (*frosted glassmorphism*) dan efek hover aksen emas menyala.
+- **Hasil:**
+  - Alur kuis kini sesuai dengan instruksi: pengguna dipandu memilih daerah yang diinginkan terlebih dahulu sebelum tantangan soal diluncurkan.
+  - Build produksi Vite (`npm run build`) sukses tanpa error.
+
 ## [2026-10-18] Perbaikan Masalah Akses Halaman Paspor & Kuis (Eliminasi Error 'gsap is not defined')
 - **Dibuat/diubah:**
   - `web/src/router/spa-router.js`:
