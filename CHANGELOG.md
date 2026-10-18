@@ -1,5 +1,18 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Penerapan Kursor Kultural Gunungan Wayang Emas Miring Kiri
+- **Dibuat/diubah:**
+  - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan.png`:
+    - Mengolah langsung karya Gunungan Wayang (Kayon) referensi pengguna (sulur flora Pohon Hayat, mustaka cakra, gapura paduraksa, dan teras bata dasar) menjadi kursor warna emas berkilau (*radiant royal gold*) dengan bayangan kontras gelap agar terbaca jelas di latar gelap maupun terang.
+    - Mencondongkan posisi Gunungan agak miring ke kiri (*left-tilted* -20 derajat) menyerupai orientasi kursor panah OS klasik `↖`, dengan puncak tajuk di titik koordinat `x=3, y=2` sebagai titik aktif klik (*hotspot pointer*).
+  - `web/public/assets/cursor-gunungan-pointer.svg` & `web/public/assets/cursor-gunungan-pointer.png`:
+    - Mengembangkan varian interaktif dengan pendaran aura emas hangat dan permata kemilau pada ujung tajuk saat melayang di atas elemen klik.
+  - `web/src/styles/base.css`:
+    - Memperbarui koordinat hotspot kursor menjadi `3 2` pada seluruh deklarasi kursor desktop.
+- **Hasil:**
+  - Tampilan kursor desktop kini persis mengadopsi motif wayang yang diinginkan pengguna dengan warna emas keraton, miring ke kiri secara ergonomis, dan presisi tinggi saat mengklik tautan atau tombol.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` sukses 100% (0 error).
+
 ## [2026-10-18] Mode Kuis Wilayah Interaktif (Wajib Pilih Wilayah Terlebih Dahulu)
 - **Dibuat/diubah:**
   - `web/index.html` & `web/kuis.html`:
@@ -23,19 +36,6 @@
 - **Hasil:**
   - Alur kuis kini sesuai dengan instruksi: pengguna dipandu memilih daerah yang diinginkan terlebih dahulu sebelum tantangan soal diluncurkan.
   - Build produksi Vite (`npm run build`) sukses tanpa error.
-
-## [2026-10-18] Penerapan Kursor Kultural Gunungan Wayang Nusantara
-- **Dibuat/diubah:**
-  - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan.png`:
-    - Membuat aset kursor kustom berbentuk siluet Gunungan Wayang Kulit (Kayon) bertatahkan emas dengan geometri Pohon Hayat Kalpataru dan Gapura Paduraksa, di mana puncak tajuk (hotspot `x=16, y=0`) berfungsi sebagai penunjuk presisi tinggi.
-  - `web/public/assets/cursor-gunungan-pointer.svg` & `web/public/assets/cursor-gunungan-pointer.png`:
-    - Membuat varian kursor interaktif dengan pendaran aura emas berkilau (*radiant golden glow*) dan permata bintang pada puncak tajuk untuk menandakan elemen yang dapat diklik.
-  - `web/src/styles/base.css`:
-    - Menerapkan aturan kursor Gunungan Wayang pada `html` dan `body` untuk perangkat berpenunjuk halus (`@media (hover: hover) and (pointer: fine)`).
-    - Memastikan seluruh elemen interaktif (tombol, tautan, kartu bento, tab, peta, dan dialog) menggunakan kursor Gunungan Menyala Emas, serta menjaga kenyamanan seleksi teks (`cursor: text`) pada kolom input.
-- **Hasil:**
-  - Pengunjung di desktop/laptop kini disambut dengan kursor Gunungan Wayang khas keraton nusantara yang unik, anggun, dan bernilai kultural tinggi tanpa membebani perangkat seluler/layar sentuh.
-  - Validasi data (`node tools/validate.mjs`) dan `npm run build` sukses 100% (0 error).
 
 ## [2026-10-18] Penyesuaian Transisi Memudar Murni (Fade Only) pada Tema & Dialog Modal
 - **Dibuat/diubah:**
