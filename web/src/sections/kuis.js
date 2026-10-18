@@ -152,9 +152,9 @@ export function inisialisasiBagianKuis({
       bannerTopik.className = 'kuis-topik-badge-banner';
       bannerTopik.setAttribute('role', 'status');
       bannerTopik.innerHTML = `
-        <span class="kuis-topik-label">Cakupan Wilayah:</span>
+        <span class="kuis-topik-label">Zona Aktif:</span>
         <strong class="kuis-topik-nama">${infoWilayah.ikon} ${infoWilayah.nama}</strong>
-        <span class="kuis-topik-total">• 8 Pertanyaan Terkurasi SPKT</span>
+        <span class="kuis-topik-total">&bull; 8 Pertanyaan Terkurasi SPKT</span>
       `;
       kepala.appendChild(bannerTopik);
     } else {
@@ -163,9 +163,9 @@ export function inisialisasiBagianKuis({
       bannerPilih.className = 'kuis-topik-badge-banner kuis-topik-badge-banner--pilih';
       bannerPilih.setAttribute('role', 'status');
       bannerPilih.innerHTML = `
-        <span class="kuis-topik-label">LANGKAH 1:</span>
-        <strong class="kuis-topik-nama">Pilih Zona Wilayah Budaya Terlebih Dahulu</strong>
-        <span class="kuis-topik-total">• 7 Pilihan Wilayah</span>
+        <span class="kuis-topik-label">Zona Kuratorial:</span>
+        <strong class="kuis-topik-nama">Pilih Zona Wilayah Budaya</strong>
+        <span class="kuis-topik-total">&bull; 7 Pilihan Wilayah</span>
       `;
       kepala.appendChild(bannerPilih);
     }
@@ -191,7 +191,7 @@ export function inisialisasiBagianKuis({
 
       const skorChip = document.createElement('div');
       skorChip.className = 'kuis-lencana-skor-live';
-      skorChip.innerHTML = `<span class="kuis-lencana-skor-label">Skor</span><span class="kuis-lencana-skor-angka">${skor}</span>`;
+      skorChip.innerHTML = `<span class="kuis-lencana-skor-label">Skor</span><strong class="kuis-lencana-skor-angka">${skor}</strong>`;
       barisAtas.appendChild(skorChip);
     } else if (statusLayar === 'hasil' && infoWilayah) {
       const tagKategori = document.createElement('span');
@@ -200,7 +200,7 @@ export function inisialisasiBagianKuis({
 
       const judulHasil = document.createElement('h3');
       judulHasil.className = 'kuis-kartu-judul';
-      judulHasil.textContent = `Hasil Kuis: ${infoWilayah.nama}`;
+      judulHasil.textContent = `Hasil Penjelajahan: ${infoWilayah.nama}`;
 
       infoKiri.append(tagKategori, judulHasil);
       barisAtas.appendChild(infoKiri);
@@ -211,7 +211,7 @@ export function inisialisasiBagianKuis({
 
       const judulAwal = document.createElement('h3');
       judulAwal.className = 'kuis-kartu-judul';
-      judulAwal.textContent = 'Pilih Wilayah Terlebih Dahulu';
+      judulAwal.textContent = 'Pilih Wilayah Penjelajahan';
 
       infoKiri.append(tagKategori, judulAwal);
       barisAtas.appendChild(infoKiri);
@@ -254,7 +254,7 @@ export function inisialisasiBagianKuis({
       const deskripsiAwal = document.createElement('p');
       deskripsiAwal.className = 'kuis-paragraf-pembuka';
       deskripsiAwal.textContent =
-        'Silakan tentukan zona wilayah kebudayaan Indonesia yang ingin kamu uji di bawah ini. Soal-soal yang muncul akan dikurasi secara spesifik berdasarkan tradisi, seni, kriya, dan realitas pencatatan data resmi SPKT di daerah pilihanmu:';
+        'Tentukan zona wilayah kebudayaan Indonesia yang ingin kamu uji. Soal-soal yang muncul dihimpun secara spesifik berdasarkan tradisi, seni, kriya, dan realitas pencatatan data resmi SPKT di daerah pilihanmu:';
 
       // Grid Kartu Pemilihan Wilayah Interaktif
       const gridPilih = document.createElement('div');
@@ -269,16 +269,16 @@ export function inisialisasiBagianKuis({
         kartuW.className = 'kuis-pilih-wilayah-kartu';
         kartuW.setAttribute('role', 'listitem');
         kartuW.innerHTML = `
-          <div>
+          <div class="kuis-pilih-kartu-atas">
             <div class="kuis-pilih-kartu-kepala">
-              <span class="kuis-pilih-kartu-ikon">${cfg.ikon}</span>
+              <span class="kuis-pilih-kartu-ikon" aria-hidden="true">${cfg.ikon}</span>
               <h4 class="kuis-pilih-kartu-judul">${cfg.nama}</h4>
             </div>
             <p class="kuis-pilih-kartu-sub">${cfg.subjudul}</p>
           </div>
           <div class="kuis-pilih-kartu-kaki">
-            <span>${formatAngka(statW.jumlahTradisi)} Tradisi • ${statW.jumlahProvinsi} Prov</span>
-            <span class="kuis-pilih-kartu-panah">Mulai Kuis &rarr;</span>
+            <span class="kuis-pilih-kartu-stat">${formatAngka(statW.jumlahTradisi)} Tradisi &bull; ${statW.jumlahProvinsi} Prov</span>
+            <span class="kuis-pilih-kartu-panah">Buka Tantangan &rarr;</span>
           </div>
         `;
         kartuW.addEventListener('click', () => {
@@ -295,8 +295,8 @@ export function inisialisasiBagianKuis({
       catatanBawah.className = 'kuis-awal-catatan';
       catatanBawah.style.marginTop = 'var(--ruang-2)';
       catatanBawah.textContent = dataSiap
-        ? '• Kamu juga dapat memilih wilayah melalui tombol pill di atas'
-        : '• Sedang membaca arsip lokal...';
+        ? 'Pilih salah satu zona di atas untuk memulai 8 pertanyaan kuratorial.'
+        : 'Sedang membaca arsip lokal...';
 
       badanAwal.append(deskripsiAwal, gridPilih, catatanBawah);
       wadahUtama.appendChild(badanAwal);
@@ -325,13 +325,8 @@ export function inisialisasiBagianKuis({
       const arsipKepala = document.createElement('div');
       arsipKepala.className = 'kuis-arsip-kepala';
       arsipKepala.innerHTML = `
-        <svg class="kuis-arsip-ikon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-        </svg>
-        <span class="kuis-arsip-sumber-label">Petunjuk dari Catatan Resmi SPKT:</span>
+        <span class="kuis-arsip-tag">Catatan Arsip SPKT</span>
+        <span class="kuis-arsip-sumber-label">Kementerian Kebudayaan RI</span>
       `;
 
       const isiKutipan = document.createElement('blockquote');
@@ -382,10 +377,10 @@ export function inisialisasiBagianKuis({
           const badgeStatus = document.createElement('span');
           badgeStatus.className = 'kuis-opsi-status-badge';
           if (adalahBenar) {
-            badgeStatus.textContent = 'Tercatat Benar';
+            badgeStatus.textContent = 'Tercatat Benar ✓';
             btnOpsi.appendChild(badgeStatus);
           } else if (adalahPilihanKita && !adalahBenar) {
-            badgeStatus.textContent = 'Pilihanmu';
+            badgeStatus.textContent = 'Pilihan Anda';
             btnOpsi.appendChild(badgeStatus);
           }
         }
@@ -415,8 +410,8 @@ export function inisialisasiBagianKuis({
         const teksStatus = document.createElement('h5');
         teksStatus.className = 'kuis-umpan-status-teks';
         teksStatus.textContent = benar
-          ? 'Catatanmu tepat sekali!'
-          : `Belum tepat. Jawaban tercatat: ${soal.jawabanBenar}`;
+          ? 'Catatan Anda tepat!'
+          : `Belum tepat. Jawaban tercatat di SPKT: ${soal.jawabanBenar}`;
 
         headerUmpan.append(ikonStatus, teksStatus);
 
@@ -512,7 +507,7 @@ export function inisialisasiBagianKuis({
 
         const labelTradisi = document.createElement('p');
         labelTradisi.className = 'label-kecil';
-        labelTradisi.textContent = `Catatan Budaya ${infoWilayah.namaSingkat || ''} yang Kamu Temui di Sesi Ini:`;
+        labelTradisi.textContent = `Catatan Budaya ${infoWilayah.namaSingkat || ''} yang Terhimpun di Sesi Ini:`;
         blokTradisi.appendChild(labelTradisi);
 
         const listTradisi = document.createElement('div');
@@ -524,7 +519,7 @@ export function inisialisasiBagianKuis({
 
           const tagWilayah = document.createElement('div');
           tagWilayah.className = 'kuis-tradisi-mini-tag';
-          tagWilayah.textContent = `${rek.provinsi || 'Nusantara'} • ${rek.jenis || 'OPK'}`;
+          tagWilayah.textContent = `${rek.provinsi || 'Nusantara'} · ${rek.jenis || 'OPK'}`;
 
           const namaItem = document.createElement('h5');
           namaItem.className = 'kuis-tradisi-mini-judul';
@@ -622,7 +617,7 @@ export function inisialisasiBagianKuis({
           }
         }
         try {
-          await navigator.clipboard.writeText(`${teksShare} — ${window.location.href}`);
+          await navigator.clipboard.writeText(`${teksShare} (${window.location.href})`);
           tampilkanToast('Rangkuman hasil berhasil disalin ke papan klip.');
         } catch {
           tampilkanToast('Salin tautan dari bilah alamat browser.');

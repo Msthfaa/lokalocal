@@ -1,5 +1,27 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Redesain Kuis Budaya Anti-Slop (Pembersihan Template AI Menjadi Khas Budaya Nusantara)
+- **Dibuat/diubah:**
+  - `web/index.html` & `web/kuis.html`:
+    - Menghapus pola generic AI slop: kicker berkilau `✦ ARENA UJI WAWASAN NUSANTARA ✦` dan deretan pill stat mengambang dengan emoji generik.
+    - Menggantinya dengan kicker editorial elegan `<p class="kicker">Eksplorasi Kuratorial</p>` dan baris metadata arsip yang tenang dan informatif (`Koleksi Terkurasi: 347 Tradisi • Cakupan: 38 Provinsi • Format: 8 Pertanyaan Terverifikasi`).
+    - Menyelaraskan tab navigasi zona wilayah dengan border radius proporsional (`8px`) dan aksen emas klasik tanpa gradien neon berlebih.
+  - `web/src/sections/kuis.js`:
+    - Mengganti teks template "LANGKAH 1" dan badge status generik dengan tata letak lembar kuratorial budaya Nusantara.
+    - Menghapus tanda pisah em dash (`—`) pada seluruh teks antarmuka sesuai aturan Hard Gate R-02 antislop.
+    - Menyempurnakan kotak petunjuk arsip resmi SPKT berformat kutipan historis dengan label resmi Kementerian Kebudayaan RI.
+    - Mengubah kartu opsi abjad (A, B, C, D) dengan status jawaban berwibawa: hijau zamrud gelap (`#2D6A4F` / `#1B4332`) untuk jawaban benar dan terakota nusantara (`#A03018` / `#781E0E`) untuk koreksi kesalahan, tanpa efek neon glow yang menyilaukan.
+    - Merestrukturisasi layar hasil menjadi Lembar Evaluasi Penjelajah Budaya dengan skor bertipe serif Fraunces, refleksi sosial pencatatan data, serta 3 tradisi penemuan baru.
+  - `web/src/features/kuis.js`:
+    - Membersihkan karakter em dash pada teks penjelasan bank soal menjadi tanda koma alami.
+  - `web/src/styles/sections.css`:
+    - Menghilangkan *trend-stacking* (glassmorphism berlebih, neon glow, dan pill-radius 28px/999px di semua elemen).
+    - Menerapkan sistem permukaan taktil solid (pernis mahoni gelap `#14100E` pada mode gelap dan kertas arsip cerah `#FFFFFF`/`#FBF8F2` pada mode terang).
+    - Memastikan kontras teks memenuhi standar WCAG AA/AAA di seluruh mode tema, navigasi keyboard penuh (`:focus-visible`), dan responsivitas tanpa scroll horizontal.
+- **Hasil:**
+  - Tampilan kuis kini berwibawa, berkarakter budaya Nusantara asli, nyaman dibaca, dan bebas 100% dari ciri khas template generik AI slop.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` lulus 100%.
+
 ## [2026-10-18] Peningkatan Resolusi Tinggi (HD) & Kejernihan Kursor Gunungan Wayang Emas
 - **Dibuat/diubah:**
   - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan-pointer.svg`:

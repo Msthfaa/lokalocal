@@ -111,7 +111,7 @@ export const BANK_SOAL_FAKTA_WILAYAH = {
       petunjuk: 'Provinsi ini menyumbang 119 catatan budaya (sekitar 22% dari total rekaman nasional).',
       pilihan: ['Sumatera Barat', 'Jawa Tengah', 'Jawa Timur', 'Sulawesi Selatan'],
       jawabanBenar: 'Sumatera Barat',
-      penjelasan: 'Sumatera Barat berada di urutan pertama dengan 119 catatan di SPKT — sebagian besar berasal dari aktifnya inventarisasi di Kota Pariaman.',
+      penjelasan: 'Sumatera Barat berada di urutan pertama dengan 119 catatan di SPKT, yang sebagian besar berasal dari aktifnya inventarisasi di Kota Pariaman.',
       kodeProvinsiTerkait: '13',
       rekamanTerkait: null
     },
