@@ -9,6 +9,7 @@
 
 import { terbangkanPesawatLepasLandas } from '../ui/transisi-pesawat.js';
 import { NAMA_SITUS } from '../config.js';
+import { gsap, apakahKurangiGerak } from '../util/motion.js';
 
 export const DAFTAR_TAMPILAN = ['cerita', 'paspor', 'kuis'];
 
@@ -172,36 +173,42 @@ export class SpaRouter {
     const elAsal = this.elemenViews[asalTampilan];
     const elTarget = this.elemenViews[targetTampilan];
 
-    if (!animasiPesawat || !elAsal || !elTarget) {
+    if (!animasiPesawat || !elAsal || !elTarget || apakahKurangiGerak()) {
       this.tukarTampilanDom(asalTampilan, targetTampilan);
       this.sedangTransisi = false;
       this.perbaruiStatusNav(targetTampilan);
       return;
     }
 
-    gsap.to(elAsal, {
-      opacity: 0,
-      duration: 0.18,
-      ease: 'power1.out',
-      onComplete: () => {
-        this.tukarTampilanDom(asalTampilan, targetTampilan);
-        window.scrollTo({ top: 0, behavior: 'instant' });
+    try {
+      gsap.to(elAsal, {
+        opacity: 0,
+        duration: 0.18,
+        ease: 'power1.out',
+        onComplete: () => {
+          this.tukarTampilanDom(asalTampilan, targetTampilan);
+          window.scrollTo({ top: 0, behavior: 'instant' });
 
-        gsap.fromTo(
-          elTarget,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 0.22,
-            ease: 'power1.in',
-            onComplete: () => {
-              this.sedangTransisi = false;
-              this.perbaruiStatusNav(targetTampilan);
+          gsap.fromTo(
+            elTarget,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 0.22,
+              ease: 'power1.in',
+              onComplete: () => {
+                this.sedangTransisi = false;
+                this.perbaruiStatusNav(targetTampilan);
+              }
             }
-          }
-        );
-      }
-    });
+          );
+        }
+      });
+    } catch (e) {
+      this.tukarTampilanDom(asalTampilan, targetTampilan);
+      this.sedangTransisi = false;
+      this.perbaruiStatusNav(targetTampilan);
+    }
   }
 
   /**
@@ -232,7 +239,8 @@ export class SpaRouter {
       if (aktif) {
         el.hidden = false;
         el.removeAttribute('hidden');
-        el.style.display = id === 'jelajah' ? 'block' : '';
+        el.style.display = 'block';
+        el.style.opacity = '1';
         el.classList.add('is-aktif');
       } else {
         el.hidden = true;

@@ -1,5 +1,21 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Perbaikan Masalah Akses Halaman Paspor & Kuis (Eliminasi Error 'gsap is not defined')
+- **Dibuat/diubah:**
+  - `web/src/router/spa-router.js`:
+    - Mengimpor `gsap` dan `apakahKurangiGerak` dari `../util/motion.js` untuk mengatasi error `ReferenceError: gsap is not defined` yang terjadi saat transisi view SPA dipicu.
+    - Menambahkan blok proteksi `try/catch` dan pemeriksaan `apakahKurangiGerak()` pada transisi cross-fade halaman agar tidak pernah macet atau melempar runtime exception.
+    - Memastikan `el.style.display = 'block'` dan `el.style.opacity = '1'` saat view aktif ditegakkan di `tukarTampilanDom`.
+  - `web/src/main.js`:
+    - Menjadikan `renderDataAwalKeHalaman` sebagai fungsi `async` dan menambahkan `await muatFiturInteraktifS7S8({ provinsi, statistik })` agar modul Paspor dan Kuis selesai terinisialisasi sebelum navigasi view dijalankan.
+    - Menyetel parameter `animasiPesawat: false` pada pemuatan rute awal URL hash (`#paspor` / `#kuis`) agar tampilan langsung terbuka instan tanpa jeda fade out.
+    - Menghapus listener usang `pasangFilterKuis` yang memanggil metode deprecated `gantiKategori`.
+  - `web/index.html`:
+    - Menyelaraskan struktur markup `#view-paspor` dan `#view-kuis` dalam shell SPA agar identik dengan standar anti-slop kuratorial di `paspor.html` dan `kuis.html` (strip spesifikasi 38 provinsi, gelar kehormatan, 8 langkah evaluasi kuratorial tanpa emoji dan tanpa bintang kelip).
+- **Hasil:**
+  - Halaman Paspor dan Kuis kini terbuka seketika dan 100% bebas dari pesan error "Gagal memuat data budaya: gsap is not defined", baik diklik dari navbar, tombol navigasi bawah, maupun dibuka langsung via URL hash `index.html#paspor` dan `index.html#kuis`.
+  - Validasi data dan build produksi lulus 100% (0 error).
+
 ## [2026-10-16] Penyambungan Dua Babak Animasi Penerbangan Pesawat Budaya (Lepas Landas & Mendarat di Pulau)
 - **Dibuat/diubah:**
   - `web/src/ui/transisi-pesawat.js` (Memecah arsitektur animasi pesawat menjadi dua babak modular yang saling terhubung: `terbangkanPesawatLepasLandas` untuk lepas landas dari halaman keberangkatan, `siapkanPesawatMendarat` untuk menempatkan pesawat melayang di langit horison, dan `mendaratkanPesawatDiPulau` untuk menukik turun melintasi diorama 3D dan touchdown di pulau Jawa/Nusantara dengan letupan bintang emas).

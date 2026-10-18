@@ -133,8 +133,6 @@ async function muatFiturInteraktifS7S8({ provinsi, statistik }) {
     }
   });
 
-  pasangFilterKuis(kontrolKuis);
-
   if (dataLengkapCache && kontrolKuis) {
     kontrolKuis.terimaDataLengkap(dataLengkapCache);
   }
@@ -146,40 +144,9 @@ async function muatFiturInteraktifS7S8({ provinsi, statistik }) {
 }
 
 /**
- * Memasang listener filter kategori & piliah wilayah pada kuis
- */
-function pasangFilterKuis(kontroler) {
-  const daftarTombolTopik = document.querySelectorAll('.kuis-wilayah-pill, .kuis-stat-btn');
-  daftarTombolTopik.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const kategori = btn.dataset.kategori;
-      const label = btn.textContent.trim();
-      if (!kategori || !kontroler) return;
-
-      daftarTombolTopik.forEach((b) => {
-        const cocok = b.dataset.kategori === kategori;
-        b.classList.toggle('is-aktif', cocok);
-        if (b.hasAttribute('aria-selected')) {
-          b.setAttribute('aria-selected', cocok ? 'true' : 'false');
-        }
-      });
-
-      kontroler.gantiKategori(kategori, label);
-
-      const panelKuis = document.getElementById('s7-panel-kuis');
-      if (panelKuis) {
-        panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    });
-  });
-}
-
-
-
-/**
  * Merender data tahap awal ke bagian S1–S8 dan memperbarui atribusi footer.
  */
-function renderDataAwalKeHalaman(dataAwal) {
+async function renderDataAwalKeHalaman(dataAwal) {
   const { statistik, provinsi = [], meta } = dataAwal;
 
   // Perbarui atribusi dan tanggal di footer, dialog, serta teks halaman
@@ -267,13 +234,13 @@ function renderDataAwalKeHalaman(dataAwal) {
     .catch(() => {});
 
   // Muat fitur S7 & S8 secara dinamis
-  muatFiturInteraktifS7S8({ provinsi, statistik });
+  await muatFiturInteraktifS7S8({ provinsi, statistik });
 
   // Cek apakah URL awal meminta halaman selain cerita (misal #paspor atau #kuis)
   if (spaRouter) {
     const tampilanAwal = spaRouter.dapatkanTampilanDariUrl();
     if (tampilanAwal !== 'cerita') {
-      spaRouter.navigasiKe(tampilanAwal, { updateUrl: false });
+      spaRouter.navigasiKe(tampilanAwal, { updateUrl: false, animasiPesawat: false });
     }
   }
 
@@ -325,7 +292,7 @@ async function jalankanPemuatanData(paksaUlang = false) {
 
   try {
     const dataAwal = await muatDataAwal(paksaUlang);
-    renderDataAwalKeHalaman(dataAwal);
+    await renderDataAwalKeHalaman(dataAwal);
 
     // Jadwalkan pemuatan data tahap kedua (budaya.clean.json & index-pencarian.json)
     const elemenJelajah = document.getElementById('jelajah');
