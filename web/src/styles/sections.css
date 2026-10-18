@@ -181,13 +181,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 110px;
+  height: 140px;
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(0, 0, 0, 0.25) 45%,
-    rgba(0, 0, 0, 0.75) 80%,
-    #000000 100%
+    rgba(14, 11, 9, 0.25) 45%,
+    rgba(14, 11, 9, 0.70) 80%,
+    rgba(14, 11, 9, 0.88) 100%
   );
   z-index: 2;
   pointer-events: none;
@@ -198,9 +198,9 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.25) 45%,
-    rgba(255, 255, 255, 0.75) 80%,
-    #ffffff 100%
+    rgba(250, 246, 238, 0.25) 45%,
+    rgba(250, 246, 238, 0.70) 80%,
+    rgba(250, 246, 238, 0.90) 100%
   );
 }
 
@@ -4013,28 +4013,17 @@ body.tema-siang .hud-atribusi-teks {
   position: relative;
   padding-top: clamp(2.5rem, 5vw, 4rem);
   padding-bottom: clamp(2rem, 4vw, 3rem);
-  background-color: #0E0B09;
-  background-image:
-    linear-gradient(180deg, rgba(14, 11, 9, 0.42) 0%, rgba(14, 11, 9, 0.08) 18%, rgba(14, 11, 9, 0.35) 55%, rgba(14, 11, 9, 0.92) 100%),
-    url('/assets/bg-budaya-kuis.jpg');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  background: transparent !important;
+  background-color: transparent !important;
   border: none !important;
   border-top: none !important;
   border-bottom: none !important;
   overflow: hidden;
-  transition: background 0.35s ease, background-color 0.35s ease;
 }
 
 [data-tema="terang"] .editorial-section {
-  background-color: #FAF6EE;
-  background-image:
-    linear-gradient(180deg, rgba(250, 246, 238, 0.45) 0%, rgba(250, 246, 238, 0.08) 18%, rgba(250, 246, 238, 0.35) 55%, rgba(250, 246, 238, 0.95) 100%),
-    url('/assets/bg-budaya-kuis-light.jpg');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  background: transparent !important;
+  background-color: transparent !important;
   border: none !important;
   border-top: none !important;
   border-bottom: none !important;
@@ -4608,21 +4597,20 @@ body.tema-siang .hud-atribusi-teks {
 #penutup {
   padding-block: var(--ruang-6) var(--ruang-8);
   position: relative;
-  background-color: #000000;
-  background: #000000;
+  background: transparent !important;
+  background-color: transparent !important;
   border: none !important;
   border-top: none !important;
   border-bottom: none !important;
   outline: none !important;
   overflow: hidden;
-  transition: background-color 0.35s ease;
 }
 
 [data-tema="terang"] .penutup-section,
 [data-tema="terang"] #penutup.bagian,
 [data-tema="terang"] #penutup {
-  background-color: #ffffff;
-  background: #ffffff;
+  background: transparent !important;
+  background-color: transparent !important;
   border: none !important;
   border-top: none !important;
   border-bottom: none !important;

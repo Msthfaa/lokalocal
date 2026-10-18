@@ -47,6 +47,30 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+body:not(.halaman-fullscreen-body) {
+  position: relative;
+  background-color: #0E0B09;
+  background-image:
+    linear-gradient(180deg, rgba(14, 11, 9, 0.38) 0%, rgba(14, 11, 9, 0.08) 22%, rgba(14, 11, 9, 0.35) 60%, rgba(14, 11, 9, 0.88) 100%),
+    url('/assets/bg-budaya-kuis.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: background 0.35s ease, background-color 0.35s ease, color 0.35s ease;
+}
+
+[data-tema="terang"] body:not(.halaman-fullscreen-body) {
+  background-color: #FAF6EE;
+  background-image:
+    linear-gradient(180deg, rgba(250, 246, 238, 0.40) 0%, rgba(250, 246, 238, 0.08) 22%, rgba(250, 246, 238, 0.35) 60%, rgba(250, 246, 238, 0.92) 100%),
+    url('/assets/bg-budaya-kuis-light.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 @media (prefers-reduced-motion: reduce) {
   body {
     transition: none !important;

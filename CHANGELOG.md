@@ -1,13 +1,17 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
-## [2026-10-18] Penerapan Latar Belakang Rumah Adat & Candi Nusantara pada Area Kisah & Catatan Warisan (Bento Grid)
+## [2026-10-18] Perluasan Latar Belakang Rumah Adat & Candi Nusantara ke Seluruh Halaman Bawah hingga Footer
 - **Dibuat/diubah:**
+  - `web/src/styles/base.css`:
+    - Menerapkan latar belakang arsitektur kultural tetap (*fixed background*) bergambar Rumah Gadang, siluet Candi Borobudur, dan Tongkonan Toraja berhiaskan awan mega mendung (`url('/assets/bg-budaya-kuis.jpg')` untuk tema gelap dan `url('/assets/bg-budaya-kuis-light.jpg')` untuk tema terang) pada `body:not(.halaman-fullscreen-body)`.
   - `web/src/styles/sections.css`:
-    - Mengganti latar belakang hitam pekat polos (`#000000` / `#ffffff`) pada `.editorial-section` dengan ilustrasi megah Rumah Gadang, siluet Candi Borobudur, dan Tongkonan Toraja berhiaskan awan mega mendung batik (`url('/assets/bg-budaya-kuis.jpg')` untuk mode gelap dan `url('/assets/bg-budaya-kuis-light.jpg')` untuk mode terang).
-    - Menerapkan gradasi pelindung kontras halus (`linear-gradient`) dengan bukaan lembut di area tengah agar kartu-kartu kaca bento grid (80% tembus pandang) tampak mengapung indah di depan latar arsitektur tradisional.
+    - Menjadikan `.editorial-section` dan `.penutup-section` transparan penuh (`background: transparent !important`) sehingga gambar rumah adat mengalir mulus tanpa terpotong kotak hitam/putih.
+    - Menyesuaikan gradien vinyet halus pada `.s1-pembuka::after` agar transisi keluar dari hero alam/pegunungan menuju siluet arsitektur budaya mengalir lembut (*seamless transition*).
+  - `web/src/styles/layout.css`:
+    - Menjadikan `.footer-utama` transparan penuh (`background: transparent !important`) tanpa garis pembatas, membuat pemandangan rumah adat nusantara membentang utuh hingga ujung terbawah halaman.
 - **Hasil:**
-  - Area Kisah & Catatan Warisan Tempat Bersejarah kini memiliki atmosfer kultural yang serasi dan harmonis dengan halaman Kuis dan Paspor.
-  - Teks judul, keterangan, dan kartu-kartu bento tetap kontras dan terbaca jelas (WCAG AAA).
+  - Seluruh area halaman Beranda dari bawah Hero, melintasi Bento Grid tempat bersejarah, 5 tradisi UNESCO, modul penutup, hingga area footer kini memiliki satu latar belakang arsitektur nusantara yang megah, konsisten, dan elegan.
+  - Kartu-kartu kaca bento, kartu penutup, dan panel atribusi (80% tembus pandang) mengapung indah di depan latar kultural tanpa mengorbankan keterbacaan teks.
 
 ## [2026-10-18] Perbaikan Masalah Akses Halaman Paspor & Kuis (Eliminasi Error 'gsap is not defined')
 - **Dibuat/diubah:**
