@@ -1,5 +1,21 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-18] Peningkatan Resolusi Tinggi (HD) & Kejernihan Kursor Gunungan Wayang Emas
+- **Dibuat/diubah:**
+  - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan-pointer.svg`:
+    - Mengintegrasikan aset master resolusi tinggi 190x190 piksel (5x supersampling) ke dalam kursor SVG berbasis kontur siluet tegas pernis mahoni gelap (`#140B04`) dan tatah ukir emas 24K bercahaya (`#FFE066` hingga `#FFC400`).
+    - Menyempurnakan pendaran aura emas dan intan permata 4 sudut (*diamond sparkle glint*) pada ujung mustaka kursor pointer interaktif.
+    - Menghilangkan buram/pecah pada layar resolusi tinggi (Retina / 2K / 4K dan Windows scaling 125%-200%) berkat subpixel rasterization peramban modern.
+  - `web/public/assets/cursor-gunungan.png` & `web/public/assets/cursor-gunungan-pointer.png` (38x38):
+    - Dilengkapi bayangan lembut berkontras tinggi (*drop shadow*) dan penegasan tepian (*outline definition*) agar siluet Gunungan terbaca tajam di atas latar belakang terang maupun gelap.
+  - `web/public/assets/cursor-gunungan@2x.png` & `web/public/assets/cursor-gunungan-pointer@2x.png` (76x76):
+    - Menyediakan varian piksel ganda (2x) native untuk peramban yang memanfaatkan `image-set`.
+  - `web/src/styles/base.css`:
+    - Memperbarui aturan kursor desktop dengan dukungan `-webkit-image-set` (1x dan 2x) serta titik aktif klik (*hotspot pointer*) tepat di koordinat `4 2` (ujung lancip mustaka wayang).
+- **Hasil:**
+  - Kursor Gunungan Wayang kini tampil sangat tajam (*High Definition*), kaya detail ornamen, berkilau emas, dan terlihat sangat jelas di semua mode latar serta tingkat DPI layar.
+  - Validasi data (`node tools/validate.mjs`) dan `npm run build` lulus 100%.
+
 ## [2026-10-18] Penerapan Kursor Kultural Gunungan Wayang Emas Miring Kiri
 - **Dibuat/diubah:**
   - `web/public/assets/cursor-gunungan.svg` & `web/public/assets/cursor-gunungan.png`:

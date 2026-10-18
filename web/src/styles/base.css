@@ -53,8 +53,12 @@ body {
 @media (hover: hover) and (pointer: fine) {
   html,
   body {
-    cursor: url('/assets/cursor-gunungan.svg') 3 2,
-            url('/assets/cursor-gunungan.png') 3 2,
+    cursor: url('/assets/cursor-gunungan.svg') 4 2,
+            -webkit-image-set(
+              url('/assets/cursor-gunungan.png') 1x,
+              url('/assets/cursor-gunungan@2x.png') 2x
+            ) 4 2,
+            url('/assets/cursor-gunungan.png') 4 2,
             auto;
   }
 
@@ -89,8 +93,12 @@ body {
   .s4-daftar-item,
   .leaflet-interactive,
   .dialog-modal button {
-    cursor: url('/assets/cursor-gunungan-pointer.svg') 3 2,
-            url('/assets/cursor-gunungan-pointer.png') 3 2,
+    cursor: url('/assets/cursor-gunungan-pointer.svg') 4 2,
+            -webkit-image-set(
+              url('/assets/cursor-gunungan-pointer.png') 1x,
+              url('/assets/cursor-gunungan-pointer@2x.png') 2x
+            ) 4 2,
+            url('/assets/cursor-gunungan-pointer.png') 4 2,
             pointer !important;
   }
 
