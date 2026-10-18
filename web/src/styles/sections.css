@@ -7078,108 +7078,451 @@ body.tema-siang .nav-kartun-info {
   color: #6B5D50;
 }
 
-/* Grid Kartu Pemilihan Wilayah Awal */
-.kuis-pilih-wilayah-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-top: var(--ruang-3);
-  margin-bottom: var(--ruang-3);
-}
+/* ==========================================================================
+   S7: PUSAT EKSPEDISI KURATORIAL KUIS NUSANTARA (ANTI-SLOP REDESIGN)
+   ========================================================================== */
 
-.kuis-pilih-wilayah-kartu {
+/* Kontainer Hub Ekspedisi di Layar Awal */
+.kuis-hub-wadah {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  background: #181411;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: var(--r-md);
-  padding: 1.25rem;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  position: relative;
+  gap: var(--ruang-4);
+  width: 100%;
 }
 
-[data-tema="terang"] .kuis-pilih-wilayah-kartu {
-  background: #FBF8F2;
-  border: 1px solid #E2D9CC;
-  box-shadow: 0 2px 8px rgba(40, 25, 15, 0.04);
-}
-
-.kuis-pilih-wilayah-kartu:hover {
-  background: #221A15;
-  border-color: var(--aksen);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-}
-
-[data-tema="terang"] .kuis-pilih-wilayah-kartu:hover {
-  background: #FFFFFF;
-  border-color: #B87314;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(40, 25, 15, 0.08);
-}
-
-.kuis-pilih-kartu-kepala {
+.kuis-hub-intro {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--ruang-2);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 8px;
 }
 
-.kuis-pilih-kartu-ikon {
-  font-size: 1.4rem;
-  line-height: 1;
-  flex-shrink: 0;
+.kuis-hub-kicker {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--aksen);
 }
 
-.kuis-pilih-kartu-judul {
+[data-tema="terang"] .kuis-hub-kicker {
+  color: #B87314;
+}
+
+.kuis-hub-judul {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  color: var(--kertas);
+  line-height: 1.25;
+}
+
+[data-tema="terang"] .kuis-hub-judul {
+  color: #1C1917;
+}
+
+.kuis-hub-deskripsi {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--kertas-redup);
+  line-height: 1.55;
+}
+
+[data-tema="terang"] .kuis-hub-deskripsi {
+  color: #55483B;
+}
+
+/* ==========================================================================
+   Kartu Akbar Nusantara (Featured Master Dossier Banner)
+   ========================================================================== */
+.kuis-dossier-hero {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--r-md);
+  border: 1.5px solid rgba(212, 160, 23, 0.38);
+  background: linear-gradient(135deg, rgba(34, 26, 20, 0.92) 0%, rgba(18, 14, 12, 0.96) 100%);
+  padding: clamp(1.25rem, 3vw, 1.85rem);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+[data-tema="terang"] .kuis-dossier-hero {
+  background: linear-gradient(135deg, #FFFDF8 0%, #F5EFE3 100%);
+  border: 1.5px solid rgba(184, 115, 20, 0.35);
+  box-shadow: 0 4px 16px rgba(50, 32, 15, 0.06);
+}
+
+.kuis-dossier-hero:hover {
+  transform: translateY(-3px);
+  border-color: var(--aksen);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--aksen);
+}
+
+[data-tema="terang"] .kuis-dossier-hero:hover {
+  border-color: #B87314;
+  box-shadow: 0 10px 24px rgba(60, 40, 20, 0.12), 0 0 0 1px #B87314;
+}
+
+.kuis-dossier-hero:focus-visible {
+  outline: 2px solid var(--aksen);
+  outline-offset: 3px;
+}
+
+.kuis-dossier-hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kuis-dossier-hero-atas {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kuis-dossier-segel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(212, 160, 23, 0.12);
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  color: var(--aksen);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+[data-tema="terang"] .kuis-dossier-segel {
+  background: rgba(184, 115, 20, 0.08);
+  border-color: rgba(184, 115, 20, 0.28);
+  color: #B87314;
+}
+
+.kuis-dossier-hero:hover .kuis-dossier-segel,
+.kuis-dossier-kartu:hover .kuis-dossier-segel {
+  transform: scale(1.08) rotate(4deg);
+  border-color: var(--aksen);
+}
+
+.kuis-dossier-segel--emas {
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle, rgba(212, 160, 23, 0.22) 0%, rgba(212, 160, 23, 0.08) 100%);
+  border: 1.5px solid var(--aksen);
+}
+
+[data-tema="terang"] .kuis-dossier-segel--emas {
+  background: radial-gradient(circle, rgba(184, 115, 20, 0.18) 0%, rgba(184, 115, 20, 0.06) 100%);
+  border-color: #B87314;
+}
+
+.kuis-dossier-hero-label-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kuis-dossier-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kuis-dossier-tag--emas {
+  color: var(--aksen);
+}
+
+[data-tema="terang"] .kuis-dossier-tag--emas {
+  color: #B87314;
+}
+
+.kuis-dossier-tag-sub {
+  font-size: 0.75rem;
+  color: var(--kertas-redup);
+}
+
+[data-tema="terang"] .kuis-dossier-tag-sub {
+  color: #6B5D50;
+}
+
+.kuis-dossier-hero-judul {
+  margin: 0 0 6px 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
   font-weight: 700;
   color: var(--kertas);
   line-height: 1.3;
 }
 
-[data-tema="terang"] .kuis-pilih-kartu-judul {
+[data-tema="terang"] .kuis-dossier-hero-judul {
   color: #1C1917;
 }
 
-.kuis-pilih-kartu-sub {
-  margin: 0 0 12px 0;
-  font-size: 0.825rem;
+.kuis-dossier-hero-sub {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--kertas-redup);
+  line-height: 1.55;
+  max-width: 780px;
+}
+
+[data-tema="terang"] .kuis-dossier-hero-sub {
+  color: #55483B;
+}
+
+.kuis-dossier-hero-bawah {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-tema="terang"] .kuis-dossier-hero-bawah {
+  border-top-color: rgba(184, 115, 20, 0.18);
+}
+
+.kuis-dossier-stat-pill {
+  font-size: 0.8rem;
+  color: var(--kertas);
+  font-weight: 500;
+}
+
+[data-tema="terang"] .kuis-dossier-stat-pill {
+  color: #2E251D;
+}
+
+.kuis-dossier-stat-pill strong {
+  color: var(--aksen);
+  font-weight: 700;
+}
+
+[data-tema="terang"] .kuis-dossier-stat-pill strong {
+  color: #B87314;
+}
+
+.kuis-dossier-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--aksen);
+  transition: transform 0.2s ease;
+}
+
+[data-tema="terang"] .kuis-dossier-hero-cta {
+  color: #B87314;
+}
+
+.kuis-dossier-hero:hover .kuis-dossier-hero-cta {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Pemisah Estetik Berkas Kuratorial
+   ========================================================================== */
+.kuis-dossier-pemisah {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.25rem 0;
+}
+
+.kuis-pemisah-garis {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-tema="terang"] .kuis-pemisah-garis {
+  background: rgba(184, 115, 20, 0.2);
+}
+
+.kuis-pemisah-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--aksen);
+  white-space: nowrap;
+}
+
+[data-tema="terang"] .kuis-pemisah-label {
+  color: #B87314;
+}
+
+/* ==========================================================================
+   Grid 6 Berkas Kepulauan Budaya
+   ========================================================================== */
+.kuis-dossier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .kuis-dossier-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .kuis-dossier-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kuis-dossier-kartu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  background: #171310;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-md);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  font-family: inherit;
+  position: relative;
+}
+
+[data-tema="terang"] .kuis-dossier-kartu {
+  background: #FAF7F0;
+  border: 1px solid #DFD6C9;
+  box-shadow: 0 2px 8px rgba(40, 25, 15, 0.04);
+}
+
+.kuis-dossier-kartu:hover {
+  background: #201914;
+  border-color: var(--aksen);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+}
+
+[data-tema="terang"] .kuis-dossier-kartu:hover {
+  background: #FFFFFF;
+  border-color: #B87314;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(50, 32, 15, 0.08);
+}
+
+.kuis-dossier-kartu:focus-visible {
+  outline: 2px solid var(--aksen);
+  outline-offset: 2px;
+}
+
+.kuis-dossier-kartu-kepala {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.kuis-dossier-zona-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--aksen);
+}
+
+[data-tema="terang"] .kuis-dossier-zona-tag {
+  color: #B87314;
+}
+
+.kuis-dossier-kartu-badan {
+  flex: 1;
+}
+
+.kuis-dossier-judul {
+  margin: 0 0 6px 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--kertas);
+  line-height: 1.35;
+}
+
+[data-tema="terang"] .kuis-dossier-judul {
+  color: #1C1917;
+}
+
+.kuis-dossier-sub {
+  margin: 0 0 14px 0;
+  font-size: 0.8rem;
   color: var(--kertas-redup);
   line-height: 1.45;
 }
 
-[data-tema="terang"] .kuis-pilih-kartu-sub {
+[data-tema="terang"] .kuis-dossier-sub {
   color: #55483B;
 }
 
-.kuis-pilih-kartu-kaki {
+.kuis-dossier-kartu-kaki {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.75rem;
-  color: var(--aksen);
-  font-weight: 600;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-[data-tema="terang"] .kuis-pilih-kartu-kaki {
+[data-tema="terang"] .kuis-dossier-kartu-kaki {
   border-top-color: #E8E0D5;
+}
+
+.kuis-dossier-stat {
+  font-size: 0.74rem;
+  color: var(--kertas-redup);
+  font-weight: 500;
+}
+
+[data-tema="terang"] .kuis-dossier-stat {
+  color: #6B5D50;
+}
+
+.kuis-dossier-aksi {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--aksen);
+  transition: transform 0.2s ease;
+}
+
+[data-tema="terang"] .kuis-dossier-aksi {
   color: #B87314;
 }
 
-/* Panel Utama Tantangan Kuis */
+.kuis-dossier-kartu:hover .kuis-dossier-aksi {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Panel Utama Tantangan Kuis (#s7-panel-kuis)
+   ========================================================================== */
 .halaman-kuis-body #s7-panel-kuis.s7-panel-kartu {
   background: #14100E;
-  border: 1px solid rgba(212, 160, 23, 0.22);
+  border: 1px solid rgba(212, 160, 23, 0.24);
   border-radius: var(--r-md);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   padding: clamp(1.5rem, 3.5vw, 2.5rem);
@@ -7187,10 +7530,81 @@ body.tema-siang .nav-kartun-info {
 }
 
 [data-tema="terang"] #s7-panel-kuis.s7-panel-kartu {
-  background: #FFFFFF;
-  border: 1px solid #D8CFC4;
-  box-shadow: 0 8px 24px rgba(40, 25, 15, 0.06);
+  background: #FAF7F0;
+  border: 1px solid #DCD3C5;
+  box-shadow: 0 8px 24px rgba(40, 25, 15, 0.05);
   color: #1C1917;
+}
+
+/* Navigasi Bermain: Tombol Ganti Zona + Banner */
+.kuis-bermain-nav-baris {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: var(--ruang-2);
+}
+
+.kuis-tombol-ganti-zona {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--kertas);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+[data-tema="terang"] .kuis-tombol-ganti-zona {
+  background: #F0E8DC;
+  border-color: #D3C6B4;
+  color: #2A2016;
+}
+
+.kuis-tombol-ganti-zona:hover {
+  border-color: var(--aksen);
+  color: var(--aksen);
+  transform: translateX(-2px);
+}
+
+[data-tema="terang"] .kuis-tombol-ganti-zona:hover {
+  border-color: #B87314;
+  color: #B87314;
+}
+
+.kuis-tombol-ganti-zona:focus-visible {
+  outline: 2px solid var(--aksen);
+  outline-offset: 2px;
+}
+
+.kuis-topik-segel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--aksen);
+}
+
+[data-tema="terang"] .kuis-topik-segel {
+  color: #B87314;
+}
+
+.kuis-chip-segel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  color: currentColor;
 }
 
 /* Header Kartu Kuis */

@@ -89,11 +89,8 @@ async function mulaiHalamanKuis() {
     // Tangani parameter URL jika ada (misal ?topik=sumatera)
     const params = new URLSearchParams(window.location.search);
     const topikUrl = params.get('topik') || params.get('kategori');
-    if (topikUrl) {
-      const targetBtn = document.querySelector(`.kuis-wilayah-pill[data-kategori="${topikUrl}"]`);
-      if (targetBtn) {
-        setTimeout(() => targetBtn.click(), 100);
-      }
+    if (topikUrl && kontrolKuis) {
+      kontrolKuis.aturWilayah(topikUrl);
     }
   } catch (err) {
     console.error('Gagal memuat data kuis:', err);

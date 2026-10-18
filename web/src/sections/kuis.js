@@ -141,42 +141,203 @@ export function inisialisasiBagianKuis({
     const infoWilayah = wilayahAktif ? WILAYAH_CONFIG[wilayahAktif] : null;
 
     // =========================================================================
-    // 1. Header Kartu Kuis (Banner Topik Wilayah + Metadata)
+    // 1. Layar Awal: PUSAT EKSPEDISI KURATORIAL NUSANTARA
+    // =========================================================================
+    if (statusLayar === 'awal') {
+      const hubAwal = document.createElement('div');
+      hubAwal.className = 'kuis-hub-wadah';
+
+      // Header Kuratorial Terpadu (Satu judul megah, tanpa banner ganda)
+      const hubIntro = document.createElement('div');
+      hubIntro.className = 'kuis-hub-intro';
+      hubIntro.innerHTML = `
+        <span class="kuis-hub-kicker">Katalog Ekspedisi Kuratorial</span>
+        <h2 class="kuis-hub-judul">Pilih Zona Penjelajahan Budaya</h2>
+        <p class="kuis-hub-deskripsi">
+          Pilih tantangan akbar seluruh Nusantara atau selami khasanah tradisi per kepulauan. Setiap ekspedisi memuat 8 soal terverifikasi yang diracik langsung dari rekaman inventaris resmi Kementerian Kebudayaan RI.
+        </p>
+      `;
+      hubAwal.appendChild(hubIntro);
+
+      // Kartu Akbar Nusantara (Featured Master Dossier across 100% width)
+      const cfgSemua = WILAYAH_CONFIG.semua;
+      const statSemua = dapatkanStatistikWilayah('semua', daftarBudaya, daftarProvinsi);
+
+      const heroNusantara = document.createElement('div');
+      heroNusantara.className = 'kuis-dossier-hero';
+      heroNusantara.setAttribute('role', 'button');
+      heroNusantara.setAttribute('tabindex', '0');
+      heroNusantara.setAttribute('aria-label', 'Mulai Ekspedisi Akbar Seluruh Nusantara, 347 Tradisi di 38 Provinsi');
+      heroNusantara.innerHTML = `
+        <div class="kuis-dossier-hero-inner">
+          <div class="kuis-dossier-hero-atas">
+            <div class="kuis-dossier-segel kuis-dossier-segel--emas">
+              ${cfgSemua.segelSvg}
+            </div>
+            <div class="kuis-dossier-hero-label-wrap">
+              <span class="kuis-dossier-tag kuis-dossier-tag--emas">${cfgSemua.zonaLabel} &bull; 38 PROVINSI</span>
+              <span class="kuis-dossier-tag-sub">Arsip Nasional Terlengkap</span>
+            </div>
+          </div>
+          <div class="kuis-dossier-hero-tengah">
+            <h3 class="kuis-dossier-hero-judul">Ekspedisi Akbar Seluruh Nusantara</h3>
+            <p class="kuis-dossier-hero-sub">${cfgSemua.deskripsiLengkap}</p>
+          </div>
+          <div class="kuis-dossier-hero-bawah">
+            <div class="kuis-dossier-stat-pill">
+              <strong>${formatAngka(statSemua.jumlahTradisi)}</strong> Tradisi Terkurasi &bull; <strong>38</strong> Provinsi
+            </div>
+            <div class="kuis-dossier-hero-cta">
+              <span>Mulai Ekspedisi Nusantara</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </div>
+          </div>
+        </div>
+      `;
+      const triggerNusantara = () => {
+        aturWilayah('semua');
+        const panelKuis = document.getElementById('s7-panel-kuis');
+        if (panelKuis) {
+          panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      };
+      heroNusantara.addEventListener('click', triggerNusantara);
+      heroNusantara.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerNusantara();
+        }
+      });
+      hubAwal.appendChild(heroNusantara);
+
+      // Pemisah Estetik Tradisional
+      const pemisah = document.createElement('div');
+      pemisah.className = 'kuis-dossier-pemisah';
+      pemisah.setAttribute('aria-hidden', 'true');
+      pemisah.innerHTML = `
+        <span class="kuis-pemisah-garis"></span>
+        <span class="kuis-pemisah-label">TELUSURI 6 KEPULAUAN BUDAYA</span>
+        <span class="kuis-pemisah-garis"></span>
+      `;
+      hubAwal.appendChild(pemisah);
+
+      // Grid 6 Berkas Kepulauan Budaya
+      const gridWilayah = document.createElement('div');
+      gridWilayah.className = 'kuis-dossier-grid';
+      gridWilayah.setAttribute('role', 'list');
+      gridWilayah.setAttribute('aria-label', 'Daftar pilihan zona ekspedisi budaya kepulauan');
+
+      const daftarKunciWilayah = ['sumatera', 'jawa', 'kalimantan', 'sulawesi', 'bali_nusa', 'maluku_papua'];
+      daftarKunciWilayah.forEach((kunci) => {
+        const cfg = WILAYAH_CONFIG[kunci];
+        if (!cfg) return;
+        const statW = dapatkanStatistikWilayah(kunci, daftarBudaya, daftarProvinsi);
+        const kartuW = document.createElement('div');
+        kartuW.className = 'kuis-dossier-kartu';
+        kartuW.setAttribute('role', 'button');
+        kartuW.setAttribute('tabindex', '0');
+        kartuW.setAttribute('aria-label', `Mulai Ekspedisi ${cfg.nama}, ${statW.jumlahTradisi} Tradisi`);
+        kartuW.innerHTML = `
+          <div class="kuis-dossier-kartu-kepala">
+            <div class="kuis-dossier-segel">
+              ${cfg.segelSvg}
+            </div>
+            <span class="kuis-dossier-zona-tag">${cfg.zonaLabel}</span>
+          </div>
+          <div class="kuis-dossier-kartu-badan">
+            <h4 class="kuis-dossier-judul">${cfg.nama}</h4>
+            <p class="kuis-dossier-sub">${cfg.subjudul}</p>
+          </div>
+          <div class="kuis-dossier-kartu-kaki">
+            <span class="kuis-dossier-stat">${formatAngka(statW.jumlahTradisi)} Tradisi &bull; ${statW.jumlahProvinsi} Prov</span>
+            <span class="kuis-dossier-aksi">
+              <span>Jelajahi</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
+          </div>
+        `;
+        const triggerWilayah = () => {
+          aturWilayah(kunci);
+          const panelKuis = document.getElementById('s7-panel-kuis');
+          if (panelKuis) {
+            panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        };
+        kartuW.addEventListener('click', triggerWilayah);
+        kartuW.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerWilayah();
+          }
+        });
+        gridWilayah.appendChild(kartuW);
+      });
+
+      hubAwal.appendChild(gridWilayah);
+
+      const catatanBawah = document.createElement('div');
+      catatanBawah.className = 'kuis-awal-catatan';
+      catatanBawah.textContent = dataSiap
+        ? 'Pilih salah satu zona di atas untuk memulai 8 pertanyaan kuratorial.'
+        : 'Sedang membaca basis data lokal...';
+      hubAwal.appendChild(catatanBawah);
+
+      wadahUtama.appendChild(hubAwal);
+      return;
+    }
+
+    // =========================================================================
+    // 2. Header Kartu Kuis saat Bermain atau Hasil
     // =========================================================================
     const kepala = document.createElement('div');
     kepala.className = 'kuis-kartu-kepala';
 
-    if (infoWilayah) {
-      // Banner Topik Wilayah Aktif
+    if (statusLayar === 'bermain' && infoWilayah) {
+      // Baris Navigasi Atas (Ganti Zona + Banner Zona Aktif + Skor Live)
+      const barisNavAtas = document.createElement('div');
+      barisNavAtas.className = 'kuis-bermain-nav-baris';
+
+      const btnGantiZona = document.createElement('button');
+      btnGantiZona.type = 'button';
+      btnGantiZona.className = 'kuis-tombol-ganti-zona';
+      btnGantiZona.setAttribute('aria-label', 'Kembali ke pemilihan zona wilayah');
+      btnGantiZona.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Ganti Zona</span>
+      `;
+      btnGantiZona.addEventListener('click', () => {
+        wilayahAktif = null;
+        statusLayar = 'awal';
+        render();
+        const panelKuis = document.getElementById('s7-panel-kuis');
+        if (panelKuis) {
+          panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
       const bannerTopik = document.createElement('div');
       bannerTopik.className = 'kuis-topik-badge-banner';
       bannerTopik.setAttribute('role', 'status');
       bannerTopik.innerHTML = `
-        <span class="kuis-topik-label">Zona Aktif:</span>
-        <strong class="kuis-topik-nama">${infoWilayah.ikon} ${infoWilayah.nama}</strong>
+        <span class="kuis-topik-segel">${infoWilayah.segelSvg}</span>
+        <strong class="kuis-topik-nama">${infoWilayah.nama}</strong>
         <span class="kuis-topik-total">&bull; 8 Pertanyaan Terkurasi SPKT</span>
       `;
-      kepala.appendChild(bannerTopik);
-    } else {
-      // Banner Permintaan Memilih Wilayah Terlebih Dahulu
-      const bannerPilih = document.createElement('div');
-      bannerPilih.className = 'kuis-topik-badge-banner kuis-topik-badge-banner--pilih';
-      bannerPilih.setAttribute('role', 'status');
-      bannerPilih.innerHTML = `
-        <span class="kuis-topik-label">Zona Kuratorial:</span>
-        <strong class="kuis-topik-nama">Pilih Zona Wilayah Budaya</strong>
-        <span class="kuis-topik-total">&bull; 7 Pilihan Wilayah</span>
-      `;
-      kepala.appendChild(bannerPilih);
-    }
 
-    const barisAtas = document.createElement('div');
-    barisAtas.className = 'kuis-kartu-baris-atas';
+      const skorChip = document.createElement('div');
+      skorChip.className = 'kuis-lencana-skor-live';
+      skorChip.innerHTML = `<span class="kuis-lencana-skor-label">Skor</span><strong class="kuis-lencana-skor-angka">${skor}</strong>`;
 
-    const infoKiri = document.createElement('div');
-    infoKiri.className = 'kuis-kartu-meta-kiri';
+      barisNavAtas.append(btnGantiZona, bannerTopik, skorChip);
+      kepala.appendChild(barisNavAtas);
 
-    if (statusLayar === 'bermain' && infoWilayah) {
+      // Baris Judul & Kategori Soal
+      const barisAtas = document.createElement('div');
+      barisAtas.className = 'kuis-kartu-baris-atas';
+
+      const infoKiri = document.createElement('div');
+      infoKiri.className = 'kuis-kartu-meta-kiri';
+
       const soal = daftarSoal[indeksSoalAktif];
       const tagKategori = document.createElement('span');
       tagKategori.className = 'kuis-label-kategori';
@@ -188,39 +349,9 @@ export function inisialisasiBagianKuis({
 
       infoKiri.append(tagKategori, judulSoal);
       barisAtas.appendChild(infoKiri);
+      kepala.appendChild(barisAtas);
 
-      const skorChip = document.createElement('div');
-      skorChip.className = 'kuis-lencana-skor-live';
-      skorChip.innerHTML = `<span class="kuis-lencana-skor-label">Skor</span><strong class="kuis-lencana-skor-angka">${skor}</strong>`;
-      barisAtas.appendChild(skorChip);
-    } else if (statusLayar === 'hasil' && infoWilayah) {
-      const tagKategori = document.createElement('span');
-      tagKategori.className = 'kuis-label-kategori';
-      tagKategori.textContent = 'Evaluasi Akhir';
-
-      const judulHasil = document.createElement('h3');
-      judulHasil.className = 'kuis-kartu-judul';
-      judulHasil.textContent = `Hasil Penjelajahan: ${infoWilayah.nama}`;
-
-      infoKiri.append(tagKategori, judulHasil);
-      barisAtas.appendChild(infoKiri);
-    } else {
-      const tagKategori = document.createElement('span');
-      tagKategori.className = 'kuis-label-kategori';
-      tagKategori.textContent = 'Eksplorasi Terkurasi SPKT';
-
-      const judulAwal = document.createElement('h3');
-      judulAwal.className = 'kuis-kartu-judul';
-      judulAwal.textContent = 'Pilih Wilayah Penjelajahan';
-
-      infoKiri.append(tagKategori, judulAwal);
-      barisAtas.appendChild(infoKiri);
-    }
-
-    kepala.appendChild(barisAtas);
-
-    // Progress Bar Bersegmen 8 Langkah (Hanya tampil saat bermain)
-    if (statusLayar === 'bermain' && daftarSoal.length > 0) {
+      // Progress Bar Bersegmen 8 Langkah
       const barProgres = document.createElement('div');
       barProgres.className = 'kuis-segmen-bar';
       barProgres.setAttribute('role', 'progressbar');
@@ -240,68 +371,37 @@ export function inisialisasiBagianKuis({
         barProgres.appendChild(segmen);
       }
       kepala.appendChild(barProgres);
+    } else if (statusLayar === 'hasil' && infoWilayah) {
+      const bannerTopik = document.createElement('div');
+      bannerTopik.className = 'kuis-topik-badge-banner';
+      bannerTopik.setAttribute('role', 'status');
+      bannerTopik.innerHTML = `
+        <span class="kuis-topik-segel">${infoWilayah.segelSvg}</span>
+        <strong class="kuis-topik-nama">${infoWilayah.nama}</strong>
+        <span class="kuis-topik-total">&bull; Evaluasi Ekspedisi Budaya</span>
+      `;
+      kepala.appendChild(bannerTopik);
+
+      const barisAtas = document.createElement('div');
+      barisAtas.className = 'kuis-kartu-baris-atas';
+
+      const infoKiri = document.createElement('div');
+      infoKiri.className = 'kuis-kartu-meta-kiri';
+
+      const tagKategori = document.createElement('span');
+      tagKategori.className = 'kuis-label-kategori';
+      tagKategori.textContent = 'Evaluasi Akhir';
+
+      const judulHasil = document.createElement('h3');
+      judulHasil.className = 'kuis-kartu-judul';
+      judulHasil.textContent = `Hasil Penjelajahan: ${infoWilayah.nama}`;
+
+      infoKiri.append(tagKategori, judulHasil);
+      barisAtas.appendChild(infoKiri);
+      kepala.appendChild(barisAtas);
     }
 
     wadahUtama.appendChild(kepala);
-
-    // =========================================================================
-    // 2. Layar Awal: WAJIB PILIH WILAYAH TERLEBIH DAHULU
-    // =========================================================================
-    if (statusLayar === 'awal') {
-      const badanAwal = document.createElement('div');
-      badanAwal.className = 'kuis-badan-konten';
-
-      const deskripsiAwal = document.createElement('p');
-      deskripsiAwal.className = 'kuis-paragraf-pembuka';
-      deskripsiAwal.textContent =
-        'Tentukan zona wilayah kebudayaan Indonesia yang ingin kamu uji. Soal-soal yang muncul dihimpun secara spesifik berdasarkan tradisi, seni, kriya, dan realitas pencatatan data resmi SPKT di daerah pilihanmu:';
-
-      // Grid Kartu Pemilihan Wilayah Interaktif
-      const gridPilih = document.createElement('div');
-      gridPilih.className = 'kuis-pilih-wilayah-grid';
-      gridPilih.setAttribute('role', 'list');
-      gridPilih.setAttribute('aria-label', 'Daftar pilihan zona wilayah budaya');
-
-      Object.entries(WILAYAH_CONFIG).forEach(([kunci, cfg]) => {
-        const statW = dapatkanStatistikWilayah(kunci, daftarBudaya, daftarProvinsi);
-        const kartuW = document.createElement('button');
-        kartuW.type = 'button';
-        kartuW.className = 'kuis-pilih-wilayah-kartu';
-        kartuW.setAttribute('role', 'listitem');
-        kartuW.innerHTML = `
-          <div class="kuis-pilih-kartu-atas">
-            <div class="kuis-pilih-kartu-kepala">
-              <span class="kuis-pilih-kartu-ikon" aria-hidden="true">${cfg.ikon}</span>
-              <h4 class="kuis-pilih-kartu-judul">${cfg.nama}</h4>
-            </div>
-            <p class="kuis-pilih-kartu-sub">${cfg.subjudul}</p>
-          </div>
-          <div class="kuis-pilih-kartu-kaki">
-            <span class="kuis-pilih-kartu-stat">${formatAngka(statW.jumlahTradisi)} Tradisi &bull; ${statW.jumlahProvinsi} Prov</span>
-            <span class="kuis-pilih-kartu-panah">Buka Tantangan &rarr;</span>
-          </div>
-        `;
-        kartuW.addEventListener('click', () => {
-          aturWilayah(kunci);
-          const panelKuis = document.getElementById('s7-panel-kuis');
-          if (panelKuis) {
-            panelKuis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
-        });
-        gridPilih.appendChild(kartuW);
-      });
-
-      const catatanBawah = document.createElement('div');
-      catatanBawah.className = 'kuis-awal-catatan';
-      catatanBawah.style.marginTop = 'var(--ruang-2)';
-      catatanBawah.textContent = dataSiap
-        ? 'Pilih salah satu zona di atas untuk memulai 8 pertanyaan kuratorial.'
-        : 'Sedang membaca arsip lokal...';
-
-      badanAwal.append(deskripsiAwal, gridPilih, catatanBawah);
-      wadahUtama.appendChild(badanAwal);
-      return;
-    }
 
     // =========================================================================
     // 3. Layar Bermain (Pertanyaan, Arsip Petunjuk, dan Opsi Abjad)
@@ -560,7 +660,7 @@ export function inisialisasiBagianKuis({
         const btnWil = document.createElement('button');
         btnWil.type = 'button';
         btnWil.className = 'kuis-hasil-wilayah-chip';
-        btnWil.innerHTML = `<span>${cfg.ikon} ${cfg.namaSingkat || cfg.nama}</span>`;
+        btnWil.innerHTML = `<span class="kuis-chip-segel" aria-hidden="true">${cfg.segelSvg}</span> <span>${cfg.namaSingkat || cfg.nama}</span>`;
         btnWil.addEventListener('click', () => {
           aturWilayah(kunci);
           const panelKuis = document.getElementById('s7-panel-kuis');

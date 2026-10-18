@@ -1,6 +1,31 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
-## [2026-10-18] Redesain Kuis Budaya Anti-Slop (Pembersihan Template AI Menjadi Khas Budaya Nusantara)
+## [2026-10-18] Transformasi Hub Ekspedisi Kuis Budaya: Eliminasi Redundansi Menu & Format AI Slop
+- **Dibuat/diubah:**
+  - `web/index.html` & `web/kuis.html`:
+    - Mengeliminasi menu ganda (*duplicate selection UI*): menghapus baris 7 tombol pill wilayah mengambang di atas panel kuis yang sebelumnya menumpuk dan menduplikasi kartu pilihan di bawahnya.
+    - Melebarkan kontainer utama kuis menjadi `980px` agar tata letak kisi kuratorial memiliki ruang baca proporsional dan tidak berhimpitan.
+  - `web/src/features/kuis.js`:
+    - Menghapus seluruh emoji kartun generik (`🌿`, `🏛️`, `🛶`, `⛵`, `🌊`, `🦜`, `🇮🇩`) yang menjadi ciri khas template AI generatif.
+    - Menambahkan lambang segel budaya Nusantara berbasis vektor SVG murni untuk setiap wilayah (Surya Majapahit Mandala Cakra, Gonjong Minangkabau Pucuk Rebung, Gunungan Wayang Purwa, Perisai Talawang Dayak, Layar Pinisi Bahari, Gapura Candi Bentar, dan Tifa Rempah Papua).
+    - Memperbarui `WILAYAH_CONFIG` dengan label zona resmi (`ZONA I: ANDALAS`, `ZONA II: DWIPANTARA`, dll.) dan narasi kuratorial berbobot tanpa tanda pisah em dash.
+  - `web/src/sections/kuis.js`:
+    - Merancang ulang Layar Awal kuis menjadi **Pusat Ekspedisi Kuratorial Nusantara**:
+      1. **Berkas Utama Nusantara (Featured Master Dossier)**: Banner akbar selebar 100% untuk tantangan seluruh Nusantara (38 provinsi, 347 tradisi) berhiaskan segel emas Surya Majapahit.
+      2. **Pemisah Estetik Klasik**: Garis batas halus bertuliskan `TELUSURI 6 KEPULAUAN BUDAYA`.
+      3. **Kisi 6 Berkas Kepulauan Budaya**: Grid 3 kolom (desktop) / 2 kolom (tablet) / 1 kolom (mobile) berisi 6 wilayah kepulauan lengkap dengan lambang segel budaya masing-masing.
+    - Menambahkan tombol navigasi ergonomis `← Ganti Zona` di bilah atas saat bermain kuis, memudahkan pengguna kembali ke pusat pilihan tanpa mengotori layar.
+    - Menghilangkan banner ganda "Pilih Wilayah Penjelajahan" yang berulang-ulang di layar awal.
+  - `web/src/pages/kuis.js`:
+    - Menghubungkan pembacaan parameter URL (`?topik=...`) secara langsung ke `kontrolKuis.aturWilayah(topikUrl)` tanpa simulasi klik elemen pill yang sudah dihapus.
+  - `web/src/styles/sections.css`:
+    - Mengganti latar kotak putih steril (`#FFFFFF`) dengan materialitas kertas arsip kuno hangat (`#FAF7F0` di mode terang dan pernis mahoni pekat `#14100E` di mode gelap) berbingkai aksen kuningan antik halus (`rgba(184, 115, 20, 0.28)` / `rgba(212, 160, 23, 0.24)`).
+    - Menerapkan interaksi hover taktil pada berkas ekspedisi: elevasi halus `-3px`, pendaran bingkai emas berwibawa, dan sedikit rotasi pada segel budaya.
+    - Memastikan kontras warna tajam sesuai standar WCAG AA/AAA dan aksesibilitas navigasi keyboard penuh (`Enter`/`Space` dan `:focus-visible`).
+- **Hasil:**
+  - Halaman kuis kini bebas 100% dari kesan AI Slop, tidak ada menu ganda yang membingungkan, memiliki hierarki informasi yang anggun dan berkarakter budaya Nusantara, serta berfungsi interaktif secara mulus.
+  - Validasi data (`node tools/validate.mjs`) dan build produksi (`npm run build`) lulus 100% tanpa error.
+
 - **Dibuat/diubah:**
   - `web/index.html` & `web/kuis.html`:
     - Menghapus pola generic AI slop: kicker berkilau `✦ ARENA UJI WAWASAN NUSANTARA ✦` dan deretan pill stat mengambang dengan emoji generik.

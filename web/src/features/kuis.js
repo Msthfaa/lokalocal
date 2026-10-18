@@ -16,57 +16,71 @@ export const WILAYAH_CONFIG = {
     kunci: 'semua',
     nama: 'Semua Nusantara',
     namaSingkat: 'Nusantara',
-    ikon: '🇮🇩',
+    zonaLabel: 'TANTANGAN AKBAR',
     subjudul: 'Ragam 38 Provinsi Seluruh Indonesia',
-    kodeProvinsi: []
+    deskripsiLengkap: 'Uji wawasan lintas kepulauan dari Sabang sampai Merauke yang mencakup seluruh keragaman tradisi dan realitas anomali pencatatan data nasional.',
+    kodeProvinsi: [],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2v3m0 14v3M2 12h3m14 0h3"></path><path d="m4.93 4.93 2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12"></path><circle cx="12" cy="12" r="8.5" stroke-dasharray="2 2.5"></circle></svg>`
   },
   sumatera: {
     kunci: 'sumatera',
-    nama: 'Sumatera • Gadang & Tenun',
+    nama: 'Sumatera: Gadang & Tenun',
     namaSingkat: 'Sumatera',
-    ikon: '🌿',
-    subjudul: 'Khasanah Andalas: Minangkabau, Melayu, Batak, & Sriwijaya',
-    kodeProvinsi: ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21']
+    zonaLabel: 'ZONA I: ANDALAS',
+    subjudul: 'Minangkabau, Melayu, Batak & Sriwijaya',
+    deskripsiLengkap: 'Khasanah terpadat di basis data nasional dengan keagungan gonjong Minangkabau, tradisi ulos Batak, dan kejayaan maritim Melayu.',
+    kodeProvinsi: ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21'],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20l2-8 5-8 5 8 2 8M12 4v16"></path><path d="M2 10c2.5-1.5 4.5 0 5 1.5m15-1.5c-2.5-1.5-4.5 0-5 1.5"></path></svg>`
   },
   jawa: {
     kunci: 'jawa',
-    nama: 'Jawa • Candi & Wayang',
+    nama: 'Jawa: Candi & Wayang',
     namaSingkat: 'Jawa',
-    ikon: '🏛️',
-    subjudul: 'Khasanah Dwipantara: Keraton, Candi, Pewayangan, & Kriya Luhur',
-    kodeProvinsi: ['31', '32', '33', '34', '35', '36']
+    zonaLabel: 'ZONA II: DWIPANTARA',
+    subjudul: 'Keraton, Candi, Pewayangan & Kriya Luhur',
+    deskripsiLengkap: 'Warisan peradaban klasik Dwipantara: filosofi batik, seni pertunjukan wayang purwa, gamelan, dan arsitektur candi batu megah.',
+    kodeProvinsi: ['31', '32', '33', '34', '35', '36'],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L4 17h16L12 2z"></path><path d="M12 2v20M8 17c0 2 1.8 3.5 4 3.5s4-1.5 4-3.5"></path><path d="M9 11h6"></path></svg>`
   },
   kalimantan: {
     kunci: 'kalimantan',
-    nama: 'Kalimantan • Dayak & Mandau',
+    nama: 'Kalimantan: Dayak & Mandau',
     namaSingkat: 'Kalimantan',
-    ikon: '🛶',
-    subjudul: 'Khasanah Borneo: Mandau Pusaka, Anyaman Rotan, & Arsitektur Dayak-Banjar',
-    kodeProvinsi: ['61', '62', '63', '64', '65']
+    zonaLabel: 'ZONA III: BORNEO',
+    subjudul: 'Mandau Pusaka, Anyaman Rotan & Banjar',
+    deskripsiLengkap: 'Kearifan rimba dan sungai Borneo: perisai talawang pusaka, seni arsitektur lamin Dayak, dan kriya anyam rotan Banjar.',
+    kodeProvinsi: ['61', '62', '63', '64', '65'],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 4v12l-7 4-7-4V6l7-4z"></path><path d="M12 6v12M8 10l4 2 4-2M8 14l4 2 4-2"></path></svg>`
   },
   sulawesi: {
     kunci: 'sulawesi',
-    nama: 'Sulawesi • Tongkonan & Pinisi',
+    nama: 'Sulawesi: Tongkonan & Pinisi',
     namaSingkat: 'Sulawesi',
-    ikon: '⛵',
-    subjudul: 'Khasanah Celebes: Bahari Pinisi, Tongkonan Megah, & Kriya Sutra Lagosi',
-    kodeProvinsi: ['71', '72', '73', '74', '75', '76']
+    zonaLabel: 'ZONA IV: CELEBES',
+    subjudul: 'Bahari Pinisi, Tongkonan & Tenun Sutra',
+    deskripsiLengkap: 'Keagungan maritim Celebes: tradisi pembuatan perahu layar Pinisi Bulukumba, arsitektur tongkonan Toraja, dan sutra Mandar-Lagosi.',
+    kodeProvinsi: ['71', '72', '73', '74', '75', '76'],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18l-3 2H6l-3-2z"></path><path d="M7 20V5l10 15M13 20V8l6 12"></path></svg>`
   },
   bali_nusa: {
     kunci: 'bali_nusa',
     nama: 'Bali & Nusa Tenggara',
     namaSingkat: 'Bali & Nusa Tenggara',
-    ikon: '🌊',
-    subjudul: 'Khasanah Sunda Kecil: Seni Sakral Bali & Tenun Ikat Flobamora',
-    kodeProvinsi: ['51', '52', '53']
+    zonaLabel: 'ZONA V: SUNDA KECIL',
+    subjudul: 'Seni Sakral Dewata & Tenun Ikat Flobamora',
+    deskripsiLengkap: 'Harmoni sakral Kepulauan Sunda Kecil: upacara adat dan seni tari Bali, arsitektur Sasak, hingga kriya tenun ikat Sumba-Flobamora.',
+    kodeProvinsi: ['51', '52', '53'],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V6l4-3v19M20 22V6l-4-3v19"></path><path d="M4 11h4M16 11h4M4 16h4M16 16h4M2 22h20"></path></svg>`
   },
   maluku_papua: {
     kunci: 'maluku_papua',
     nama: 'Maluku & Papua',
     namaSingkat: 'Maluku & Papua',
-    ikon: '🦜',
-    subjudul: 'Khasanah Rempah & Cenderawasih: Sasadu, Tifa, & Ritus Sakral',
-    kodeProvinsi: ['81', '82', '91', '92', '93', '94', '95', '96']
+    zonaLabel: 'ZONA VI: KEPULAUAN TIMUR',
+    subjudul: 'Bumi Rempah, Sasadu & Pusaka Cenderawasih',
+    deskripsiLengkap: 'Kekayaan jalur rempah Maluku, arsitektur adat Sasadu Halmahera, ritus musik tifa, dan pusaka tradisi pesisir Papua.',
+    kodeProvinsi: ['81', '82', '91', '92', '93', '94', '95', '96'],
+    segelSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="6" ry="2.5"></ellipse><path d="M6 5v14c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5"></path><path d="M6 12c1.5 1 3.5 1.5 6 1.5s4.5-.5 6-1.5"></path><path d="M7 7.5l10 9M17 7.5l-10 9"></path></svg>`
   }
 };
 
