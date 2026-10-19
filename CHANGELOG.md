@@ -1,5 +1,33 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-19] Tur Sinematik 3D: Isolasi Fokus Gugus Pulau Penuh & Voice Over Narator Wanita Aksen Indonesia Alami
+- **Permintaan Pengguna:**
+  1. Tur Sinematik 3D dikhususkan untuk menyorot dan mengisolasi satu pulau/gugus pulau besar yang sedang dibahas, bukan hanya satu provinsi.
+  2. Voice Over diperbaiki agar menggunakan suara perempuan dengan aksen bahasa Indonesia yang khas dan alami (bukan aksen bahasa Inggris).
+- **Dibuat/diubah:**
+  - **Isolasi & Penyorotan Utuh Gugus Pulau pada Tur Sinematik 3D**:
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Mengimplementasikan `sorotPulauZona(zona)`: Saat tur membahas suatu pulau (Sumatera, Jawa, Bali & Nusa Tenggara, Kalimantan, Sulawesi, Maluku & Papua), **seluruh keping provinsi pada pulau tersebut diangkat tinggi secara kompak (+0.26 unit) dan memancarkan pendaran cahaya emas hangat (`#FFD700` dan `#E5A93C`)**.
+      - Sementara itu, seluruh pulau di luar zona aktif secara otomatis diturunkan lembut ke permukaan laut dan diberi efek semi-transparan redup artistik (`opacity: 0.32`), sehingga pulau yang sedang dibahas menjadi fokus visual mutlak di layar.
+      - Menambahkan denyut emas tersinkronisasi pada `loop` Three.js untuk seluruh keping pulau aktif.
+      - Mengembalikan seluruh pulau ke kondisi normal, warna penuh, dan permukaan awal secara mulus saat tur ditutup atau dijeda via `kembalikanSorotanPulau()`.
+  - **Voice Over Wanita Indonesia Tulen & Naskah Narasi Adiluhung**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Memperbaiki pemilihan TTS dengan fungsi `perbaruiPilihanSuaraWanitaIndo()`, secara dinamis memprioritaskan suara wanita Indonesia alami: `Microsoft Gadis Online (Natural)` (Edge/Windows 11) dan `Google Bahasa Indonesia` (Chrome/Android), dengan fallback pintar ke suara `id-ID` berkarakter wanita.
+      - Menghubungkan pendengar event `voiceschanged` agar suara langsung terhubung saat browser selesai memuat daftar suara asinkron.
+      - Mengatur `pitch: 1.04` (timbre wanita hangat dan ramah) serta `rate: 0.94` (tempo tutur mendongeng yang anggun dan jelas).
+      - Menuliskan naskah `narasiAudio` khusus untuk ke-6 zona kepulauan dengan ejaan bilangan penuh (misal *"seratus sembilan belas"* bukan *"119"*) dan kata penghubung *"dan"* (bukan *"&"*), menjamin pelafalan fasih dengan aksen Indonesia yang khas.
+      - Menambah durasi per zona menjadi 12.0 detik agar narasi selesai tuntas dan nyaman dinikmati.
+  - **Penyempurnaan Antarmuka HUD Tur**:
+    - Menampilkan lencana baru `🏝️ Fokus: [Nama Pulau] • [Provinsi Terpilih]`.
+    - Merapikan gaya tombol tutup `✕` (`.jelajah-tur-btn-tutup`) menjadi tombol bulat melingkar yang selaras dengan tombol `[🔊 Narasi: ON]`.
+- **Hasil Pengujian**:
+  - `scratch/test-island-cinematic.mjs` dijalankan via browser Edge:
+    - Terkonfirmasi suara wanita Indonesia `Microsoft Gadis Online (Natural) - Indonesian (Indonesia)` terpilih 100%.
+    - Screenshot bukti `scratch/evidence-cinematic-island-focus-sumatera.png` dan `scratch/evidence-cinematic-island-focus-jawa.png` membuktikan seluruh gugus pulau terangkat kompak, berpendar emas, sementara pulau lain redup transparan.
+  - `npm run build` berhasil (0 error).
+  - `node tools/validate.mjs` lolos (0 error).
+
 ## [2026-10-19] Penyempurnaan Revisi Fitur: Navigasi Bebas Hambatan, Ruang Bunyi 8 Nada & Akor Simultan, Kamera Tur Drone Lapang & Voice Over Bahasa Indonesia
 - **Permintaan Pengguna:**
   1. Perbaikan bug klik terhalang pada navigasi atas dan seluruh halaman setelah menutup fitur/modal.

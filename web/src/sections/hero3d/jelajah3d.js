@@ -550,6 +550,99 @@ export function inisialisasiJelajah3D({
     }
   }
 
+  let daftarMeshZonaAktif = [];
+  let kodeUtamaZonaAktif = null;
+
+  /**
+   * Menyorot satu gugus pulau besar secara utuh selama Tur Sinematik 3D berlangsung:
+   * Seluruh keping provinsi pada pulau yang sedang dibahas diangkat (+0.26 unit)
+   * dan berpendar emas, sementara pulau-pulau lainnya dibuat semi-transparan redup.
+   */
+  function sorotPulauZona(zona) {
+    if (!zona || !zona.daftarKode) return;
+
+    const setKode = new Set(zona.daftarKode.map((k) => String(k).padStart(2, '0')));
+    const kodeUtamaStr = String(zona.provinsiKode).padStart(2, '0');
+    kodeUtamaZonaAktif = kodeUtamaStr;
+    daftarMeshZonaAktif = [];
+
+    let meshUtama = null;
+
+    for (const m of elemenAdegan.daftarProvinsiMesh) {
+      const u = m.userData;
+      if (!u) continue;
+      const kStr = String(u.kode).padStart(2, '0');
+      const isPulauIni = setKode.has(kStr);
+      const isUtama = (kStr === kodeUtamaStr);
+
+      if (isPulauIni) {
+        daftarMeshZonaAktif.push(m);
+        // Angkat seluruh keping pulau yang sedang dibahas secara kompak & harmonis (+0.26 unit)
+        u.offsetTerpilih = 0.26;
+
+        if (m.material) {
+          m.material.transparent = false;
+          m.material.opacity = 1.0;
+          m.material.color.set(u.warnaNormal || '#6EC443');
+          m.material.emissive.set(isUtama ? '#FFD700' : '#E5A93C');
+          m.material.emissiveIntensity = isUtama ? 0.65 : 0.45;
+        }
+
+        if (isUtama) {
+          meshUtama = m;
+        }
+      } else {
+        // Pulau-pulau lain di luar zona yang dibahas:
+        // Turunkan lembut ke permukaan laut dan buat semi-transparan redup artistik (opacity 0.32)
+        u.offsetTerpilih = -0.04;
+        if (m.material) {
+          m.material.transparent = true;
+          m.material.opacity = 0.32;
+          m.material.emissive.set('#000000');
+          m.material.emissiveIntensity = 0;
+        }
+      }
+    }
+
+    // Tancapkan tiang bendera 3D pada provinsi representatif utama
+    if (meshUtama) {
+      meshTerpilih = meshUtama;
+      const provData =
+        daftarProvinsi.find((p) => String(p.kode).padStart(2, '0') === kodeUtamaStr) ||
+        meshUtama.userData.info || {
+          nama: meshUtama.userData.nama,
+          kode: meshUtama.userData.kode,
+          total: 0,
+          status_data: 'belum_tercatat'
+        };
+      provTerpilihData = provData;
+      pengontrolBendera.tampilkan(provData, meshUtama);
+    }
+  }
+
+  function kembalikanSorotanPulau() {
+    daftarMeshZonaAktif = [];
+    kodeUtamaZonaAktif = null;
+    meshTerpilih = null;
+    provTerpilihData = null;
+
+    for (const m of elemenAdegan.daftarProvinsiMesh) {
+      const u = m.userData;
+      if (!u) continue;
+      u.offsetTerpilih = 0;
+      if (m.material) {
+        m.material.transparent = false;
+        m.material.opacity = 1.0;
+        m.material.color.set(u.warnaNormal || '#6EC443');
+        m.material.emissive.set('#000000');
+        m.material.emissiveIntensity = 0;
+      }
+    }
+
+    pengontrolBendera.sembunyikan();
+    panelKanan.sembunyikan();
+  }
+
   // Pasang Pengontrol Tur Sinematik Autopilot 3D (6 Wilayah Nusantara)
   const pengontrolTur = buatPengontrolTurSinematik({
     camera,
@@ -559,21 +652,14 @@ export function inisialisasiJelajah3D({
     aturRotasiDiorama: (rotY) => {
       targetRotY = rotY;
     },
+    sorotPulauZona: (zona) => {
+      sorotPulauZona(zona);
+    },
     pilihProvinsiMesh: (kode) => {
       pilihProvinsi(kode, { animasikanKamera: false, tampilkanSideCard: false });
     },
     kembalikanPilihanProvinsi: () => {
-      if (meshTerpilih) {
-        meshTerpilih.userData.offsetTerpilih = 0;
-        if (meshTerpilih.material) {
-          meshTerpilih.material.emissive.set('#000000');
-          meshTerpilih.material.emissiveIntensity = 0;
-        }
-        meshTerpilih = null;
-        provTerpilihData = null;
-      }
-      pengontrolBendera.sembunyikan();
-      panelKanan.sembunyikan();
+      kembalikanSorotanPulau();
     }
   });
 
@@ -598,8 +684,16 @@ export function inisialisasiJelajah3D({
           grupUtama.rotation.y = currentRotY + Math.sin(tDetik * 0.28) * 0.006;
         }
 
-        // Denyut halus cahaya emas pada pulau terpilih
-        if (meshTerpilih && meshTerpilih.material) {
+        // Denyut halus cahaya emas pada pulau terpilih atau gugusan pulau yang sedang dibahas
+        if (daftarMeshZonaAktif.length > 0) {
+          const denyut = 0.45 + Math.sin(tDetik * 3.5) * 0.15;
+          for (const m of daftarMeshZonaAktif) {
+            if (m.material) {
+              const isUtama = String(m.userData.kode).padStart(2, '0') === kodeUtamaZonaAktif;
+              m.material.emissiveIntensity = isUtama ? denyut + 0.18 : denyut;
+            }
+          }
+        } else if (meshTerpilih && meshTerpilih.material) {
           meshTerpilih.material.emissiveIntensity = 0.45 + Math.sin(tDetik * 3.5) * 0.15;
         }
 

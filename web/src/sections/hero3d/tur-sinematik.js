@@ -14,78 +14,96 @@ export const DAFTAR_ZONA_TUR = [
   {
     nomor: 1,
     zonaId: 'sumatera',
+    pulauNama: 'Pulau Sumatera',
+    daftarKode: ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21'],
     provinsiKode: '13',
     provinsiNama: 'Sumatera Barat (119 Catatan)',
     judul: 'Sumatera: Gerbang Barat & Warisan Luhur',
     subjudul: 'Randai Minangkabau, Silek Harimau Lalok, & Kawasan Balai Kaliki',
     deskripsi: 'Gugusan peradaban barat dengan 119 catatan budaya di Sumatera Barat: seni teater tutur Randai, bela diri Silek Harimau Lalok Pariaman, dan kawasan adat Balai Kaliki.',
-    offsetLookAt: { x: -2.2, y: 0.15, z: 0.2 },
-    offsetPos: { x: -1.9, y: 2.9, z: 4.3 },
-    rotY: 0.12
+    narasiAudio: 'Selamat datang di Pulau Sumatera, Gerbang Barat Nusantara. Wilayah ini menyimpan seratus sembilan belas catatan kebudayaan di Sumatera Barat, termasuk seni teater tutur Randai Minangkabau, seni bela diri Silek Harimau Lalok, dan cagar budaya Balai Kaliki.',
+    offsetLookAt: { x: -2.3, y: 0.18, z: 0.15 },
+    offsetPos: { x: -1.8, y: 2.7, z: 4.0 },
+    rotY: 0.14
   },
   {
     nomor: 2,
     zonaId: 'jawa',
+    pulauNama: 'Pulau Jawa',
+    daftarKode: ['31', '32', '33', '34', '35', '36'],
     provinsiKode: '35',
     provinsiNama: 'Jawa Timur (70 Catatan)',
     judul: 'Jawa: Warisan Kesenian & Ragam Motif',
     subjudul: 'Bantengan Pasuruan, Wayang Kulit Gagrak, & Batik Garutan',
     deskripsi: 'Episentrum seni pertunjukan dan kerajinan tradisi: seni Bantengan Pasuruan, Wayang Kulit Gagrak Porongan, hingga ragam filosofi motif Batik Garutan & Cianjur.',
-    offsetLookAt: { x: -0.4, y: 0.15, z: 1.1 },
-    offsetPos: { x: -0.3, y: 2.8, z: 4.3 },
+    narasiAudio: 'Kita melayang ke Pulau Jawa, episentrum kesenian dan ragam motif adiluhung. Mari saksikan keunikan seni Bantengan Pasuruan, pertunjukan Wayang Kulit Gagrak Porongan, hingga mahakarya Batik Garutan yang penuh filosofi.',
+    offsetLookAt: { x: -0.4, y: 0.18, z: 1.15 },
+    offsetPos: { x: -0.35, y: 2.5, z: 3.8 },
     rotY: -0.02
   },
   {
     nomor: 3,
     zonaId: 'bali-nusa',
+    pulauNama: 'Kepulauan Bali & Nusa Tenggara',
+    daftarKode: ['51', '52', '53'],
     provinsiKode: '51',
     provinsiNama: 'Bali (6 Catatan)',
     judul: 'Bali & Kepulauan Nusa: Dinamika Seni & Tradisi',
     subjudul: 'Ogoh-Ogoh, Okokan Tabanan, Gending Ratu Anom, & Knobe',
     deskripsi: 'Seni pertunjukan Ogoh-Ogoh, tradisi bunyi Okokan Tabanan, tembang Gending Ratu Anom di Bali, hingga alat musik tradisi Knobe dari Nusa Tenggara Timur.',
-    offsetLookAt: { x: 1.0, y: 0.15, z: 1.25 },
-    offsetPos: { x: 0.9, y: 2.8, z: 4.3 },
+    narasiAudio: 'Kini kita singgah di Kepulauan Bali dan Nusa Tenggara, beranda dewata nan kaya tradisi. Dari kemegahan patung Ogoh-Ogoh, tradisi bunyi Okokan Tabanan, lantunan tembang Gending Ratu Anom, hingga keunikan alat musik Knobe di Nusa Tenggara Timur.',
+    offsetLookAt: { x: 1.1, y: 0.18, z: 1.25 },
+    offsetPos: { x: 1.05, y: 2.45, z: 3.7 },
     rotY: -0.08
   },
   {
     nomor: 4,
     zonaId: 'kalimantan',
+    pulauNama: 'Pulau Kalimantan (Borneo)',
+    daftarKode: ['61', '62', '63', '64', '65'],
     provinsiKode: '61',
     provinsiNama: 'Kalimantan Barat (29 Catatan)',
     judul: 'Kalimantan: Kearifan Rumah Panjang & Ritus Bahari',
     subjudul: 'Rumah Panjang Nanga Siyai, Naq Hudoq, & Musik Keringut',
     deskripsi: 'Arsitektur Rumah Panjang Nanga Siyai, topeng ritus Naq Hudoq Dayak Bahau, instrumen musik petik Jatung Utang, serta alat musik tiup Keringut Dayak Punan.',
-    offsetLookAt: { x: -0.6, y: 0.15, z: -0.2 },
-    offsetPos: { x: -0.5, y: 3.1, z: 4.4 },
+    narasiAudio: 'Terbang melintasi rimbunnya Pulau Kalimantan, jantung Borneo pusaka Dayak. Simak kemegahan Rumah Panjang Nanga Siyai, ritus sakral topeng Hudoq Dayak Bahau, petikan Jatung Utang, serta alat tiup Keringut Dayak Punan.',
+    offsetLookAt: { x: -0.6, y: 0.2, z: -0.2 },
+    offsetPos: { x: -0.55, y: 2.85, z: 3.9 },
     rotY: 0.05
   },
   {
     nomor: 5,
     zonaId: 'sulawesi',
+    pulauNama: 'Pulau Sulawesi',
+    daftarKode: ['71', '72', '73', '74', '75', '76'],
     provinsiKode: '73',
     provinsiNama: 'Sulawesi Selatan (33 Catatan)',
     judul: 'Sulawesi: Arsitektur Adat & Jejak Aksara',
     subjudul: 'Aksara Lontaraq, Rumah Kajang, & Pakaian Adat Bada',
     deskripsi: 'Dokumentasi aksara Lontaraq Bugis-Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Bada Sulawesi Tengah.',
-    offsetLookAt: { x: 0.8, y: 0.15, z: 0.1 },
-    offsetPos: { x: 0.8, y: 2.9, z: 4.3 },
+    narasiAudio: 'Kita tiba di Pulau Sulawesi, benteng arsitektur adat dan jejak aksara kuno. Menghadirkan aksara Lontaraq Bugis-Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Lembah Bada.',
+    offsetLookAt: { x: 0.85, y: 0.18, z: 0.1 },
+    offsetPos: { x: 0.8, y: 2.6, z: 3.8 },
     rotY: -0.06
   },
   {
     nomor: 6,
     zonaId: 'maluku-papua',
+    pulauNama: 'Kepulauan Maluku & Tanah Papua',
+    daftarKode: ['81', '82', '91', '92', '93', '94', '95', '96'],
     provinsiKode: '82',
     provinsiNama: 'Maluku Utara (9 Catatan)',
     judul: 'Maluku & Papua: Negeri Rempah & Bumi Cenderawasih',
     subjudul: 'Rumah Adat Sasadu, Tari Togal, & Limne Ketengban',
     deskripsi: 'Arsitektur musyawarah Sasadu Maluku Utara, kesyahduan Tari Togal, perkusi Kelambut Papua, hingga gerak tari adat Limne suku Ketengban Papua Pegunungan.',
-    offsetLookAt: { x: 2.3, y: 0.15, z: 0.25 },
-    offsetPos: { x: 2.1, y: 3.0, z: 4.4 },
+    narasiAudio: 'Pemberhentian terakhir di Kepulauan Maluku dan Tanah Papua, bumi cenderawasih kaya rempah. Menampilkan balai musyawarah Sasadu Halmahera, tarian Togal, tabuhan perkusi Kelambut, hingga gerak tari adat Limne suku Ketengban di Papua Pegunungan.',
+    offsetLookAt: { x: 2.3, y: 0.2, z: 0.3 },
+    offsetPos: { x: 2.1, y: 2.75, z: 3.9 },
     rotY: -0.15
   }
 ];
 
-const DURASI_PER_ZONA_DETIK = 9.5;
+const DURASI_PER_ZONA_DETIK = 12.0;
 
 /**
  * Membuat mesin pengontrol Tur Sinematik Autopilot 3D.
@@ -96,6 +114,7 @@ export function buatPengontrolTurSinematik({
   cameraTargetPos,
   cameraTargetLookAt,
   aturRotasiDiorama,
+  sorotPulauZona,
   pilihProvinsiMesh,
   kembalikanPilihanProvinsi
 }) {
@@ -111,6 +130,94 @@ export function buatPengontrolTurSinematik({
   // Voice Over (Web Speech API)
   let voiceOverAktif = true;
   const synth = typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null;
+  let suaraWanitaIndo = null;
+
+  /**
+   * Menemukan suara wanita berbahasa Indonesia dengan pelafalan & aksen asli Indonesia
+   * Memprioritaskan Microsoft Gadis Natural (Edge/Windows) atau Google Bahasa Indonesia (Chrome)
+   */
+  function perbaruiPilihanSuaraWanitaIndo() {
+    if (!synth) return null;
+    const voices = synth.getVoices();
+    if (!voices || voices.length === 0) return null;
+
+    // 1. Prioritas Utama: Microsoft Gadis Natural (Edge / Windows 11 — suara wanita Indonesia paling fasih & manusiawi)
+    let v = voices.find(
+      (x) =>
+        x.lang.toLowerCase().startsWith('id') &&
+        (x.name.toLowerCase().includes('gadis') ||
+         (x.name.toLowerCase().includes('natural') && !x.name.toLowerCase().includes('ardi')))
+    );
+    if (v) {
+      suaraWanitaIndo = v;
+      return v;
+    }
+
+    // 2. Google Bahasa Indonesia di Chrome / Android
+    v = voices.find(
+      (x) =>
+        x.lang.toLowerCase().startsWith('id') &&
+        x.name.toLowerCase().includes('google')
+    );
+    if (v) {
+      suaraWanitaIndo = v;
+      return v;
+    }
+
+    // 3. Suara dengan tag Female / Perempuan / Wanita Indonesia lainnya
+    v = voices.find(
+      (x) =>
+        x.lang.toLowerCase().startsWith('id') &&
+        (x.name.toLowerCase().includes('female') ||
+         x.name.toLowerCase().includes('wanita') ||
+         x.name.toLowerCase().includes('perempuan') ||
+         x.name.toLowerCase().includes('putri') ||
+         x.name.toLowerCase().includes('siti'))
+    );
+    if (v) {
+      suaraWanitaIndo = v;
+      return v;
+    }
+
+    // 4. Suara bahasa Indonesia non-pria (menghindari Ardi / Male / Pria / David)
+    v = voices.find(
+      (x) =>
+        x.lang.toLowerCase().startsWith('id') &&
+        !x.name.toLowerCase().includes('ardi') &&
+        !x.name.toLowerCase().includes('male') &&
+        !x.name.toLowerCase().includes('pria')
+    );
+    if (v) {
+      suaraWanitaIndo = v;
+      return v;
+    }
+
+    // 5. Suara resmi bahasa Indonesia (id-ID)
+    v = voices.find((x) => x.lang.toLowerCase().startsWith('id'));
+    if (v) {
+      suaraWanitaIndo = v;
+      return v;
+    }
+
+    // 6. Kode bahasa lama 'in-ID'
+    v = voices.find((x) => x.lang.toLowerCase().startsWith('in'));
+    if (v) {
+      suaraWanitaIndo = v;
+      return v;
+    }
+
+    return null;
+  }
+
+  // Pasang pendengar voiceschanged agar suara terdeteksi seketika browser selesai memuat
+  if (synth) {
+    perbaruiPilihanSuaraWanitaIndo();
+    if (typeof synth.addEventListener === 'function') {
+      synth.addEventListener('voiceschanged', perbaruiPilihanSuaraWanitaIndo);
+    } else {
+      synth.onvoiceschanged = perbaruiPilihanSuaraWanitaIndo;
+    }
+  }
 
   // Elemen DOM HUD Overlay
   const overlayEl = document.getElementById('jelajah-tur-overlay');
@@ -134,17 +241,25 @@ export function buatPengontrolTurSinematik({
     if (!synth || !voiceOverAktif) return;
     try {
       synth.cancel();
-      const naskah = `${zona.judul}. Fokus provinsi ${zona.provinsiNama}. ${zona.subjudul}. ${zona.deskripsi}`;
+
+      if (!suaraWanitaIndo) {
+        perbaruiPilihanSuaraWanitaIndo();
+      }
+
+      const naskah = zona.narasiAudio || `${zona.judul}. ${zona.subjudul}. ${zona.deskripsi}`;
       const utterance = new SpeechSynthesisUtterance(naskah);
       utterance.lang = 'id-ID';
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
 
-      // Cari suara berbahasa Indonesia
-      const voices = synth.getVoices();
-      const idVoice = voices.find((v) => v.lang.startsWith('id') || v.lang.includes('ID'));
-      if (idVoice) {
-        utterance.voice = idVoice;
+      if (suaraWanitaIndo) {
+        utterance.voice = suaraWanitaIndo;
+        // Pitch 1.04 memberikan timbre wanita hangat, ramah, dan artikulasi jelas
+        utterance.pitch = 1.04;
+        // Rate 0.94 memberikan tempo tutur mendongeng yang anggun dan santai
+        utterance.rate = 0.94;
+      } else {
+        // Fallback jika suara belum siap
+        utterance.pitch = 1.14;
+        utterance.rate = 0.92;
       }
 
       synth.speak(utterance);
@@ -165,10 +280,10 @@ export function buatPengontrolTurSinematik({
     overlayEl.classList.add('aktif');
 
     if (zonaLangkahEl) {
-      zonaLangkahEl.textContent = `Wilayah ${zona.nomor} dari ${DAFTAR_ZONA_TUR.length}`;
+      zonaLangkahEl.textContent = `Wilayah ${zona.nomor} dari ${DAFTAR_ZONA_TUR.length}: ${zona.pulauNama}`;
     }
     if (provinsiBadgeEl) {
-      provinsiBadgeEl.textContent = `📍 Fokus: ${zona.provinsiNama}`;
+      provinsiBadgeEl.textContent = `🏝️ Fokus: ${zona.pulauNama} • ${zona.provinsiNama}`;
     }
     if (judulEl) {
       judulEl.textContent = zona.judul;
@@ -216,8 +331,10 @@ export function buatPengontrolTurSinematik({
     const zona = DAFTAR_ZONA_TUR[indeksZona];
     perbaruiUIOverlay(zona);
 
-    // Sorot provinsi representatif di peta 3D & tancapkan bendera
-    if (typeof pilihProvinsiMesh === 'function') {
+    // Sorot khusus pulau yang sedang dibahas (angkat pulau & beri rona emas berkilau, pulau lain teduh redup)
+    if (typeof sorotPulauZona === 'function') {
+      sorotPulauZona(zona);
+    } else if (typeof pilihProvinsiMesh === 'function') {
       pilihProvinsiMesh(zona.provinsiKode);
     }
 

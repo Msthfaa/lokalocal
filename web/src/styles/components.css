@@ -2179,26 +2179,36 @@
 }
 
 .jelajah-tur-btn-tutup {
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   color: var(--c-teks-redup, #A89F91);
-  padding: 4px;
-  border-radius: 6px;
-  display: flex;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .jelajah-tur-btn-tutup:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #F87171;
+}
+
+[data-tema="terang"] .jelajah-tur-btn-tutup {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #78716C;
 }
 
 [data-tema="terang"] .jelajah-tur-btn-tutup:hover {
-  background: rgba(0, 0, 0, 0.06);
-  color: #1C1917;
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #DC2626;
 }
 
 .jelajah-tur-subjudul {
