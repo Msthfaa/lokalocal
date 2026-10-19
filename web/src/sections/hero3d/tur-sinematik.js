@@ -23,10 +23,10 @@ export const DAFTAR_ZONA_TUR = [
     deskripsi: 'Gugusan peradaban barat dengan 119 catatan budaya di Sumatera Barat: seni teater tutur Randai, bela diri Silek Harimau Lalok Pariaman, dan kawasan adat Balai Kaliki.',
     narasiAudio: 'Selamat datang di Pulau Sumatera, Gerbang Barat Nusantara. Wilayah ini menyimpan seratus sembilan belas catatan kebudayaan di Sumatera Barat, termasuk seni teater tutur Randai Minangkabau, seni bela diri Silek Harimau Lalok, dan cagar budaya Balai Kaliki.',
     audioUrl: '/assets/audio/tur/tur-1-sumatera.mp3',
-    durasiDetik: 18.5,
-    offsetLookAt: { x: -2.3, y: 0.18, z: 0.15 },
-    offsetPos: { x: -1.8, y: 2.7, z: 4.0 },
-    rotY: 0.14
+    durasiDetik: 20.5,
+    offsetLookAt: { x: -3.80, y: 0.15, z: -0.45 },
+    offsetPos: { x: -3.80, y: 2.8, z: 3.3 },
+    rotY: 0.0
   },
   {
     nomor: 2,
@@ -40,10 +40,10 @@ export const DAFTAR_ZONA_TUR = [
     deskripsi: 'Episentrum seni pertunjukan dan kerajinan tradisi: seni Bantengan Pasuruan, Wayang Kulit Gagrak Porongan, hingga ragam filosofi motif Batik Garutan & Cianjur.',
     narasiAudio: 'Kita melayang ke Pulau Jawa, episentrum kesenian dan ragam motif adiluhung. Mari saksikan keunikan seni Bantengan Pasuruan, pertunjukan Wayang Kulit Gagrak Porongan, hingga mahakarya Batik Garutan yang penuh filosofi.',
     audioUrl: '/assets/audio/tur/tur-2-jawa.mp3',
-    durasiDetik: 16.2,
-    offsetLookAt: { x: -0.4, y: 0.18, z: 1.15 },
-    offsetPos: { x: -0.35, y: 2.5, z: 3.8 },
-    rotY: -0.02
+    durasiDetik: 18.5,
+    offsetLookAt: { x: -1.80, y: 0.15, z: 1.15 },
+    offsetPos: { x: -1.80, y: 2.3, z: 4.1 },
+    rotY: 0.0
   },
   {
     nomor: 3,
@@ -57,10 +57,10 @@ export const DAFTAR_ZONA_TUR = [
     deskripsi: 'Seni pertunjukan Ogoh-Ogoh, tradisi bunyi Okokan Tabanan, tembang Gending Ratu Anom di Bali, hingga alat musik tradisi Knobe dari Nusa Tenggara Timur.',
     narasiAudio: 'Kini kita singgah di Kepulauan Bali dan Nusa Tenggara, beranda dewata nan kaya tradisi. Dari kemegahan patung Ogoh-Ogoh, tradisi bunyi Okokan Tabanan, lantunan tembang Gending Ratu Anom, hingga keunikan alat musik Knobe di Nusa Tenggara Timur.',
     audioUrl: '/assets/audio/tur/tur-3-bali-nusa.mp3',
-    durasiDetik: 18.0,
-    offsetLookAt: { x: 1.1, y: 0.18, z: 1.25 },
-    offsetPos: { x: 1.05, y: 2.45, z: 3.7 },
-    rotY: -0.08
+    durasiDetik: 21.0,
+    offsetLookAt: { x: 0.45, y: 0.15, z: 1.65 },
+    offsetPos: { x: 0.45, y: 2.3, z: 4.6 },
+    rotY: 0.0
   },
   {
     nomor: 4,
@@ -74,10 +74,10 @@ export const DAFTAR_ZONA_TUR = [
     deskripsi: 'Arsitektur Rumah Panjang Nanga Siyai, topeng ritus Naq Hudoq Dayak Bahau, instrumen musik petik Jatung Utang, serta alat musik tiup Keringut Dayak Punan.',
     narasiAudio: 'Terbang melintasi rimbunnya Pulau Kalimantan, jantung Borneo pusaka Dayak. Simak kemegahan Rumah Panjang Nanga Siyai, ritus sakral topeng Hudoq Dayak Bahau, petikan Jatung Utang, serta alat tiup Keringut Dayak Punan.',
     audioUrl: '/assets/audio/tur/tur-4-kalimantan.mp3',
-    durasiDetik: 17.0,
-    offsetLookAt: { x: -0.6, y: 0.2, z: -0.2 },
-    offsetPos: { x: -0.55, y: 2.85, z: 3.9 },
-    rotY: 0.05
+    durasiDetik: 18.5,
+    offsetLookAt: { x: -1.00, y: 0.15, z: -0.55 },
+    offsetPos: { x: -1.00, y: 2.9, z: 2.9 },
+    rotY: 0.0
   },
   {
     nomor: 5,
@@ -89,12 +89,12 @@ export const DAFTAR_ZONA_TUR = [
     judul: 'Sulawesi: Arsitektur Adat & Jejak Aksara',
     subjudul: 'Aksara Lontaraq, Rumah Kajang, & Pakaian Adat Bada',
     deskripsi: 'Dokumentasi aksara Lontaraq Bugis-Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Bada Sulawesi Tengah.',
-    narasiAudio: 'Kita tiba di Pulau Sulawesi, benteng arsitektur adat dan jejak aksara kuno. Menghadirkan aksara Lontaraq Bugis-Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Lembah Bada.',
+    narasiAudio: 'Kita tiba di Pulau Sulawesi, benteng arsitektur adat dan jejak aksara kuno. Menghadirkan aksara Lontaraq Bugis Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Lembah Bada.',
     audioUrl: '/assets/audio/tur/tur-5-sulawesi.mp3',
-    durasiDetik: 17.0,
-    offsetLookAt: { x: 0.85, y: 0.18, z: 0.1 },
-    offsetPos: { x: 0.8, y: 2.6, z: 3.8 },
-    rotY: -0.06
+    durasiDetik: 19.5,
+    offsetLookAt: { x: 1.13, y: 0.15, z: -0.20 },
+    offsetPos: { x: 1.13, y: 2.8, z: 3.2 },
+    rotY: 0.0
   },
   {
     nomor: 6,
@@ -108,10 +108,10 @@ export const DAFTAR_ZONA_TUR = [
     deskripsi: 'Arsitektur musyawarah Sasadu Maluku Utara, kesyahduan Tari Togal, perkusi Kelambut Papua, hingga gerak tari adat Limne suku Ketengban Papua Pegunungan.',
     narasiAudio: 'Pemberhentian terakhir di Kepulauan Maluku dan Tanah Papua, bumi cenderawasih kaya rempah. Menampilkan balai musyawarah Sasadu Halmahera, tarian Togal, tabuhan perkusi Kelambut, hingga gerak tari adat Limne suku Ketengban di Papua Pegunungan.',
     audioUrl: '/assets/audio/tur/tur-6-maluku-papua.mp3',
-    durasiDetik: 18.2,
-    offsetLookAt: { x: 2.3, y: 0.2, z: 0.3 },
-    offsetPos: { x: 2.1, y: 2.75, z: 3.9 },
-    rotY: -0.15
+    durasiDetik: 20.2,
+    offsetLookAt: { x: 3.45, y: 0.15, z: 0.20 },
+    offsetPos: { x: 3.45, y: 3.4, z: 4.3 },
+    rotY: 0.0
   }
 ];
 
@@ -436,7 +436,7 @@ export function buatPengontrolTurSinematik({
     sedangDijeda = false;
     indeksZona = 0;
 
-    tampilkanToast('Memulai Tur Drone Sinematik Nusantara... Dengarkan narasi suara Piper TTS 🎥🎙️✨');
+    tampilkanToast('Memulai Tur Drone Sinematik Nusantara... Dengarkan narasi pemandu budaya 🎥🎙️✨');
     terbangKeZona(0);
   }
 

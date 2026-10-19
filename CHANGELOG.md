@@ -1,6 +1,40 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
-## [2026-10-19] Integrasi Piper TTS: Rekaman Narasi Studio Wanita Indonesia (MP3 Berkualitas Tinggi & Ringan)
+## [2026-10-19] Penyempurnaan Vokal Narasi Alami (Azure Neural TTS Gadis) & Kalibrasi Presisi Kamera Tur Sinematik 3D
+- **Permintaan Pengguna:**
+  1. Suara Voice Over diperbaiki karena sebelumnya dinilai kaku, datar tanpa intonasi, serta jeda pada koma dan ganti baris sangat kentara seperti AI robotik. Pengguna meminta suara wanita dengan intonasi alami, luwes, dan khas Indonesia.
+  2. Pengarahan kamera tur sinematik diperbaiki karena beberapa pulau terarah terlalu ke kanan atau tidak pas di tengah layar.
+- **Dibuat/diubah:**
+  - **Peningkatan Mutu Vokal Narasi (Natural Neural TTS `id-ID-GadisNeural`)**:
+    - `tools/generate-tur-audio.py`:
+      - Diperbarui menggunakan mesin Azure Neural TTS dengan vokal wanita Indonesia `id-ID-GadisNeural` yang memiliki modulasi intonasi manusiawi, nada naik lembut pada koma, serta jeda alami tanpa kesan kaku atau terputus-putus.
+      - Parameter tutur: `rate="-3%"` (tempo bertutur anggun, santai, dan artikulatif) serta `pitch="+1Hz"` (timbre wanita muda ramah dan hangat).
+      - Menggunakan konektor IPv4 (`aiohttp.TCPConnector(family=socket.AF_INET)`) untuk menjamin keandalan koneksi instan di lingkungan Windows.
+      - Men-generate ulang 6 berkas MP3 narasi kepulauan di `web/public/assets/audio/tur/`:
+        - `tur-1-sumatera.mp3` (114.6 KB, durasi 19.56s)
+        - `tur-2-jawa.mp3` (102.7 KB, durasi 17.52s)
+        - `tur-3-bali-nusa.mp3` (116.4 KB, durasi 19.87s)
+        - `tur-4-kalimantan.mp3` (102.0 KB, durasi 17.40s)
+        - `tur-5-sulawesi.mp3` (108.3 KB, durasi 18.48s)
+        - `tur-6-maluku-papua.mp3` (111.4 KB, durasi 19.01s)
+      - Total ukuran ke-6 berkas MP3 hanya **655.3 KB** (sangat hemat data untuk koneksi seluler).
+  - **Kalibrasi Presisi Kamera Tur Sinematik 3D (Sentralisasi 6 Gugus Pulau)**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Menghitung koordinat tengah geografis 3D (*bounding box center*) untuk ke-6 gugus kepulauan dari berkas `provinsi.geojson`.
+      - Menyetel ulang seluruh `offsetLookAt`, `offsetPos`, dan `rotY: 0.0` di `DAFTAR_ZONA_TUR` sehingga setiap gugus pulau tepat berada di sumbu tengah horizontal layar di atas kartu HUD:
+        - **Zona 1 (Sumatera)**: `offsetLookAt: (-3.80, 0.15, -0.45)`, `offsetPos: (-3.80, 2.8, 3.3)`, `durasiDetik: 20.5`.
+        - **Zona 2 (Jawa)**: `offsetLookAt: (-1.80, 0.15, 1.15)`, `offsetPos: (-1.80, 2.3, 4.1)`, `durasiDetik: 18.5`.
+        - **Zona 3 (Bali & Nusa Tenggara)**: `offsetLookAt: (0.45, 0.15, 1.65)`, `offsetPos: (0.45, 2.3, 4.6)`, `durasiDetik: 21.0` (sebelumnya terlempar ke pojok kiri bawah, kini terbentang indah di tengah layar).
+        - **Zona 4 (Kalimantan)**: `offsetLookAt: (-1.00, 0.15, -0.55)`, `offsetPos: (-1.00, 2.9, 2.9)`, `durasiDetik: 18.5`.
+        - **Zona 5 (Sulawesi)**: `offsetLookAt: (1.13, 0.15, -0.20)`, `offsetPos: (1.13, 2.8, 3.2)`, `durasiDetik: 19.5` (empat semenanjung Sulawesi kini terpusat simetris).
+        - **Zona 6 (Maluku & Papua)**: `offsetLookAt: (3.45, 0.15, 0.20)`, `offsetPos: (3.45, 3.4, 4.3)`, `durasiDetik: 20.2` (sebelumnya Papua terpotong di tepi kanan, kini pulau Maluku hingga ujung timur Papua terlihat utuh 100%).
+      - Durasi setiap zona disinkronkan secara presisi dengan panjang audio aktual ditambah jeda 1 detik untuk menyerap visual.
+- **Hasil Pengujian**:
+  - `scratch/check-audio-durations.mjs` mengonfirmasi ke-6 file audio berdurasi antara 17.4s hingga 19.8s.
+  - `scratch/capture-all-zones.mjs` mengambil tangkapan layar 6 zona (`tour-zone-1.png` s/d `tour-zone-6.png`), membuktikan seluruh pulau terpusat sempurna di atas kartu HUD tanpa ada pulau yang condong ke kanan atau terpotong.
+  - `npm run build` berhasil (0 error, build 2.47s).
+  - `node tools/validate.mjs` lolos (0 error).
+
 - **Permintaan Pengguna:**
   - Menggunakan Piper TTS untuk narasi Voice Over bahasa Indonesia wanita yang konsisten di semua perangkat, dengan implementasi yang hati-hati tanpa membebani performa website.
 - **Dibuat/diubah:**
