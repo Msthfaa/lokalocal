@@ -133,33 +133,38 @@ async function mulaiHalamanJelajah() {
 
     // Prioritaskan inisialisasi Peta Diorama 3D Nusantara
     if (wadahPeta) {
-      kontroler3D = inisialisasiJelajah3D({
-        wadahEl: wadahPeta,
-        geoProvinsi,
-        daftarProvinsi: provinsi,
-        daftarBudaya: [],
-        proyeksi,
-        saatPilihProvinsi: (kode) => {
-          // Logika tambahan bila diperlukan
-        },
-        onZoomUbah: (persen) => {
-          const btnReset = document.getElementById('hud-zoom-reset');
-          if (btnReset) {
-            btnReset.textContent = `${persen}%`;
-            btnReset.setAttribute('title', `Atur Ulang Zoom Kamera (Sekarang ${persen}%)`);
+      try {
+        kontroler3D = inisialisasiJelajah3D({
+          wadahEl: wadahPeta,
+          geoProvinsi,
+          daftarProvinsi: provinsi,
+          daftarBudaya: [],
+          proyeksi,
+          saatPilihProvinsi: (kode) => {
+            // Logika tambahan bila diperlukan
+          },
+          onZoomUbah: (persen) => {
+            const btnReset = document.getElementById('hud-zoom-reset');
+            if (btnReset) {
+              btnReset.textContent = `${persen}%`;
+              btnReset.setAttribute('title', `Atur Ulang Zoom Kamera (Sekarang ${persen}%)`);
+            }
+          },
+          onBukaDetailRekaman: (rekaman, pemicuEl) => {
+            if (dialogRekamanKontrol) {
+              dialogRekamanKontrol.bukaRekaman(rekaman, pemicuEl);
+            }
+          },
+          onCatatStempel: (kode, jenis) => {
+            if (pengelolaPaspor) {
+              pengelolaPaspor.catatStempel(kode, jenis);
+            }
           }
-        },
-        onBukaDetailRekaman: (rekaman, pemicuEl) => {
-          if (dialogRekamanKontrol) {
-            dialogRekamanKontrol.bukaRekaman(rekaman, pemicuEl);
-          }
-        },
-        onCatatStempel: (kode, jenis) => {
-          if (pengelolaPaspor) {
-            pengelolaPaspor.catatStempel(kode, jenis);
-          }
-        }
-      });
+        });
+      } catch (err3d) {
+        console.warn('Inisialisasi Jelajah 3D Three.js dialihkan ke 2D:', err3d);
+        kontroler3D = null;
+      }
     }
 
     if (kontroler3D) {
@@ -169,7 +174,7 @@ async function mulaiHalamanJelajah() {
       // Peta 3D berhasil aktif: pasang interaksi Floating HUD
       pasangKontrolHud(kontroler3D);
     } else if (wadahPeta && geoProvinsi) {
-      // Fallback 2D hanya jika browser/perangkat benar-benar tidak mendukung WebGL
+      // Fallback 2D jika browser/perangkat membutuhkan mode ringan
       wadahPeta.classList.add('is-fallback-2d');
 
       // Sesuaikan HUD agar tidak menampilkan kontrol 3D yang tidak relevan
@@ -180,8 +185,15 @@ async function mulaiHalamanJelajah() {
       if (hudPetunjuk) {
         hudPetunjuk.innerHTML = `
           <span class="hud-titik-aktif"></span>
-          <strong>Mode Ringan (2D)</strong> &bull; Klik provinsi untuk menandai paspor budaya
+          <strong>Mode Ringan (2D)</strong> &bull; <button type="button" id="btn-coba-peta-3d" style="background:none;border:none;color:var(--aksen);font-weight:700;cursor:pointer;padding:0;text-decoration:underline;">Beralih ke Peta 3D ➔</button>
         `;
+        const btnCoba3d = document.getElementById('btn-coba-peta-3d');
+        if (btnCoba3d) {
+          btnCoba3d.addEventListener('click', () => {
+            sessionStorage.setItem('lokalocal_paksa_3d', '1');
+            window.location.href = window.location.pathname + '?mode3d=1';
+          });
+        }
       }
 
       const instans2D = renderPetaSvg(wadahPeta, {

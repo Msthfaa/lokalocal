@@ -28,24 +28,67 @@ export function inisialisasiBagianHero({ statistik }) {
     inisialisasiHeroCinema(wadahLatarPeta);
   }
 
-  // Animasi masuk halus untuk konten utama hero
+  // Animasi masuk halus saat halaman pertama dimuat
   pasangMatchMediaAnimasi({
     desktop: () => {
       gsap.fromTo(
-        '.hero-cinema-tengah',
-        { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 1.1, delay: 0.2, ease: 'power3.out' }
+        ['#judul-s1', '#subjudul-s1', '.hero-cta-wadah'],
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.0, delay: 0.2, stagger: 0.12, ease: 'power3.out' }
       );
     },
     ponsel: () => {
       gsap.fromTo(
-        '.hero-cinema-tengah',
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.85, delay: 0.15, ease: 'power2.out' }
+        ['#judul-s1', '#subjudul-s1', '.hero-cta-wadah'],
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.15, stagger: 0.1, ease: 'power2.out' }
       );
     },
     kurangiGerak: () => {
-      gsap.set('.hero-cinema-tengah', { opacity: 1, y: 0 });
+      gsap.set(['#judul-s1', '#subjudul-s1', '.hero-cta-wadah'], { opacity: 1, y: 0 });
     }
   });
+
+  // Animasi menghilang perlahan secara transparan saat discroll ke bawah (Scroll-driven Fade Out)
+  if (elPembuka) {
+    const elTengah = elPembuka.querySelector('.hero-cinema-tengah');
+    const wadahLatar = document.getElementById('s1-latar-peta');
+    let ticking = false;
+
+    const perbaruiFadeScroll = () => {
+      const y = window.scrollY || window.pageYOffset || 0;
+      
+      // 1. Teks dan tombol judul tengah menghilang cepat & mulus (0px - 220px)
+      const progresTeks = Math.min(1, Math.max(0, y / 220));
+      const opasitasTeks = 1 - progresTeks;
+
+      if (elTengah) {
+        elTengah.style.opacity = opasitasTeks.toFixed(3);
+        elTengah.style.transform = `translateY(${(-42 * progresTeks).toFixed(1)}px)`;
+        elTengah.style.pointerEvents = opasitasTeks < 0.15 ? 'none' : 'auto';
+      }
+
+      // 2. Latar belakang foto & sinematik awal perlahan menghilang secara transparan seiring scroll (0px - 380px)
+      if (wadahLatar) {
+        const progresLatar = Math.min(1, Math.max(0, y / 380));
+        const opasitasLatar = 1 - progresLatar;
+        wadahLatar.style.opacity = opasitasLatar.toFixed(3);
+      }
+
+      ticking = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(perbaruiFadeScroll);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+
+    perbaruiFadeScroll();
+  }
 }

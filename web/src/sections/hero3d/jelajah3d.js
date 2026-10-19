@@ -48,7 +48,6 @@ export function inisialisasiJelajah3D({
   onZoomUbah
 }) {
   if (!wadahEl || !geoProvinsi || !proyeksi) return null;
-  if (!apakahBisaMemuat3D({ abaikanKurangiGerak: true })) return null;
 
   const adalahLayarSentuh =
     'ontouchstart' in window || navigator.maxTouchPoints > 0;

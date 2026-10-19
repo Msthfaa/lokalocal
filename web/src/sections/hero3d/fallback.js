@@ -5,44 +5,25 @@
 
 import { apakahKurangiGerak } from '../../util/motion.js';
 
-let cacheDukunganWebGL = null;
-
 /**
  * Memeriksa apakah browser mendukung WebGL (WebGL2 atau WebGL 1).
- * Menggunakan cache dan segera melepaskan konteks probe agar tidak memakan kuota WebGL browser.
+ * Menggunakan probe ringan tanpa merusak konteks WebGL browser.
  * @returns {boolean}
  */
 export function cekDukunganWebGL() {
-  if (cacheDukunganWebGL !== null) {
-    return cacheDukunganWebGL;
-  }
-
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return false;
   }
 
   try {
     const probe = document.createElement('canvas');
-    const gl =
-      probe.getContext('webgl2') ||
-      probe.getContext('webgl') ||
-      probe.getContext('experimental-webgl');
-
-    if (!gl) {
-      cacheDukunganWebGL = false;
-      return false;
-    }
-
-    // Segera lepaskan konteks probe agar tidak bocor dan tidak memakan kuota konteks aktif browser
-    const extLose = gl.getExtension('WEBGL_lose_context');
-    if (extLose) {
-      extLose.loseContext();
-    }
-
-    cacheDukunganWebGL = true;
-    return true;
+    return !!(
+      window.WebGLRenderingContext &&
+      (probe.getContext('webgl2') ||
+        probe.getContext('webgl') ||
+        probe.getContext('experimental-webgl'))
+    );
   } catch {
-    cacheDukunganWebGL = false;
     return false;
   }
 }
@@ -55,6 +36,7 @@ export function cekDukunganWebGL() {
  *
  * @param {object} [opsi]
  * @param {boolean} [opsi.abaikanKurangiGerak=false]
+ * @param {boolean} [opsi.abaikanSaveData=false]
  * @returns {boolean}
  */
 export function apakahBisaMemuat3D(opsi = {}) {
@@ -67,9 +49,9 @@ export function apakahBisaMemuat3D(opsi = {}) {
     return false;
   }
 
-  // 2. Periksa mode penghemat data pengguna
+  // 2. Periksa mode penghemat data pengguna (kecuali diabaikan untuk halaman 3D utama)
   const nav = window.navigator || {};
-  if (nav.connection && nav.connection.saveData === true) {
+  if (!opsi.abaikanSaveData && nav.connection && nav.connection.saveData === true) {
     return false;
   }
 
@@ -80,3 +62,4 @@ export function apakahBisaMemuat3D(opsi = {}) {
 
   return true;
 }
+
