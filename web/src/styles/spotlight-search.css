@@ -490,63 +490,103 @@
   gap: 5px;
 }
 
-/* Tombol Pemicu di Navbar */
+/* Tombol Pemicu di Navbar (Redesain Elegan, Kontras Tinggi, dan Selaras dengan Pill Navbar) */
 .nav-tombol-cari {
+  pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 10px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--c-teks-redup, #C4BAAB);
-  font-size: 0.82rem;
+  gap: 0.55rem;
+  min-height: 40px;
+  padding: 0.35rem 0.85rem 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(32, 26, 21, 0.75) 0%, rgba(18, 14, 12, 0.55) 100%) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #F5EFEB;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.18s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  transition: transform 0.2s cubic-bezier(.22, 1, .36, 1),
+              background 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-tombol-cari svg {
+  color: var(--aksen, #E6B14A);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
 .nav-tombol-cari:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(212, 160, 23, 0.35);
-  color: var(--c-teks, #F5F0EB);
+  background: rgba(45, 36, 28, 0.95) !important;
+  border-color: var(--aksen, #E6B14A) !important;
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(230, 177, 74, 0.25) !important;
+  transform: translateY(-1px);
 }
 
+.nav-tombol-cari:hover svg {
+  transform: scale(1.12);
+}
+
+/* Penataan Khusus Mode Terang (High Contrast & Solid Frosted Canvas) */
 [data-tema="terang"] .nav-tombol-cari {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.1);
-  color: #57534E;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(253, 249, 243, 0.86) 100%) !important;
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1.5px solid rgba(184, 115, 20, 0.35) !important;
+  color: #1A1613 !important;
+  box-shadow: 0 4px 14px rgba(60, 40, 20, 0.08), 0 1px 3px rgba(60, 40, 20, 0.04), inset 0 1px 1px #FFFFFF !important;
+}
+
+[data-tema="terang"] .nav-tombol-cari svg {
+  color: #B87314;
 }
 
 [data-tema="terang"] .nav-tombol-cari:hover {
-  background: rgba(0, 0, 0, 0.08);
-  border-color: rgba(180, 83, 9, 0.3);
-  color: #1C1917;
+  background: #FFFFFF !important;
+  border-color: #B87314 !important;
+  color: #B87314 !important;
+  box-shadow: 0 6px 20px rgba(184, 115, 20, 0.18), 0 0 0 1px rgba(184, 115, 20, 0.25) !important;
+  transform: translateY(-1px);
 }
 
 .nav-tombol-cari-teks {
-  display: none;
+  display: inline;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 880px) {
   .nav-tombol-cari-teks {
-    display: inline;
+    display: none;
   }
 }
 
 .nav-tombol-cari-kbd {
-  font-size: 0.7rem;
-  padding: 1px 5px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--c-teks-redup, #A89F91);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(230, 177, 74, 0.14);
+  border: 1px solid rgba(230, 177, 74, 0.32);
+  color: #F5D38A;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.03em;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  line-height: 1;
 }
 
 [data-tema="terang"] .nav-tombol-cari-kbd {
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #44403C;
+  background: rgba(184, 115, 20, 0.12);
+  border: 1px solid rgba(184, 115, 20, 0.32);
+  color: #8C5304;
+  box-shadow: 0 1px 2px rgba(184, 115, 20, 0.08);
 }
 
 @media (max-width: 520px) {

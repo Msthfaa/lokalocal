@@ -1,6 +1,28 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
-## [2026-10-19] Penguatan Efek Frosted Glassmorphism & Kontras Teks pada Bagian Penutup (Call to Action)
+## [2026-10-19] Redesain Tombol Pencarian (Ctrl K) di Navbar: Kontras Tinggi, Kapsul Pill 40px, & Anti-Tembus Ornamen di Mode Terang
+- **Permintaan Pengguna:**
+  - Tombol pencarian global `Ctrl K` pada saat mode terang (*light mode*) sangat tidak terlihat/samar dan meminta untuk diredesain agar jelas terlihat, baik dari penempatan, bentuk, kontras, maupun gayanya.
+- **Akar Masalah:**
+  - Sebelumnya tombol `.nav-tombol-cari` berukuran mini (`padding: 5px 10px`, tinggi ~28px) dengan `background: rgba(0, 0, 0, 0.04)` (96% transparan), border tipis `rgba(0, 0, 0, 0.1)`, dan warna teks abu-abu redup `#57534E`.
+  - Akibatnya, garis ornamen segitiga/batik pada background header memotong langsung huruf "Cari" dan keycap "Ctrl K", membuatnya nyaris tak terlihat dan tidak selaras dengan tombol navigasi 40px di sebelahnya.
+- **Dibuat/diubah:**
+  - `web/src/styles/spotlight-search.css`:
+    - **Geometri & Proporsi Sempurna**:
+      - Mengubah bentuk menjadi kapsul pill penuh (`min-height: 40px`, `border-radius: 9999px`, `padding: 0.35rem 0.85rem`) agar seimbang dan serasi 100% dengan tombol toggle tema (`.nav-tema-toggle`) dan tombol Jelajah 3D (`.nav-tombol-3d`).
+    - **Mode Terang (`[data-tema="terang"]`)**:
+      - Background: Latar putih-krim berkabut tebal `linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(253, 249, 243, 0.86) 100%)` dipadu `backdrop-filter: blur(20px) saturate(190%)` yang 100% memblokir dan mendifusikan garis ornamen di belakangnya.
+      - Border & Shadow: Border emas terakota `1.5px solid rgba(184, 115, 20, 0.35)` dengan bayangan fisik lembut berlapis `box-shadow: 0 4px 14px rgba(60, 40, 20, 0.08), 0 1px 3px rgba(60, 40, 20, 0.04)` dan inset cahaya putih.
+      - Tipografi & Ikon: Ikon kaca pembesar SVG beraksen emas terakota `#B87314`, teks "Cari" tebal tajam `#1A1613` (font-weight: 600), dan lencana keycap `Ctrl K` fisik berbingkai tegas (`background: rgba(184, 115, 20, 0.12)`, border `1px solid rgba(184, 115, 20, 0.32)`, warna `#8C5304`).
+    - **Mode Gelap (Malam)**:
+      - Menyesuaikan gradasi kapsul gelap hangat `linear-gradient(135deg, rgba(32, 26, 21, 0.75) 0%, rgba(18, 14, 12, 0.55) 100%)`, border `rgba(255, 255, 255, 0.18)`, teks `#F5EFEB`, dan aksen keycap emas cerah `#F5D38A`.
+    - **Responsif Cerdas**:
+      - Pada viewport `<= 880px`, teks "Cari" otomatis disembunyikan sehingga tombol beralih ringkas menjadi `[ 🔍 Ctrl K ]` tanpa memakan ruang atau menabrak tautan menu di bilah tengah.
+- **Hasil Pengujian**:
+  - Tangkapan layar `scratch/navbar-search-after-light.png` dan `scratch/navbar-search-after-dark.png` membuktikan tombol `[ 🔍 Cari Ctrl K ]` kini sangat kontras, tegas, mudah dibaca dari kejauhan, dan berpadu estetis dengan seluruh bilah navigasi.
+  - `npm run build` sukses (0 error, build 4.95s).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
 - **Permintaan Pengguna:**
   - Mempertebal efek glass (kaca buram/frosted glassmorphism) pada kartu pilar aksi budaya dan banner status paspor di bagian penutup agar teks tidak bertabrakan dengan ilustrasi candi di latar belakang.
 - **Dibuat/diubah:**
