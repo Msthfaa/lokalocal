@@ -22,6 +22,7 @@ import { buatPanelKanan } from './panel-kanan.js';
 import { buatPengelolaModeDetail } from './mode-detail.js';
 import { hitungPosisiKameraFit } from './index.js';
 import { buatPengontrolTurSinematik } from './tur-sinematik.js';
+import { buatPengelolaWaypoints } from './waypoints-budaya.js';
 /**
  * Menginisialisasi Peta Diorama 3D berskala besar di halaman Jelajah fullscreen.
  *
@@ -221,6 +222,15 @@ export function inisialisasiJelajah3D({
     }
   });
 
+  // Pasang Pengelola Waypoints Budaya 3D Interaktif (Muncul Saat Zoom In > 1.08)
+  const pengelolaWaypoints = buatPengelolaWaypoints({
+    grupUtama,
+    daftarProvinsiMesh: elemenAdegan.daftarProvinsiMesh,
+    saatKlikWaypoint: (kodeProv) => {
+      pilihProvinsi(kodeProv);
+    }
+  });
+
   // State interaksi drag putar diorama
   let isDragging = false;
   let dragStartX = 0;
@@ -410,22 +420,37 @@ export function inisialisasiJelajah3D({
     pointerRay.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(pointerRay, camera);
+    const wpHover = pengelolaWaypoints ? pengelolaWaypoints.tanganiHover(raycaster) : null;
     const intersects = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
 
-    if (intersects.length > 0) {
-      const mesh = intersects[0].object;
+    if (wpHover || intersects.length > 0) {
       kanvas.style.cursor = 'pointer';
-      if (meshHoverAktif !== mesh) {
-        if (meshHoverAktif) {
-          meshHoverAktif.userData.offsetHover = 0;
+      if (intersects.length > 0) {
+        const mesh = intersects[0].object;
+        if (meshHoverAktif !== mesh) {
+          if (meshHoverAktif) {
+            meshHoverAktif.userData.offsetHover = 0;
+            if (meshHoverAktif.material && meshHoverAktif !== meshTerpilih) {
+              meshHoverAktif.material.emissive.set('#000000');
+              meshHoverAktif.material.emissiveIntensity = 0;
+            }
+          }
+          meshHoverAktif = mesh;
+          meshHoverAktif.userData.offsetHover = 0.08;
+          if (mesh.material && mesh !== meshTerpilih) {
+            mesh.material.emissive.set('#FFBE3B');
+            mesh.material.emissiveIntensity = 0.28;
+          }
         }
-        meshHoverAktif = mesh;
-        meshHoverAktif.userData.offsetHover = 0.08;
       }
     } else {
       kanvas.style.cursor = 'grab';
       if (meshHoverAktif) {
         meshHoverAktif.userData.offsetHover = 0;
+        if (meshHoverAktif.material && meshHoverAktif !== meshTerpilih) {
+          meshHoverAktif.material.emissive.set('#000000');
+          meshHoverAktif.material.emissiveIntensity = 0;
+        }
         meshHoverAktif = null;
       }
     }
@@ -471,6 +496,11 @@ export function inisialisasiJelajah3D({
     pointerRay.y = -((clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(pointerRay, camera);
+
+    if (pengelolaWaypoints && pengelolaWaypoints.tanganiKlik(raycaster)) {
+      return;
+    }
+
     const intersects = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
 
     if (intersects.length > 0) {
@@ -739,6 +769,11 @@ export function inisialisasiJelajah3D({
       // Update animasi ornamen kemaritiman nusantara (3 Perahu Pinisi berlayar, buih ombak, denyut jalur rempah)
       if (elemenAdegan.pengontrolMaritim && typeof elemenAdegan.pengontrolMaritim.update === 'function') {
         elemenAdegan.pengontrolMaritim.update(tDetik);
+      }
+
+      // Update animasi waypoints budaya 3D adaptif saat zoom in
+      if (pengelolaWaypoints && typeof pengelolaWaypoints.update === 'function') {
+        pengelolaWaypoints.update(zoomLevel, tDetik);
       }
 
       // Lerp kamera halus ke target posisi daerah yang dipilih (jika mode detail tidak aktif)

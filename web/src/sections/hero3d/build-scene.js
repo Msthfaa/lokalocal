@@ -227,14 +227,20 @@ export function bangunAdeganDiorama({
     for (const mesh of daftarProvinsiMesh) {
       const u = mesh.userData;
       const targetHex = mode === 'data' ? u.warnaDataHex : u.warnaNaturalHex;
+      const gunakanMap = mode === 'natural' && u.teksturTopo;
+
       if (u.materialNormal) {
-        u.materialNormal.color.set(targetHex);
+        u.materialNormal.color.set(gunakanMap ? 0xffffff : targetHex);
+        u.materialNormal.map = gunakanMap ? u.teksturTopo : null;
+        u.materialNormal.needsUpdate = true;
       }
-      if (mesh.material) {
-        mesh.material.color.set(targetHex);
+      if (mesh.material && (!u.materialAtlas || mesh.material !== u.materialAtlas)) {
+        mesh.material.color.set(gunakanMap ? 0xffffff : targetHex);
+        mesh.material.map = gunakanMap ? u.teksturTopo : null;
+        mesh.material.needsUpdate = true;
       }
       if (u.warnaNormal) {
-        u.warnaNormal.set(targetHex);
+        u.warnaNormal.set(gunakanMap ? 0xffffff : targetHex);
       }
     }
   }

@@ -99,7 +99,7 @@ function dapatkanBumpMapTopografi() {
   const texture = new CanvasTexture(canvas);
   texture.wrapS = RepeatWrapping;
   texture.wrapT = RepeatWrapping;
-  texture.repeat.set(0.35, 0.35);
+  texture.repeat.set(2.0, 2.0);
 
   cacheBumpTopografi = texture;
   return texture;
@@ -183,7 +183,7 @@ function dapatkanTeksturTopografi(varian = 'berdata') {
   const texture = new CanvasTexture(canvas);
   texture.wrapS = RepeatWrapping;
   texture.wrapT = RepeatWrapping;
-  texture.repeat.set(0.35, 0.35);
+  texture.repeat.set(1.0, 1.0);
 
   if (varian === 'berdata') cacheTeksturBerdata = texture;
   else cacheTeksturBelum = texture;
@@ -404,13 +404,19 @@ export function bangunKepingProvinsi({
       );
     }
 
-    // 1. Material normal diorama: Flat-shaded low-poly bersih & cerah (tanpa tekstur pada kondisi normal)
+    // 1. Material normal diorama: Tekstur bentang alam tropis kaya kontur mikro & relief alami (anti-kaku saat zoom in)
+    const teksturTopo = dapatkanTeksturTopografi(belumTercatat ? 'belum' : 'berdata');
+    const bumpMapTopo = dapatkanBumpMapTopografi();
+
     const warnaAwalHex = modeAwal === 'data' ? warnaDataHex : warnaNaturalHex;
     const materialNormal = new MeshStandardMaterial({
-      color: new Color(warnaAwalHex),
-      roughness: 0.82,
-      metalness: 0.02,
-      flatShading: true
+      color: modeAwal === 'data' ? new Color(warnaDataHex) : new Color(0xffffff),
+      map: modeAwal === 'data' ? null : teksturTopo,
+      bumpMap: bumpMapTopo || undefined,
+      bumpScale: 0.035,
+      roughness: 0.65,
+      metalness: 0.03,
+      flatShading: false
     });
 
     // 2. Material atlas & tekstur topografi dibuat MALAS (Lazy On-Demand)
@@ -511,6 +517,8 @@ export function bangunKepingProvinsi({
       warnaDataHex,
       warnaNormal: new Color(warnaAwalHex),
       materialNormal,
+      teksturTopo,
+      bumpMapTopo,
       pastikanMaterialAtlas,
       get materialAtlas() {
         return pastikanMaterialAtlas();

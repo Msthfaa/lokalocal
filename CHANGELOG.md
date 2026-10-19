@@ -1,5 +1,40 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-19] Implementasi Karakter Adat Chibi Nusantara & Tekstur Topografi Organik + Waypoint Budaya 3D Interaktif Saat Zoom In
+- **Permintaan Pengguna:**
+  1. Integrasi lembar karakter chibi pakaian adat Nusantara (8 suku adat dengan beragam pose/ekspresi emosi serta banner Bhinneka Tunggal Ika) ke bagian yang paling tepat dan hidup.
+  2. Peningkatan tekstur peta pada mode Jelajah 3D yang dinilai sangat kaku/flat saat diperbesar (*zoom in*), meminta tampilan yang lebih interaktif, organik, dan menarik.
+- **Rekomendasi & Desain Implementasi:**
+  1. **Ekstraksi Aset Grafis Chibi Presisi Tinggi (`tools/extract-chibi.py`)**:
+     - Memotong 40 variasi sprite chibi berlatar transparan dari 8 suku adat Indonesia (`bali_pria`, `minang`, `batak`, `jawa`, `bali_wanita`, `papua`, `aceh`, `bugis`) dengan 5 status emosi (`netral`, `senang`, `kaget`, `pikir`, `belakang`).
+     - Mengekstrak 2 banner: barisan siluet nusantara tampak belakang dan kaligrafi slogan "Bhinneka Tunggal Ika".
+  2. **Modul Pengelola Karakter Adat (`web/src/features/chibi.js`)**:
+     - Metadata 8 karakter lengkap (nama panggilan, suku, provinsi representasi, deskripsi busana adat, dan kutipan khas daerah).
+     - Pemetaan cerdas kode provinsi ke karakter adat terdekat.
+     - Pengelolaan avatar pengguna tersimpan persisten di `localStorage` (`lokalocal_avatar_chibi`).
+  3. **Integrasi Karakter Adat di Kuis Budaya (`web/src/sections/kuis.js`)**:
+     - Teman Belajar Chibi interaktif yang bereaksi emosional terhadap aktivitas pemain:
+       - Mode berpikir (*pose mikir/penasaran*) saat soal baru dimuat.
+       - Mode selebrasi gembira (*chibi lompat ceria*) saat jawaban tercatat benar.
+       - Mode terkejut/semangat (*chibi kaget/penasaran*) saat jawaban belum tepat.
+     - Tray Pop-up Pemilihan Avatar: pemain bebas memilih pendamping adat favoritnya kapan saja.
+     - Layar Hasil Akhir: banner kebinekaan akbar menampilkan parade chibi dan slogan Bhinneka Tunggal Ika.
+  4. **Foto Resmi Penjelajah di Paspor Budaya (`web/src/sections/paspor.js`)**:
+     - Foto profil penjelajah pada lembar paspor 38 wilayah lengkap dengan stempel lencana "PASPOR", nama karakter adat, dan tombol ganti foto interaktif.
+  5. **Duta Budaya Chibi di Panel Jelajah 3D (`web/src/sections/hero3d/panel-kanan.js`)**:
+     - Header compact drawer menampilkan avatar duta budaya daerah yang sesuai dengan provinsi terpilih.
+  6. **Penyempurnaan Tekstur Peta 3D Organik & Topografi Nusantara (`web/src/sections/hero3d/build-provinces.js`)**:
+     - Tekstur kanvas prosedural gradasi zamrud khatulistiwa bertingkat elevasi (lembah hijau tua, lereng perbukitan, hingga puncak keemasan).
+     - Micro-bump map kontur relief fisik yang menangkap pencahayaan Three.js secara dinamis.
+     - Pendar emas dan elevasi mikro saat provinsi disentuh kursor (*hover micro-elevation*).
+  7. **Titik Waypoint Budaya 3D Interaktif Saat Zoom In (`web/src/sections/hero3d/waypoints-budaya.js`)**:
+     - Waypoint 3D melayang dengan lencana ikonik untuk cagar budaya & tradisi Nusantara (Borobudur, Wayang Kulit, Tari Legong, Kapal Pinisi, dll).
+     - Muncul otomatis secara adaptif saat diperbesar (*zoomLevel > 1.08*) dengan animasi bobbing melayang dan interaktivitas hover/klik langsung membuka arsip SPKT.
+- **Hasil Pengujian**:
+  - `npm run build` sukses 0 error (2.66s).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+  - Verifikasi tangkapan layar otomatis membuktikan keterbacaan kontras teks tinggi, estetika chibi selaras dengan gaya lokal, dan peta 3D zoom in tampak hidup layaknya diorama digital.
+
 ## [2026-10-19] Redesain Tombol Pencarian (Ctrl K) di Navbar: Kontras Tinggi, Kapsul Pill 40px, & Anti-Tembus Ornamen di Mode Terang
 - **Permintaan Pengguna:**
   - Tombol pencarian global `Ctrl K` pada saat mode terang (*light mode*) sangat tidak terlihat/samar dan meminta untuk diredesain agar jelas terlihat, baik dari penempatan, bentuk, kontras, maupun gayanya.

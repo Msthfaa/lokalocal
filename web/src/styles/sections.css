@@ -8846,3 +8846,586 @@ body.tema-siang .nav-kartun-info {
   border: 1px solid #7FB07A;
   cursor: default;
 }
+
+/* ==========================================================================
+   KOMPONEN KARAKTER ADAT CHIBI NUSANTARA & AVATAR INTERAKTIF
+   Kuis Budaya, Paspor Budaya, Peta Jelajah Drawer, & Banner Kebinekaan
+   ========================================================================== */
+
+/* 1. Header Drawer Peta Jelajah (Avatar Duta Budaya) */
+.kartu-kanan-header-kiri {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kartu-chibi-avatar-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.2), rgba(230, 177, 74, 0.05));
+  border: 1.5px solid rgba(230, 177, 74, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.kartu-chibi-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translateY(2px);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.kartu-chibi-avatar-badge:hover .kartu-chibi-img {
+  transform: translateY(0) scale(1.15);
+}
+
+.kartu-chibi-pesan-sosial {
+  margin: 0.65rem 0;
+  padding: 0.65rem 0.85rem;
+  background: rgba(230, 177, 74, 0.08);
+  border-left: 3px solid var(--aksen);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--tinta);
+}
+
+.kartu-chibi-pesan-sosial p {
+  margin: 0;
+}
+
+/* 2. Teman Belajar Chibi Interaktif di Kuis Budaya */
+.kuis-chibi-pendamping {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 0.85rem 0 1.25rem 0;
+  padding: 0.85rem 1.15rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(230, 177, 74, 0.06) 100%);
+  border: 1px solid rgba(230, 177, 74, 0.25);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(12px);
+  position: relative;
+}
+
+[data-tema="terang"] .kuis-chibi-pendamping {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 248, 238, 0.9) 100%);
+  border: 1px solid rgba(184, 115, 20, 0.25);
+  box-shadow: 0 4px 18px rgba(60, 40, 20, 0.06);
+}
+
+.kuis-chibi-kiri {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.kuis-chibi-avatar-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.25), rgba(28, 22, 17, 0.6));
+  border: 2px solid var(--aksen);
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+
+.kuis-chibi-avatar-btn:hover {
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 8px 24px rgba(230, 177, 74, 0.4);
+}
+
+.kuis-chibi-avatar-btn.is-senang {
+  animation: chibiLompat 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.kuis-chibi-avatar-btn.is-kaget {
+  animation: chibiKaget 0.5s ease;
+}
+
+@keyframes chibiLompat {
+  0% { transform: scale(1); }
+  35% { transform: translateY(-10px) scale(1.15) rotate(-4deg); }
+  65% { transform: translateY(0) scale(1.05) rotate(3deg); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes chibiKaget {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.12) rotate(6deg); }
+  50% { transform: scale(1.08) rotate(-6deg); }
+  75% { transform: scale(1.04) rotate(3deg); }
+  100% { transform: scale(1); }
+}
+
+.kuis-chibi-img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  transform: translateY(2px);
+}
+
+.kuis-chibi-badge-ganti {
+  position: absolute;
+  bottom: -4px;
+  right: -6px;
+  background: var(--tinta-latar, #1C1611);
+  color: var(--aksen);
+  border: 1px solid var(--aksen);
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+[data-tema="terang"] .kuis-chibi-badge-ganti {
+  background: #FFFFFF;
+  color: #B87314;
+  border-color: #B87314;
+}
+
+.kuis-chibi-balon {
+  flex: 1;
+}
+
+.kuis-chibi-header-balon {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-bottom: 0.25rem;
+}
+
+.kuis-chibi-nama {
+  font-size: 0.9375rem;
+  color: var(--aksen);
+  font-weight: 700;
+}
+
+[data-tema="terang"] .kuis-chibi-nama {
+  color: #B87314;
+}
+
+.kuis-chibi-asal {
+  font-size: 0.78rem;
+  color: #DDD2C5;
+  font-weight: 500;
+}
+
+[data-tema="terang"] .kuis-chibi-asal {
+  color: #6C5946;
+}
+
+.kuis-chibi-teks {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #F8F4EC;
+  font-style: italic;
+}
+
+[data-tema="terang"] .kuis-chibi-teks {
+  color: #1A1613;
+}
+
+/* 3. Avatar Tray Pop-up (Pilihan 8 Karakter Adat) */
+.kuis-avatar-tray {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: rgba(24, 18, 14, 0.95);
+  border: 1.5px solid var(--aksen);
+  border-radius: var(--r-md);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  animation: trayMasuk 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-tema="terang"] .kuis-avatar-tray {
+  background: #FFFFFF;
+  border-color: #B87314;
+  box-shadow: 0 10px 32px rgba(60, 40, 20, 0.15);
+}
+
+@keyframes trayMasuk {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.kuis-avatar-tray-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--aksen);
+}
+
+[data-tema="terang"] .kuis-avatar-tray-header {
+  color: #B87314;
+}
+
+.kuis-avatar-tray-tutup {
+  background: none;
+  border: none;
+  color: var(--tinta);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.kuis-avatar-tray-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 0.65rem;
+}
+
+.kuis-avatar-tray-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.45rem;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F8F4EC;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+[data-tema="terang"] .kuis-avatar-tray-item {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #1A1613;
+}
+
+.kuis-avatar-tray-item:hover {
+  background: rgba(230, 177, 74, 0.15);
+  border-color: var(--aksen);
+  transform: translateY(-2px);
+}
+
+.kuis-avatar-tray-item.is-aktif {
+  background: rgba(230, 177, 74, 0.25);
+  border: 1.5px solid var(--aksen);
+  box-shadow: 0 0 12px rgba(230, 177, 74, 0.35);
+}
+
+.kuis-avatar-tray-item img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* 4. Banner Kebinekaan Akbar di Layar Hasil Kuis */
+.kuis-hasil-bhinneka-banner {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(30, 24, 18, 0.9) 0%, rgba(18, 14, 11, 0.95) 100%);
+  border: 1.5px solid rgba(230, 177, 74, 0.35);
+  border-radius: var(--r-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+[data-tema="terang"] .kuis-hasil-bhinneka-banner {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(253, 248, 238, 0.95) 100%);
+  border-color: rgba(184, 115, 20, 0.35);
+  box-shadow: 0 8px 28px rgba(60, 40, 20, 0.08);
+}
+
+.kuis-hasil-chibi-celebrate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.15rem;
+  margin-bottom: 1.15rem;
+  text-align: left;
+}
+
+.kuis-chibi-celebrate-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+  animation: chibiLompat 1.2s infinite ease-in-out;
+}
+
+.kuis-celebrate-balon {
+  max-width: 480px;
+}
+
+.kuis-celebrate-nama {
+  color: var(--aksen);
+  font-size: 0.95rem;
+}
+
+[data-tema="terang"] .kuis-celebrate-nama {
+  color: #B87314;
+}
+
+.kuis-celebrate-teks {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #F8F4EC;
+  font-style: italic;
+}
+
+[data-tema="terang"] .kuis-celebrate-teks {
+  color: #1A1613;
+}
+
+.kuis-bhinneka-lineup-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(230, 177, 74, 0.25);
+}
+
+.kuis-lineup-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 60px;
+  object-fit: contain;
+}
+
+.kuis-slogan-img {
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 5. Foto Resmi Penjelajah di Paspor Budaya */
+.paspor-avatar-foto-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 0.75rem 0.45rem 0.45rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(230, 177, 74, 0.4);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+[data-tema="terang"] .paspor-avatar-foto-box {
+  background: #FFFFFF;
+  border-color: rgba(184, 115, 20, 0.35);
+  box-shadow: 0 4px 14px rgba(60, 40, 20, 0.06);
+}
+
+.paspor-avatar-foto-box:hover {
+  transform: translateY(-2px);
+  border-color: var(--aksen);
+  box-shadow: 0 6px 18px rgba(230, 177, 74, 0.3);
+}
+
+.paspor-foto-frame {
+  width: 50px;
+  height: 56px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.15), rgba(28, 22, 17, 0.5));
+  border: 1px solid rgba(230, 177, 74, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.paspor-foto-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  transform: translateY(2px);
+}
+
+.paspor-foto-badge-stempel {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--aksen);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+.paspor-foto-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.paspor-foto-nama {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #F8F4EC;
+}
+
+[data-tema="terang"] .paspor-foto-nama {
+  color: #1A1613;
+}
+
+.paspor-foto-ganti-link {
+  font-size: 0.72rem;
+  color: var(--aksen);
+  font-weight: 600;
+}
+
+[data-tema="terang"] .paspor-foto-ganti-link {
+  color: #B87314;
+}
+
+/* 6. Modal Tray Pemilihan Avatar Paspor */
+.paspor-avatar-tray-modal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin-top: 0.85rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(22, 17, 13, 0.98);
+  border: 1.5px solid var(--aksen);
+  border-radius: var(--r-lg);
+  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(20px);
+  animation: trayMasuk 0.25s ease-out;
+}
+
+[data-tema="terang"] .paspor-avatar-tray-modal {
+  background: #FFFFFF;
+  border-color: #B87314;
+  box-shadow: 0 12px 38px rgba(60, 40, 20, 0.18);
+}
+
+.paspor-avatar-tray-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.paspor-avatar-tray-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--aksen);
+}
+
+[data-tema="terang"] .paspor-avatar-tray-header h4 {
+  color: #B87314;
+}
+
+.paspor-avatar-tray-tutup {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--tinta);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.paspor-avatar-tray-sub {
+  margin: 0 0 1rem 0;
+  font-size: 0.8125rem;
+  color: var(--tinta-2);
+}
+
+.paspor-avatar-tray-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.85rem;
+}
+
+.paspor-avatar-item-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+  padding: 0.85rem 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-md);
+  color: var(--tinta);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+[data-tema="terang"] .paspor-avatar-item-btn {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.paspor-avatar-item-btn:hover {
+  background: rgba(230, 177, 74, 0.15);
+  border-color: var(--aksen);
+  transform: translateY(-2px);
+}
+
+.paspor-avatar-item-btn.is-aktif {
+  background: rgba(230, 177, 74, 0.22);
+  border: 2px solid var(--aksen);
+  box-shadow: 0 4px 14px rgba(230, 177, 74, 0.3);
+}
+
+.paspor-item-avatar-img-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.paspor-item-avatar-img-wrap img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  transform: translateY(2px);
+}
+
+.paspor-item-nama {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #F8F4EC;
+}
+
+[data-tema="terang"] .paspor-item-nama {
+  color: #1A1613;
+}
+
+.paspor-item-suku {
+  font-size: 0.72rem;
+  color: #DDD2C5;
+}
+
+[data-tema="terang"] .paspor-item-suku {
+  color: #6C5946;
+}

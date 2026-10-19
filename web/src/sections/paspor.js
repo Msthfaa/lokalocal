@@ -8,6 +8,7 @@ import { buatStempelProvinsiSvg } from '../patterns/generate.js';
 import { formatAngka } from '../util/format.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 import { tampilkanToast } from '../ui/toast.js';
+import { DAFTAR_CHIBI, ambilAvatarPengguna, simpanAvatarPengguna, dapatkanChibi } from '../features/chibi.js';
 
 const GUGUS_WILAYAH = [
   { id: 'semua', label: 'Semua', kodeSet: null },
@@ -74,8 +75,10 @@ export function inisialisasiBagianPaspor({
   const petaNamaProv = new Map(daftarProvinsi.map((p) => [String(p.kode), p.nama]));
   let filterWilayahAktif = 'semua';
   let sedangKonfirmasiReset = false;
+  let modalAvatarBuka = false;
 
   function render(infoPerubahan = null) {
+    const avatarAktif = ambilAvatarPengguna();
     const semuaStempel = pengelolaPaspor.dapatkanSemuaStempel();
     const kodeTerkumpul = Object.keys(semuaStempel);
     const jumlahTerkumpul = kodeTerkumpul.length;
@@ -96,6 +99,27 @@ export function inisialisasiBagianPaspor({
 
     const barisAtasId = document.createElement('div');
     barisAtasId.className = 'paspor-identitas-baris-atas';
+
+    // Foto Resmi Penjelajah Budaya (Chibi Avatar)
+    const boxAvatar = document.createElement('div');
+    boxAvatar.className = 'paspor-avatar-foto-box';
+    boxAvatar.setAttribute('role', 'button');
+    boxAvatar.setAttribute('tabindex', '0');
+    boxAvatar.setAttribute('title', `Foto Resmi: ${avatarAktif.nama} (${avatarAktif.suku}). Klik untuk ganti foto!`);
+    boxAvatar.innerHTML = `
+      <div class="paspor-foto-frame">
+        <img src="${avatarAktif.foto}" alt="${avatarAktif.nama}" class="paspor-foto-img" />
+        <span class="paspor-foto-badge-stempel">PASPOR</span>
+      </div>
+      <div class="paspor-foto-info">
+        <strong class="paspor-foto-nama">${avatarAktif.nama}</strong>
+        <span class="paspor-foto-ganti-link">Ganti Foto 🔄</span>
+      </div>
+    `;
+    boxAvatar.addEventListener('click', () => {
+      modalAvatarBuka = !modalAvatarBuka;
+      render();
+    });
 
     const grupMerek = document.createElement('div');
     grupMerek.className = 'paspor-identitas-merek-grup';
@@ -120,7 +144,54 @@ export function inisialisasiBagianPaspor({
       <strong class="paspor-gelar-nama">${infoGelar.gelar}</strong>
     `;
 
-    barisAtasId.append(grupMerek, badgeGelar);
+    barisAtasId.append(boxAvatar, grupMerek, badgeGelar);
+
+    // Modal Tray Pemilihan Avatar jika dibuka
+    if (modalAvatarBuka) {
+      const modalAvatar = document.createElement('div');
+      modalAvatar.className = 'paspor-avatar-tray-modal';
+      modalAvatar.innerHTML = `
+        <div class="paspor-avatar-tray-inner">
+          <div class="paspor-avatar-tray-header">
+            <h4>Pilih Foto Identitas Penjelajah Budaya</h4>
+            <button type="button" class="paspor-avatar-tray-tutup" aria-label="Tutup">&times;</button>
+          </div>
+          <p class="paspor-avatar-tray-sub">Pilih salah satu dari 8 perwakilan pakaian adat Nusantara untuk buku paspormu:</p>
+          <div class="paspor-avatar-tray-grid">
+            ${DAFTAR_CHIBI.map(
+              (c) => `
+              <button type="button" class="paspor-avatar-item-btn ${c.id === avatarAktif.id ? 'is-aktif' : ''}" data-id="${c.id}">
+                <div class="paspor-item-avatar-img-wrap">
+                  <img src="${c.foto}" alt="${c.nama}" />
+                </div>
+                <strong class="paspor-item-nama">${c.nama}</strong>
+                <span class="paspor-item-suku">${c.suku}</span>
+              </button>
+            `
+            ).join('')}
+          </div>
+        </div>
+      `;
+      const btnTutupM = modalAvatar.querySelector('.paspor-avatar-tray-tutup');
+      if (btnTutupM) {
+        btnTutupM.addEventListener('click', (e) => {
+          e.stopPropagation();
+          modalAvatarBuka = false;
+          render();
+        });
+      }
+      modalAvatar.querySelectorAll('.paspor-avatar-item-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idDipilih = btn.dataset.id;
+          simpanAvatarPengguna(idDipilih);
+          modalAvatarBuka = false;
+          tampilkanToast(`Foto profil paspor berganti ke ${dapatkanChibi(idDipilih).nama}!`);
+          render();
+        });
+      });
+      kartuIdentitas.appendChild(modalAvatar);
+    }
 
     const narasiGelar = document.createElement('p');
     narasiGelar.className = 'paspor-identitas-deskripsi';

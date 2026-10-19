@@ -13,6 +13,7 @@
 import { buatSesiKuis, WILAYAH_CONFIG, dapatkanStatistikWilayah } from '../features/kuis.js';
 import { formatAngka } from '../util/format.js';
 import { tampilkanToast } from '../ui/toast.js';
+import { DAFTAR_CHIBI, ambilAvatarPengguna, simpanAvatarPengguna, dapatkanChibi } from '../features/chibi.js';
 
 const ABJAD_OPSI = ['A', 'B', 'C', 'D'];
 
@@ -45,6 +46,8 @@ export function inisialisasiBagianKuis({
   let skor = 0;
   let jawabanDipilih = null;
   let tradisiDitemui = [];
+  let avatarAktif = ambilAvatarPengguna();
+  let menuGantiAvatarBuka = false;
 
   function perbaruiStatistikHero() {
     const statWil = dapatkanStatistikWilayah(wilayahAktif || 'semua', daftarBudaya, daftarProvinsi);
@@ -418,6 +421,93 @@ export function inisialisasiBagianKuis({
       judulTanya.className = 'kuis-pertanyaan-teks';
       judulTanya.textContent = soal.pertanyaan;
 
+      // Blok Teman Belajar Nusantara Chibi Interaktif
+      const blokChibi = document.createElement('div');
+      blokChibi.className = 'kuis-chibi-pendamping';
+
+      let fotoChibi = avatarAktif.pikir;
+      let teksBalon = `“Coba cermati kutipan arsip resmi di bawah, menurutmu apa jawabannya?”`;
+      let animasiKelas = 'is-pikir';
+
+      if (jawabanDipilih !== null) {
+        const benar = jawabanDipilih === soal.jawabanBenar;
+        if (benar) {
+          fotoChibi = avatarAktif.senang;
+          teksBalon = `“${avatarAktif.apresiasi}”`;
+          animasiKelas = 'is-senang';
+        } else {
+          fotoChibi = avatarAktif.kaget;
+          teksBalon = `“${avatarAktif.semangat}”`;
+          animasiKelas = 'is-kaget';
+        }
+      }
+
+      blokChibi.innerHTML = `
+        <div class="kuis-chibi-kiri">
+          <button type="button" class="kuis-chibi-avatar-btn ${animasiKelas}" title="Klik untuk mengganti teman belajar (${avatarAktif.nama})">
+            <img src="${fotoChibi}" alt="${avatarAktif.nama}" class="kuis-chibi-img" />
+            <span class="kuis-chibi-badge-ganti">Ganti 🔄</span>
+          </button>
+        </div>
+        <div class="kuis-chibi-balon">
+          <div class="kuis-chibi-header-balon">
+            <strong class="kuis-chibi-nama">${avatarAktif.nama}</strong>
+            <span class="kuis-chibi-asal">&bull; ${avatarAktif.suku} (${avatarAktif.daerah})</span>
+          </div>
+          <p class="kuis-chibi-teks">${teksBalon}</p>
+        </div>
+      `;
+
+      const btnGantiChibi = blokChibi.querySelector('.kuis-chibi-avatar-btn');
+      if (btnGantiChibi) {
+        btnGantiChibi.addEventListener('click', () => {
+          menuGantiAvatarBuka = !menuGantiAvatarBuka;
+          render();
+        });
+      }
+
+      badanSoal.append(judulTanya, blokChibi);
+
+      // Jika menu ganti avatar dibuka, tampilkan tray 8 karakter adat
+      if (menuGantiAvatarBuka) {
+        const trayAvatar = document.createElement('div');
+        trayAvatar.className = 'kuis-avatar-tray';
+        trayAvatar.innerHTML = `
+          <div class="kuis-avatar-tray-header">
+            <span>Pilih Teman Belajar Nusantara:</span>
+            <button type="button" class="kuis-avatar-tray-tutup" aria-label="Tutup">&times;</button>
+          </div>
+          <div class="kuis-avatar-tray-grid">
+            ${DAFTAR_CHIBI.map(
+              (c) => `
+              <button type="button" class="kuis-avatar-tray-item ${c.id === avatarAktif.id ? 'is-aktif' : ''}" data-id="${c.id}" title="${c.nama} (${c.suku})">
+                <img src="${c.foto}" alt="${c.nama}" />
+                <span>${c.nama}</span>
+              </button>
+            `
+            ).join('')}
+          </div>
+        `;
+        const btnTutupTray = trayAvatar.querySelector('.kuis-avatar-tray-tutup');
+        if (btnTutupTray) {
+          btnTutupTray.addEventListener('click', () => {
+            menuGantiAvatarBuka = false;
+            render();
+          });
+        }
+        trayAvatar.querySelectorAll('.kuis-avatar-tray-item').forEach((item) => {
+          item.addEventListener('click', () => {
+            const idBaru = item.dataset.id;
+            avatarAktif = dapatkanChibi(idBaru);
+            simpanAvatarPengguna(idBaru);
+            menuGantiAvatarBuka = false;
+            tampilkanToast(`Teman belajar berganti ke ${avatarAktif.nama}!`);
+            render();
+          });
+        });
+        badanSoal.appendChild(trayAvatar);
+      }
+
       // Kotak Kutipan Arsip Resmi SPKT
       const kotakArsip = document.createElement('div');
       kotakArsip.className = 'kuis-kotak-arsip';
@@ -646,6 +736,24 @@ export function inisialisasiBagianKuis({
         blokTradisi.appendChild(listTradisi);
         badanHasil.appendChild(blokTradisi);
       }
+
+      // Banner Kebinekaan Akbar Karakter Nusantara di Layar Hasil
+      const bannerBhinneka = document.createElement('div');
+      bannerBhinneka.className = 'kuis-hasil-bhinneka-banner';
+      bannerBhinneka.innerHTML = `
+        <div class="kuis-hasil-chibi-celebrate">
+          <img src="${avatarAktif.senang}" alt="${avatarAktif.nama}" class="kuis-chibi-celebrate-img" />
+          <div class="kuis-celebrate-balon">
+            <strong class="kuis-celebrate-nama">${avatarAktif.nama}:</strong>
+            <p class="kuis-celebrate-teks">“Terima kasih telah menjelajahi khasanah tradisi bersama kami! Budaya Nusantara sangat kaya, mari terus lestarikan dan catat bersama.”</p>
+          </div>
+        </div>
+        <div class="kuis-bhinneka-lineup-wrap">
+          <img src="/assets/chibi/barisan_nusantara_belakang.png" alt="Barisan Nusantara Beragam Suku" class="kuis-lineup-img" />
+          <img src="/assets/chibi/slogan_bhinneka.png" alt="Berbeda-beda tapi tetap satu Indonesia" class="kuis-slogan-img" />
+        </div>
+      `;
+      badanHasil.appendChild(bannerBhinneka);
 
       // Pintasan Pilih Wilayah Lain di Akhir Sesi
       const blokPilihLain = document.createElement('div');

@@ -13,6 +13,7 @@ import { formatAngka } from '../../util/format.js';
 import { normalisasiPencarian } from '../../util/teks.js';
 import { dapatkanGambarBudaya } from '../../data/gambar-budaya.js';
 import { buatSvgPieceProvinsi } from '../../map/render-piece.js';
+import { dapatkanChibiProvinsi } from '../../features/chibi.js';
 
 /**
  * Membuat komponen Floating Card & Detail 3 Zona untuk Jelajah 3D
@@ -178,6 +179,8 @@ export function buatPanelKanan({
       );
     }
 
+    const chibiProv = dapatkanChibiProvinsi(p.kode);
+
     if (statusMode === 'compact') {
       // ==========================================
       // 1. TAMPILAN COMPACT ("SECUIL SAJA" DI KANAN)
@@ -185,11 +188,16 @@ export function buatPanelKanan({
       elKartu.innerHTML = `
         <div class="kartu-kanan-compact-inner">
           <header class="kartu-kanan-header">
-            <div class="kartu-kanan-judul-blok">
-              <span class="kartu-badge-kode" style="color: ${warnaJenis};">
-                PROVINSI ${p.kode}
-              </span>
-              <h3 class="kartu-nama-prov">${p.nama}</h3>
+            <div class="kartu-kanan-header-kiri">
+              <div class="kartu-chibi-avatar-badge" title="Duta Budaya: ${chibiProv.nama} (${chibiProv.suku})">
+                <img src="${adalahKosong ? chibiProv.kaget : chibiProv.senang}" alt="${chibiProv.nama}" class="kartu-chibi-img" />
+              </div>
+              <div class="kartu-kanan-judul-blok">
+                <span class="kartu-badge-kode" style="color: ${warnaJenis};">
+                  PROVINSI ${p.kode} &bull; ${chibiProv.suku}
+                </span>
+                <h3 class="kartu-nama-prov">${p.nama}</h3>
+              </div>
             </div>
             <button type="button" class="kartu-tombol-tutup" aria-label="Tutup kartu">&times;</button>
           </header>
@@ -231,6 +239,9 @@ export function buatPanelKanan({
           ${
             adalahKosong
               ? `
+            <div class="kartu-chibi-pesan-sosial">
+              <p><strong>${chibiProv.nama}:</strong> “Budaya di ${p.nama} sangat kaya, namun belum tercatat di SPKT. Yuk kita sama-sama dorong pencatatannya!”</p>
+            </div>
             <p class="kartu-catatan-refleksi">
               Belum tercatat di SPKT bukan berarti tidak memiliki budaya. Pendataan resmi masih terus berlanjut.
             </p>
