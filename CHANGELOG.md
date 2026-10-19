@@ -1,6 +1,27 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
-## [2026-10-19] Penyempurnaan Vokal Narasi Alami (Azure Neural TTS Gadis) & Kalibrasi Presisi Kamera Tur Sinematik 3D
+## [2026-10-19] Penguatan Efek Frosted Glassmorphism & Kontras Teks pada Bagian Penutup (Call to Action)
+- **Permintaan Pengguna:**
+  - Mempertebal efek glass (kaca buram/frosted glassmorphism) pada kartu pilar aksi budaya dan banner status paspor di bagian penutup agar teks tidak bertabrakan dengan ilustrasi candi di latar belakang.
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - **`.penutup-pilar-kartu` & `.penutup-jejak-kotak`**:
+      - Mempertebal opasitas latar belakang gradasi dari `rgba(255, 255, 255, 0.42 ... 0.15)` menjadi `rgba(255, 255, 255, 0.88 ... 0.74)` di tema terang, dan `rgba(34, 28, 22, 0.84 ... 0.72)` di tema malam.
+      - Meningkatkan radius blur dari `blur(8px)` menjadi `blur(24px) saturate(190%)` untuk mendifusikan garis ilustrasi candi secara halus menjadi pendaran hangat tanpa mengganggu keterbacaan teks.
+      - Menambahkan pantulan tepi kaca murni (*glass bevel & highlight*) dengan `border: 1.5px solid rgba(255, 255, 255, 0.95)` dan `inset 0 1.5px 2px rgba(255, 255, 255, 1.0)`.
+      - Memperhalus bayangan lantai (*drop shadow*) berlapis untuk kedalaman fisik nyata.
+    - **`.penutup-kartu-akbar`**:
+      - Wadah akbar penutup dipertebal kaca buramnya ke `blur(24px) saturate(180%)` dengan opasitas `0.68 ... 0.48` dan border pembingkai elegan.
+    - **`.penutup-btn-kaca`**:
+      - Tombol aksi sekunder ("Bagikan Halaman Ini" & "Kembali ke Awal") diperkuat lapisan kacanya menjadi `rgba(255, 255, 255, 0.88)` dengan `blur(20px)` dan bayangan lembut.
+    - **Peningkatan Kontras Tipografi**:
+      - Teks deskripsi kartu `.penutup-pilar-isi` dipertajam warnanya menjadi `#2D2721` (kontras rasio > 7:1) di tema terang dan `#E2D9D2` di tema malam.
+      - Lencana kategori `.penutup-pilar-kategori` dipertegas kontrasnya dengan rona emas tua `#8C5304`.
+- **Hasil Pengujian**:
+  - Tangkapan layar `scratch/penutup-before-light.png` dan `scratch/penutup-before-dark.png` mengonfirmasi teks terbaca sangat jernih dan tegas di atas ilustrasi candi dengan efek kaca tebal berkelas.
+  - `npm run build` sukses (0 error, 4.79s).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
 - **Permintaan Pengguna:**
   1. Suara Voice Over diperbaiki karena sebelumnya dinilai kaku, datar tanpa intonasi, serta jeda pada koma dan ganti baris sangat kentara seperti AI robotik. Pengguna meminta suara wanita dengan intonasi alami, luwes, dan khas Indonesia.
   2. Pengarahan kamera tur sinematik diperbaiki karena beberapa pulau terarah terlalu ke kanan atau tidak pas di tengah layar.
