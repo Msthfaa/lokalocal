@@ -63,8 +63,9 @@ export function bukaSpotlightSearch() {
  */
 export function tutupSpotlightSearch() {
   if (!dialogEl) return;
-  dialogEl.removeAttribute('open');
-  dialogEl.close();
+  if (dialogEl.open) {
+    dialogEl.close();
+  }
   document.body.style.overflow = '';
 }
 
@@ -414,6 +415,14 @@ export function inisialisasiSpotlightSearch({
   // Event tutup backdrop & tombol
   dialog.querySelectorAll('[data-aksi="tutup"]').forEach((btn) => {
     btn.addEventListener('click', tutupSpotlightSearch);
+  });
+
+  dialog.addEventListener('close', () => {
+    document.body.style.overflow = '';
+  });
+
+  dialog.addEventListener('cancel', () => {
+    document.body.style.overflow = '';
   });
 
   // Event filter pills

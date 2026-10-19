@@ -412,11 +412,20 @@ export async function bukaModalCetakKartu({ pengelolaPaspor, daftarProvinsi = []
   // Event Tutup
   modalEl.querySelectorAll('[data-aksi="tutup"]').forEach((btn) => {
     btn.onclick = () => {
-      modalEl.removeAttribute('open');
-      modalEl.close();
+      if (modalEl.open) {
+        modalEl.close();
+      }
       document.body.style.overflow = '';
     };
   });
+
+  modalEl.onclose = () => {
+    document.body.style.overflow = '';
+  };
+
+  modalEl.oncancel = () => {
+    document.body.style.overflow = '';
+  };
 
   // Event Unduh PNG
   if (btnUnduh) {

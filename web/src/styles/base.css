@@ -26,6 +26,12 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Dialog yang tertutup mutlak tidak boleh tampil atau menghalangi klik pointer */
+dialog:not([open]) {
+  display: none !important;
+  pointer-events: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

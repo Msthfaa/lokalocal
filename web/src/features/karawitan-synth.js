@@ -12,31 +12,36 @@ let masterGain = null;
 let compressor = null;
 
 /**
- * Frekuensi Nada Pentatonis Nusantara (Standar Laras Slendro C4 - A4)
+ * Frekuensi 8 Tangga Nada Nusantara (Laras Slendro & Pelog C4 - C5 Lengkap)
  */
 export const NADA_PENTATONIS = [
   { nama: 'Ji', notasi: '1', frekuensi: 261.63, arti: 'Panunggul / Kepala', tombol: '1' },
   { nama: 'Ro', notasi: '2', frekuensi: 293.66, arti: 'Gulu / Leher', tombol: '2' },
   { nama: 'Lu', notasi: '3', frekuensi: 329.63, arti: 'Dhadha / Dada', tombol: '3' },
-  { nama: 'Ma', notasi: '5', frekuensi: 392.00, arti: 'Lima / Tangan', tombol: '4' },
-  { nama: 'Nem', notasi: '6', frekuensi: 440.00, arti: 'Nem / Enam', tombol: '5' }
+  { nama: 'Pat', notasi: '4', frekuensi: 349.23, arti: 'Pelog / Pathet', tombol: '4' },
+  { nama: 'Ma', notasi: '5', frekuensi: 392.00, arti: 'Lima / Tangan', tombol: '5' },
+  { nama: 'Nem', notasi: '6', frekuensi: 440.00, arti: 'Nem / Enam', tombol: '6' },
+  { nama: 'Pi', notasi: '7', frekuensi: 493.88, arti: 'Barang / Peling', tombol: '7' },
+  { nama: 'Ji̇', notasi: '1̇', frekuensi: 523.25, arti: 'Panunggul Luhur (C5)', tombol: '8' }
 ];
 
 /**
- * Melodi Klasik Nusantara untuk Fitur Pratinjau Otomatis (Gundhul Pacul Intro)
+ * Melodi Klasik Nusantara untuk Fitur Pratinjau Otomatis (Gundhul Pacul & Suwe Ora Jamu)
  */
 const MELODI_CONTOH = [
-  { nadaIndex: 0, durasi: 350 }, // 1
-  { nadaIndex: 2, durasi: 350 }, // 3
-  { nadaIndex: 0, durasi: 350 }, // 1
-  { nadaIndex: 2, durasi: 350 }, // 3
-  { nadaIndex: 3, durasi: 400 }, // 5
-  { nadaIndex: 3, durasi: 450 }, // 5
-  { nadaIndex: 4, durasi: 350 }, // 6
-  { nadaIndex: 3, durasi: 350 }, // 5
-  { nadaIndex: 2, durasi: 350 }, // 3
-  { nadaIndex: 1, durasi: 350 }, // 2
-  { nadaIndex: 0, durasi: 600 }  // 1
+  { nadaIndex: 0, durasi: 320 }, // 1
+  { nadaIndex: 2, durasi: 320 }, // 3
+  { nadaIndex: 0, durasi: 320 }, // 1
+  { nadaIndex: 2, durasi: 320 }, // 3
+  { nadaIndex: 4, durasi: 380 }, // 5
+  { nadaIndex: 4, durasi: 400 }, // 5
+  { nadaIndex: 5, durasi: 340 }, // 6
+  { nadaIndex: 4, durasi: 340 }, // 5
+  { nadaIndex: 2, durasi: 340 }, // 3
+  { nadaIndex: 1, durasi: 340 }, // 2
+  { nadaIndex: 2, durasi: 340 }, // 3
+  { nadaIndex: 4, durasi: 360 }, // 5
+  { nadaIndex: 7, durasi: 650 }  // 1̇ (oktaf tinggi puncak)
 ];
 
 /**
@@ -271,11 +276,11 @@ export function bukaRuangBunyiModal() {
           </div>
 
           <p class="ruang-bunyi-keterangan" id="ruang-bunyi-keterangan">
-            Resonansi logam perunggu dengan 5 nada pokok laras Slendro. Tekan bilah logam atau gunakan tombol keyboard 1, 2, 3, 4, 5.
+            Resonansi logam perunggu dengan 8 nada lengkap laras Slendro & Pelog (1-8). Mendukung penekanan tombol secara bersamaan (akor) dan usap melodi.
           </p>
 
           <!-- Bilah Tuts Pentatonis Interaktif -->
-          <div class="ruang-bunyi-tuts-baris" id="ruang-bunyi-tuts-baris" role="group" aria-label="Bilah Nada Pentatonis">
+          <div class="ruang-bunyi-tuts-baris" id="ruang-bunyi-tuts-baris" role="group" aria-label="Bilah Nada Pentatonis dan Pelog">
             ${NADA_PENTATONIS.map((n, idx) => `
               <button
                 type="button"
@@ -299,14 +304,14 @@ export function bukaRuangBunyiModal() {
               <span>Dengarkan Tembang Klasik</span>
             </button>
             <span class="ruang-bunyi-hint-keyboard">
-              💡 Pintasan tombol: <strong>1</strong> sampai <strong>5</strong> di keyboard
+              💡 Pintasan: <strong>1</strong> s/d <strong>8</strong> (bisa ditekan bersamaan / akor harmoni)
             </span>
           </div>
         </div>
 
         <div class="ruang-bunyi-footer">
           <p class="ruang-bunyi-footer-sains">
-            Sintesis gelombang fisika akustik murni Web Audio API • 0 KB audio eksternal • Tanpa latensi
+            Sintesis gelombang fisika akustik murni Web Audio API • 0 KB audio eksternal • Polifoni Multisuara Real-time
           </p>
         </div>
       </div>
@@ -335,9 +340,9 @@ export function bukaRuangBunyiModal() {
 
     if (ketEl) {
       if (instrumenAktif === 'angklung') {
-        ketEl.textContent = 'Resonansi getaran tabung bambu kembar Priangan berlaras pentatonis. Tekan tabung atau tombol 1-5 di keyboard.';
+        ketEl.textContent = 'Resonansi getaran tabung bambu kembar Priangan 8 nada lengkap (1-8). Tekan beberapa bilah bersamaan untuk harmoni angklung.';
       } else {
-        ketEl.textContent = 'Resonansi logam perunggu dengan 5 nada pokok laras Slendro. Tekan bilah perunggu atau tombol 1-5 di keyboard.';
+        ketEl.textContent = 'Resonansi logam perunggu 8 nada laras Slendro & Pelog (1-8). Tekan beberapa bilah bersamaan untuk akor kempyang/gamelan.';
       }
     }
   }
@@ -356,15 +361,22 @@ export function bukaRuangBunyiModal() {
     }
   }
 
+  // Multi-Touch & Pointer Down Support (Polifoni Sentuh & Geser)
   bilahBtns.forEach((btn) => {
-    const memicu = () => {
+    const bunyikan = (e) => {
+      if (e) e.preventDefault();
       const idx = parseInt(btn.dataset.index, 10);
       mainkanNada(idx, instrumenAktif);
       getarkanBilah(idx);
     };
-    btn.onclick = memicu;
-    btn.onpointerdown = (e) => {
-      if (e.pointerType === 'touch') memicu();
+
+    btn.onpointerdown = bunyikan;
+
+    // Glissando / Usap Nada saat pointer digeser sambil ditekan
+    btn.onpointerenter = (e) => {
+      if (e.buttons === 1) {
+        bunyikan(e);
+      }
     };
   });
 
@@ -379,31 +391,61 @@ export function bukaRuangBunyiModal() {
     };
   }
 
-  // Keyboard Handler Khusus saat Modal Terbuka
+  // Keyboard Handler Polifonik (Mendukung Multi-key Simultan / Akor)
+  const tombolSedangDitekan = new Set();
+  const PETA_TOMBOL = {
+    '1': 0, '2': 1, '3': 2, '4': 3,
+    '5': 4, '6': 5, '7': 6, '8': 7
+  };
+
   function handleKeydown(e) {
     if (!modalEl.hasAttribute('open')) return;
     const key = e.key;
-    if (['1', '2', '3', '4', '5'].includes(key)) {
+    if (key in PETA_TOMBOL) {
       e.preventDefault();
-      const idx = parseInt(key, 10) - 1;
-      mainkanNada(idx, instrumenAktif);
-      getarkanBilah(idx);
+      if (!tombolSedangDitekan.has(key)) {
+        tombolSedangDitekan.add(key);
+        const idx = PETA_TOMBOL[key];
+        mainkanNada(idx, instrumenAktif);
+        getarkanBilah(idx);
+      }
     } else if (key === 'Escape') {
       tutupRuangBunyiModal();
     }
   }
 
-  window.addEventListener('keydown', handleKeydown);
+  function handleKeyup(e) {
+    if (e.key in PETA_TOMBOL) {
+      tombolSedangDitekan.delete(e.key);
+    }
+  }
 
-  // Event Tutup
+  window.addEventListener('keydown', handleKeydown);
+  window.addEventListener('keyup', handleKeyup);
+
+  // Pastikan listener keyboard dibersihkan saat modal tertutup
+  modalEl.onclose = () => {
+    window.removeEventListener('keydown', handleKeydown);
+    window.removeEventListener('keyup', handleKeyup);
+    document.body.style.overflow = '';
+  };
+
+  modalEl.oncancel = () => {
+    window.removeEventListener('keydown', handleKeydown);
+    window.removeEventListener('keyup', handleKeyup);
+    document.body.style.overflow = '';
+  };
+
+  // Event Tutup dari tombol atau backdrop
   modalEl.querySelectorAll('[data-aksi="tutup"]').forEach((btn) => {
     btn.onclick = () => {
       tutupRuangBunyiModal();
     };
   });
 
-  modalEl.showModal();
-  modalEl.setAttribute('open', '');
+  if (!modalEl.open) {
+    modalEl.showModal();
+  }
   document.body.style.overflow = 'hidden';
 }
 
@@ -414,7 +456,8 @@ export function tutupRuangBunyiModal() {
   const modalEl = document.getElementById('modal-ruang-bunyi');
   if (!modalEl) return;
   hentikanMelodi();
-  modalEl.removeAttribute('open');
-  modalEl.close();
+  if (modalEl.open) {
+    modalEl.close();
+  }
   document.body.style.overflow = '';
 }

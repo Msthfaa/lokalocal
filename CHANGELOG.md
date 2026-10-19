@@ -1,5 +1,96 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-19] Integrasi Piper TTS: Rekaman Narasi Studio Wanita Indonesia (MP3 Berkualitas Tinggi & Ringan)
+- **Permintaan Pengguna:**
+  - Menggunakan Piper TTS untuk narasi Voice Over bahasa Indonesia wanita yang konsisten di semua perangkat, dengan implementasi yang hati-hati tanpa membebani performa website.
+- **Dibuat/diubah:**
+  - **Pembangkitan Audio Narasi Neural Piper TTS**:
+    - `tools/generate-tur-audio.py`:
+      - Menggunakan model neural Piper resmi `id_ID-news_tts-medium` (vokal wanita pembaca berita bahasa Indonesia).
+      - Men-generate 6 file audio narasi pulau Nusantara dengan parameter tempo tenang (`--length-scale 1.06`, `--sentence-silence 0.35`).
+      - Mengompresi gelombang PCM ke format MP3 96 kbps via pustaka `lameenc`.
+      - Menghasilkan 6 berkas audio di `web/public/assets/audio/tur/`:
+        - `tur-1-sumatera.mp3` (204.2 KB)
+        - `tur-2-jawa.mp3` (176.0 KB)
+        - `tur-3-bali-nusa.mp3` (196.5 KB)
+        - `tur-4-kalimantan.mp3` (182.8 KB)
+        - `tur-5-sulawesi.mp3` (184.6 KB)
+        - `tur-6-maluku-papua.mp3` (197.4 KB)
+      - Total ukuran ke-6 file audio hanya **1.14 MB**, sangat ringan dan cepat dimuat di peramban seluler.
+  - **Integrasi Pemutar Audio Tur Sinematik & Arsitektur Dual-Engine**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Mendaftarkan `audioUrl` dan `durasiDetik` aktual untuk masing-masing dari 6 zona kepulauan.
+      - Menginisialisasi `naratorAudioEl = new Audio()` untuk memutar audio Piper TTS secara instan saat drone tiba di setiap pulau.
+      - Mengintegrasikan kendali jeda/lanjut (`pause()` / `play()`), pembisuan (`[🔇 Narasi: OFF]`), serta penutupan tur (`Esc` / `✕`).
+      - **Fallback Cerdas**: Jika pemutaran berkas MP3 diblokir oleh kebijakan *autoplay* peramban atau berkas offline, sistem otomatis beralih (*fallback*) secara mulus ke Web Speech API (`Microsoft Gadis Natural / Google ID`).
+- **Hasil Pengujian**:
+  - `scratch/test-piper-audio-tour.mjs` dijalankan via browser Edge:
+    - Berkas MP3 berhasil dimuat (`status: 200, type: audio/mpeg`).
+    - Audio narasi terputar mulus seiring pergerakan kamera drone dan pulau yang terangkat.
+    - Navigasi tetap 100% responsif setelah tur selesai (`navClickable: true`).
+  - `npm run build` berhasil (0 error).
+  - `node tools/validate.mjs` lolos (0 error).
+
+## [2026-10-19] Tur Sinematik 3D: Isolasi Fokus Gugus Pulau Penuh & Voice Over Narator Wanita Aksen Indonesia Alami
+- **Permintaan Pengguna:**
+  1. Tur Sinematik 3D dikhususkan untuk menyorot dan mengisolasi satu pulau/gugus pulau besar yang sedang dibahas, bukan hanya satu provinsi.
+  2. Voice Over diperbaiki agar menggunakan suara perempuan dengan aksen bahasa Indonesia yang khas dan alami (bukan aksen bahasa Inggris).
+- **Dibuat/diubah:**
+  - **Isolasi & Penyorotan Utuh Gugus Pulau pada Tur Sinematik 3D**:
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Mengimplementasikan `sorotPulauZona(zona)`: Saat tur membahas suatu pulau (Sumatera, Jawa, Bali & Nusa Tenggara, Kalimantan, Sulawesi, Maluku & Papua), **seluruh keping provinsi pada pulau tersebut diangkat tinggi secara kompak (+0.26 unit) dan memancarkan pendaran cahaya emas hangat (`#FFD700` dan `#E5A93C`)**.
+      - Sementara itu, seluruh pulau di luar zona aktif secara otomatis diturunkan lembut ke permukaan laut dan diberi efek semi-transparan redup artistik (`opacity: 0.32`), sehingga pulau yang sedang dibahas menjadi fokus visual mutlak di layar.
+      - Menambahkan denyut emas tersinkronisasi pada `loop` Three.js untuk seluruh keping pulau aktif.
+      - Mengembalikan seluruh pulau ke kondisi normal, warna penuh, dan permukaan awal secara mulus saat tur ditutup atau dijeda via `kembalikanSorotanPulau()`.
+  - **Voice Over Wanita Indonesia Tulen & Naskah Narasi Adiluhung**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Memperbaiki pemilihan TTS dengan fungsi `perbaruiPilihanSuaraWanitaIndo()`, secara dinamis memprioritaskan suara wanita Indonesia alami: `Microsoft Gadis Online (Natural)` (Edge/Windows 11) dan `Google Bahasa Indonesia` (Chrome/Android), dengan fallback pintar ke suara `id-ID` berkarakter wanita.
+      - Menghubungkan pendengar event `voiceschanged` agar suara langsung terhubung saat browser selesai memuat daftar suara asinkron.
+      - Mengatur `pitch: 1.04` (timbre wanita hangat dan ramah) serta `rate: 0.94` (tempo tutur mendongeng yang anggun dan jelas).
+      - Menuliskan naskah `narasiAudio` khusus untuk ke-6 zona kepulauan dengan ejaan bilangan penuh (misal *"seratus sembilan belas"* bukan *"119"*) dan kata penghubung *"dan"* (bukan *"&"*), menjamin pelafalan fasih dengan aksen Indonesia yang khas.
+      - Menambah durasi per zona menjadi 12.0 detik agar narasi selesai tuntas dan nyaman dinikmati.
+  - **Penyempurnaan Antarmuka HUD Tur**:
+    - Menampilkan lencana baru `🏝️ Fokus: [Nama Pulau] • [Provinsi Terpilih]`.
+    - Merapikan gaya tombol tutup `✕` (`.jelajah-tur-btn-tutup`) menjadi tombol bulat melingkar yang selaras dengan tombol `[🔊 Narasi: ON]`.
+- **Hasil Pengujian**:
+  - `scratch/test-island-cinematic.mjs` dijalankan via browser Edge:
+    - Terkonfirmasi suara wanita Indonesia `Microsoft Gadis Online (Natural) - Indonesian (Indonesia)` terpilih 100%.
+    - Screenshot bukti `scratch/evidence-cinematic-island-focus-sumatera.png` dan `scratch/evidence-cinematic-island-focus-jawa.png` membuktikan seluruh gugus pulau terangkat kompak, berpendar emas, sementara pulau lain redup transparan.
+  - `npm run build` berhasil (0 error).
+  - `node tools/validate.mjs` lolos (0 error).
+
+## [2026-10-19] Penyempurnaan Revisi Fitur: Navigasi Bebas Hambatan, Ruang Bunyi 8 Nada & Akor Simultan, Kamera Tur Drone Lapang & Voice Over Bahasa Indonesia
+- **Permintaan Pengguna:**
+  1. Perbaikan bug klik terhalang pada navigasi atas dan seluruh halaman setelah menutup fitur/modal.
+  2. Ruang Bunyi Nusantara diperbanyak nadanya (tidak hanya 5 nada) dan mendukung penekanan simultan beberapa nada (polifoni / akor).
+  3. Tur Sinematik 3D diperbaiki: kamera tidak boleh terlalu zoom-in, provinsi terpilih harus jelas terlihat, dan ditambahkan Voice Over penjelasan suara narasi.
+- **Dibuat/diubah:**
+  - **Akar Masalah Navigasi Macet Diselesaikan Tuntas**:
+    - Ditemukan bahwa pemanggilan `dialog.removeAttribute('open')` sebelum `dialog.close()` atau di handler `onclose`/`oncancel` merusak state internal browser, menyebabkan dokumen terkunci dalam status `:modal` inert.
+    - Menghapus seluruh `removeAttribute('open')` dari `web/src/features/karawitan-synth.js`, `web/src/features/paspor-canvas.js`, `web/src/ui/spotlight-search.js`, dan menambahkan aturan mutlak `dialog:not([open]) { display: none !important; pointer-events: none !important; }` di `web/src/styles/base.css` serta `web/src/styles/components.css`.
+    - Mengubah kontainer `.jelajah-tur-overlay.aktif` menjadi `pointer-events: none` dengan `pointer-events: auto` khusus pada kartu HUD tur, sehingga navbar dan elemen luar tetap 100% responsif terhadap klik.
+  - **Ruang Bunyi Nusantara 8 Nada & Polifoni Akor Simultan**:
+    - `web/src/features/karawitan-synth.js`:
+      - Diperluas dari 5 nada menjadi 8 tangga nada lengkap: `1` (Ji), `2` (Ro), `3` (Lu), `4` (Pat), `5` (Ma), `6` (Nem), `7` (Pi/Pelog), `1̇` (Ji Inggil).
+      - Menambahkan pelacakan set `tombolSedangDitekan` untuk mendukung penekanan multi-kunci keyboard fisik secara bersamaan (`1` sampai `8`), memungkinkan harmoni akor kempyang/kempyung gamelan (misal kombinasi 1+3+5 atau 1+5+8).
+      - Menambahkan dukungan multi-pointer touch dan sweep glissando (`pointerdown`, `pointerenter` dengan tombol ditekan).
+  - **Tur Sinematik 3D Drone Lapang, Sorotan Provinsi & Voice Over Narasi Suara**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Sudut kamera dinaikkan ke ketinggian drone lapang sinematik ($Y \approx 2{,}8 - 3{,}2$, $Z \approx 4{,}2 - 4{,}5$) agar seluruh gugus kepulauan tampak megah tanpa clipping/zoom berlebih.
+      - Integrasi Web Speech API (`speechSynthesis`) berbahasa Indonesia (`id-ID`) untuk membaca narasi setiap zona secara hidup dan ekspresif.
+      - Menambahkan tombol kontrol toggle narasi suara `[🔊 Narasi: ON/OFF]` pada kartu HUD.
+      - Menambahkan badge lencana wilayah fokus `📍 Fokus: [Nama Provinsi] ([Jumlah] Catatan)` pada HUD.
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Memperbaiki pencocokan kode provinsi mesh dengan padding `padStart(2, '0')`, memastikan pulau representatif terangkat +0.25, berkilau emas, dan ditandai tiang bendera 3D saat tur berlangsung.
+- **Hasil Pengujian**:
+  - `scratch/verify-revisions.mjs` dijalankan via browser engine sesungguhnya:
+    - Navbar tetap 100% dapat diklik sebelum tur, saat tur berjalan, dan setelah tur ditutup (`navClickable: true`).
+    - Navbar tetap 100% dapat diklik setelah Spotlight Search dan Ruang Bunyi ditutup (`isClickable: true`).
+    - Ruang Bunyi 8 bilah terdeteksi aktif dan 4 nada bergetar simultan secara bersamaan.
+    - Tur sinematik berjalan mulus dengan lencana provinsi, pembacaan VO, dan framing drone lapang.
+  - `npm run build` berhasil (0 error).
+  - `node tools/validate.mjs` lolos (0 error).
+
 ## [2026-10-19] Implementasi 4 Inovasi Interaktif: Spotlight Search, Cetak Paspor Budaya PNG, Karawitan Web Audio Synth, & Tur Sinematik 3D Nusantara
 - **Permintaan Pengguna:**
   - Menjalankan seluruh 4 rekomendasi pembaruan interaktif tingkat lanjut secara hati-hati dan menyeluruh untuk memaksimalkan pengalaman pengguna serta nilai inovasi website pada lomba.

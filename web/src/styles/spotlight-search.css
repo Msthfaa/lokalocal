@@ -4,6 +4,10 @@
  * Mematuhi Antislop (Kontras WCAG AA/AAA, Responsif Mobile <640px, Aksesibilitas Penuh)
  */
 
+.spotlight-dialog:not([open]) {
+  display: none !important;
+}
+
 .spotlight-dialog {
   border: none;
   background: transparent;
