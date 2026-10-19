@@ -22,6 +22,8 @@ export const DAFTAR_ZONA_TUR = [
     subjudul: 'Randai Minangkabau, Silek Harimau Lalok, & Kawasan Balai Kaliki',
     deskripsi: 'Gugusan peradaban barat dengan 119 catatan budaya di Sumatera Barat: seni teater tutur Randai, bela diri Silek Harimau Lalok Pariaman, dan kawasan adat Balai Kaliki.',
     narasiAudio: 'Selamat datang di Pulau Sumatera, Gerbang Barat Nusantara. Wilayah ini menyimpan seratus sembilan belas catatan kebudayaan di Sumatera Barat, termasuk seni teater tutur Randai Minangkabau, seni bela diri Silek Harimau Lalok, dan cagar budaya Balai Kaliki.',
+    audioUrl: '/assets/audio/tur/tur-1-sumatera.mp3',
+    durasiDetik: 18.5,
     offsetLookAt: { x: -2.3, y: 0.18, z: 0.15 },
     offsetPos: { x: -1.8, y: 2.7, z: 4.0 },
     rotY: 0.14
@@ -37,6 +39,8 @@ export const DAFTAR_ZONA_TUR = [
     subjudul: 'Bantengan Pasuruan, Wayang Kulit Gagrak, & Batik Garutan',
     deskripsi: 'Episentrum seni pertunjukan dan kerajinan tradisi: seni Bantengan Pasuruan, Wayang Kulit Gagrak Porongan, hingga ragam filosofi motif Batik Garutan & Cianjur.',
     narasiAudio: 'Kita melayang ke Pulau Jawa, episentrum kesenian dan ragam motif adiluhung. Mari saksikan keunikan seni Bantengan Pasuruan, pertunjukan Wayang Kulit Gagrak Porongan, hingga mahakarya Batik Garutan yang penuh filosofi.',
+    audioUrl: '/assets/audio/tur/tur-2-jawa.mp3',
+    durasiDetik: 16.2,
     offsetLookAt: { x: -0.4, y: 0.18, z: 1.15 },
     offsetPos: { x: -0.35, y: 2.5, z: 3.8 },
     rotY: -0.02
@@ -52,6 +56,8 @@ export const DAFTAR_ZONA_TUR = [
     subjudul: 'Ogoh-Ogoh, Okokan Tabanan, Gending Ratu Anom, & Knobe',
     deskripsi: 'Seni pertunjukan Ogoh-Ogoh, tradisi bunyi Okokan Tabanan, tembang Gending Ratu Anom di Bali, hingga alat musik tradisi Knobe dari Nusa Tenggara Timur.',
     narasiAudio: 'Kini kita singgah di Kepulauan Bali dan Nusa Tenggara, beranda dewata nan kaya tradisi. Dari kemegahan patung Ogoh-Ogoh, tradisi bunyi Okokan Tabanan, lantunan tembang Gending Ratu Anom, hingga keunikan alat musik Knobe di Nusa Tenggara Timur.',
+    audioUrl: '/assets/audio/tur/tur-3-bali-nusa.mp3',
+    durasiDetik: 18.0,
     offsetLookAt: { x: 1.1, y: 0.18, z: 1.25 },
     offsetPos: { x: 1.05, y: 2.45, z: 3.7 },
     rotY: -0.08
@@ -67,6 +73,8 @@ export const DAFTAR_ZONA_TUR = [
     subjudul: 'Rumah Panjang Nanga Siyai, Naq Hudoq, & Musik Keringut',
     deskripsi: 'Arsitektur Rumah Panjang Nanga Siyai, topeng ritus Naq Hudoq Dayak Bahau, instrumen musik petik Jatung Utang, serta alat musik tiup Keringut Dayak Punan.',
     narasiAudio: 'Terbang melintasi rimbunnya Pulau Kalimantan, jantung Borneo pusaka Dayak. Simak kemegahan Rumah Panjang Nanga Siyai, ritus sakral topeng Hudoq Dayak Bahau, petikan Jatung Utang, serta alat tiup Keringut Dayak Punan.',
+    audioUrl: '/assets/audio/tur/tur-4-kalimantan.mp3',
+    durasiDetik: 17.0,
     offsetLookAt: { x: -0.6, y: 0.2, z: -0.2 },
     offsetPos: { x: -0.55, y: 2.85, z: 3.9 },
     rotY: 0.05
@@ -82,6 +90,8 @@ export const DAFTAR_ZONA_TUR = [
     subjudul: 'Aksara Lontaraq, Rumah Kajang, & Pakaian Adat Bada',
     deskripsi: 'Dokumentasi aksara Lontaraq Bugis-Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Bada Sulawesi Tengah.',
     narasiAudio: 'Kita tiba di Pulau Sulawesi, benteng arsitektur adat dan jejak aksara kuno. Menghadirkan aksara Lontaraq Bugis-Makassar, arsitektur bersahaja Balla To Kajang, istana Raja Kulawi, serta busana serat kayu Lembah Bada.',
+    audioUrl: '/assets/audio/tur/tur-5-sulawesi.mp3',
+    durasiDetik: 17.0,
     offsetLookAt: { x: 0.85, y: 0.18, z: 0.1 },
     offsetPos: { x: 0.8, y: 2.6, z: 3.8 },
     rotY: -0.06
@@ -97,6 +107,8 @@ export const DAFTAR_ZONA_TUR = [
     subjudul: 'Rumah Adat Sasadu, Tari Togal, & Limne Ketengban',
     deskripsi: 'Arsitektur musyawarah Sasadu Maluku Utara, kesyahduan Tari Togal, perkusi Kelambut Papua, hingga gerak tari adat Limne suku Ketengban Papua Pegunungan.',
     narasiAudio: 'Pemberhentian terakhir di Kepulauan Maluku dan Tanah Papua, bumi cenderawasih kaya rempah. Menampilkan balai musyawarah Sasadu Halmahera, tarian Togal, tabuhan perkusi Kelambut, hingga gerak tari adat Limne suku Ketengban di Papua Pegunungan.',
+    audioUrl: '/assets/audio/tur/tur-6-maluku-papua.mp3',
+    durasiDetik: 18.2,
     offsetLookAt: { x: 2.3, y: 0.2, z: 0.3 },
     offsetPos: { x: 2.1, y: 2.75, z: 3.9 },
     rotY: -0.15
@@ -237,7 +249,44 @@ export function buatPengontrolTurSinematik({
   const ikonVO = document.getElementById('jelajah-tur-ikon-vo');
   const teksVO = document.getElementById('jelajah-tur-teks-vo');
 
+  // Pemutar Audio Studio Piper TTS (Format MP3 Jernih & Ringan) dengan Fallback Web Speech API
+  let naratorAudioEl = null;
+  if (typeof window !== 'undefined' && typeof Audio !== 'undefined') {
+    try {
+      naratorAudioEl = new Audio();
+      naratorAudioEl.preload = 'auto';
+    } catch (e) {
+      console.warn('Audio narator init kendala:', e);
+    }
+  }
+
   function bicarakanNarasiZona(zona) {
+    if (!voiceOverAktif) return;
+    hentikanVoiceOver();
+
+    // Prioritas 1: Putar audio MP3 narator wanita Piper TTS (Suara Studio Jernih & Alami)
+    if (naratorAudioEl && zona.audioUrl) {
+      try {
+        naratorAudioEl.src = zona.audioUrl;
+        naratorAudioEl.currentTime = 0;
+        const playPromise = naratorAudioEl.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            console.warn('Audio MP3 diblokir/gagal, beralih ke Web Speech:', err);
+            putarWebSpeechFallback(zona);
+          });
+        }
+        return;
+      } catch (err) {
+        console.warn('Kendala memutar naratorAudioEl:', err);
+      }
+    }
+
+    // Prioritas 2 (Fallback): Web Speech API
+    putarWebSpeechFallback(zona);
+  }
+
+  function putarWebSpeechFallback(zona) {
     if (!synth || !voiceOverAktif) return;
     try {
       synth.cancel();
@@ -269,6 +318,10 @@ export function buatPengontrolTurSinematik({
   }
 
   function hentikanVoiceOver() {
+    if (naratorAudioEl) {
+      naratorAudioEl.pause();
+      naratorAudioEl.currentTime = 0;
+    }
     if (synth) {
       synth.cancel();
     }
@@ -366,9 +419,10 @@ export function buatPengontrolTurSinematik({
       ease: 'power2.inOut'
     }, 0);
 
-    // Jadwalkan transisi ke zona berikutnya setelah durasi selesai
+    // Jadwalkan transisi ke zona berikutnya setelah durasi narasi audio selesai
     clearTimeout(timerZona);
-    sisaWaktuMs = DURASI_PER_ZONA_DETIK * 1000;
+    const durasiDetik = zona.durasiDetik || DURASI_PER_ZONA_DETIK;
+    sisaWaktuMs = durasiDetik * 1000;
     mulaiAnimasiProgresBar(sisaWaktuMs);
 
     timerZona = setTimeout(() => {
@@ -382,7 +436,7 @@ export function buatPengontrolTurSinematik({
     sedangDijeda = false;
     indeksZona = 0;
 
-    tampilkanToast('Memulai Tur Drone Sinematik Nusantara... Dengarkan narasi audio 🎥🎙️✨');
+    tampilkanToast('Memulai Tur Drone Sinematik Nusantara... Dengarkan narasi suara Piper TTS 🎥🎙️✨');
     terbangKeZona(0);
   }
 
@@ -392,12 +446,15 @@ export function buatPengontrolTurSinematik({
     sedangDijeda = !sedangDijeda;
     if (sedangDijeda) {
       clearTimeout(timerZona);
+      if (naratorAudioEl) naratorAudioEl.pause();
       if (synth) synth.pause();
       if (ikonJeda) ikonJeda.textContent = '▶';
       if (teksJeda) teksJeda.textContent = 'Lanjut';
       tampilkanToast('Tur Sinematik dijeda.');
     } else {
-      if (synth && synth.paused) {
+      if (naratorAudioEl && naratorAudioEl.paused && naratorAudioEl.currentTime > 0) {
+        naratorAudioEl.play().catch(() => {});
+      } else if (synth && synth.paused) {
         synth.resume();
       } else {
         bicarakanNarasiZona(DAFTAR_ZONA_TUR[indeksZona]);

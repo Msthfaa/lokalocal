@@ -1,5 +1,36 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-19] Integrasi Piper TTS: Rekaman Narasi Studio Wanita Indonesia (MP3 Berkualitas Tinggi & Ringan)
+- **Permintaan Pengguna:**
+  - Menggunakan Piper TTS untuk narasi Voice Over bahasa Indonesia wanita yang konsisten di semua perangkat, dengan implementasi yang hati-hati tanpa membebani performa website.
+- **Dibuat/diubah:**
+  - **Pembangkitan Audio Narasi Neural Piper TTS**:
+    - `tools/generate-tur-audio.py`:
+      - Menggunakan model neural Piper resmi `id_ID-news_tts-medium` (vokal wanita pembaca berita bahasa Indonesia).
+      - Men-generate 6 file audio narasi pulau Nusantara dengan parameter tempo tenang (`--length-scale 1.06`, `--sentence-silence 0.35`).
+      - Mengompresi gelombang PCM ke format MP3 96 kbps via pustaka `lameenc`.
+      - Menghasilkan 6 berkas audio di `web/public/assets/audio/tur/`:
+        - `tur-1-sumatera.mp3` (204.2 KB)
+        - `tur-2-jawa.mp3` (176.0 KB)
+        - `tur-3-bali-nusa.mp3` (196.5 KB)
+        - `tur-4-kalimantan.mp3` (182.8 KB)
+        - `tur-5-sulawesi.mp3` (184.6 KB)
+        - `tur-6-maluku-papua.mp3` (197.4 KB)
+      - Total ukuran ke-6 file audio hanya **1.14 MB**, sangat ringan dan cepat dimuat di peramban seluler.
+  - **Integrasi Pemutar Audio Tur Sinematik & Arsitektur Dual-Engine**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Mendaftarkan `audioUrl` dan `durasiDetik` aktual untuk masing-masing dari 6 zona kepulauan.
+      - Menginisialisasi `naratorAudioEl = new Audio()` untuk memutar audio Piper TTS secara instan saat drone tiba di setiap pulau.
+      - Mengintegrasikan kendali jeda/lanjut (`pause()` / `play()`), pembisuan (`[🔇 Narasi: OFF]`), serta penutupan tur (`Esc` / `✕`).
+      - **Fallback Cerdas**: Jika pemutaran berkas MP3 diblokir oleh kebijakan *autoplay* peramban atau berkas offline, sistem otomatis beralih (*fallback*) secara mulus ke Web Speech API (`Microsoft Gadis Natural / Google ID`).
+- **Hasil Pengujian**:
+  - `scratch/test-piper-audio-tour.mjs` dijalankan via browser Edge:
+    - Berkas MP3 berhasil dimuat (`status: 200, type: audio/mpeg`).
+    - Audio narasi terputar mulus seiring pergerakan kamera drone dan pulau yang terangkat.
+    - Navigasi tetap 100% responsif setelah tur selesai (`navClickable: true`).
+  - `npm run build` berhasil (0 error).
+  - `node tools/validate.mjs` lolos (0 error).
+
 ## [2026-10-19] Tur Sinematik 3D: Isolasi Fokus Gugus Pulau Penuh & Voice Over Narator Wanita Aksen Indonesia Alami
 - **Permintaan Pengguna:**
   1. Tur Sinematik 3D dikhususkan untuk menyorot dan mengisolasi satu pulau/gugus pulau besar yang sedang dibahas, bukan hanya satu provinsi.
