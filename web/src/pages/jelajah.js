@@ -22,7 +22,8 @@ import { apakahBisaMemuat3D } from '../sections/hero3d/fallback.js';
 import { renderPetaSvg } from '../map/render.js';
 import { pasangInteraksiPeta } from '../map/interactions.js';
 import { inisialisasiLoaderLucu } from '../ui/loader-lucu.js';
-import { siapkanPesawatMendarat, mendaratkanPesawatDiPulau } from '../ui/transisi-pesawat.js';
+import { siapkanGatotkacaMendarat, sambutGatotkacaDiJelajah } from '../ui/transisi-gatotkaca.js';
+import { inisialisasiSpotlightSearch } from '../ui/spotlight-search.js';
 
 let dialogRekamanKontrol = null;
 let pengelolaPaspor = null;
@@ -61,9 +62,9 @@ async function mulaiHalamanJelajah() {
     // Abaikan
   }
 
-  // Jika tiba dengan pesawat, langsung siapkan pesawat di angkasa di atas pulau
+  // Jika tiba dengan transisi, langsung siapkan Gatotkaca melayang di atas kepulauan
   if (adalahMendarat) {
-    siapkanPesawatMendarat();
+    siapkanGatotkacaMendarat();
   }
 
   // Cek apakah Peta 3D sudah pernah dimuat di sesi kunjungan ini
@@ -197,11 +198,26 @@ async function mulaiHalamanJelajah() {
       });
     }
 
-    // Tuntaskan layar muat dan jalankan pendaratan pesawat jika relevan
+    // Inisialisasi Pencarian Cepat Global (Ctrl+K) di Peta 3D
+    inisialisasiSpotlightSearch({
+      daftarProvinsi: provinsi,
+      onBukaDetailRekaman: (rekaman, pemicuEl) => {
+        if (dialogRekamanKontrol) {
+          dialogRekamanKontrol.bukaRekaman(rekaman, pemicuEl);
+        }
+      },
+      onPilihProvinsi: (kode) => {
+        if (kontroler3D && typeof kontroler3D.pilihProvinsi === 'function') {
+          kontroler3D.pilihProvinsi(kode);
+        }
+      }
+    });
+
+    // Tuntaskan layar muat dan jalankan sambutan Gatotkaca jika relevan
     if (adalahMendarat) {
       loaderLucu.selesai();
-      // Jalankan pendaratan sinematik pesawat kartun budaya di pulau Nusantara
-      mendaratkanPesawatDiPulau({
+      // Buka balon sambutan Gatotkaca di atas kepulauan 3D dengan tombol Oke
+      sambutGatotkacaDiJelajah({
         onTouchdown: () => {
           if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
             kontroler3D.mulaiAnimasiMasuk();

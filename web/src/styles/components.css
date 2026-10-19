@@ -3,6 +3,8 @@
  * dialog tentang data, banner status/error data, dan toast.
  */
 
+@import './spotlight-search.css';
+
 /* Tombol */
 .tombol {
   display: inline-flex;
@@ -1414,4 +1416,817 @@
 [data-tema="terang"] .audio-popup-sumber {
   color: #6B5D50;
 }
+
+/* ==========================================================================
+   Modal Cetak Kartu Pengelana Budaya (HTML5 Canvas Shareable ID)
+   ========================================================================== */
+.modal-kartu-dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 16px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-kartu-dialog[open] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-kartu-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(14, 11, 9, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-tema="terang"] .modal-kartu-backdrop {
+  background-color: rgba(250, 246, 238, 0.85);
+}
+
+.modal-kartu-wadah {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 760px;
+  background: var(--bg-card, #1A1512);
+  border: 1px solid var(--border-emas-halus, rgba(212, 160, 23, 0.3));
+  border-radius: 16px;
+  box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 92vh;
+}
+
+[data-tema="terang"] .modal-kartu-wadah {
+  background: #FFFFFF;
+  border-color: rgba(180, 83, 9, 0.25);
+  box-shadow: 0 24px 56px -12px rgba(78, 59, 45, 0.2);
+}
+
+.modal-kartu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-tema="terang"] .modal-kartu-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.modal-kartu-kicker {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-emas, #D4A017);
+  display: block;
+}
+
+.modal-kartu-judul {
+  margin: 2px 0 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-teks, #F5F0EB);
+}
+
+[data-tema="terang"] .modal-kartu-judul {
+  color: #1C1917;
+}
+
+.modal-kartu-tombol-tutup {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--c-teks-redup, #A89F91);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.modal-kartu-tombol-tutup:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--c-teks, #F5F0EB);
+}
+
+[data-tema="terang"] .modal-kartu-tombol-tutup:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1C1917;
+}
+
+.modal-kartu-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.modal-kartu-input-baris {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-kartu-input-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--c-teks, #F5F0EB);
+  white-space: nowrap;
+}
+
+[data-tema="terang"] .modal-kartu-input-label {
+  color: #1C1917;
+}
+
+.modal-kartu-input-teks {
+  flex: 1;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--c-teks, #F5F0EB);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.modal-kartu-input-teks:focus {
+  border-color: var(--c-emas, #D4A017);
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
+}
+
+[data-tema="terang"] .modal-kartu-input-teks {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1C1917;
+}
+
+.modal-kartu-kanvas-pembungkus {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background: #14100C;
+}
+
+.modal-kartu-kanvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 675;
+  display: block;
+}
+
+.modal-kartu-footer {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+[data-tema="terang"] .modal-kartu-footer {
+  border-top-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.modal-kartu-footer-info {
+  font-size: 0.78rem;
+  color: var(--c-teks-redup, #A89F91);
+}
+
+[data-tema="terang"] .modal-kartu-footer-info {
+  color: #78716C;
+}
+
+.modal-kartu-footer-aksi {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   Ruang Laras Bunyi Nusantara (Gamelan & Angklung Synth Virtual)
+   ========================================================================== */
+.ruang-bunyi-dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 16px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ruang-bunyi-dialog[open] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ruang-bunyi-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(14, 11, 9, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-tema="terang"] .ruang-bunyi-backdrop {
+  background-color: rgba(250, 246, 238, 0.85);
+}
+
+.ruang-bunyi-wadah {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 740px;
+  background: var(--bg-card, #1A1512);
+  border: 1px solid var(--border-emas-halus, rgba(212, 160, 23, 0.3));
+  border-radius: 16px;
+  box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 92vh;
+}
+
+[data-tema="terang"] .ruang-bunyi-wadah {
+  background: #FFFFFF;
+  border-color: rgba(180, 83, 9, 0.25);
+  box-shadow: 0 24px 56px -12px rgba(78, 59, 45, 0.2);
+}
+
+.ruang-bunyi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-tema="terang"] .ruang-bunyi-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.ruang-bunyi-kicker {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-emas, #D4A017);
+  display: block;
+}
+
+.ruang-bunyi-judul {
+  margin: 2px 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--c-teks, #F5F0EB);
+}
+
+[data-tema="terang"] .ruang-bunyi-judul {
+  color: #1C1917;
+}
+
+.ruang-bunyi-tombol-tutup {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--c-teks-redup, #A89F91);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.ruang-bunyi-tombol-tutup:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--c-teks, #F5F0EB);
+}
+
+[data-tema="terang"] .ruang-bunyi-tombol-tutup:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1C1917;
+}
+
+.ruang-bunyi-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ruang-bunyi-toggle-instrumen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-tema="terang"] .ruang-bunyi-toggle-instrumen {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.ruang-bunyi-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--c-teks-redup, #A89F91);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ruang-bunyi-tab:hover {
+  color: var(--c-teks, #F5F0EB);
+}
+
+.ruang-bunyi-tab.aktif {
+  background: var(--c-emas, #D4A017);
+  color: #14100C;
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.25);
+}
+
+[data-tema="terang"] .ruang-bunyi-tab {
+  color: #57534E;
+}
+
+[data-tema="terang"] .ruang-bunyi-tab.aktif {
+  background: #B45309;
+  color: #FFFFFF;
+}
+
+.ruang-bunyi-keterangan {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--c-teks-redup, #A89F91);
+  text-align: center;
+}
+
+[data-tema="terang"] .ruang-bunyi-keterangan {
+  color: #57534E;
+}
+
+/* Bilah Tuts Pentatonis */
+.ruang-bunyi-tuts-baris {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-height: 220px;
+}
+
+[data-tema="terang"] .ruang-bunyi-tuts-baris {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.ruang-bunyi-bilah {
+  flex: 1;
+  max-width: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(212, 160, 23, 0.4);
+  background: linear-gradient(180deg, #3A2B1D 0%, #2A1D13 60%, #1E140C 100%);
+  color: #F5F0EB;
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+
+/* Variasi Tinggi Alami Bilah Tradisional (Bilah nada rendah lebih panjang) */
+.ruang-bunyi-bilah[data-index="0"] { height: 195px; }
+.ruang-bunyi-bilah[data-index="1"] { height: 185px; }
+.ruang-bunyi-bilah[data-index="2"] { height: 175px; }
+.ruang-bunyi-bilah[data-index="3"] { height: 165px; }
+.ruang-bunyi-bilah[data-index="4"] { height: 155px; }
+
+[data-tema="terang"] .ruang-bunyi-bilah {
+  background: linear-gradient(180deg, #F3E8D6 0%, #E6D3B6 60%, #D4BC95 100%);
+  border-color: rgba(180, 83, 9, 0.35);
+  color: #1C1917;
+}
+
+.ruang-bunyi-bilah:hover {
+  border-color: var(--c-emas, #FFD15C);
+  box-shadow: 0 6px 16px rgba(212, 160, 23, 0.25);
+  transform: translateY(-2px);
+}
+
+.ruang-bunyi-bilah.sedang-bergetar {
+  transform: translateY(4px) scale(0.97);
+  border-color: #FFD15C;
+  box-shadow: 0 0 24px rgba(255, 209, 92, 0.65), inset 0 0 12px rgba(255, 209, 92, 0.35);
+  background: linear-gradient(180deg, #5C452E 0%, #3D2B1C 100%);
+}
+
+[data-tema="terang"] .ruang-bunyi-bilah.sedang-bergetar {
+  background: linear-gradient(180deg, #FFE8B8 0%, #F5CF80 100%);
+  box-shadow: 0 0 24px rgba(180, 83, 9, 0.45);
+}
+
+.ruang-bunyi-bilah-notasi {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #FFD15C;
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+[data-tema="terang"] .ruang-bunyi-bilah-notasi {
+  color: #B45309;
+}
+
+.ruang-bunyi-bilah-nama {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ruang-bunyi-bilah-kbd {
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFD15C;
+  font-family: ui-monospace, monospace;
+}
+
+[data-tema="terang"] .ruang-bunyi-bilah-kbd {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #78350F;
+}
+
+.ruang-bunyi-bilah-arti {
+  font-size: 0.65rem;
+  text-align: center;
+  color: var(--c-teks-redup, #C4BAAB);
+  white-space: nowrap;
+}
+
+[data-tema="terang"] .ruang-bunyi-bilah-arti {
+  color: #78716C;
+}
+
+.ruang-bunyi-kontrol-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ruang-bunyi-btn-melodi {
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-color: rgba(212, 160, 23, 0.4);
+  color: var(--c-emas, #FFD15C);
+}
+
+.ruang-bunyi-btn-melodi:hover {
+  background: rgba(212, 160, 23, 0.15);
+  border-color: var(--c-emas, #FFD15C);
+}
+
+.ruang-bunyi-hint-keyboard {
+  font-size: 0.8rem;
+  color: var(--c-teks-redup, #A89F91);
+}
+
+[data-tema="terang"] .ruang-bunyi-hint-keyboard {
+  color: #78716C;
+}
+
+.ruang-bunyi-footer {
+  padding: 14px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+[data-tema="terang"] .ruang-bunyi-footer {
+  border-top-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.ruang-bunyi-footer-sains {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--c-teks-redup, #8C8273);
+  text-align: center;
+}
+
+[data-tema="terang"] .ruang-bunyi-footer-sains {
+  color: #78716C;
+}
+
+@media (max-width: 520px) {
+  .ruang-bunyi-tuts-baris {
+    gap: 6px;
+    padding: 10px 4px;
+  }
+  .ruang-bunyi-bilah-arti {
+    display: none;
+  }
+  .ruang-bunyi-bilah {
+    padding: 10px 4px;
+  }
+  .ruang-bunyi-kontrol-bar {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   Tur Sinematik 3D Nusantara (Autopilot Drone Tour HUD)
+   ========================================================================== */
+.jelajah-tur-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: clamp(24px, 6vh, 50px);
+  padding-inline: 16px;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jelajah-tur-overlay.aktif {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.jelajah-tur-kartu {
+  width: 100%;
+  max-width: 560px;
+  background: rgba(20, 16, 12, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 160, 23, 0.45);
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.75), 0 0 20px rgba(212, 160, 23, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateY(12px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jelajah-tur-overlay.aktif .jelajah-tur-kartu {
+  transform: translateY(0);
+}
+
+[data-tema="terang"] .jelajah-tur-kartu {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(180, 83, 9, 0.35);
+  box-shadow: 0 20px 48px -8px rgba(78, 59, 45, 0.25);
+}
+
+.jelajah-tur-kartu-baris-atas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jelajah-tur-lencana {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-emas, #FFD15C);
+  background: rgba(212, 160, 23, 0.15);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+}
+
+[data-tema="terang"] .jelajah-tur-lencana {
+  color: #B45309;
+  background: rgba(180, 83, 9, 0.1);
+  border-color: rgba(180, 83, 9, 0.25);
+}
+
+.jelajah-tur-titik-rec {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #EF4444;
+  box-shadow: 0 0 8px #EF4444;
+  display: inline-block;
+  animation: tur-kedip-rec 1s ease-in-out infinite alternate;
+}
+
+@keyframes tur-kedip-rec {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.jelajah-tur-btn-tutup {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--c-teks-redup, #A89F91);
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.jelajah-tur-btn-tutup:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+[data-tema="terang"] .jelajah-tur-btn-tutup:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1C1917;
+}
+
+.jelajah-tur-judul {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+[data-tema="terang"] .jelajah-tur-judul {
+  color: #1C1917;
+}
+
+.jelajah-tur-deskripsi {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--c-teks-redup, #D6CABA);
+}
+
+[data-tema="terang"] .jelajah-tur-deskripsi {
+  color: #57534E;
+}
+
+/* Progres Bar Waktu */
+.jelajah-tur-progres-bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+[data-tema="terang"] .jelajah-tur-progres-bar {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.jelajah-tur-progres-isi {
+  height: 100%;
+  background: var(--c-emas, #FFD15C);
+  border-radius: 999px;
+  transition: width 0.1s linear;
+}
+
+[data-tema="terang"] .jelajah-tur-progres-isi {
+  background: #B45309;
+}
+
+/* Kontrol Baris Bawah */
+.jelajah-tur-kartu-kontrol {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.jelajah-tur-kontrol-kiri {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jelajah-tur-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #F5F0EB;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jelajah-tur-ctrl-btn:hover {
+  background: rgba(212, 160, 23, 0.2);
+  border-color: rgba(212, 160, 23, 0.4);
+  color: #FFD15C;
+}
+
+[data-tema="terang"] .jelajah-tur-ctrl-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1C1917;
+}
+
+[data-tema="terang"] .jelajah-tur-ctrl-btn:hover {
+  background: rgba(180, 83, 9, 0.1);
+  border-color: rgba(180, 83, 9, 0.3);
+  color: #B45309;
+}
+
+.jelajah-tur-hint-drag {
+  font-size: 0.72rem;
+  color: var(--c-teks-redup, #9E9382);
+}
+
+[data-tema="terang"] .jelajah-tur-hint-drag {
+  color: #78716C;
+}
+
+/* Tombol Tur di Toolbar */
+.hud-btn-tur.aktif-tur {
+  background: rgba(212, 160, 23, 0.25) !important;
+  border-color: var(--c-emas, #FFD15C) !important;
+  color: var(--c-emas, #FFD15C) !important;
+  box-shadow: 0 0 12px rgba(212, 160, 23, 0.4) !important;
+}
+
+
+
 

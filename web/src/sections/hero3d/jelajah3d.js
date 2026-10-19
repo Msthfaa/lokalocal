@@ -21,6 +21,7 @@ import { buatPengontrolBendera } from './bendera.js';
 import { buatPanelKanan } from './panel-kanan.js';
 import { buatPengelolaModeDetail } from './mode-detail.js';
 import { hitungPosisiKameraFit } from './index.js';
+import { buatPengontrolTurSinematik } from './tur-sinematik.js';
 /**
  * Menginisialisasi Peta Diorama 3D berskala besar di halaman Jelajah fullscreen.
  *
@@ -377,6 +378,11 @@ export function inisialisasiJelajah3D({
   function onPointerDown(e) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
 
+    // Hentikan tur sinematik jika user mulai menyeret peta secara manual
+    if (pengontrolTur && pengontrolTur.apakahBerjalan()) {
+      pengontrolTur.hentikan(true);
+    }
+
     isDragging = true;
     dragStartX = e.clientX;
     dragDistance = 0;
@@ -492,7 +498,7 @@ export function inisialisasiJelajah3D({
   window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('pointerup', onPointerUp);
 
-  function pilihProvinsi(kode) {
+  function pilihProvinsi(kode, opsi = {}) {
     const mesh = elemenAdegan.daftarProvinsiMesh.find((m) => String(m.userData.kode) === String(kode));
     if (!mesh) return;
 
@@ -526,16 +532,47 @@ export function inisialisasiJelajah3D({
     }
 
     // Arahkan kamera secara dinamis dan mulus ke pulau/daerah yang dipilih di ruang dunia
-    perbaruiTargetKamera(false);
+    if (opsi.animasikanKamera !== false) {
+      perbaruiTargetKamera(false);
+    }
     pengontrolBendera.tampilkan(provData, mesh);
 
     // Tampilkan Floating Side Card di kanan layar
-    panelKanan.tampilkan(provData, 'compact');
+    if (opsi.tampilkanSideCard !== false) {
+      panelKanan.tampilkan(provData, 'compact');
+    }
 
-    if (typeof saatPilihProvinsi === 'function') {
+    if (typeof saatPilihProvinsi === 'function' && opsi.pemicuEvent !== false) {
       saatPilihProvinsi(kode);
     }
   }
+
+  // Pasang Pengontrol Tur Sinematik Autopilot 3D (6 Wilayah Nusantara)
+  const pengontrolTur = buatPengontrolTurSinematik({
+    camera,
+    cameraBasePos,
+    cameraTargetPos,
+    cameraTargetLookAt,
+    aturRotasiDiorama: (rotY) => {
+      targetRotY = rotY;
+    },
+    pilihProvinsiMesh: (kode) => {
+      pilihProvinsi(kode, { animasikanKamera: false, tampilkanSideCard: false });
+    },
+    kembalikanPilihanProvinsi: () => {
+      if (meshTerpilih) {
+        meshTerpilih.userData.offsetTerpilih = 0;
+        if (meshTerpilih.material) {
+          meshTerpilih.material.emissive.set('#000000');
+          meshTerpilih.material.emissiveIntensity = 0;
+        }
+        meshTerpilih = null;
+        provTerpilihData = null;
+      }
+      pengontrolBendera.sembunyikan();
+      panelKanan.sembunyikan();
+    }
+  });
 
   // Loop Render dengan buttery-smooth spring interpolation
   function loop(sekarang) {
@@ -725,6 +762,9 @@ export function inisialisasiJelajah3D({
 
     pengontrolBendera.dispose();
     panelKanan.dispose();
+    if (pengontrolTur && typeof pengontrolTur.hentikan === 'function') {
+      pengontrolTur.hentikan();
+    }
     if (pengelolaDetail && typeof pengelolaDetail.dispose === 'function') {
       pengelolaDetail.dispose();
     }
@@ -787,6 +827,9 @@ export function inisialisasiJelajah3D({
     getModeWarna: () => modeWarnaAktif,
     jedaRender: hentikanLoop,
     lanjutkanRender: mulaiLoop,
-    perbaruiUkuran
+    perbaruiUkuran,
+    mulaiTurSinematik: pengontrolTur.mulai,
+    hentikanTurSinematik: pengontrolTur.hentikan,
+    apakahTurBerjalan: pengontrolTur.apakahBerjalan
   };
 }

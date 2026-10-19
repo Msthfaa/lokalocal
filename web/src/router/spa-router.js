@@ -7,7 +7,7 @@
  * serta memicu animasi sinematik Pesawat Kartun Budaya saat menuju halaman Jelajah.
  */
 
-import { terbangkanPesawatLepasLandas } from '../ui/transisi-pesawat.js';
+import { terbangkanGatotkacaLepasLandas } from '../ui/transisi-gatotkaca.js';
 import { NAMA_SITUS } from '../config.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 
@@ -133,7 +133,7 @@ export class SpaRouter {
     const targetUrl = `./jelajah.html?${queryParams.join('&')}`;
 
     try {
-      terbangkanPesawatLepasLandas({
+      terbangkanGatotkacaLepasLandas({
         onTerbangTinggi: () => {
           window.location.href = targetUrl;
         }

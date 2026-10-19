@@ -15,6 +15,7 @@ import { inisialisasiBacksound } from '../ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { buatPengelolaPaspor } from '../features/paspor.js';
 import { inisialisasiBagianPaspor } from '../sections/paspor.js';
+import { inisialisasiSpotlightSearch } from '../ui/spotlight-search.js';
 
 async function mulaiHalamanPaspor() {
   inisialisasiTema();
@@ -48,6 +49,10 @@ async function mulaiHalamanPaspor() {
         // Alihkan ke halaman jelajah dengan hash kode provinsi
         window.location.href = `./jelajah.html#provinsi-${kode}`;
       }
+    });
+
+    inisialisasiSpotlightSearch({
+      daftarProvinsi: provinsi
     });
   } catch (err) {
     console.error('Gagal memuat data paspor:', err);

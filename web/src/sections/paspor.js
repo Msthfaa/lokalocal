@@ -170,7 +170,35 @@ export function inisialisasiBagianPaspor({
     trekBar.appendChild(isiBar);
 
     blokProgres.append(barisInfoProgres, trekBar);
-    kartuIdentitas.append(barisAtasId, narasiGelar, blokProgres);
+
+    // Baris Tombol Aksi Cetak Kartu Pengelana Budaya
+    const barisAksiKartu = document.createElement('div');
+    barisAksiKartu.className = 'paspor-identitas-aksi-baris';
+    barisAksiKartu.style.cssText = 'display: flex; align-items: center; justify-content: flex-end; margin-top: 14px; gap: 10px; flex-wrap: wrap;';
+
+    const btnCetakKartu = document.createElement('button');
+    btnCetakKartu.type = 'button';
+    btnCetakKartu.className = 'tombol tombol--utama';
+    btnCetakKartu.style.cssText = 'font-size: 0.85rem; padding: 7px 16px; min-height: 38px;';
+    btnCetakKartu.innerHTML = `
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <circle cx="9" cy="10" r="2"></circle>
+        <path d="M15 8h2"></path>
+        <path d="M15 12h2"></path>
+        <path d="M7 16h10"></path>
+      </svg>
+      <span>Cetak Kartu Pengelana Budaya (PNG)</span>
+    `;
+    btnCetakKartu.addEventListener('click', () => {
+      import('../features/paspor-canvas.js').then(({ bukaModalCetakKartu }) => {
+        bukaModalCetakKartu({ pengelolaPaspor, daftarProvinsi });
+      });
+    });
+
+    barisAksiKartu.appendChild(btnCetakKartu);
+
+    kartuIdentitas.append(barisAtasId, narasiGelar, blokProgres, barisAksiKartu);
     wadahUtama.appendChild(kartuIdentitas);
 
     // =========================================================================

@@ -1,6 +1,96 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
-## [2026-10-18] Transformasi Hub Ekspedisi Kuis Budaya: Eliminasi Redundansi Menu & Format AI Slop
+## [2026-10-19] Implementasi 4 Inovasi Interaktif: Spotlight Search, Cetak Paspor Budaya PNG, Karawitan Web Audio Synth, & Tur Sinematik 3D Nusantara
+- **Permintaan Pengguna:**
+  - Menjalankan seluruh 4 rekomendasi pembaruan interaktif tingkat lanjut secara hati-hati dan menyeluruh untuk memaksimalkan pengalaman pengguna serta nilai inovasi website pada lomba.
+- **Dibuat/diubah:**
+  - **Inovasi 1: Pencarian Cepat Global (Spotlight Search `Ctrl + K`)**:
+    - `web/src/ui/spotlight-search.js`:
+      - Dialog pencarian global cepat modal berbasis indeks `index-pencarian.json` (493 rekaman budaya + 38 provinsi).
+      - Filter kategori instan: *Semua*, *Tradisi & Seni (OPK)*, *Cagar Budaya*, dan *Wilayah Provinsi*.
+      - Navigasi keyboard penuh: `↑` / `↓` untuk memilih rekaman, `ENTER` untuk membuka detail / menjelajahi provinsi, `ESC` untuk menutup.
+      - Rekomendasi pencarian populer dari rekaman nyata SPKT (*Bantengan*, *Zapin*, *Pencak Silat*, *Upuh Kerawang*).
+      - Terintegrasi lintas halaman: otomatis mengarahkan ke `jelajah.html?provinsi=...&budaya=...` jika dibuka di luar halaman jelajah.
+    - `web/src/styles/spotlight-search.css`:
+      - Antarmuka *dark glassmorphism* terakota dan aksen emas klasik Nusantara yang konsisten dengan desain sistem.
+    - `web/index.html`, `web/jelajah.html`, `web/paspor.html`, `web/kuis.html`:
+      - Menambahkan tombol pencarian interaktif `.nav-tombol-cari` lengkap dengan badge `Ctrl K` pada bilah navigasi utama di semua halaman.
+  - **Inovasi 2: Cetak Kartu Pengelana Budaya (Passport ID Canvas PNG)**:
+    - `web/src/features/paspor-canvas.js`:
+      - Generator kartu identitas penjelajah beresolusi tinggi (1200×675 px) berbasis HTML5 Canvas murni tanpa dependensi eksternal.
+      - Dilengkapi bingkai ukir emas geometris, avatar Gatotkaca Chibi *"Ksatria Budaya"*, nama pengelana kustom, gelar kehormatan dinamis, jumlah jejak provinsi terhimpun, nomor registrasi unik `LKLC-2026-XXXX`, stempel resmi SPKT Kementerian Kebudayaan, serta kutipan filosofis *"Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."*.
+      - Menyediakan pratinjau instan dengan input perubahan nama *real-time* dan tombol unduh berkas PNG langsung.
+    - `web/src/sections/paspor.js`:
+      - Tombol aksi *"Cetak Kartu Tanda Pengelana"* terpasang langsung di kartu ringkasan Paspor Budaya.
+  - **Inovasi 3: Eksplorasi Akustik Warisan UNESCO (Ruang Bunyi Nusantara - Web Audio Synth)**:
+    - `web/src/features/karawitan-synth.js`:
+      - Sintesis akustik fisika gelombang murni berbasis **Web Audio API** (0 KB aset audio eksternal, latensi nol).
+      - **Gamelan Perunggu (Saron)**: Mensimulasikan resonator bilah logam perunggu dengan frekuensi fundamental + 2 inharmonic partials (rasio 2.76× dan 5.40× frekuensi) serta peluruhan eksponensial alami (*exponential decay*).
+      - **Angklung Bambu (Priangan)**: Mensimulasikan tabung bambu oktaf ganda dengan modulasi kocokan LFO getaran tangan ~8.5 Hz dan filter resonansi lowpass 1400 Hz.
+      - Tangga nada pentatonis klasik **Laras Slendro**: 1 (Ji / Panunggul), 2 (Ro / Gulu), 3 (Lu / Dhadha), 5 (Ma / Lima), 6 (Nem / Nem).
+      - Bilah visual interaktif dengan respon getar dan kilau emas saat ditekan atau dimainkan melalui tuts keyboard fisik `1`, `2`, `3`, `4`, `5`.
+      - Fitur *"Dengarkan Tembang Klasik"* yang memainkan pola gending gamelan otomatis untuk demonstrasi audio.
+    - `web/src/ui/audio.js`:
+      - Terintegrasi langsung ke pemutar musik mengambang dengan tombol ikon instrumen gamelan dan modal pop-up *"Ruang Bunyi Nusantara"*.
+  - **Inovasi 4: Tur Sinematik 3D Nusantara (Autopilot Drone Tour)**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Mode tur terbang otomatis mengitari 6 zona kepulauan Nusantara pada diorama Three.js (Sumatera, Jawa, Bali-Nusa, Kalimantan, Sulawesi, Maluku-Papua).
+      - Interpolasi pergerakan kamera halus berbasis GSAP (`camera.position`, `controls.target`, dan rotasi diorama).
+      - Panel HUD sinematik mengambang yang menampilkan nomor zona, judul wilayah, ringkasan tradisi nyata SPKT, bilah progres durasi, tombol jeda/lanjut, dan tombol lewati wilayah.
+      - Penanganan interaksi cerdas: tur otomatis beralih kembali ke kendali manual seketika saat pengguna menyeret kanvas atau menekan tombol `Esc`.
+      - Narasi 6 zona diselaraskan 100% dengan data nyata SPKT sesuai Aturan Emas 1.
+    - `web/jelajah.html` & `web/src/sections/hero3d/jelajah3d.js`:
+      - Tombol aksi *"Tur Sinematik"* terpasang di bilah navigasi peta 3D melayang.
+- **Hasil:**
+  - Keempat fitur keterbaruan terpasang rapi, berfungsi responsif, dan telah terverifikasi melalui tangkapan visual pengujian otomatis.
+  - `npm run build` sukses (2.42s) dan `node tools/validate.mjs` lolos dengan **0 error**.
+
+## [2026-10-19] Penyempurnaan Tata Letak Gatotkaca & Transisi Mulus ke Peta 3D Jelajah
+- **Masalah Pengguna:**
+  - Gatotkaca posisinya terlalu turun sehingga badan dan kakinya tertutup oleh kartu dialog sambutan (*Selamat Datang di Peta 3D Nusantara!*).
+  - Transisi saat masuk ke halaman Jelajah masih ada kedipan/bug akibat konflik animasi CSS transform pada kontainer yang sama serta urutan pelepasan class CSS.
+- **Dibuat/diubah:**
+  - `web/src/styles/transisi-gatotkaca.css`:
+    - Merestrukturisasi tata letak panggung sambutan menjadi struktur fleksibel vertikal terpadu (`gatotkaca-panggung-wadah`):
+      - Gatotkaca dinaikkan secara signifikan (`top: 36%; transform: translate(-50%, -36%)`).
+      - Diberikan jarak bernapas `gap: 22px` di antara Gatotkaca dan kartu dialog, sehingga tubuh, sayap, mahkota, dan sepatu Gatotkaca **100% tampak utuh dan bebas dari halangan**.
+      - Panah dialog menunjuk langsung ke arah Gatotkaca tanpa tumpang-tindih.
+    - Memisahkan kontainer koordinat posisi (`gatotkaca-aktor-posisi`) dan kontainer animasi melayang (*bobbing*) (`gatotkaca-bobbing-wadah`):
+      - Gerakan melayang halus `@keyframes gatotkacaBobbing` kini berjalan di kontainer anak independen, menghilangkan konflik `transform` GSAP yang sebelumnya mereset posisi Gatotkaca secara mendadak.
+  - `web/src/ui/transisi-gatotkaca.js`:
+    - Mengunci posisi awal GSAP (`gsap.set`) **sebelum** melepas class CSS `sedang-mendarat-gatotkaca`, sehingga tidak ada kebocoran 1 frame pun saat halaman `jelajah.html` berpindah kendali ke GSAP.
+    - Gatotkaca meluncur turun dengan lembut dari ketinggian (`y: -90 -> 0`, `back.out(1.5)`) seiring tirai awan tersibak.
+    - Balon sambutan muncul tepat di bawahnya setelah Gatotkaca mendarat di posisinya.
+  - `web/jelajah.html`:
+    - Menyelaraskan struktur markup overlay statis dengan kontainer panggung terpadu `gatotkaca-panggung-wadah`.
+- **Hasil:**
+  - Gatotkaca kini melayang tinggi di angkasa kepulauan Nusantara dengan seluruh tubuhnya terlihat jelas, berjarak 22px dari kartu sambutan.
+  - Alur transisi dari beranda -> awan menutup -> jelajah termuat -> awan tersibak -> Gatotkaca meluncur anggun -> dialog menyapa -> tombol Oke diklik -> Gatotkaca terbang ke angkasa luar telah teruji 100% mulus (*buttery-smooth*) tanpa kedip maupun sentakan.
+  - Terverifikasi otomatis melalui pengujian Microsoft Edge Headless (`shot-stage-dialog.png`).
+  - `npm run build` dan `node tools/validate.mjs` lolos dengan **0 error**.
+
+## [2026-10-19] Revisi Transisi Halaman Jelajah: Karakter Gatotkaca Chibi, Sapuan Awan, dan Balon Sambutan Interaktif
+- **Dibuat/diubah:**
+  - `web/public/assets/gatotkaca-transparan.png`:
+    - Mengolah referensi gambar karakter Gatotkaca Chibi kiriman pengguna menjadi berkas PNG beresolusi tinggi dengan latar belakang 100% transparan murni (membersihkan seluruh artefak kotak catur dan watermarking).
+  - `web/src/styles/transisi-gatotkaca.css`:
+    - Merancang sistem visual transisi Gatotkaca: aura pendaran emas, bayangan melayang dinamis, animasi *hover floating* mengambang halus (`@keyframes gatotkacaMengambang`), percikan partikel bintang dan petir Brajamusti, serta 5 lapisan awan organik Nusantara yang tersibak secara bergelombang.
+    - Merancang kartu sambutan balon kata kaca tembus pandang (*glassmorphism speech bubble*) dengan lencana `⚡ KSATRIA BUDAYA NUSANTARA`, penjelasan ringkas navigasi 3D, dan tombol aksi bergradasi emas `"Oke, Ayo Jelajah! 🚀"`.
+    - Mendukung mode gelap dan mode terang serta tata letak responsif untuk desktop dan ponsel pintar.
+  - `web/src/ui/transisi-gatotkaca.js`:
+    - Mengorkestrasikan transisi sinematik dua babak:
+      1. **Babak 1 (Lepas Landas)**: Gatotkaca muncul membal di tengah layar diiringi slogan *"⚡ Otot Kawat Tulang Besi, Melesat ke Nusantara!"*, lalu menunduk ancang-ancang dan melesat ke angkasa diiringi sapuan awan-awan tebal yang menutup layar secara halus untuk memicu navigasi.
+      2. **Babak 2 (Sambutan di Jelajah 3D)**: Saat `jelajah.html` dimuat, awan tersibak sepenuhnya ke luar layar menampakkan relief pulau Nusantara 3D. Gatotkaca melayang di bagian atas layar dan memunculkan kartu panduan interaktif.
+      3. **Interaksi Tombol Oke**: Saat pengguna mengklik `"Oke, Ayo Jelajah!"` (atau menekan `Enter`/`Escape`), kartu menutup lembut, Gatotkaca memancarkan petir pamit lalu melesat terbang keluar layar ke atas, dan diorama 3D membuka seluruh kontrolnya untuk dieksplorasi.
+  - `web/src/ui/transisi-pesawat.js`:
+    - Mengalihkan dan mere-ekspor seluruh fungsi ke modul `transisi-gatotkaca.js` demi menjamin stabilitas dan kompatibilitas panggilan modul di seluruh proyek.
+  - `web/src/pages/jelajah.js` & `web/src/router/spa-router.js`:
+    - Menghubungkan titik masuk navigasi ke `terbangkanGatotkacaLepasLandas`, `siapkanGatotkacaMendarat`, dan `sambutGatotkacaDiJelajah`.
+- **Hasil:**
+  - Konsep transisi kini bertransformasi menjadi petualangan mitologi Nusantara yang imut, ramah, dan interaktif sesuai arahan pengguna.
+  - Alur transisi dari beranda -> Gatotkaca terbang -> awan menyapu -> tiba di peta 3D -> Gatotkaca menyapa dan menjelaskan -> tombol Oke diklik -> Gatotkaca terbang keluar layar -> peta 3D aktif telah teruji 100% mulus tanpa lag.
+  - Terverifikasi otomatis melalui pengujian headless Microsoft Edge (seluruh tangkapan layar `screenshot-gatotkaca-takeoff.png`, `screenshot-gatotkaca-hover-dialog.png`, `screenshot-gatotkaca-flyout.png`, dan `screenshot-gatotkaca-final-map.png` terekam sempurna).
+  - `npm run build` dan `node tools/validate.mjs` lolos dengan **0 error**.
 - **Dibuat/diubah:**
   - `web/index.html` & `web/kuis.html`:
     - Mengeliminasi menu ganda (*duplicate selection UI*): menghapus baris 7 tombol pill wilayah mengambang di atas panel kuis yang sebelumnya menumpuk dan menduplikasi kartu pilihan di bawahnya.

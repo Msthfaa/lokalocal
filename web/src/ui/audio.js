@@ -364,6 +364,20 @@ function bangunWidgetUI(audio) {
         ).join('')}
       </ul>
 
+      <!-- Tombol Akses Ruang Bunyi Nusantara (Gamelan & Angklung) -->
+      <div class="audio-popup-ruang-bunyi-wadah" style="padding: 10px 14px 4px;">
+        <button
+          type="button"
+          id="audio-btn-buka-ruang-bunyi"
+          class="tombol tombol--utama"
+          style="width: 100%; font-size: 0.8rem; padding: 7px 12px; min-height: 38px; display: flex; align-items: center; justify-content: center; gap: 8px;"
+          title="Buka Ruang Laras Gamelan & Angklung Virtual"
+        >
+          <span aria-hidden="true">🪘</span>
+          <span>Mainkan Gamelan & Angklung</span>
+        </button>
+      </div>
+
       <!-- Atribusi Sumber WikiDendang -->
       <div class="audio-popup-footer">
         <p class="audio-popup-sumber">
@@ -411,6 +425,17 @@ function bangunWidgetUI(audio) {
     popupEl.setAttribute('hidden', '');
     tombolMenu.setAttribute('aria-expanded', 'false');
   });
+
+  const btnBukaRuangBunyi = document.getElementById('audio-btn-buka-ruang-bunyi');
+  if (btnBukaRuangBunyi) {
+    btnBukaRuangBunyi.addEventListener('click', () => {
+      popupEl.setAttribute('hidden', '');
+      tombolMenu.setAttribute('aria-expanded', 'false');
+      import('../features/karawitan-synth.js').then(({ bukaRuangBunyiModal }) => {
+        bukaRuangBunyiModal();
+      });
+    });
+  }
 
   tombolNext.addEventListener('click', () => {
     putarLaguBerikutnya();
@@ -547,3 +572,13 @@ function perbaruiSliderVolume(vol) {
     }
   }
 }
+
+// Ekspos global fungsi pembuka Ruang Bunyi Nusantara
+if (typeof window !== 'undefined') {
+  window.bukaRuangBunyi = () => {
+    import('../features/karawitan-synth.js').then(({ bukaRuangBunyiModal }) => {
+      bukaRuangBunyiModal();
+    });
+  };
+}
+

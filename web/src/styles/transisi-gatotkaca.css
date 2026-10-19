@@ -1,0 +1,640 @@
+/**
+ * transisi-gatotkaca.css — Gaya Visual Animasi Transisi Gatotkaca Chibi Nusantara
+ *
+ * Mengatur tampilan transisi sinematik awan empuk (fluffy cumulus) & karakter Gatotkaca:
+ * - Tirai awan empuk (bank atas & bank bawah) yang menutup dan menyibak layar secara lembut
+ * - Panggung utama vertikal fleksibel: Gatotkaca di atas & balon dialog di bawah (tanpa pernah bertumpuk)
+ * - Animasi bobbing mengambang halus pada kontainer anak terpisah (bebas konflik transform GSAP)
+ * - Balon sambutan modern (glassmorphism) di halaman Jelajah Peta 3D
+ * - Mendukung mode terang, mode gelap, dan prefers-reduced-motion
+ */
+
+/* ==========================================================================
+   Wadah Utama Overlay
+   ========================================================================== */
+.transisi-gatotkaca-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000; /* Di atas seluruh elemen halaman dan tirai pengantar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  user-select: none;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.transisi-gatotkaca-overlay.is-aktif {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   Latar Tirai Langit & Mist Lembut
+   ========================================================================== */
+.gatotkaca-langit-aura {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 35%,
+    rgba(56, 189, 248, 0.45) 0%,
+    rgba(250, 204, 21, 0.28) 45%,
+    rgba(14, 11, 9, 0.75) 85%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+[data-tema="terang"] .gatotkaca-langit-aura {
+  background: radial-gradient(
+    circle at 50% 35%,
+    rgba(186, 230, 253, 0.70) 0%,
+    rgba(254, 240, 138, 0.45) 45%,
+    rgba(250, 246, 238, 0.85) 85%
+  );
+}
+
+/* Mist di tengah yang menjembatani saat tirai awan menutup sempurna */
+.gatotkaca-langit-mist {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.95) 55%,
+    rgba(241, 245, 249, 0.90) 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 8;
+  will-change: opacity;
+}
+
+[data-tema="gelap"] .gatotkaca-langit-mist {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(248, 250, 252, 0.98) 0%,
+    rgba(241, 245, 249, 0.95) 55%,
+    rgba(226, 232, 240, 0.90) 100%
+  );
+}
+
+/* ==========================================================================
+   Tirai Awan Panggung Empuk (Bank Atas & Bank Bawah)
+   ========================================================================== */
+.gatotkaca-tirai-bank-atas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 60vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  will-change: transform;
+  transform: translateY(-105%);
+}
+
+.gatotkaca-awan-solid-atas {
+  width: 100vw;
+  flex: 1;
+  background: #FFFFFF;
+}
+
+.gatotkaca-tirai-bank-bawah {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 60vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+  will-change: transform;
+  transform: translateY(105%);
+}
+
+.gatotkaca-awan-solid-bawah {
+  width: 100vw;
+  flex: 1;
+  background: #FFFFFF;
+}
+
+[data-tema="gelap"] .gatotkaca-awan-solid-atas,
+[data-tema="gelap"] .gatotkaca-awan-solid-bawah {
+  background: #F8FAFC;
+}
+
+.gatotkaca-awan-crest {
+  width: 100vw;
+  height: 180px;
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .gatotkaca-awan-crest {
+    height: 120px;
+  }
+}
+
+.gatotkaca-awan-crest--atas {
+  margin-top: -2px;
+}
+
+.gatotkaca-awan-crest--bawah {
+  margin-bottom: -2px;
+}
+
+/* ==========================================================================
+   Awan-Awan Apung Chibi Melayang
+   ========================================================================== */
+.gatotkaca-awan-apung-wadah {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 14;
+  overflow: hidden;
+}
+
+.gatotkaca-awan-apung {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+  opacity: 0;
+  filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12));
+}
+
+.gatotkaca-awan-apung-1 {
+  top: 24%;
+  left: 8%;
+  width: 130px;
+  animation: apungAwanDrift1 5.5s ease-in-out infinite alternate;
+}
+
+.gatotkaca-awan-apung-2 {
+  top: 32%;
+  right: 10%;
+  width: 160px;
+  animation: apungAwanDrift2 6.5s ease-in-out infinite alternate;
+}
+
+.gatotkaca-awan-apung-3 {
+  bottom: 26%;
+  left: 14%;
+  width: 110px;
+  animation: apungAwanDrift1 6s ease-in-out infinite alternate 1s;
+}
+
+@keyframes apungAwanDrift1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(16px, -12px) scale(1.04); }
+}
+
+@keyframes apungAwanDrift2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-18px, 10px) scale(0.97); }
+}
+
+/* ==========================================================================
+   Panggung Utama Sambutan: Gatotkaca di Atas + Balon Dialog di Bawah
+   ========================================================================== */
+.gatotkaca-panggung-wadah {
+  position: absolute;
+  top: 36%;
+  left: 50%;
+  transform: translate(-50%, -36%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px; /* Ruang bernapas agar Gatotkaca berada tinggi di atas dan tidak pernah tertutup kartu dialog */
+  z-index: 25;
+  width: 90%;
+  max-width: 440px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Kontainer Posisi Gatotkaca (Digerakkan oleh GSAP untuk meluncur atau lepas landas) */
+.gatotkaca-aktor-posisi {
+  position: relative;
+  width: 195px;
+  height: 195px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  opacity: 0; /* Default tak tampak agar tidak berkedip sebelum animasi dimulai */
+  pointer-events: none;
+}
+
+/* Kontainer Bobbing Melayang (Animasi Loop Mengambang Halus Independen) */
+.gatotkaca-bobbing-wadah {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.gatotkaca-efek-melayang {
+  animation: gatotkacaBobbing 3.2s ease-in-out infinite alternate !important;
+}
+
+@keyframes gatotkacaBobbing {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.8deg);
+  }
+  100% {
+    transform: translateY(4px) rotate(-1.5deg);
+  }
+}
+
+/* Gambar Karakter Gatotkaca */
+.gatotkaca-gambar {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(250, 204, 21, 0.75)) drop-shadow(0 14px 28px rgba(0, 0, 0, 0.45));
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform;
+}
+
+/* Aura Emas di Belakang Gatotkaca */
+.gatotkaca-aura-glow {
+  position: absolute;
+  width: 185px;
+  height: 185px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(250, 204, 21, 0.60) 0%,
+    rgba(245, 158, 11, 0.38) 45%,
+    transparent 72%
+  );
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+  animation: auraGatotkacaPulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes auraGatotkacaPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0.95;
+  }
+}
+
+/* Bayangan Melayang di Bawah Gatotkaca */
+.gatotkaca-bayangan-bawah {
+  position: absolute;
+  bottom: -16px;
+  width: 100px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.38);
+  filter: blur(4px);
+  z-index: -2;
+  animation: bayanganGatotkaca 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes bayanganGatotkaca {
+  0% {
+    transform: scale(1);
+    opacity: 0.38;
+  }
+  100% {
+    transform: scale(0.72);
+    opacity: 0.20;
+  }
+}
+
+/* ==========================================================================
+   Partikel Bintang Emas & Petir Brajamusti
+   ========================================================================== */
+.gatotkaca-sparks-wadah {
+  position: absolute;
+  inset: -20px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.gatotkaca-spark {
+  position: absolute;
+  display: inline-block;
+  font-size: 1.35rem;
+  line-height: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px #facc15);
+  transform-origin: center;
+}
+
+/* ==========================================================================
+   Toast Slogan Terbang (Halaman Asal)
+   ========================================================================== */
+.gatotkaca-toast-terbang {
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  background: rgba(20, 17, 15, 0.90);
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  border-radius: 9999px;
+  color: #fef08a;
+  font-family: var(--font-judul, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 18px rgba(250, 204, 21, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  z-index: 30;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+[data-tema="terang"] .gatotkaca-toast-terbang {
+  background: rgba(255, 255, 255, 0.94);
+  color: #854d0e;
+  border-color: rgba(234, 179, 8, 0.55);
+}
+
+/* ==========================================================================
+   Balon Dialog Sambutan di Halaman Jelajah 3D (Tepat di Bawah Gatotkaca)
+   ========================================================================== */
+.gatotkaca-dialog-wadah {
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: none; /* Sembunyikan default agar tidak mengganggu fase takeoff di beranda */
+}
+
+.gatotkaca-dialog-wadah.is-tampil {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  display: block;
+}
+
+.gatotkaca-dialog-kartu {
+  position: relative;
+  background: rgba(20, 17, 15, 0.92);
+  border: 1.5px solid rgba(250, 204, 21, 0.50);
+  border-radius: 20px;
+  padding: 20px 24px;
+  color: #FAF6EE;
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.65),
+    0 0 30px rgba(250, 204, 21, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+[data-tema="terang"] .gatotkaca-dialog-kartu {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(217, 119, 6, 0.50);
+  color: #1C1917;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 25px rgba(250, 204, 21, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Panah Balon Dialog Menunjuk ke Atas Tepat ke Arah Gatotkaca */
+.gatotkaca-dialog-panah {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid rgba(250, 204, 21, 0.55);
+}
+
+[data-tema="terang"] .gatotkaca-dialog-panah {
+  border-bottom-color: rgba(217, 119, 6, 0.55);
+}
+
+/* Lencana Ksatria */
+.gatotkaca-lencana {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  background: rgba(250, 204, 21, 0.15);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  color: #facc15;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+[data-tema="terang"] .gatotkaca-lencana {
+  background: rgba(254, 240, 138, 0.5);
+  border-color: rgba(217, 119, 6, 0.4);
+  color: #854d0e;
+}
+
+.gatotkaca-lencana-titik {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #facc15;
+  box-shadow: 0 0 8px #facc15;
+  animation: titikKedip 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes titikKedip {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.gatotkaca-dialog-judul {
+  margin: 0 0 8px 0;
+  font-family: var(--font-judul, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.35;
+}
+
+[data-tema="terang"] .gatotkaca-dialog-judul {
+  color: #1c1917;
+}
+
+.gatotkaca-dialog-teks {
+  margin: 0 0 16px 0;
+  font-size: 0.86rem;
+  line-height: 1.52;
+  color: rgba(250, 246, 238, 0.85);
+}
+
+[data-tema="terang"] .gatotkaca-dialog-teks {
+  color: #44403c;
+}
+
+/* Tombol Aksi "Oke, Ayo Jelajah!" */
+.gatotkaca-btn-oke {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%);
+  color: #14110F;
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-judul, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(234, 179, 8, 0.4);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  outline: none;
+}
+
+.gatotkaca-btn-oke:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(234, 179, 8, 0.55);
+  filter: brightness(1.06);
+}
+
+.gatotkaca-btn-oke:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+.gatotkaca-btn-oke:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+}
+
+.gatotkaca-btn-panah {
+  font-size: 1.05rem;
+  transition: transform 0.2s ease;
+}
+
+.gatotkaca-btn-oke:hover .gatotkaca-btn-panah {
+  transform: translate(2px, -2px) scale(1.15);
+}
+
+.gatotkaca-dialog-hint {
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: rgba(250, 246, 238, 0.5);
+  letter-spacing: 0.02em;
+}
+
+[data-tema="terang"] .gatotkaca-dialog-hint {
+  color: #78716c;
+}
+
+/* ==========================================================================
+   Penyesuaian Responsif Ponsel (< 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .gatotkaca-panggung-wadah {
+    top: 46%;
+    gap: 12px;
+    max-width: 360px;
+  }
+
+  .gatotkaca-aktor-posisi {
+    width: 155px;
+    height: 155px;
+  }
+
+  .gatotkaca-aura-glow {
+    width: 145px;
+    height: 145px;
+  }
+
+  .gatotkaca-dialog-kartu {
+    padding: 16px 18px;
+  }
+
+  .gatotkaca-dialog-judul {
+    font-size: 1.05rem;
+  }
+
+  .gatotkaca-dialog-teks {
+    font-size: 0.82rem;
+    line-height: 1.48;
+    margin-bottom: 14px;
+  }
+
+  .gatotkaca-btn-oke {
+    padding: 11px 18px;
+    font-size: 0.88rem;
+  }
+
+  .gatotkaca-toast-terbang {
+    font-size: 0.82rem;
+    padding: 8px 16px;
+    top: 66%;
+  }
+}
+
+/* ==========================================================================
+   Aksesibilitas: Hormati prefers-reduced-motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .transisi-gatotkaca-overlay {
+    transition: opacity 0.15s ease;
+  }
+
+  .gatotkaca-efek-melayang,
+  .gatotkaca-aura-glow,
+  .gatotkaca-bayangan-bawah,
+  .gatotkaca-awan-apung,
+  .gatotkaca-lencana-titik {
+    animation: none !important;
+  }
+
+  .gatotkaca-aktor-posisi,
+  .gatotkaca-bobbing-wadah,
+  .gatotkaca-tirai-bank-atas,
+  .gatotkaca-tirai-bank-bawah {
+    transition: none !important;
+  }
+}

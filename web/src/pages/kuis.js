@@ -15,6 +15,7 @@ import { inisialisasiBacksound } from '../ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from '../ui/footer.js';
 import { inisialisasiBagianKuis } from '../sections/kuis.js';
 import { inisialisasiDialogRekaman } from '../ui/dialog-rekaman.js';
+import { inisialisasiSpotlightSearch } from '../ui/spotlight-search.js';
 
 let dialogRekamanKontrol = null;
 
@@ -54,6 +55,15 @@ async function mulaiHalamanKuis() {
         window.location.href = `./jelajah.html#provinsi-${kode}`;
       },
       saatBukaDetailRekaman: (rekaman, pemicuEl) => {
+        if (dialogRekamanKontrol) {
+          dialogRekamanKontrol.bukaRekaman(rekaman, pemicuEl);
+        }
+      }
+    });
+
+    inisialisasiSpotlightSearch({
+      daftarProvinsi: provinsi,
+      onBukaDetailRekaman: (rekaman, pemicuEl) => {
         if (dialogRekamanKontrol) {
           dialogRekamanKontrol.bukaRekaman(rekaman, pemicuEl);
         }

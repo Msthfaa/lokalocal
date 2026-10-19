@@ -20,6 +20,7 @@ import { inisialisasiBacksound } from './ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from './ui/footer.js';
 import { tampilkanToast } from './ui/toast.js';
 import { inisialisasiTiraiWayang } from './ui/tirai-wayang.js';
+import { inisialisasiSpotlightSearch } from './ui/spotlight-search.js';
 
 import { inisialisasiBagianHero } from './sections/hero.js';
 import { inisialisasiBagianNyala } from './sections/nyala.js';
@@ -233,6 +234,21 @@ async function renderDataAwalKeHalaman(dataAwal) {
   kontrolKisah = inisialisasiBagianKisah({
     saatBukaDetailRekaman: (rekaman, pemicuEl) => {
       bukaDetailRekamanDinamis(rekaman, pemicuEl);
+    }
+  });
+
+  // Inisialisasi Pencarian Cepat Global (Command Palette Ctrl+K)
+  inisialisasiSpotlightSearch({
+    daftarProvinsi: provinsi,
+    onBukaDetailRekaman: (rekaman, pemicuEl) => {
+      bukaDetailRekamanDinamis(rekaman, pemicuEl);
+    },
+    onPilihProvinsi: (kode) => {
+      if (spaRouter) {
+        spaRouter.navigasiKeJelajahDedicated({ provinsi: kode });
+      } else {
+        window.location.href = `./jelajah.html?provinsi=${kode}&mendarat=1`;
+      }
     }
   });
 
