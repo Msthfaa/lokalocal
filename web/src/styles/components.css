@@ -198,6 +198,11 @@
 }
 
 /* Dialog (<dialog>) */
+.dialog-modal:not([open]) {
+  display: none !important;
+  pointer-events: none !important;
+}
+
 .dialog-modal {
   margin: auto;
   width: calc(100% - 2rem);
@@ -1420,6 +1425,10 @@
 /* ==========================================================================
    Modal Cetak Kartu Pengelana Budaya (HTML5 Canvas Shareable ID)
    ========================================================================== */
+.modal-kartu-dialog:not([open]) {
+  display: none !important;
+}
+
 .modal-kartu-dialog {
   border: none;
   background: transparent;
@@ -1634,6 +1643,10 @@
 /* ==========================================================================
    Ruang Laras Bunyi Nusantara (Gamelan & Angklung Synth Virtual)
    ========================================================================== */
+.ruang-bunyi-dialog:not([open]) {
+  display: none !important;
+}
+
 .ruang-bunyi-dialog {
   border: none;
   background: transparent;
@@ -1856,12 +1869,15 @@
   transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
 }
 
-/* Variasi Tinggi Alami Bilah Tradisional (Bilah nada rendah lebih panjang) */
-.ruang-bunyi-bilah[data-index="0"] { height: 195px; }
-.ruang-bunyi-bilah[data-index="1"] { height: 185px; }
-.ruang-bunyi-bilah[data-index="2"] { height: 175px; }
-.ruang-bunyi-bilah[data-index="3"] { height: 165px; }
-.ruang-bunyi-bilah[data-index="4"] { height: 155px; }
+/* Variasi Tinggi Alami 8 Bilah Tradisional (Bilah nada rendah lebih panjang) */
+.ruang-bunyi-bilah[data-index="0"] { height: 210px; }
+.ruang-bunyi-bilah[data-index="1"] { height: 200px; }
+.ruang-bunyi-bilah[data-index="2"] { height: 190px; }
+.ruang-bunyi-bilah[data-index="3"] { height: 180px; }
+.ruang-bunyi-bilah[data-index="4"] { height: 170px; }
+.ruang-bunyi-bilah[data-index="5"] { height: 160px; }
+.ruang-bunyi-bilah[data-index="6"] { height: 150px; }
+.ruang-bunyi-bilah[data-index="7"] { height: 140px; }
 
 [data-tema="terang"] .ruang-bunyi-bilah {
   background: linear-gradient(180deg, #F3E8D6 0%, #E6D3B6 60%, #D4BC95 100%);
@@ -2019,12 +2035,13 @@
 
 .jelajah-tur-overlay.aktif {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none !important;
 }
 
 .jelajah-tur-kartu {
+  pointer-events: auto !important;
   width: 100%;
-  max-width: 560px;
+  max-width: 580px;
   background: rgba(20, 16, 12, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -2055,11 +2072,18 @@
   justify-content: space-between;
 }
 
+.jelajah-tur-lencana-grup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .jelajah-tur-lencana {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2068,6 +2092,69 @@
   padding: 3px 10px;
   border-radius: 999px;
   border: 1px solid rgba(212, 160, 23, 0.3);
+}
+
+.jelajah-tur-lencana-provinsi {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #FBBF24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+[data-tema="terang"] .jelajah-tur-lencana-provinsi {
+  color: #92400E;
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(180, 83, 9, 0.3);
+}
+
+.jelajah-tur-baris-atas-kanan {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jelajah-tur-btn-vo {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: #F5F0EB;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jelajah-tur-btn-vo:hover {
+  background: rgba(212, 160, 23, 0.25);
+  border-color: rgba(212, 160, 23, 0.5);
+  color: #FFD15C;
+}
+
+.jelajah-tur-btn-vo.bisu {
+  opacity: 0.65;
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #A89F91;
+}
+
+[data-tema="terang"] .jelajah-tur-btn-vo {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #44403C;
+}
+
+[data-tema="terang"] .jelajah-tur-btn-vo:hover {
+  background: rgba(180, 83, 9, 0.15);
+  border-color: rgba(180, 83, 9, 0.35);
+  color: #B45309;
 }
 
 [data-tema="terang"] .jelajah-tur-lencana {
@@ -2112,6 +2199,19 @@
 [data-tema="terang"] .jelajah-tur-btn-tutup:hover {
   background: rgba(0, 0, 0, 0.06);
   color: #1C1917;
+}
+
+.jelajah-tur-subjudul {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--c-emas, #FFD15C);
+  margin-top: 1px;
+  margin-bottom: 3px;
+  letter-spacing: 0.01em;
+}
+
+[data-tema="terang"] .jelajah-tur-subjudul {
+  color: #B45309;
 }
 
 .jelajah-tur-judul {

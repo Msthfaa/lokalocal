@@ -1,5 +1,37 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-19] Penyempurnaan Revisi Fitur: Navigasi Bebas Hambatan, Ruang Bunyi 8 Nada & Akor Simultan, Kamera Tur Drone Lapang & Voice Over Bahasa Indonesia
+- **Permintaan Pengguna:**
+  1. Perbaikan bug klik terhalang pada navigasi atas dan seluruh halaman setelah menutup fitur/modal.
+  2. Ruang Bunyi Nusantara diperbanyak nadanya (tidak hanya 5 nada) dan mendukung penekanan simultan beberapa nada (polifoni / akor).
+  3. Tur Sinematik 3D diperbaiki: kamera tidak boleh terlalu zoom-in, provinsi terpilih harus jelas terlihat, dan ditambahkan Voice Over penjelasan suara narasi.
+- **Dibuat/diubah:**
+  - **Akar Masalah Navigasi Macet Diselesaikan Tuntas**:
+    - Ditemukan bahwa pemanggilan `dialog.removeAttribute('open')` sebelum `dialog.close()` atau di handler `onclose`/`oncancel` merusak state internal browser, menyebabkan dokumen terkunci dalam status `:modal` inert.
+    - Menghapus seluruh `removeAttribute('open')` dari `web/src/features/karawitan-synth.js`, `web/src/features/paspor-canvas.js`, `web/src/ui/spotlight-search.js`, dan menambahkan aturan mutlak `dialog:not([open]) { display: none !important; pointer-events: none !important; }` di `web/src/styles/base.css` serta `web/src/styles/components.css`.
+    - Mengubah kontainer `.jelajah-tur-overlay.aktif` menjadi `pointer-events: none` dengan `pointer-events: auto` khusus pada kartu HUD tur, sehingga navbar dan elemen luar tetap 100% responsif terhadap klik.
+  - **Ruang Bunyi Nusantara 8 Nada & Polifoni Akor Simultan**:
+    - `web/src/features/karawitan-synth.js`:
+      - Diperluas dari 5 nada menjadi 8 tangga nada lengkap: `1` (Ji), `2` (Ro), `3` (Lu), `4` (Pat), `5` (Ma), `6` (Nem), `7` (Pi/Pelog), `1̇` (Ji Inggil).
+      - Menambahkan pelacakan set `tombolSedangDitekan` untuk mendukung penekanan multi-kunci keyboard fisik secara bersamaan (`1` sampai `8`), memungkinkan harmoni akor kempyang/kempyung gamelan (misal kombinasi 1+3+5 atau 1+5+8).
+      - Menambahkan dukungan multi-pointer touch dan sweep glissando (`pointerdown`, `pointerenter` dengan tombol ditekan).
+  - **Tur Sinematik 3D Drone Lapang, Sorotan Provinsi & Voice Over Narasi Suara**:
+    - `web/src/sections/hero3d/tur-sinematik.js`:
+      - Sudut kamera dinaikkan ke ketinggian drone lapang sinematik ($Y \approx 2{,}8 - 3{,}2$, $Z \approx 4{,}2 - 4{,}5$) agar seluruh gugus kepulauan tampak megah tanpa clipping/zoom berlebih.
+      - Integrasi Web Speech API (`speechSynthesis`) berbahasa Indonesia (`id-ID`) untuk membaca narasi setiap zona secara hidup dan ekspresif.
+      - Menambahkan tombol kontrol toggle narasi suara `[🔊 Narasi: ON/OFF]` pada kartu HUD.
+      - Menambahkan badge lencana wilayah fokus `📍 Fokus: [Nama Provinsi] ([Jumlah] Catatan)` pada HUD.
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Memperbaiki pencocokan kode provinsi mesh dengan padding `padStart(2, '0')`, memastikan pulau representatif terangkat +0.25, berkilau emas, dan ditandai tiang bendera 3D saat tur berlangsung.
+- **Hasil Pengujian**:
+  - `scratch/verify-revisions.mjs` dijalankan via browser engine sesungguhnya:
+    - Navbar tetap 100% dapat diklik sebelum tur, saat tur berjalan, dan setelah tur ditutup (`navClickable: true`).
+    - Navbar tetap 100% dapat diklik setelah Spotlight Search dan Ruang Bunyi ditutup (`isClickable: true`).
+    - Ruang Bunyi 8 bilah terdeteksi aktif dan 4 nada bergetar simultan secara bersamaan.
+    - Tur sinematik berjalan mulus dengan lencana provinsi, pembacaan VO, dan framing drone lapang.
+  - `npm run build` berhasil (0 error).
+  - `node tools/validate.mjs` lolos (0 error).
+
 ## [2026-10-19] Implementasi 4 Inovasi Interaktif: Spotlight Search, Cetak Paspor Budaya PNG, Karawitan Web Audio Synth, & Tur Sinematik 3D Nusantara
 - **Permintaan Pengguna:**
   - Menjalankan seluruh 4 rekomendasi pembaruan interaktif tingkat lanjut secara hati-hati dan menyeluruh untuk memaksimalkan pengalaman pengguna serta nilai inovasi website pada lomba.

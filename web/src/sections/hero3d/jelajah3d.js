@@ -499,7 +499,10 @@ export function inisialisasiJelajah3D({
   window.addEventListener('pointerup', onPointerUp);
 
   function pilihProvinsi(kode, opsi = {}) {
-    const mesh = elemenAdegan.daftarProvinsiMesh.find((m) => String(m.userData.kode) === String(kode));
+    const kodeCari = String(kode).padStart(2, '0');
+    const mesh = elemenAdegan.daftarProvinsiMesh.find(
+      (m) => String(m.userData.kode).padStart(2, '0') === kodeCari
+    );
     if (!mesh) return;
 
     const kodeStr = String(kode).padStart(2, '0');
