@@ -91,6 +91,25 @@
   - Alur transisi dari beranda -> Gatotkaca terbang -> awan menyapu -> tiba di peta 3D -> Gatotkaca menyapa dan menjelaskan -> tombol Oke diklik -> Gatotkaca terbang keluar layar -> peta 3D aktif telah teruji 100% mulus tanpa lag.
   - Terverifikasi otomatis melalui pengujian headless Microsoft Edge (seluruh tangkapan layar `screenshot-gatotkaca-takeoff.png`, `screenshot-gatotkaca-hover-dialog.png`, `screenshot-gatotkaca-flyout.png`, dan `screenshot-gatotkaca-final-map.png` terekam sempurna).
   - `npm run build` dan `node tools/validate.mjs` lolos dengan **0 error**.
+
+## [2026-10-19] Penyempurnaan Efek Glassmorphism Tembus Pandang pada Penutup, Hub Kuis, dan Navigasi Bawah
+- **Dibuat/diubah:**
+  - `web/src/styles/sections.css`:
+    - **Section 8 (Penutup Budaya - Gambar 1)**:
+      - Menyesuaikan tingkat keburaman (*blur*) dari 20px menjadi 8-12px dan menurunkan opasitas kartu pilar anak (`.penutup-pilar-kartu`) dari 0.50 menjadi 0.45/0.20 agar tidak terjadi penumpukan putih pekat (*compounding opacity*) yang menutupi sketsa latar.
+      - Menambahkan kilau specular pada tepian kaca kristal (`border: 1px solid rgba(255, 255, 255, 0.65)`) di mode terang dan aksen transparan berkedalaman di mode gelap.
+    - **Pusat Ekspedisi Kuis Budaya (Gambar 2)**:
+      - Mengganti latar belakang solid `#FAF7F0` (terang) dan `#14100E` (gelap) pada panel utama `#s7-panel-kuis.s7-panel-kartu` dengan efek kaca kristal tembus pandang bertekstur halus (`backdrop-filter: blur(12px) saturate(160%)`, `border-radius: 28px`, gradien transparan).
+      - Mengonversi Berkas Utama Nusantara (`.kuis-dossier-hero`) dan 6 Berkas Wilayah (`.kuis-dossier-kartu`) menjadi kartu kaca mengambang semi-transparan dengan `backdrop-filter: blur(8px) saturate(160%)` dan tepian kilau kaca.
+    - **Bilah Navigasi Bawah Kuis (Gambar 3)**:
+      - Mengubah modul navigasi `.kuis-nav-bawah-kotak` dari kotak padat menjadi kapsul kaca kristal melayang (`backdrop-filter: blur(12px) saturate(160%)`, `border-radius: 28px`, border kaca kilau) selaras dengan desain halaman Paspor Budaya.
+    - **Sub-komponen Pertanyaan & Evaluasi Kuis**:
+      - Menyempurnakan kotak arsip resmi (`.kuis-kotak-arsip`), kartu opsi pilihan (`.kuis-opsi-kartu`), umpan balik kuratorial (`.kuis-umpan-kartu`), dan kartu rekomendasi tradisi (`.kuis-tradisi-mini-kartu`) dengan efek *frosted glass* halus yang konsisten.
+- **Hasil:**
+  - Ketiga area (Penutup, Berkas Kuis, dan Navigasi Bawah) kini menampilkan efek kaca tembus pandang (*frosted glassmorphism*) yang nyata, memperlihatkan tekstur motif latar belakang dengan elegan tanpa mengorbankan keterbacaan teks (WCAG AA).
+  - Validasi data (`node tools/validate.mjs`) lolos 100% dan build produksi (`npm run build`) sukses tanpa error.
+
+## [2026-10-18] Transformasi Hub Ekspedisi Kuis Budaya: Eliminasi Redundansi Menu & Format AI Slop
 - **Dibuat/diubah:**
   - `web/index.html` & `web/kuis.html`:
     - Mengeliminasi menu ganda (*duplicate selection UI*): menghapus baris 7 tombol pill wilayah mengambang di atas panel kuis yang sebelumnya menumpuk dan menduplikasi kartu pilihan di bawahnya.
