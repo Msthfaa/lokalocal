@@ -1540,6 +1540,7 @@ body.tema-siang .kartu-modern-judul {
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
@@ -3512,6 +3513,7 @@ body.tema-siang .hud-atribusi-teks {
   font-weight: 600;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: normal;
@@ -4662,6 +4664,7 @@ body.tema-siang .hud-atribusi-teks {
 .penutup-teks-aksen {
   background: linear-gradient(135deg, #F5D38A 0%, #E6B14A 50%, #C8922C 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
@@ -4669,6 +4672,7 @@ body.tema-siang .hud-atribusi-teks {
 [data-tema="terang"] .penutup-teks-aksen {
   background: linear-gradient(135deg, #B87314 0%, #D48922 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -5836,6 +5840,7 @@ body.tema-siang .cangkang-judul-tengah {
   color: #3A322C;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -8254,6 +8259,7 @@ body.tema-siang .nav-kartun-info {
   color: var(--kertas-redup);
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
@@ -8762,6 +8768,7 @@ body.tema-siang .nav-kartun-info {
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
