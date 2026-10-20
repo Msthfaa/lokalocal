@@ -535,57 +535,75 @@ main {
 }
 
 /* ==========================================================================
-   Footer Utama Modern Sinematik (Frosted Glassmorphism)
+   Footer Utama Modern Sinematik (Frosted Glassmorphism Card)
    ========================================================================== */
 .footer-utama {
   position: relative;
-  overflow: hidden;
-  padding-block: var(--ruang-6) var(--ruang-5);
-  background: linear-gradient(180deg, rgba(20, 17, 14, 0.65) 0%, rgba(14, 11, 9, 0.88) 100%) !important;
-  backdrop-filter: blur(16px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-bottom: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 -16px 44px rgba(0, 0, 0, 0.40) !important;
+  background: transparent !important;
+  border: none !important;
+  padding-block: var(--ruang-4) var(--ruang-7) !important;
   color: var(--kertas-redup);
   font-size: var(--teks-kecil);
-  transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+  transition: color 0.35s ease;
+  overflow: visible !important;
 }
 
 [data-tema="terang"] .footer-utama {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68) 0%, rgba(250, 246, 238, 0.86) 100%) !important;
-  backdrop-filter: blur(16px) saturate(170%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(170%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.85) !important;
-  border-bottom: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 -12px 36px rgba(50, 32, 15, 0.06) !important;
+  background: transparent !important;
+  border: none !important;
   color: #382E25;
 }
 
+/* Kartu Kaca Akbar Footer */
 .footer-utama > .wadah {
   position: relative;
   z-index: 2;
+  border-radius: 28px;
+  padding: clamp(2rem, 4vw, 3.25rem);
+  background: linear-gradient(145deg, rgba(20, 17, 14, 0.65) 0%, rgba(10, 8, 7, 0.45) 100%) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  overflow: hidden;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* Garis pendaran halus di puncak footer kaca */
-.footer-utama::before {
+[data-tema="terang"] .footer-utama > .wadah {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.68) 0%, rgba(250, 246, 238, 0.50) 100%) !important;
+  backdrop-filter: blur(16px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(170%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 20px 50px rgba(50, 32, 15, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Pendaran specular emas di puncak kartu kaca */
+.footer-utama > .wadah::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 10%;
-  right: 10%;
+  left: 15%;
+  right: 15%;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(230, 177, 74, 0.5) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(230, 177, 74, 0.55) 50%, transparent 100%);
   pointer-events: none;
   z-index: 3;
 }
 
-[data-tema="terang"] .footer-utama::before {
-  background: linear-gradient(90deg, transparent 0%, rgba(184, 115, 20, 0.4) 50%, transparent 100%);
+[data-tema="terang"] .footer-utama > .wadah::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(184, 115, 20, 0.45) 50%, transparent 100%);
+}
+
+@media (max-width: 640px) {
+  .footer-utama {
+    padding-inline: var(--ruang-3) !important;
+    padding-block: var(--ruang-3) var(--ruang-6) !important;
+  }
+
+  .footer-utama > .wadah {
+    border-radius: 20px;
+    padding: 1.75rem 1.25rem;
+  }
 }
 
 .footer-grid-modern {
