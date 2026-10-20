@@ -64,6 +64,108 @@ function hitungGelarPaspor(jumlahTerkumpul, totalProvinsi) {
  * @param {object} parameter.pengelolaPaspor - Instans dari buatPengelolaPaspor()
  * @param {(kode: string) => void} parameter.saatKlikPetakProvinsi - Membuka provinsi di S5 Jelajah
  */
+/**
+ * Membuka modal dialog pemilih pakaian adat karakter (fixed modal overlay).
+ * Bersih, terpusat di layar, bebas tumpang tindih dengan grid stempel.
+ */
+function bukaDialogPilihAvatar({ avatarAktif, saatPilih }) {
+  // Bersihkan dialog avatar sebelumnya jika masih ada di DOM
+  document.getElementById('dialog-avatar-paspor-modal')?.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.id = 'dialog-avatar-paspor-modal';
+  backdrop.className = 'paspor-modal-avatar-backdrop';
+  backdrop.setAttribute('role', 'dialog');
+  backdrop.setAttribute('aria-modal', 'true');
+  backdrop.setAttribute('aria-labelledby', 'judul-modal-avatar-nusantara');
+
+  backdrop.innerHTML = `
+    <div class="paspor-modal-avatar-kartu" role="document">
+      <div class="paspor-modal-avatar-header">
+        <div class="paspor-modal-avatar-header-teks">
+          <span class="paspor-modal-avatar-kicker">Karakter Penjelajah Nusantara</span>
+          <h3 id="judul-modal-avatar-nusantara" class="paspor-modal-avatar-judul">Pilih Pakaian Adat Paspor</h3>
+        </div>
+        <button type="button" class="paspor-modal-avatar-tutup" aria-label="Tutup jendela pemilihan">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <p class="paspor-modal-avatar-deskripsi">
+        Pilih salah satu dari 8 representasi busana adat Nusantara sebagai foto identitas resmi di buku paspor kebudayaanmu:
+      </p>
+
+      <div class="paspor-modal-avatar-grid">
+        ${DAFTAR_CHIBI.map((c) => {
+          const aktif = c.id === avatarAktif.id;
+          return `
+            <button
+              type="button"
+              class="paspor-modal-avatar-item ${aktif ? 'is-aktif' : ''}"
+              data-id="${c.id}"
+              aria-label="Pilih ${c.nama} busana ${c.suku}${aktif ? ' (Sedang Dipakai)' : ''}"
+            >
+              <div class="paspor-modal-avatar-frame">
+                <img src="${c.foto}" alt="${c.nama}" class="paspor-modal-avatar-img" loading="lazy" />
+                ${aktif ? '<span class="paspor-modal-avatar-centang" aria-hidden="true">✓</span>' : ''}
+              </div>
+              <strong class="paspor-modal-avatar-nama">${c.nama}</strong>
+              <span class="paspor-modal-avatar-suku">${c.suku}</span>
+            </button>
+          `;
+        }).join('')}
+      </div>
+
+      <div class="paspor-modal-avatar-footer">
+        <span class="paspor-modal-avatar-petunjuk">Karakter dapat diganti kapan saja tanpa memengaruhi stempel yang telah terkumpul.</span>
+      </div>
+    </div>
+  `;
+
+  function tutupModal() {
+    backdrop.classList.add('is-keluar');
+    document.removeEventListener('keydown', tanganiKeydown);
+    setTimeout(() => {
+      backdrop.remove();
+    }, 200);
+  }
+
+  function tanganiKeydown(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      tutupModal();
+    }
+  }
+
+  backdrop.querySelector('.paspor-modal-avatar-tutup')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    tutupModal();
+  });
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      tutupModal();
+    }
+  });
+
+  backdrop.querySelectorAll('.paspor-modal-avatar-item').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idDipilih = btn.dataset.id;
+      if (idDipilih) {
+        saatPilih(idDipilih);
+        tutupModal();
+      }
+    });
+  });
+
+  document.addEventListener('keydown', tanganiKeydown);
+  document.body.appendChild(backdrop);
+}
+
 export function inisialisasiBagianPaspor({
   daftarProvinsi = [],
   pengelolaPaspor,
@@ -75,7 +177,6 @@ export function inisialisasiBagianPaspor({
   const petaNamaProv = new Map(daftarProvinsi.map((p) => [String(p.kode), p.nama]));
   let filterWilayahAktif = 'semua';
   let sedangKonfirmasiReset = false;
-  let modalAvatarBuka = false;
 
   function render(infoPerubahan = null) {
     const avatarAktif = ambilAvatarPengguna();
@@ -105,20 +206,38 @@ export function inisialisasiBagianPaspor({
     boxAvatar.className = 'paspor-avatar-foto-box';
     boxAvatar.setAttribute('role', 'button');
     boxAvatar.setAttribute('tabindex', '0');
-    boxAvatar.setAttribute('title', `Foto Resmi: ${avatarAktif.nama} (${avatarAktif.suku}). Klik untuk ganti foto!`);
+    boxAvatar.setAttribute('title', `Foto Resmi: ${avatarAktif.nama} (${avatarAktif.suku}). Klik untuk ganti karakter!`);
     boxAvatar.innerHTML = `
       <div class="paspor-foto-frame">
         <img src="${avatarAktif.foto}" alt="${avatarAktif.nama}" class="paspor-foto-img" />
         <span class="paspor-foto-badge-stempel">PASPOR</span>
       </div>
       <div class="paspor-foto-info">
+        <span class="paspor-foto-kategori">Identitas Pemilik</span>
         <strong class="paspor-foto-nama">${avatarAktif.nama}</strong>
-        <span class="paspor-foto-ganti-link">Ganti Foto 🔄</span>
+        <span class="paspor-foto-suku">${avatarAktif.suku}</span>
+        <span class="paspor-foto-ganti-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          Ganti Karakter
+        </span>
       </div>
     `;
     boxAvatar.addEventListener('click', () => {
-      modalAvatarBuka = !modalAvatarBuka;
-      render();
+      bukaDialogPilihAvatar({
+        avatarAktif,
+        saatPilih: (idDipilih) => {
+          simpanAvatarPengguna(idDipilih);
+          const chibiDipilih = dapatkanChibi(idDipilih);
+          tampilkanToast(`Foto paspor berganti: ${chibiDipilih.nama} (${chibiDipilih.suku})`);
+          render();
+        }
+      });
+    });
+    boxAvatar.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        boxAvatar.click();
+      }
     });
 
     const grupMerek = document.createElement('div');
@@ -140,58 +259,12 @@ export function inisialisasiBagianPaspor({
     const badgeGelar = document.createElement('div');
     badgeGelar.className = 'paspor-gelar-badge';
     badgeGelar.innerHTML = `
-      <span class="paspor-gelar-tingkat">${infoGelar.tingkat}</span>
+      <span class="paspor-gelar-tingkat">Gelar Penjelajah</span>
       <strong class="paspor-gelar-nama">${infoGelar.gelar}</strong>
+      <span class="paspor-gelar-tahap">${infoGelar.tingkat}</span>
     `;
 
     barisAtasId.append(boxAvatar, grupMerek, badgeGelar);
-
-    // Modal Tray Pemilihan Avatar jika dibuka
-    if (modalAvatarBuka) {
-      const modalAvatar = document.createElement('div');
-      modalAvatar.className = 'paspor-avatar-tray-modal';
-      modalAvatar.innerHTML = `
-        <div class="paspor-avatar-tray-inner">
-          <div class="paspor-avatar-tray-header">
-            <h4>Pilih Foto Identitas Penjelajah Budaya</h4>
-            <button type="button" class="paspor-avatar-tray-tutup" aria-label="Tutup">&times;</button>
-          </div>
-          <p class="paspor-avatar-tray-sub">Pilih salah satu dari 8 perwakilan pakaian adat Nusantara untuk buku paspormu:</p>
-          <div class="paspor-avatar-tray-grid">
-            ${DAFTAR_CHIBI.map(
-              (c) => `
-              <button type="button" class="paspor-avatar-item-btn ${c.id === avatarAktif.id ? 'is-aktif' : ''}" data-id="${c.id}">
-                <div class="paspor-item-avatar-img-wrap">
-                  <img src="${c.foto}" alt="${c.nama}" />
-                </div>
-                <strong class="paspor-item-nama">${c.nama}</strong>
-                <span class="paspor-item-suku">${c.suku}</span>
-              </button>
-            `
-            ).join('')}
-          </div>
-        </div>
-      `;
-      const btnTutupM = modalAvatar.querySelector('.paspor-avatar-tray-tutup');
-      if (btnTutupM) {
-        btnTutupM.addEventListener('click', (e) => {
-          e.stopPropagation();
-          modalAvatarBuka = false;
-          render();
-        });
-      }
-      modalAvatar.querySelectorAll('.paspor-avatar-item-btn').forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const idDipilih = btn.dataset.id;
-          simpanAvatarPengguna(idDipilih);
-          modalAvatarBuka = false;
-          tampilkanToast(`Foto profil paspor berganti ke ${dapatkanChibi(idDipilih).nama}!`);
-          render();
-        });
-      });
-      kartuIdentitas.appendChild(modalAvatar);
-    }
 
     const narasiGelar = document.createElement('p');
     narasiGelar.className = 'paspor-identitas-deskripsi';
@@ -230,10 +303,10 @@ export function inisialisasiBagianPaspor({
     const trekBar = document.createElement('div');
     trekBar.className = 'paspor-progres-trek';
     trekBar.setAttribute('role', 'progressbar');
-    trekBar.setAttribute('aria-valuenow', String(jumlahTerkumpul));
+    trekBar.setAttribute('aria-valuenow', String(persen));
     trekBar.setAttribute('aria-valuemin', '0');
-    trekBar.setAttribute('aria-valuemax', String(totalProvinsi));
-    trekBar.setAttribute('aria-label', `${jumlahTerkumpul} dari ${totalProvinsi} provinsi dijelajahi`);
+    trekBar.setAttribute('aria-valuemax', '100');
+    trekBar.setAttribute('aria-label', `Kemajuan paspor: ${persen}% (${jumlahTerkumpul} dari ${totalProvinsi} provinsi)`);
 
     const isiBar = document.createElement('div');
     isiBar.className = 'paspor-progres-isi';
@@ -245,14 +318,12 @@ export function inisialisasiBagianPaspor({
     // Baris Tombol Aksi Cetak Kartu Pengelana Budaya
     const barisAksiKartu = document.createElement('div');
     barisAksiKartu.className = 'paspor-identitas-aksi-baris';
-    barisAksiKartu.style.cssText = 'display: flex; align-items: center; justify-content: flex-end; margin-top: 14px; gap: 10px; flex-wrap: wrap;';
 
     const btnCetakKartu = document.createElement('button');
     btnCetakKartu.type = 'button';
-    btnCetakKartu.className = 'tombol tombol--utama';
-    btnCetakKartu.style.cssText = 'font-size: 0.85rem; padding: 7px 16px; min-height: 38px;';
+    btnCetakKartu.className = 'paspor-btn-cetak tombol tombol--utama';
     btnCetakKartu.innerHTML = `
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="4" width="18" height="16" rx="2"></rect>
         <circle cx="9" cy="10" r="2"></circle>
         <path d="M15 8h2"></path>
