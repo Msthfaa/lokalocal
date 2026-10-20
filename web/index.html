@@ -28,7 +28,9 @@
       content="Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat. Jelajahi peta dan kisah budaya Nusantara dari data SPKT."
     />
     <meta name="twitter:image" content="./og-image.svg" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./assets/logo-emblem.png" />
     <script>
       (function () {
         try {
@@ -61,6 +63,13 @@
         top: -999px;
         left: -999px;
       }
+      .nav-merek-logo {
+        height: 40px !important;
+        width: auto !important;
+        max-width: 145px !important;
+        object-fit: contain;
+        display: block;
+      }
       .nav-merek-ikon {
         width: 24px !important;
         height: 24px !important;
@@ -81,12 +90,8 @@
 
     <header id="header-utama" class="header-utama">
       <nav class="nav-bar" aria-label="Navigasi utama">
-        <a href="#pembuka" class="nav-merek">
-          <svg class="nav-merek-ikon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px;" aria-hidden="true">
-            <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
-            <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
-          </svg>
-          <span id="nav-nama-situs">Lokalocal</span>
+        <a href="#pembuka" class="nav-merek" aria-label="Lokalocal: Beranda">
+          <img src="./assets/logo-lokalocal.png" alt="Lokalocal" class="nav-merek-logo" width="142" height="42" />
         </a>
 
         <button
@@ -759,12 +764,8 @@
         <div class="footer-grid-modern">
           <!-- Kolom 1: Merek & Misi -->
           <div class="footer-kolom-merek">
-            <a href="#pembuka" class="footer-merek-link">
-              <svg class="footer-merek-ikon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
-                <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
-              </svg>
-              <span class="footer-merek-nama" id="footer-judul-situs">Lokalocal</span>
+            <a href="#pembuka" class="footer-merek-link" aria-label="Lokalocal: Kembali ke atas">
+              <img src="./assets/logo-lokalocal.png" alt="Lokalocal" class="footer-merek-logo" width="160" height="48" />
             </a>
             <p class="footer-deskripsi">
               Visualisasi interaktif pencatatan budaya Indonesia. Menampilkan apa yang sudah tercatat dengan indah, sekaligus memperlihatkan celah pendataan secara jujur tanpa mengarang angka.

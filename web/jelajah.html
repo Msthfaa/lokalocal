@@ -17,7 +17,9 @@
       property="og:description"
       content="Peta 3D interaktif 38 provinsi Indonesia selayar penuh dengan bendera detail budaya dan koleksi tradisi SPKT."
     />
+    <link rel="icon" type="image/png" href="./favicon.png" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./assets/logo-emblem.png" />
 
     <script>
       (function () {
@@ -50,6 +52,13 @@
         position: absolute;
         top: -999px;
         left: -999px;
+      }
+      .nav-merek-logo {
+        height: 40px !important;
+        width: auto !important;
+        max-width: 145px !important;
+        object-fit: contain;
+        display: block;
       }
       .nav-merek-ikon {
         width: 24px !important;
@@ -328,13 +337,9 @@
     <header id="header-utama" class="header-utama">
       <nav class="nav-bar" aria-label="Navigasi utama">
         <div class="nav-kiri">
-          <a href="./index.html" class="nav-merek">
-            <svg class="nav-merek-ikon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="width: 24px; height: 24px; max-width: 24px; max-height: 24px;" aria-hidden="true">
-              <path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="2" />
-              <path d="M12 7L17 12L12 17L7 12L12 7Z" fill="currentColor" />
-            </svg>
-            <span id="nav-nama-situs">Lokalocal</span>
-          </a>
+          <a href="./index.html" class="nav-merek" aria-label="Lokalocal: Beranda">
+          <img src="./assets/logo-lokalocal.png" alt="Lokalocal" class="nav-merek-logo" width="142" height="42" />
+        </a>
 
           <!-- Maskot Kartun Lucu Penunggu Loading di Navbar -->
           <div id="nav-loading-kartun" class="nav-loading-kartun" role="status" aria-live="polite" title="Sedang memuat peta 3D Nusantara">

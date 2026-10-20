@@ -1,5 +1,24 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-20] Penerapan Logo Resmi Lokalocal Baru (Garuda Surya Nusantara & Tipografi Emas)
+- **Permintaan Pengguna:**
+  - Mengganti logo Lokalocal di website dengan gambar logo resmi baru yang dikirim oleh pengguna (emblem Garuda Cendrawasih Surya Nusantara berhiaskan pita Bhinneka Tunggal Ika serta tipografi emas "lokalocal").
+- **Dibuat/diubah:**
+  - `web/public/assets/logo-lokalocal.png`:
+    - Menyimpan aset master logo resmi resolusi tinggi (1024x303 px) berlatar belakang transparan murni.
+  - `web/public/assets/logo-emblem.png` & `web/public/favicon.png`:
+    - Mengekstrak ikon emblem utama (Garuda Cendrawasih Surya Majapahit 303x303 px) sebagai favicon browser dan ikon tab web.
+  - `web/src/styles/layout.css`:
+    - Merancang kelas `.nav-merek-logo` dan `.footer-merek-logo` dengan proporsi responsif (tinggi 40px di desktop, 33px di ponsel), efek bayangan halus (*drop shadow*), interaksi hover dinamis, serta kalibrasi kontras yang tajam baik di mode gelap maupun terang.
+  - `web/index.html`, `web/jelajah.html`, `web/kuis.html`, `web/paspor.html`:
+    - Mengganti SVG lama dan teks nama situs dengan elemen gambar logo baru `.nav-merek-logo` lengkap dengan atribut aksesibilitas (`alt="Lokalocal"`, `aria-label`).
+    - Memperbarui tautan footer merek dengan `.footer-merek-logo`.
+    - Menyisipkan `<link rel="icon" type="image/png" href="./favicon.png" />` dan `<link rel="apple-touch-icon" href="./assets/logo-emblem.png" />`.
+- **Hasil:**
+  - Identitas merek Lokalocal kini tampil seragam, berwibawa, dan estetik di seluruh halaman (Beranda, Jelajah 3D, Kuis, dan Paspor) serta tab browser.
+  - Validasi data lolos 100% dan build produksi (`npm run build`) sukses tanpa kendala.
+
+
 ## [2026-10-19] Implementasi Karakter Adat Chibi Nusantara & Tekstur Topografi Organik + Waypoint Budaya 3D Interaktif Saat Zoom In
 - **Permintaan Pengguna:**
   1. Integrasi lembar karakter chibi pakaian adat Nusantara (8 suku adat dengan beragam pose/ekspresi emosi serta banner Bhinneka Tunggal Ika) ke bagian yang paling tepat dan hidup.
