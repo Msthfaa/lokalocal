@@ -117,8 +117,8 @@
   z-index: 0;
   overflow: hidden;
   background-color: transparent !important;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 100%);
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
   will-change: opacity, transform;
 }
 
@@ -191,13 +191,11 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.52) 70%, rgba(0, 0, 0, 0.78) 100%),
-              linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, transparent 25%, transparent 82%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.55) 75%, rgba(0, 0, 0, 0.70) 100%);
 }
 
 [data-tema="terang"] .hero-cinema-overlay {
-  background: radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.45) 70%, rgba(0, 0, 0, 0.65) 100%),
-              linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 25%, transparent 82%, rgba(0, 0, 0, 0.3) 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.45) 75%, rgba(0, 0, 0, 0.60) 100%);
 }
 
 /* Konten Utama Tengah (Headline, Subtitle, CTA Pil — Rata Tengah Sempurna) */

@@ -58,21 +58,25 @@ export function inisialisasiBagianHero({ statistik }) {
     const perbaruiFadeScroll = () => {
       const y = window.scrollY || window.pageYOffset || 0;
       
-      // 1. Teks dan tombol judul tengah menghilang cepat & mulus (0px - 220px)
-      const progresTeks = Math.min(1, Math.max(0, y / 220));
-      const opasitasTeks = 1 - progresTeks;
+      // 1. Teks dan tombol judul tengah menghilang mulus seiring scroll (0px - 240px)
+      const batasTeks = Math.min(window.innerHeight * 0.45, 240);
+      const progresTeks = Math.min(1, Math.max(0, y / batasTeks));
+      const opasitasTeks = Math.max(0, 1 - progresTeks);
 
       if (elTengah) {
         elTengah.style.opacity = opasitasTeks.toFixed(3);
-        elTengah.style.transform = `translateY(${(-42 * progresTeks).toFixed(1)}px)`;
-        elTengah.style.pointerEvents = opasitasTeks < 0.15 ? 'none' : 'auto';
+        elTengah.style.transform = `translateY(${(-36 * progresTeks).toFixed(1)}px)`;
+        elTengah.style.pointerEvents = opasitasTeks < 0.12 ? 'none' : 'auto';
       }
 
-      // 2. Latar belakang foto & sinematik awal perlahan menghilang secara transparan seiring scroll (0px - 380px)
+      // 2. Latar belakang foto sinematik memudar bersih dan mulus saat discroll (0px - 440px)
       if (wadahLatar) {
-        const progresLatar = Math.min(1, Math.max(0, y / 380));
-        const opasitasLatar = 1 - progresLatar;
+        const batasLatar = Math.min(window.innerHeight * 0.72, 440);
+        const progresLatar = Math.min(1, Math.max(0, y / batasLatar));
+        // Kurva halus kuadratik agar awal scroll terasa sangat organik
+        const opasitasLatar = Math.max(0, 1 - Math.pow(progresLatar, 1.25));
         wadahLatar.style.opacity = opasitasLatar.toFixed(3);
+        wadahLatar.style.visibility = opasitasLatar <= 0.005 ? 'hidden' : 'visible';
       }
 
       ticking = false;
