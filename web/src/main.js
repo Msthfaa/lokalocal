@@ -19,7 +19,7 @@ import { inisialisasiTema } from './ui/tema.js';
 import { inisialisasiBacksound } from './ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from './ui/footer.js';
 import { tampilkanToast } from './ui/toast.js';
-import { inisialisasiTiraiWayang } from './ui/tirai-wayang.js';
+
 import { inisialisasiSpotlightSearch } from './ui/spotlight-search.js';
 
 import { inisialisasiBagianHero } from './sections/hero.js';
@@ -404,28 +404,9 @@ function inisialisasiBentoEditorial() {
 }
 
 function init() {
-  // Pasang Tirai Pembuka Sinematik Wayang Gunungan (Hanya saat awal masuk per sesi)
-  inisialisasiTiraiWayang({
-    paksaTampil: false,
-    onSelesai: () => {
-      requestAnimationFrame(() => {
-        segarkanScrollTrigger();
-      });
-    }
+  requestAnimationFrame(() => {
+    segarkanScrollTrigger();
   });
-
-  // Ekspos fungsi global untuk memutar ulang pengantar wayang kapan saja bila diinginkan
-  window.tontonTiraiWayang = () => {
-    inisialisasiTiraiWayang({ paksaTampil: true });
-  };
-
-  const btnTontonTirai = document.getElementById('footer-tombol-tonton-tirai');
-  if (btnTontonTirai) {
-    btnTontonTirai.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      window.tontonTiraiWayang();
-    });
-  }
 
   inisialisasiTema();
   inisialisasiBacksound();

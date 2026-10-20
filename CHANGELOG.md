@@ -1,5 +1,23 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-20] Penghapusan Animasi Tirai Pembuka Wayang Gunungan
+- **Permintaan Pengguna:**
+  - Menghapus animasi pembuka overlay tirai Gunungan Wayang emas (Kayon) yang membelah di awal kunjungan situs.
+- **Tindakan & Perubahan:**
+  - `web/src/main.js`:
+    - Menghapus pemanggilan `inisialisasiTiraiWayang()`, pendaftaran fungsi global `window.tontonTiraiWayang()`, dan event listener tombol footer.
+    - Halaman kini langsung memuat antarmuka beranda tanpa penundaan atau pemblokiran layar.
+  - `web/index.html`:
+    - Menghapus tombol footer `#footer-tombol-tonton-tirai` ("Tonton Ulang Pembuka Wayang") dari daftar aksi transparansi.
+  - Menghapus modul yang tidak lagi digunakan:
+    - `web/src/ui/tirai-wayang.js`
+    - `web/src/styles/tirai-wayang.css`
+- **Hasil Pengujian**:
+  - Ukuran bundel `main.js` berkurang dari 52.47 kB menjadi 47.02 kB.
+  - `npm run build` sukses 0 error (3.12s).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+  - Tangkapan layar otomatis `scratch/verify-homepage-no-intro.png` mengonfirmasi beranda utama langsung tampil instan tanpa animasi tirai wayang pembuka.
+
 ## [2026-10-20] Penerapan Efek Glassmorphism Tembus Pandang pada Footer Website
 - **Permintaan Pengguna:**
   - Memberikan latar belakang efek kaca (*glassmorphism*) pada footer website agar teks dan navigasi terpisah nyaman dari ilustrasi sketsa budaya di latar belakang.
@@ -12,7 +30,6 @@
 - **Hasil:**
   - Footer kini memiliki efek kaca tembus pandang (*frosted glass*) yang estetik, sketsa candi dan rumah adat di latar belakang tetap terlihat puitis namun tidak lagi mengganggu keterbacaan teks dan navigasi.
   - Validasi data dan build produksi (`npm run build`) sukses 100%.
-
 
 ## [2026-10-20] Penerapan Logo Resmi Lokalocal Baru (Garuda Surya Nusantara & Tipografi Emas)
 - **Permintaan Pengguna:**
@@ -31,7 +48,6 @@
 - **Hasil:**
   - Identitas merek Lokalocal kini tampil seragam, berwibawa, dan estetik di seluruh halaman (Beranda, Jelajah 3D, Kuis, dan Paspor) serta tab browser.
   - Validasi data lolos 100% dan build produksi (`npm run build`) sukses tanpa kendala.
-
 
 ## [2026-10-19] Implementasi Karakter Adat Chibi Nusantara & Tekstur Topografi Organik + Waypoint Budaya 3D Interaktif Saat Zoom In
 - **Permintaan Pengguna:**
