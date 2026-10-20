@@ -22,7 +22,6 @@ import { buatPanelKanan } from './panel-kanan.js';
 import { buatPengelolaModeDetail } from './mode-detail.js';
 import { hitungPosisiKameraFit } from './index.js';
 import { buatPengontrolTurSinematik } from './tur-sinematik.js';
-import { buatPengelolaWaypoints } from './waypoints-budaya.js';
 /**
  * Menginisialisasi Peta Diorama 3D berskala besar di halaman Jelajah fullscreen.
  *
@@ -213,21 +212,16 @@ export function inisialisasiJelajah3D({
         if (meshTerpilih.material) {
           meshTerpilih.material.emissive.set('#000000');
           meshTerpilih.material.emissiveIntensity = 0;
+          if (meshTerpilih.userData.teksturTopo) {
+            meshTerpilih.material.map = meshTerpilih.userData.teksturTopo;
+            meshTerpilih.material.color.set(0xffffff);
+          }
         }
         meshTerpilih = null;
       }
       // Kembalikan fokus kamera ke tengah diorama
       cameraTargetPos.copy(cameraBasePos);
       cameraTargetLookAt.set(0, 0.12, 0);
-    }
-  });
-
-  // Pasang Pengelola Waypoints Budaya 3D Interaktif (Muncul Saat Zoom In > 1.08)
-  const pengelolaWaypoints = buatPengelolaWaypoints({
-    grupUtama,
-    daftarProvinsiMesh: elemenAdegan.daftarProvinsiMesh,
-    saatKlikWaypoint: (kodeProv) => {
-      pilihProvinsi(kodeProv);
     }
   });
 
@@ -420,10 +414,9 @@ export function inisialisasiJelajah3D({
     pointerRay.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(pointerRay, camera);
-    const wpHover = pengelolaWaypoints ? pengelolaWaypoints.tanganiHover(raycaster) : null;
     const intersects = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
 
-    if (wpHover || intersects.length > 0) {
+    if (intersects.length > 0) {
       kanvas.style.cursor = 'pointer';
       if (intersects.length > 0) {
         const mesh = intersects[0].object;
@@ -497,10 +490,6 @@ export function inisialisasiJelajah3D({
 
     raycaster.setFromCamera(pointerRay, camera);
 
-    if (pengelolaWaypoints && pengelolaWaypoints.tanganiKlik(raycaster)) {
-      return;
-    }
-
     const intersects = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
 
     if (intersects.length > 0) {
@@ -513,6 +502,10 @@ export function inisialisasiJelajah3D({
         if (meshTerpilih.material) {
           meshTerpilih.material.emissive.set('#000000');
           meshTerpilih.material.emissiveIntensity = 0;
+          if (meshTerpilih.userData.teksturTopo) {
+            meshTerpilih.material.map = meshTerpilih.userData.teksturTopo;
+            meshTerpilih.material.color.set(0xffffff);
+          }
         }
         meshTerpilih = null;
         provTerpilihData = null;
@@ -551,6 +544,10 @@ export function inisialisasiJelajah3D({
       if (meshTerpilih.material) {
         meshTerpilih.material.emissive.set('#000000');
         meshTerpilih.material.emissiveIntensity = 0;
+        if (meshTerpilih.userData.teksturTopo) {
+          meshTerpilih.material.map = meshTerpilih.userData.teksturTopo;
+          meshTerpilih.material.color.set(0xffffff);
+        }
       }
     }
     meshTerpilih = mesh;
@@ -612,7 +609,7 @@ export function inisialisasiJelajah3D({
         if (m.material) {
           m.material.transparent = false;
           m.material.opacity = 1.0;
-          m.material.color.set(u.warnaNormal || '#6EC443');
+          if (u.teksturTopo) { m.material.map = u.teksturTopo; m.material.color.set(0xffffff); } else { m.material.color.set(u.warnaNormal || '#6EC443'); }
           m.material.emissive.set(isUtama ? '#FFD700' : '#E5A93C');
           m.material.emissiveIntensity = isUtama ? 0.65 : 0.45;
         }
@@ -662,7 +659,7 @@ export function inisialisasiJelajah3D({
       if (m.material) {
         m.material.transparent = false;
         m.material.opacity = 1.0;
-        m.material.color.set(u.warnaNormal || '#6EC443');
+        if (u.teksturTopo) { m.material.map = u.teksturTopo; m.material.color.set(0xffffff); } else { m.material.color.set(u.warnaNormal || '#6EC443'); }
         m.material.emissive.set('#000000');
         m.material.emissiveIntensity = 0;
       }
@@ -769,11 +766,6 @@ export function inisialisasiJelajah3D({
       // Update animasi ornamen kemaritiman nusantara (3 Perahu Pinisi berlayar, buih ombak, denyut jalur rempah)
       if (elemenAdegan.pengontrolMaritim && typeof elemenAdegan.pengontrolMaritim.update === 'function') {
         elemenAdegan.pengontrolMaritim.update(tDetik);
-      }
-
-      // Update animasi waypoints budaya 3D adaptif saat zoom in
-      if (pengelolaWaypoints && typeof pengelolaWaypoints.update === 'function') {
-        pengelolaWaypoints.update(zoomLevel, tDetik);
       }
 
       // Lerp kamera halus ke target posisi daerah yang dipilih (jika mode detail tidak aktif)

@@ -168,6 +168,7 @@ async function mulaiHalamanJelajah() {
     }
 
     if (kontroler3D) {
+      window.kontrolJelajah3D = kontroler3D;
       if (typeof kontroler3D.aturModeWaktu === 'function') {
         kontroler3D.aturModeWaktu(adalahSiangAwal ? 'siang' : 'malam');
       }

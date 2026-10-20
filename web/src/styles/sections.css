@@ -5492,14 +5492,17 @@ body.tema-siang .btn-tutup-silang:hover {
   color: #1C1917;
 }
 
-/* 4. Grid Tiga Kolom: Kolom Kiri Paling Lebar, Kolom Tengah Proporsional Lega, Kolom Kanan Analisis */
-.cangkang-3kolom-grid {
+/* ==============================================================
+   KONSEP A: LAYOUT 2 ZONA (PETA 3D LEGA 70% + 1 PANEL KANAN ELEGAN)
+   ============================================================== */
+.cangkang-layout-2zona {
   display: grid;
-  grid-template-columns: 1fr minmax(380px, 420px) minmax(270px, 310px);
-  gap: 18px;
+  grid-template-columns: 1fr clamp(390px, 32vw, 450px);
+  gap: 20px;
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  padding: 0 16px 16px 16px;
 }
 
 .cangkang-kolom {
@@ -5509,20 +5512,17 @@ body.tema-siang .btn-tutup-silang:hover {
   box-sizing: border-box;
 }
 
-/* ==============================================================
-   KOLOM KIRI: Panggung Part Provinsi (Paling Lebar & Bebas Hambatan)
-   ============================================================== */
+/* ZONA KIRI: Panggung Part 3D Provinsi (Lega, Bersih, Penuh Kebebasan) */
 .cangkang-kolom--kiri {
   background: transparent;
   border: none;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   position: relative;
   pointer-events: none;
 }
 
-/* Panggung 3D: Area pandang keping provinsi statis POV dari atas */
 .cangkang-kiri-viewarea {
   flex: 1;
   min-height: 280px;
@@ -5534,7 +5534,7 @@ body.tema-siang .btn-tutup-silang:hover {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 8px 12px;
-  pointer-events: none; /* Kursor bebas tembus */
+  pointer-events: none;
   user-select: none;
 }
 
@@ -5571,165 +5571,140 @@ body.tema-siang .cangkang-kiri-hud-pill {
   box-shadow: 0 0 8px #4682DC;
 }
 
-/* Blok Wilayah Administratif Kompak di Kiri Bawah (Tidak Menghalangi Peta) */
-.cangkang-kiri-wilayah-blok {
-  pointer-events: auto;
-  width: 290px;
-  max-width: 100%;
-  max-height: 190px;
-  background: rgba(14, 18, 28, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 10px 14px;
+/* ==============================================================
+   ZONA KANAN: SATU PANEL SAMPING ELEGAN BERBASIS TAB (KONSEP A)
+   ============================================================== */
+.cangkang-panel-kanan-tunggal {
+  background: rgba(18, 14, 22, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  margin-top: auto;
+  min-height: 0;
+  overflow: hidden;
+  pointer-events: auto;
 }
 
-body.tema-siang .cangkang-kiri-wilayah-blok {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+body.tema-siang .cangkang-panel-kanan-tunggal {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 40px rgba(60, 40, 20, 0.12);
 }
 
-.cangkang-kiri-wilayah-kepala {
+/* Tab Navigation Switcher */
+.cangkang-tab-nav {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
 }
 
-.cangkang-kiri-wilayah-kepala h4 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 700;
+body.tema-siang .cangkang-tab-nav {
+  background: rgba(0, 0, 0, 0.03);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+.cangkang-tab-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--kertas-redup);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.cangkang-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
   color: var(--kertas);
 }
 
-body.tema-siang .cangkang-kiri-wilayah-kepala h4 {
+body.tema-siang .cangkang-tab-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
   color: #1C1917;
 }
 
-.cangkang-kiri-wilayah-counter {
-  font-size: 0.7rem;
-  font-weight: 700;
+.cangkang-tab-btn.is-aktif {
+  background: rgba(230, 177, 74, 0.18);
+  border-color: rgba(230, 177, 74, 0.35);
   color: var(--aksen);
-  background: rgba(230, 177, 74, 0.1);
-  padding: 2px 7px;
-  border-radius: 999px;
 }
 
-.cangkang-kiri-daftar-kab {
+body.tema-siang .cangkang-tab-btn.is-aktif {
+  background: #FFFFFF;
+  border-color: rgba(184, 115, 20, 0.28);
+  color: #8C5304;
+  box-shadow: 0 2px 8px rgba(60, 40, 20, 0.08);
+}
+
+.cangkang-tab-counter {
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+}
+
+.cangkang-tab-btn.is-aktif .cangkang-tab-counter {
+  background: rgba(230, 177, 74, 0.25);
+  color: var(--aksen);
+}
+
+body.tema-siang .cangkang-tab-btn.is-aktif .cangkang-tab-counter {
+  background: rgba(184, 115, 20, 0.15);
+  color: #8C5304;
+}
+
+/* Container Tab Body Scrollable */
+.cangkang-tab-konten-wadah {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-right: 4px;
-}
-
-.cangkang-kab-item {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 5px 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-}
-
-body.tema-siang .cangkang-kab-item {
-  background: #FFFFFF;
-  border-color: rgba(0, 0, 0, 0.06);
-}
-
-.cangkang-kab-teks {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  font-size: 0.75rem;
-}
-
-.cangkang-kab-nama {
-  font-weight: 600;
-  color: var(--kertas);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-body.tema-siang .cangkang-kab-nama {
-  color: #1C1917;
-}
-
-.cangkang-kab-jml {
-  font-size: 0.7rem;
-  color: var(--kertas-redup);
-  flex-shrink: 0;
-}
-
-.cangkang-kab-bar {
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-body.tema-siang .cangkang-kab-bar {
-  background: rgba(0, 0, 0, 0.06);
-}
-
-.cangkang-kab-bar-isi {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 0.4s ease;
-}
-
-.cangkang-wilayah-kosong {
-  padding: 14px 8px;
-  text-align: center;
-  color: var(--kertas-redup);
-  font-size: 0.78rem;
-}
-
-/* ==============================================================
-   KOLOM TENGAH: Kartu Budaya Bergaya Gambar 2 (Ramping & Proporsional)
-   ============================================================== */
-.cangkang-kolom--tengah {
-  pointer-events: auto;
-  background: rgba(14, 18, 28, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   padding: 14px 16px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  scroll-behavior: smooth;
 }
 
-body.tema-siang .cangkang-kolom--tengah {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+.cangkang-tab-konten-wadah::-webkit-scrollbar {
+  width: 6px;
 }
 
-.cangkang-tengah-header {
+.cangkang-tab-konten-wadah::-webkit-scrollbar-thumb {
+  background: rgba(230, 177, 74, 0.35);
+  border-radius: 999px;
+}
+
+.cangkang-tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cangkang-tab-pane[hidden] {
+  display: none !important;
+}
+
+.cangkang-pane-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 10px;
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-body.tema-siang .cangkang-tengah-header {
+body.tema-siang .cangkang-pane-header {
   border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -5746,7 +5721,7 @@ body.tema-siang .cangkang-tengah-header {
 .cangkang-judul-tengah {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--kertas);
 }
@@ -5764,128 +5739,241 @@ body.tema-siang .cangkang-judul-tengah {
   border-radius: 999px;
 }
 
-.cangkang-tengah-scroll-feed {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding-right: 4px;
-  scroll-behavior: smooth;
-}
-
-.cangkang-masonry-2kolom {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* Gaya Kartu Gambar 2 (Pastel Gradient, Rata Tengah, Inset Foto Rounded — Proporsional & Lega) */
-.kartu-gambar2 {
-  width: 100%;
-  border-radius: 20px;
-  padding: 14px 16px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+/* ==============================================================
+   KARTU BUDAYA KOMPAK (MEDIA LIST ITEM) — LEGA & MUAT 4-5 SEKALIGUS
+   ============================================================== */
+.cangkang-daftar-budaya-kompak {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kartu-budaya-kompak {
+  display: flex;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
 }
 
-.kartu-gambar2:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
+.kartu-budaya-kompak:hover {
+  background: rgba(230, 177, 74, 0.12);
+  border-color: rgba(230, 177, 74, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
-.kartu-gambar2-foto-frame {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 155px;
-  border-radius: 14px;
+body.tema-siang .kartu-budaya-kompak {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.tema-siang .kartu-budaya-kompak:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(184, 115, 20, 0.3);
+  box-shadow: 0 6px 16px rgba(60, 40, 20, 0.08);
+}
+
+.kartu-kompak-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.14);
+  flex-shrink: 0;
+  position: relative;
+  background: rgba(0, 0, 0, 0.18);
 }
 
-.kartu-gambar2-img {
+.kartu-kompak-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
 }
 
-.kartu-gambar2:hover .kartu-gambar2-img {
-  transform: scale(1.05);
+.kartu-kompak-jenis-badge {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #F8F4EC;
+  letter-spacing: 0.04em;
 }
 
-.kartu-gambar2-konten {
-  text-align: center;
-  color: #1F1A17; /* Teks gelap tajam kontras >= 4.5:1 */
+.kartu-kompak-info {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.kartu-kompak-meta {
+  display: flex;
   align-items: center;
   gap: 5px;
+  font-size: 0.68rem;
 }
 
-.kartu-gambar2-kicker {
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #574A40;
-  text-transform: uppercase;
-}
-
-.kartu-gambar2-judul {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
+.kartu-kompak-kicker {
   font-weight: 700;
-  line-height: 1.3;
-  color: #1F1A17;
+  color: var(--aksen);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.kartu-gambar2-paragraf {
+body.tema-siang .kartu-kompak-kicker {
+  color: #8C5304;
+}
+
+.kartu-kompak-titik {
+  opacity: 0.4;
+  font-size: 0.6rem;
+}
+
+.kartu-kompak-kab {
+  color: var(--kertas-redup);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.tema-siang .kartu-kompak-kab {
+  color: #6C5946;
+}
+
+.kartu-kompak-judul {
   margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.48;
-  color: #3A322C;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--kertas);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.tema-siang .kartu-kompak-judul {
+  color: #1A1613;
+}
+
+.kartu-kompak-sinopsis {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  color: var(--kertas-redup);
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.kartu-gambar2-badge-gabung {
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: rgba(0, 0, 0, 0.08);
-  color: #1F1A17;
-  padding: 2px 7px;
-  border-radius: 999px;
+body.tema-siang .kartu-kompak-sinopsis {
+  color: #5C4A3A;
 }
 
-.kartu-gambar2-footer {
+.kartu-kompak-bawah {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 2px;
 }
 
-.kartu-gambar2-btn-detail {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: #1F1A17;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--dur-cepat);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+.kartu-kompak-gabung {
+  font-size: 0.66rem;
+  color: var(--aksen);
 }
 
-.kartu-gambar2-btn-detail:hover {
-  background: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  transform: translateY(-1px);
+.kartu-kompak-link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--aksen);
+  margin-left: auto;
+}
+
+body.tema-siang .kartu-kompak-link {
+  color: #8C5304;
+}
+
+/* ==============================================================
+   TAB 3: WILAYAH ADMINISTRATIF KABUPATEN/KOTA
+   ============================================================== */
+.cangkang-tab-daftar-kab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cangkang-kab-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+
+body.tema-siang .cangkang-kab-item {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.cangkang-kab-teks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+}
+
+.cangkang-kab-nama {
+  font-weight: 600;
+  color: var(--kertas);
+}
+
+body.tema-siang .cangkang-kab-nama {
+  color: #1C1917;
+}
+
+.cangkang-kab-jml {
+  font-size: 0.72rem;
+  color: var(--kertas-redup);
+  flex-shrink: 0;
+}
+
+.cangkang-kab-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+body.tema-siang .cangkang-kab-bar {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.cangkang-kab-bar-isi {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.cangkang-wilayah-kosong {
+  padding: 24px 12px;
+  text-align: center;
+  color: var(--kertas-redup);
+  font-size: 0.8rem;
 }
 
 /* Keadaan Kosong Jujur */

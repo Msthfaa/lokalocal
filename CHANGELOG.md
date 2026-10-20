@@ -1,5 +1,34 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-20] Perbaikan Warna Hijau Peta, Penghapusan Pin 3D, dan Redesain Mode Detail (Konsep A: Satu Panel Kanan Berbasis Tab)
+- **Permintaan Pengguna:**
+  1. Memperbaiki keping pulau yang berubah menjadi warna hijau pekat setelah dipilih lalu kembali ke peta.
+  2. Menghapus pin-pin penanda melayang (*3D waypoints*) di beberapa tempat pulau pada mode Jelajah 3D.
+  3. Merombak tata letak dan ukuran kartu pada halaman detail keping provinsi yang dinilai "sangat ramai dan bengkak", dengan menerapkan pilihan pengguna: **Konsep A** (*Satu Panel Kanan Berbasis Tab + Kartu Budaya Kompak Horizontal*).
+- **Tindakan & Perubahan:**
+  - `web/src/sections/hero3d/jelajah3d.js`:
+    - Mengoreksi penanganan pemulihan material saat keping pulau batal dipilih atau kembali dari mode detail: selalu merestore `mesh.material.map = mesh.userData.teksturTopo` dan mereset `mesh.material.color.set(0xffffff)` agar tidak terdistorsi warna hijau pekat (`#6EC443`).
+    - Menghapus ketergantungan `buatPengelolaWaypoints`, integrasi hover/click raycaster pin budaya 3D, dan update loop waypoints.
+  - Menghapus modul `web/src/sections/hero3d/waypoints-budaya.js` secara tuntas (`git rm`).
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - Merombak total arsitektur DOM cangkang detail dari 3 kolom raksasa (65% layar) menjadi **Layout 2 Zona**:
+      - **Zona Kiri (70% Layar):** Panggung 3D keping provinsi tampil lapang, megah, dan bebas hambatan tanpa kotak kabupaten di kiri bawah. Framing keping diperbesar (`targetPx: 460px`).
+      - **Zona Kanan (`clamp(390px, 32vw, 450px)`):** Satu panel ramping berbalut *glassmorphism* dengan 3 Tab Switcher:
+        - **Tab 1 — Warisan Budaya:** Kartu ringkas horizontal berukuran proporsional (thumbnail 72x72 px di kiri, kicker jenis & kabupaten, judul 1 baris, sinopsis 1 baris, link "Baca Selengkapnya"). Memuat 4–5 kartu budaya sekaligus dalam satu layar tanpa sesak.
+        - **Tab 2 — Data & Angka:** 2 kartu metrik total & peringkat nasional, diagram batang persentase 5 jenis OPK sesuai `per_jenis_opk`, rincian Cagar Budaya/Lembaga/Sarana (`per_jenis_cb`), dan catatan kejujuran data SPKT.
+        - **Tab 3 — Kabupaten:** Daftar kabupaten/kota kontributor terdata beserta bar persentase kontribusinya.
+  - `web/src/styles/sections.css`:
+    - Mengganti styling `.cangkang-3kolom-grid` dan kartu lama dengan `.cangkang-layout-2zona`, `.cangkang-panel-kanan-tunggal`, `.cangkang-tab-nav`, `.cangkang-tab-btn`, `.cangkang-daftar-budaya-kompak`, `.kartu-budaya-kompak`, dan `.cangkang-tab-daftar-kab`.
+    - Mengintegrasikan transisi tab yang responsif dan mulus di desktop maupun perangkat seluler.
+- **Hasil Pengujian:**
+  - Verifikasi otomatis via browser headless Edge:
+    - `scratch/verify-detail-konsep-a-tab1.png`: Keping 3D tampil luas di kiri, kartu budaya horizontal kompak dan rapi di panel kanan.
+    - `scratch/verify-detail-konsep-a-tab2.png`: Data metrik dan komposisi 5 jenis OPK tampil akurat 100% selaras dengan data SPKT.
+    - `scratch/verify-detail-konsep-a-tab3.png`: Daftar kabupaten/kota terdata tampil terstruktur.
+    - `scratch/verify-peta-kembali-no-green.png`: Pulau kembali ke warna relief topografi alami tanpa noda hijau pekat dan bersih dari pin penanda 3D.
+  - `npm run build` sukses 0 error (5.45s).
+  - `node tools/validate.mjs` lolos 100% (0 error).
+
 ## [2026-10-20] Pembaruan Kartu Paspor (Bento Grid Tanpa Ruang Kosong) & Stempel Landmark Khas 38 Provinsi
 - **Permintaan Pengguna:**
   - Memperbaiki kartu identitas paspor (Gambar 1) agar padat, seimbang, dan tidak ada ruang kosong hitam/mati di sisi kanan.
