@@ -117,28 +117,27 @@
   z-index: 0;
   overflow: hidden;
   background-color: transparent !important;
-  -webkit-mask-image: none !important;
-  mask-image: none !important;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 70%,
+    rgba(0, 0, 0, 0.95) 75%,
+    rgba(0, 0, 0, 0.8) 82%,
+    rgba(0, 0, 0, 0.5) 90%,
+    rgba(0, 0, 0, 0.2) 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 70%,
+    rgba(0, 0, 0, 0.95) 75%,
+    rgba(0, 0, 0, 0.8) 82%,
+    rgba(0, 0, 0, 0.5) 90%,
+    rgba(0, 0, 0, 0.2) 96%,
+    transparent 100%
+  );
   will-change: opacity, transform;
-}
-
-/* Gradasi Bawah Hero — Muncul Halus Hanya Saat Mulai Discroll */
-.s1-gradasi-bawah {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: clamp(140px, 32vh, 320px);
-  pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(180deg, transparent 0%, rgba(14, 11, 9, 0.40) 40%, rgba(14, 11, 9, 0.96) 100%);
-  opacity: 0;
-  will-change: opacity;
-  transition: opacity 0.12s linear;
-}
-
-[data-tema="terang"] .s1-gradasi-bawah {
-  background: linear-gradient(180deg, transparent 0%, rgba(250, 246, 238, 0.45) 40%, rgba(250, 246, 238, 1) 100%);
 }
 
 /* Latar Belakang Video-like Slideshow Alam & Budaya */

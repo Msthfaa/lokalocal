@@ -53,35 +53,27 @@ export function inisialisasiBagianHero({ statistik }) {
   if (elPembuka) {
     const elTengah = elPembuka.querySelector('.hero-cinema-tengah');
     const wadahLatar = document.getElementById('s1-latar-peta');
-    const elGradasiBawah = document.getElementById('s1-gradasi-bawah');
     let ticking = false;
 
     const perbaruiFadeScroll = () => {
       const y = window.scrollY || window.pageYOffset || 0;
       
-      // 1. Teks dan tombol judul tengah menghilang mulus seiring scroll (0px - 240px)
-      const batasTeks = Math.min(window.innerHeight * 0.45, 240);
+      // 1. Teks dan tombol judul tengah meluncur lembut dan menghilang seiring scroll (0px - 260px)
+      const batasTeks = Math.min(window.innerHeight * 0.45, 260);
       const progresTeks = Math.min(1, Math.max(0, y / batasTeks));
-      const opasitasTeks = Math.max(0, 1 - progresTeks);
+      const opasitasTeks = Math.max(0, 1 - Math.pow(progresTeks, 1.1));
 
       if (elTengah) {
         elTengah.style.opacity = opasitasTeks.toFixed(3);
         elTengah.style.transform = `translateY(${(-36 * progresTeks).toFixed(1)}px)`;
-        elTengah.style.pointerEvents = opasitasTeks < 0.12 ? 'none' : 'auto';
+        elTengah.style.pointerEvents = opasitasTeks < 0.1 ? 'none' : 'auto';
       }
 
-      // 2. Gradasi bawah muncul dinamis saat mulai scroll (0px -> opasitas 0, scroll meningkat -> gradasi muncul menutup lembut)
-      if (elGradasiBawah) {
-        const batasGradasi = Math.min(window.innerHeight * 0.50, 300);
-        const progresGradasi = Math.min(1, Math.max(0, y / batasGradasi));
-        elGradasiBawah.style.opacity = Math.pow(progresGradasi, 0.85).toFixed(3);
-      }
-
-      // 3. Latar belakang foto sinematik memudar bersih dan mulus saat discroll (0px - 440px)
+      // 2. Latar belakang foto sinematik memudar bersih dan sangat halus saat discroll (0px - 480px)
       if (wadahLatar) {
-        const batasLatar = Math.min(window.innerHeight * 0.72, 440);
+        const batasLatar = Math.min(window.innerHeight * 0.75, 480);
         const progresLatar = Math.min(1, Math.max(0, y / batasLatar));
-        const opasitasLatar = Math.max(0, 1 - Math.pow(progresLatar, 1.25));
+        const opasitasLatar = Math.max(0, 1 - Math.pow(progresLatar, 1.2));
         wadahLatar.style.opacity = opasitasLatar.toFixed(3);
         wadahLatar.style.visibility = opasitasLatar <= 0.005 ? 'hidden' : 'visible';
       }
