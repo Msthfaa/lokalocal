@@ -1,5 +1,25 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-20] Pembaruan Kartu Paspor (Bento Grid Tanpa Ruang Kosong) & Stempel Landmark Khas 38 Provinsi
+- **Permintaan Pengguna:**
+  - Memperbaiki kartu identitas paspor (Gambar 1) agar padat, seimbang, dan tidak ada ruang kosong hitam/mati di sisi kanan.
+  - Memperbarui stempel paspor (Gambar 2) agar menampilkan simbol budaya/landmark khas masing-masing daerah ketika daerah tersebut telah diselesaikan/dikoleksi.
+- **Tindakan & Perubahan:**
+  - `web/src/sections/paspor.js` & `web/src/styles/sections.css`:
+    - Merestrukturisasi kartu identitas paspor (`.paspor-identitas-kartu`) menjadi tata letak Bento Grid 2-kolom:
+      - Baris Header: Lambang Globe penjelajah, sublabel resmi dokumen, judul lembar paspor 38 wilayah, dan nomor registrasi sah (`NO. REG: PKN-38-00X`).
+      - Kolom Kiri (~240px): Kotak pasfoto resmi penjelajah budaya berstempel pos, avatar busana adat, nama gelar karakter, dan tombol interaktif ganti avatar.
+      - Kolom Kanan: Rincian gelar penjelajah (`Level`), statistik stempel SPKT & Penjaga, narasi kuratorial beraksen border emas, serta bilah progres terhimpun berdampingan langsung dengan tombol ekspor PNG. Menghapus total kekosongan ruang di sisi kanan kartu.
+    - Pada petak grid stempel 38 provinsi, menambahkan elemen label ikon khas daerah (`.paspor-petak-ikon-khas`) di bawah nama provinsi yang aktif menyala saat stempel berhasil dikoleksi.
+  - `web/src/patterns/generate.js`:
+    - Membuat kamus `DATA_IKON_PROVINSI` yang memetakan seluruh 38 provinsi Indonesia ke ikon budaya khas yang autentik (misal: Rencong untuk Aceh, Rumah Bolon untuk Sumut, Rumah Gadang untuk Sumbar, Monas untuk DKI Jakarta, Gedung Sate untuk Jabar, Candi Borobudur untuk Jateng, Singo Barong Reog untuk Jatim, Siger untuk Lampung, Ampera untuk Sumsel, Candi Bentar untuk Bali, Tongkonan untuk Sulsel, Mbaru Niang untuk NTT, Honai untuk Papua Pegunungan, dll.).
+    - Memperbarui `buatStempelProvinsiSvg` untuk merender stempel pos tinta resmi berisi: lingkaran gerigi pos luar, cincin dalam, siluet vektor landmark khas daerah di tengah, pita nama ikon di bawah, serta kode wilayah di atas bintang (`★ [kode] ★`).
+- **Hasil:**
+  - Kartu identitas paspor tampil penuh, padat, berbobot, dan estetik tanpa area kosong.
+  - Setiap stempel provinsi yang diperoleh kini menyajikan ikon budaya khas daerah masing-masing secara spesifik dan bermakna kultural.
+  - `npm run build` sukses 0 error (3.47s), validasi data `validate.mjs` lolos 100% (0 error).
+
+
 ## [2026-10-20] Penghapusan Animasi Tirai Pembuka Wayang Gunungan
 - **Permintaan Pengguna:**
   - Menghapus animasi pembuka overlay tirai Gunungan Wayang emas (Kayon) yang membelah di awal kunjungan situs.
