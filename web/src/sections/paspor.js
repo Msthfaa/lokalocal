@@ -4,7 +4,7 @@
  * Sesuai WEB_SPEC.md Bagian 8.1 & Bagian 7.2 (A-11).
  */
 
-import { buatStempelProvinsiSvg } from '../patterns/generate.js';
+import { buatStempelProvinsiSvg, DATA_IKON_PROVINSI } from '../patterns/generate.js';
 import { formatAngka } from '../util/format.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 import { tampilkanToast } from '../ui/toast.js';
@@ -193,15 +193,43 @@ export function inisialisasiBagianPaspor({
     wadahUtama.textContent = '';
 
     // =========================================================================
+    // =========================================================================
     // 1. Kartu Identitas Paspor (Passport Identity Card / Buku Dokumen)
     // =========================================================================
     const kartuIdentitas = document.createElement('div');
     kartuIdentitas.className = 'paspor-identitas-kartu';
 
-    const barisAtasId = document.createElement('div');
-    barisAtasId.className = 'paspor-identitas-baris-atas';
+    // 1A. Baris Header Dokumen Paspor
+    const headerDokumen = document.createElement('div');
+    headerDokumen.className = 'paspor-identitas-header-bar';
 
-    // Foto Resmi Penjelajah Budaya (Chibi Avatar)
+    const grupMerek = document.createElement('div');
+    grupMerek.className = 'paspor-identitas-merek-grup';
+    grupMerek.innerHTML = `
+      <span class="paspor-identitas-lambang" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      </span>
+      <div>
+        <p class="paspor-identitas-sublabel">Dokumen Resmi Penjelajah Kebudayaan</p>
+        <h3 class="paspor-identitas-judul">Lembar Paspor 38 Wilayah Nusantara</h3>
+      </div>
+    `;
+
+    const noDokumenBadge = document.createElement('div');
+    noDokumenBadge.className = 'paspor-identitas-serial';
+    noDokumenBadge.innerHTML = `<span>NO. REG: PKN-38-00${avatarAktif.id} • DOKUMEN SAH</span>`;
+
+    headerDokumen.append(grupMerek, noDokumenBadge);
+
+    // 1B. Badan Kartu 2-Kolom (Kiri: Foto Profil, Kanan: Detail Gelar & Progres)
+    const badanDokumen = document.createElement('div');
+    badanDokumen.className = 'paspor-identitas-badan';
+
+    // Kolom Kiri: Foto Resmi Penjelajah Budaya (Chibi Avatar)
     const boxAvatar = document.createElement('div');
     boxAvatar.className = 'paspor-avatar-foto-box';
     boxAvatar.setAttribute('role', 'button');
@@ -240,21 +268,13 @@ export function inisialisasiBagianPaspor({
       }
     });
 
-    const grupMerek = document.createElement('div');
-    grupMerek.className = 'paspor-identitas-merek-grup';
-    grupMerek.innerHTML = `
-      <span class="paspor-identitas-lambang">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-      </span>
-      <div>
-        <p class="paspor-identitas-sublabel">Dokumen Resmi Penjelajah Kebudayaan</p>
-        <h3 class="paspor-identitas-judul">Lembar Paspor 38 Wilayah</h3>
-      </div>
-    `;
+    // Kolom Kanan: Rincian Gelar, Narasi & Progres Bar
+    const kolomKanan = document.createElement('div');
+    kolomKanan.className = 'paspor-identitas-detail-kolom';
+
+    // Baris Gelar & Statistik Stempel
+    const barisGelar = document.createElement('div');
+    barisGelar.className = 'paspor-detail-baris-gelar';
 
     const badgeGelar = document.createElement('div');
     badgeGelar.className = 'paspor-gelar-badge';
@@ -264,30 +284,9 @@ export function inisialisasiBagianPaspor({
       <span class="paspor-gelar-tahap">${infoGelar.tingkat}</span>
     `;
 
-    barisAtasId.append(boxAvatar, grupMerek, badgeGelar);
-
-    const narasiGelar = document.createElement('p');
-    narasiGelar.className = 'paspor-identitas-deskripsi';
-    narasiGelar.textContent = infoGelar.deskripsi;
-
-    // Baris Metrik & Progres Bar Emas
-    const blokProgres = document.createElement('div');
-    blokProgres.className = 'paspor-progres-blok';
-
-    const barisInfoProgres = document.createElement('div');
-    barisInfoProgres.className = 'paspor-progres-info';
-
-    const teksKoleksi = document.createElement('div');
-    teksKoleksi.className = 'paspor-progres-teks-kiri';
-    teksKoleksi.innerHTML = `
-      <strong class="paspor-angka-besar">${formatAngka(jumlahTerkumpul)}</strong>
-      <span class="paspor-penyebut">/${formatAngka(totalProvinsi)} Provinsi Terhimpun</span>
-      <span class="paspor-persen-badge">${persen}%</span>
-    `;
-
-    const teksRincian = document.createElement('div');
-    teksRincian.className = 'paspor-progres-rincian';
-    teksRincian.innerHTML = `
+    const ringkasanKoleksi = document.createElement('div');
+    ringkasanKoleksi.className = 'paspor-ringkasan-koleksi';
+    ringkasanKoleksi.innerHTML = `
       <span class="paspor-rincian-item is-tercatat">
         <span class="paspor-titik-status" aria-hidden="true"></span>
         <strong>${formatAngka(jumlahBiasa)}</strong> Stempel SPKT
@@ -298,26 +297,29 @@ export function inisialisasiBagianPaspor({
       </span>
     `;
 
-    barisInfoProgres.append(teksKoleksi, teksRincian);
+    barisGelar.append(badgeGelar, ringkasanKoleksi);
 
-    const trekBar = document.createElement('div');
-    trekBar.className = 'paspor-progres-trek';
-    trekBar.setAttribute('role', 'progressbar');
-    trekBar.setAttribute('aria-valuenow', String(persen));
-    trekBar.setAttribute('aria-valuemin', '0');
-    trekBar.setAttribute('aria-valuemax', '100');
-    trekBar.setAttribute('aria-label', `Kemajuan paspor: ${persen}% (${jumlahTerkumpul} dari ${totalProvinsi} provinsi)`);
+    // Narasi Gelar
+    const narasiGelar = document.createElement('p');
+    narasiGelar.className = 'paspor-identitas-deskripsi';
+    narasiGelar.textContent = `"${infoGelar.deskripsi}"`;
 
-    const isiBar = document.createElement('div');
-    isiBar.className = 'paspor-progres-isi';
-    isiBar.style.width = `${persen}%`;
-    trekBar.appendChild(isiBar);
+    // Baris Bawah: Progres Bar & Tombol Cetak
+    const barisBawah = document.createElement('div');
+    barisBawah.className = 'paspor-detail-baris-bawah';
 
-    blokProgres.append(barisInfoProgres, trekBar);
-
-    // Baris Tombol Aksi Cetak Kartu Pengelana Budaya
-    const barisAksiKartu = document.createElement('div');
-    barisAksiKartu.className = 'paspor-identitas-aksi-baris';
+    const kotakProgres = document.createElement('div');
+    kotakProgres.className = 'paspor-progres-kotak-kiri';
+    kotakProgres.innerHTML = `
+      <div class="paspor-progres-meta-teks">
+        <strong>${formatAngka(jumlahTerkumpul)}</strong>
+        <span class="paspor-penyebut">/${formatAngka(totalProvinsi)} Provinsi Terhimpun</span>
+        <span class="paspor-persen-badge">${persen}%</span>
+      </div>
+      <div class="paspor-progres-trek" role="progressbar" aria-valuenow="${persen}" aria-valuemin="0" aria-valuemax="100" aria-label="Kemajuan paspor: ${persen}%">
+        <div class="paspor-progres-isi" style="width: ${persen}%;"></div>
+      </div>
+    `;
 
     const btnCetakKartu = document.createElement('button');
     btnCetakKartu.type = 'button';
@@ -330,7 +332,7 @@ export function inisialisasiBagianPaspor({
         <path d="M15 12h2"></path>
         <path d="M7 16h10"></path>
       </svg>
-      <span>Cetak Kartu Pengelana Budaya (PNG)</span>
+      <span>Cetak Kartu Pengelana (PNG)</span>
     `;
     btnCetakKartu.addEventListener('click', () => {
       import('../features/paspor-canvas.js').then(({ bukaModalCetakKartu }) => {
@@ -338,9 +340,12 @@ export function inisialisasiBagianPaspor({
       });
     });
 
-    barisAksiKartu.appendChild(btnCetakKartu);
+    barisBawah.append(kotakProgres, btnCetakKartu);
 
-    kartuIdentitas.append(barisAtasId, narasiGelar, blokProgres, barisAksiKartu);
+    kolomKanan.append(barisGelar, narasiGelar, barisBawah);
+    badanDokumen.append(boxAvatar, kolomKanan);
+
+    kartuIdentitas.append(headerDokumen, badanDokumen);
     wadahUtama.appendChild(kartuIdentitas);
 
     // =========================================================================
@@ -485,11 +490,20 @@ export function inisialisasiBagianPaspor({
         bungkusVisual.appendChild(watermarkSeal);
       }
 
+      const infoIkon = DATA_IKON_PROVINSI[prov.kode] || {
+        ikon: 'Warisan Budaya',
+        labelBanner: 'BUDAYA'
+      };
+
       const labelNama = document.createElement('span');
       labelNama.className = 'paspor-petak-nama';
       labelNama.textContent = prov.nama;
 
-      petak.append(bungkusVisual, labelNama);
+      const labelIkonKhas = document.createElement('span');
+      labelIkonKhas.className = `paspor-petak-ikon-khas ${sudahDapat ? 'is-didapat' : 'is-terkunci'}`;
+      labelIkonKhas.textContent = infoIkon.ikon;
+
+      petak.append(bungkusVisual, labelNama, labelIkonKhas);
 
       // Badge status kecil penjelajah
       if (sudahDapat) {
