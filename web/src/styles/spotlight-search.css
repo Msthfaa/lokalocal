@@ -490,44 +490,40 @@
   gap: 5px;
 }
 
-/* Tombol Pemicu di Navbar (Redesain Elegan, Kontras Tinggi, dan Selaras dengan Pill Navbar) */
+/* Tombol Pemicu di Navbar (Kaca Pembesar Minimalis, Serasi dengan Tombol Tema) */
 .nav-tombol-cari {
   pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  min-height: 40px;
-  padding: 0.35rem 0.85rem 0.35rem 0.85rem;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   border-radius: 9999px;
-  background: linear-gradient(135deg, rgba(32, 26, 21, 0.75) 0%, rgba(18, 14, 12, 0.55) 100%) !important;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  color: #F5EFEB;
-  font-size: 0.85rem;
-  font-weight: 600;
+  background: linear-gradient(135deg, rgba(26, 21, 18, 0.50) 0%, rgba(14, 11, 9, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  color: var(--aksen);
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.12);
-  transition: transform 0.2s cubic-bezier(.22, 1, .36, 1),
-              background 0.2s ease,
-              border-color 0.2s ease,
-              color 0.2s ease,
-              box-shadow 0.2s ease;
-  white-space: nowrap;
-}
-
-.nav-tombol-cari svg {
-  color: var(--aksen, #E6B14A);
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .nav-tombol-cari:hover {
-  background: rgba(45, 36, 28, 0.95) !important;
-  border-color: var(--aksen, #E6B14A) !important;
-  color: #FFFFFF;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(230, 177, 74, 0.25) !important;
+  background: rgba(230, 177, 74, 0.25) !important;
+  border-color: var(--aksen);
+  color: var(--aksen-hover);
   transform: translateY(-1px);
+}
+
+.nav-tombol-cari svg {
+  width: 18px;
+  height: 18px;
+  color: var(--aksen, #E6B14A);
+  flex-shrink: 0;
+  stroke: currentColor;
+  transition: transform 0.2s ease;
 }
 
 .nav-tombol-cari:hover svg {
@@ -536,24 +532,18 @@
 
 /* Penataan Khusus Mode Terang (High Contrast & Solid Frosted Canvas) */
 [data-tema="terang"] .nav-tombol-cari {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(253, 249, 243, 0.86) 100%) !important;
-  backdrop-filter: blur(20px) saturate(190%);
-  -webkit-backdrop-filter: blur(20px) saturate(190%);
-  border: 1.5px solid rgba(184, 115, 20, 0.35) !important;
-  color: #1A1613 !important;
-  box-shadow: 0 4px 14px rgba(60, 40, 20, 0.08), 0 1px 3px rgba(60, 40, 20, 0.04), inset 0 1px 1px #FFFFFF !important;
-}
-
-[data-tema="terang"] .nav-tombol-cari svg {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.20) 100%) !important;
+  backdrop-filter: blur(14px) saturate(190%);
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.50) !important;
   color: #B87314;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 [data-tema="terang"] .nav-tombol-cari:hover {
-  background: #FFFFFF !important;
-  border-color: #B87314 !important;
-  color: #B87314 !important;
-  box-shadow: 0 6px 20px rgba(184, 115, 20, 0.18), 0 0 0 1px rgba(184, 115, 20, 0.25) !important;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.35) 100%) !important;
+  border-color: #B87314;
+  color: #B87314;
 }
 
 .nav-tombol-cari-teks {
