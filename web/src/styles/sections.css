@@ -122,6 +122,25 @@
   will-change: opacity, transform;
 }
 
+/* Gradasi Bawah Hero — Muncul Halus Hanya Saat Mulai Discroll */
+.s1-gradasi-bawah {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(140px, 32vh, 320px);
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(180deg, transparent 0%, rgba(14, 11, 9, 0.40) 40%, rgba(14, 11, 9, 0.96) 100%);
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 0.12s linear;
+}
+
+[data-tema="terang"] .s1-gradasi-bawah {
+  background: linear-gradient(180deg, transparent 0%, rgba(250, 246, 238, 0.45) 40%, rgba(250, 246, 238, 1) 100%);
+}
+
 /* Latar Belakang Video-like Slideshow Alam & Budaya */
 .hero-cinema-wadah {
   position: absolute;

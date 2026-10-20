@@ -49,10 +49,11 @@ export function inisialisasiBagianHero({ statistik }) {
     }
   });
 
-  // Animasi menghilang perlahan secara transparan saat discroll ke bawah (Scroll-driven Fade Out)
+  // Animasi dinamis saat discroll: gradasi bawah muncul lembut + konten & foto memudar
   if (elPembuka) {
     const elTengah = elPembuka.querySelector('.hero-cinema-tengah');
     const wadahLatar = document.getElementById('s1-latar-peta');
+    const elGradasiBawah = document.getElementById('s1-gradasi-bawah');
     let ticking = false;
 
     const perbaruiFadeScroll = () => {
@@ -69,11 +70,17 @@ export function inisialisasiBagianHero({ statistik }) {
         elTengah.style.pointerEvents = opasitasTeks < 0.12 ? 'none' : 'auto';
       }
 
-      // 2. Latar belakang foto sinematik memudar bersih dan mulus saat discroll (0px - 440px)
+      // 2. Gradasi bawah muncul dinamis saat mulai scroll (0px -> opasitas 0, scroll meningkat -> gradasi muncul menutup lembut)
+      if (elGradasiBawah) {
+        const batasGradasi = Math.min(window.innerHeight * 0.50, 300);
+        const progresGradasi = Math.min(1, Math.max(0, y / batasGradasi));
+        elGradasiBawah.style.opacity = Math.pow(progresGradasi, 0.85).toFixed(3);
+      }
+
+      // 3. Latar belakang foto sinematik memudar bersih dan mulus saat discroll (0px - 440px)
       if (wadahLatar) {
         const batasLatar = Math.min(window.innerHeight * 0.72, 440);
         const progresLatar = Math.min(1, Math.max(0, y / batasLatar));
-        // Kurva halus kuadratik agar awal scroll terasa sangat organik
         const opasitasLatar = Math.max(0, 1 - Math.pow(progresLatar, 1.25));
         wadahLatar.style.opacity = opasitasLatar.toFixed(3);
         wadahLatar.style.visibility = opasitasLatar <= 0.005 ? 'hidden' : 'visible';
