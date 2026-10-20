@@ -1,5 +1,19 @@
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-20] Penerapan Efek Glassmorphism Tembus Pandang pada Footer Website
+- **Permintaan Pengguna:**
+  - Memberikan latar belakang efek kaca (*glassmorphism*) pada footer website agar teks dan navigasi terpisah nyaman dari ilustrasi sketsa budaya di latar belakang.
+- **Dibuat/diubah:**
+  - `web/src/styles/layout.css`:
+    - Mengganti gaya transparan polos pada `.footer-utama` dengan panel kaca kristal tembus pandang (`backdrop-filter: blur(16px) saturate(160%)` pada mode gelap dan `blur(16px) saturate(170%)` pada mode terang).
+    - Menambahkan batas tepian atas specular kilau kristal (`border-top: 1px solid rgba(255, 255, 255, 0.14)` pada mode gelap dan `rgba(255, 255, 255, 0.85)` pada mode terang) serta pendaran aksen emas halus (`::before`).
+    - Menyelaraskan bayangan dalam (*inner specular shadow*) dan bayangan kedalaman (*ambient shadow*).
+    - Memperbarui modul pil atribut data resmi, tombol aksi footer, dan bilah bawah agar menyatu mulus di atas lapisan kaca.
+- **Hasil:**
+  - Footer kini memiliki efek kaca tembus pandang (*frosted glass*) yang estetik, sketsa candi dan rumah adat di latar belakang tetap terlihat puitis namun tidak lagi mengganggu keterbacaan teks dan navigasi.
+  - Validasi data dan build produksi (`npm run build`) sukses 100%.
+
+
 ## [2026-10-20] Penerapan Logo Resmi Lokalocal Baru (Garuda Surya Nusantara & Tipografi Emas)
 - **Permintaan Pengguna:**
   - Mengganti logo Lokalocal di website dengan gambar logo resmi baru yang dikirim oleh pengguna (emblem Garuda Cendrawasih Surya Nusantara berhiaskan pita Bhinneka Tunggal Ika serta tipografi emas "lokalocal").

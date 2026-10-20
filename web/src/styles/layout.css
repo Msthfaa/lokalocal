@@ -535,30 +535,34 @@ main {
 }
 
 /* ==========================================================================
-   Footer Utama Modern Sinematik
+   Footer Utama Modern Sinematik (Frosted Glassmorphism)
    ========================================================================== */
 .footer-utama {
-  background-color: transparent !important;
-  background: transparent !important;
-  border: none !important;
-  border-top: none !important;
-  border-bottom: none !important;
-  padding-block: var(--ruang-6) var(--ruang-5);
-  color: var(--kertas-redup);
-  font-size: var(--teks-kecil);
   position: relative;
   overflow: hidden;
-  transition: color 0.35s ease;
+  padding-block: var(--ruang-6) var(--ruang-5);
+  background: linear-gradient(180deg, rgba(20, 17, 14, 0.65) 0%, rgba(14, 11, 9, 0.88) 100%) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 -16px 44px rgba(0, 0, 0, 0.40) !important;
+  color: var(--kertas-redup);
+  font-size: var(--teks-kecil);
+  transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease;
 }
 
 [data-tema="terang"] .footer-utama {
-  background-color: transparent !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: none !important;
-  border-top: none !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68) 0%, rgba(250, 246, 238, 0.86) 100%) !important;
+  backdrop-filter: blur(16px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(170%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.85) !important;
   border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 -12px 36px rgba(50, 32, 15, 0.06) !important;
   color: #382E25;
 }
 
@@ -567,9 +571,21 @@ main {
   z-index: 2;
 }
 
-/* Hilangkan sekat gradasi solid agar transisi kaca bersih dan tembus pandang */
+/* Garis pendaran halus di puncak footer kaca */
 .footer-utama::before {
-  display: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(230, 177, 74, 0.5) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+[data-tema="terang"] .footer-utama::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(184, 115, 20, 0.4) 50%, transparent 100%);
 }
 
 .footer-grid-modern {
@@ -678,8 +694,8 @@ main {
 }
 
 [data-tema="terang"] .footer-atribusi-modern {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(246, 241, 231, 0.65) 100%);
-  border: 1px solid rgba(184, 115, 20, 0.22);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(246, 241, 231, 0.45) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 4px 16px rgba(40, 25, 15, 0.04);
   backdrop-filter: blur(14px) saturate(190%);
   -webkit-backdrop-filter: blur(14px) saturate(190%);
@@ -879,8 +895,11 @@ main {
 }
 
 [data-tema="terang"] .footer-aksi-tombol {
-  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.50);
+  border-color: rgba(255, 255, 255, 0.75);
   color: #4A4036;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 [data-tema="terang"] .footer-aksi-tombol svg {
@@ -948,7 +967,7 @@ main {
 }
 
 [data-tema="terang"] .footer-bawah-modern {
-  border-top-color: #E2D9CD;
+  border-top-color: rgba(28, 25, 23, 0.10);
 }
 
 .footer-bawah-kiri {
