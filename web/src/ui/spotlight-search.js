@@ -6,6 +6,7 @@
  */
 
 import { escapeHtml } from '../util/teks.js';
+import { PATH_DATA } from '../config.js';
 
 let dialogEl = null;
 let inputEl = null;
@@ -27,7 +28,7 @@ async function muatIndeksPencarian() {
   if (indeksData.length > 0 || sedangMemuatData) return;
   sedangMemuatData = true;
   try {
-    const res = await fetch('/data/index-pencarian.json');
+    const res = await fetch(PATH_DATA?.indexPencarian || './data/index-pencarian.json');
     if (res.ok) {
       indeksData = await res.json();
     }
@@ -148,7 +149,8 @@ function renderHasil(daftar, query = '') {
     return;
   }
 
-  // Render Item-item yang cocok
+  // Render seluruh item hasil pencarian secara kilat menggunakan DocumentFragment
+  const frag = document.createDocumentFragment();
   daftar.forEach((item, idx) => {
     const el = document.createElement('div');
     el.className = `spotlight-item ${idx === 0 ? 'terpilih' : ''}`;
@@ -198,8 +200,20 @@ function renderHasil(daftar, query = '') {
       eksekusiPilihan(item);
     });
 
-    hasilWadahEl.appendChild(el);
+    frag.appendChild(el);
   });
+
+  hasilWadahEl.appendChild(frag);
+
+  // Perbarui indikator jumlah hasil di footer
+  const infoEl = dialogEl?.querySelector('#spotlight-footer-info');
+  if (infoEl) {
+    if (!query.trim()) {
+      infoEl.textContent = `Menampilkan seluruh ${daftar.length} entri`;
+    } else {
+      infoEl.textContent = `Ditemukan ${daftar.length} hasil pencarian`;
+    }
+  }
 }
 
 /**
@@ -261,7 +275,9 @@ function jalankanPencarian(query) {
   if (daftarProvinsiData.length > 0 && (filterKategoriAktif === 'semua' || filterKategoriAktif === 'provinsi')) {
     hasilProvinsi = daftarProvinsiData
       .filter((p) => {
-        if (!q) return false;
+        if (!q) {
+          return filterKategoriAktif === 'provinsi';
+        }
         return (
           p.nama.toLowerCase().includes(q) ||
           p.kode.includes(q) ||
@@ -318,8 +334,8 @@ function jalankanPencarian(query) {
     });
   }
 
-  // Batasi agar performa tetap cepat dan responsif
-  const gabungan = [...hasilProvinsi, ...hasilBudaya].slice(0, 40);
+  // Tampilkan seluruh data yang sesuai (total 493 budaya + 38 provinsi)
+  const gabungan = [...hasilProvinsi, ...hasilBudaya];
   renderHasil(gabungan, q);
 }
 
@@ -379,9 +395,9 @@ export function inisialisasiSpotlightSearch({
 
         <div class="spotlight-filter-bar" role="toolbar" aria-label="Kategori pencarian">
           <button type="button" class="spotlight-filter-pil aktif" data-kategori="semua">Semua (493)</button>
-          <button type="button" class="spotlight-filter-pil" data-kategori="OPK">Tradisi & Seni (OPK)</button>
-          <button type="button" class="spotlight-filter-pil" data-kategori="CB">Cagar Budaya</button>
-          <button type="button" class="spotlight-filter-pil" data-kategori="provinsi">Wilayah Provinsi</button>
+          <button type="button" class="spotlight-filter-pil" data-kategori="OPK">Tradisi & Seni (428)</button>
+          <button type="button" class="spotlight-filter-pil" data-kategori="CB">Cagar Budaya (65)</button>
+          <button type="button" class="spotlight-filter-pil" data-kategori="provinsi">Wilayah Provinsi (38)</button>
         </div>
 
         <div id="spotlight-daftar-hasil" class="spotlight-hasil-wadah" role="listbox"></div>
@@ -398,8 +414,8 @@ export function inisialisasiSpotlightSearch({
               <span class="spotlight-kbd-badge">ESC</span> tutup
             </span>
           </div>
-          <div class="spotlight-footer-atribusi">
-            Data Resmi SPKT Kemendikbud
+          <div id="spotlight-footer-info" class="spotlight-footer-atribusi">
+            Menampilkan seluruh 493 entri
           </div>
         </div>
       </div>

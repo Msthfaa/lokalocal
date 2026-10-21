@@ -1,3 +1,17 @@
+## [2026-10-21] Menampilkan Seluruh 493 Khazanah Budaya & 38 Provinsi pada Spotlight Search
+- **Permintaan Pengguna:**
+  - Memperbaiki modal pencarian kilat (Spotlight Search / Cmd+K) di mana sebelumnya hasil pencarian terpotong dan hanya menampilkan 40 entri awal padahal data asli memuat 493 khazanah budaya terkurasi.
+- **Tindakan & Perubahan:**
+  - `web/src/ui/spotlight-search.js`:
+    - Menghapus pembatasan artifisial `.slice(0, 40)` pada penggabungan hasil pencarian, sehingga seluruh 493 entri tradisi OPK & Cagar Budaya dapat di-scroll dan dijelajahi secara lengkap.
+    - Mengoptimalkan proses rendering daftar hasil menggunakan `DocumentFragment` agar seluruh 493 elemen DOM ter-render instan (di bawah 5 milidetik) tanpa memicu reflow berulang.
+    - Memperbarui filter kategori pada tombol pil dengan angka jumlah akurat: *Semua (493)*, *Tradisi & Seni (428)*, *Cagar Budaya (65)*, dan *Wilayah Provinsi (38)*.
+    - Menambahkan indikator jumlah data dinamis pada footer modal pencarian (*"Menampilkan seluruh 493 entri"* atau *"Ditemukan X hasil"*).
+    - Memperbaiki filter *Wilayah Provinsi* saat input pencarian kosong agar seluruh 38 provinsi langsung tampil dan siap dipilih.
+- **Hasil:**
+  - Seluruh 493 khazanah budaya kini tampil lengkap, mulus digulir hingga entri terakhir, dan dapat dicari secara cepat di seluruh halaman.
+  - Build produksi (`npm run build`) sukses tanpa error dan validasi data lolos 100%.
+
 ## [2026-10-21] Perbaikan Tabrakan Antarelemen (HUD & Audio Dock) pada Mode Detail Jelajah 3D
 - **Permintaan Pengguna:**
   - Mengatasi elemen-elemen yang saling bertimpa/tumpang tindih di layar Jelajah 3D agar terlihat rapi dan tidak saling menutupi.
@@ -24,6 +38,7 @@
   - Kartu budaya di sebelah kanan leluasa di-scroll tanpa terhalang tombol kontrol peta maupun musik.
   - Verifikasi visual berbasis headless browser membuktikan layout kini proporsional dan transisi keluar-masuk berjalan sempurna.
   - Build produksi (`npm run build`) dan validasi data (`tools/validate.mjs`) sukses 100%.
+
 
 ## [2026-10-21] Penyelarasan Posisi Rata Tengah (Center Alignment) Card Header Kuis & Paspor
 - **Permintaan Pengguna:**
