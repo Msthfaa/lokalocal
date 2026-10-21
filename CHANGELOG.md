@@ -27,6 +27,36 @@
 
 # CHANGELOG — Proyek "Atlas Budaya"
 
+## [2026-10-21] Redesain Dual Floating Cards & Galeri Warisan Budaya 2-Kolom dengan Animasi Ringan
+- **Permintaan Pengguna:**
+  - Merancang ulang kartu-kartu budaya agar Warisan Budaya disendirikan ke dalam panggung kartu megah yang indah.
+  - Memanfaatkan area kosong di layar (khususnya lautan kosong di sekitar keping pulau 3D).
+  - Menambahkan animasi-animasi ringan agar pengalaman eksplorasi tidak kaku/membosankan (*boring*).
+- **Tindakan & Perubahan:**
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - Mengubah struktur layout menjadi **Dual Floating Cards**:
+      - **Zona Kiri:**
+        - Atas: Panggung keping pulau 3D dengan framing presisi dan badge HUD floating.
+        - Bawah: Kartu melayang kaca (*Stats & Region Card*) yang mengisi area laut kosong, memuat nama daerah, status resmi SPKT, 3 metrik ringkas (catatan budaya, peringkat nasional, wilayah terdata), 5 chips kategori OPK dengan titik warna, chips kabupaten/kota kontributor teratas, catatan integritas data SPKT, serta tombol Paspor & Bagikan.
+      - **Zona Kanan (Galeri Warisan Budaya Tersendiri):**
+        - Panel kanan diperlebar (`clamp(520px, 46vw, 720px)`) menjadi galeri seni & budaya khusus.
+        - Dilengkapi *Quick Category Filter Bar* (`Semua`, `Seni`, `Adat`, `Lisan`, `Pengetahuan`, `Kerajinan`, `Cagar Budaya`) dengan badge counter arsip yang dinamis.
+        - Kartu budaya dirancang ulang dalam **Grid 2 Kolom** (`.kartu-galeri-budaya`): banner foto 16:10 dengan backdrop tenun, badge kategori mengambang beraksen border warna khusus, tag multi-wilayah, lokasi kabupaten/kota, judul tipografi Fraunces, sinopsis nyaman 2 baris, dan tautan *'Jelajahi Kisah'* berpanah interaktif.
+    - Menambahkan **Animasi-Animasi Ringan (GSAP & Micro-Interactions)**:
+      - *Entrance Stagger*: Saat detail dibuka, kartu statistik kiri dan panel galeri kanan meluncur halus dengan jeda natural, disusul kartu-kartu budaya yang bertingkat masuk (`stagger: 0.04s`).
+      - *Filter Transition*: Mengganti kategori memicu transisi fade-stagger pada kartu yang relevan.
+      - *Card Hover Elevation*: Kartu budaya terangkat (`translateY(-5px)`), bayangan kedalaman berpendar emas, thumbnail foto zoom lembut (`scale(1.06)`), panah bergerak (`translateX(4px)`), serta shimmer highlight di tepian atas kartu.
+  - `web/src/styles/sections.css`:
+    - Menerapkan styling visual *glassmorphism* untuk `.cangkang-kiri-stats-card`, `.cangkang-panel-galeri-budaya`, `.cangkang-galeri-grid`, dan `.kartu-galeri-budaya`.
+    - Menyesuaikan kontras tinggi pada mode terang (`body.tema-siang`) dan mode gelap.
+    - Memberikan `padding-bottom: 100px` pada scroll galeri agar kartu baris terakhir tidak tertutup bilah kontrol pemutar audio dan zoom.
+- **Hasil Pengujian:**
+  - `scratch/verify-dual-floating-light.png`: Menampilkan tata letak seimbang antara panggung 3D, kartu data kiri bawah, dan galeri budaya 2-kolom pada tema siang.
+  - `scratch/verify-dual-floating-dark.png`: Menampilkan tampilan elegan dan kontras tajam pada tema gelap.
+  - `scratch/verify-dual-floating-filter.png`: Menampilkan filter kategori interaktif yang memfilter kartu secara instan dengan animasi stagger.
+  - `scratch/verify-modal-detail-card.png`: Mengonfirmasi klik kartu tetap membuka dialog cerita kebudayaan lengkap dengan sempurna.
+  - `npm run build` sukses 0 error (2.47s), validasi data `validate.mjs` lolos 100% (0 error).
+
 ## [2026-10-20] Perbaikan Warna Hijau Peta, Penghapusan Pin 3D, dan Redesain Mode Detail (Konsep A: Satu Panel Kanan Berbasis Tab)
 - **Permintaan Pengguna:**
   1. Memperbaiki keping pulau yang berubah menjadi warna hijau pekat setelah dipilih lalu kembali ke peta.

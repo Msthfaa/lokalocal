@@ -804,272 +804,237 @@ export function buatPengelolaModeDetail({
           </div>
         </header>
 
-        <!-- Layout 2 Zona (Kiri: Peta 3D Lega 70%, Kanan: 1 Panel Samping Elegan Berbasis Tab) -->
+        <!-- Layout 2 Zona (Kiri: Peta 3D & Kartu Ringkas Wilayah, Kanan: Galeri Warisan Budaya Tersendiri) -->
         <div class="cangkang-layout-2zona">
           
-          <!-- ZONA KIRI: Area Pandang Peta 3D (Lega, Bersih Tanpa Halangan) -->
-          <div class="cangkang-kolom cangkang-kolom--kiri" aria-label="Inspeksi Keping 3D Wilayah">
+          <!-- ZONA KIRI: Area Pandang Peta 3D + Kartu Melayang Ringkasan di Bawah (Mengisi Laut Kosong!) -->
+          <div class="cangkang-kolom cangkang-kolom--kiri" aria-label="Inspeksi Keping 3D Wilayah dan Ringkasan">
+            
+            <!-- Panggung 3D: Area pandang keping POV dari atas -->
             <div class="cangkang-kiri-viewarea" role="region" aria-label="Peta Topografi POV dari atas ${p.nama}">
               <div class="cangkang-kiri-hud-pill">
                 <span class="cangkang-hud-titik"></span>
                 <span>PETA TOPOGRAFI &bull; ${p.nama.toUpperCase()}</span>
               </div>
             </div>
-          </div>
 
-          <!-- ZONA KANAN: Satu Panel Kanan Elegan Berbasis Tab Modern -->
-          <aside class="cangkang-panel-kanan-tunggal" aria-label="Detail Informasi ${p.nama}">
-            
-            <!-- Tab Navigation Switcher -->
-            <nav class="cangkang-tab-nav" role="tablist" aria-label="Pilihan Informasi">
-              <button type="button" role="tab" class="cangkang-tab-btn is-aktif" data-tab="budaya" aria-selected="true">
-                <span class="cangkang-tab-ikon">🏛️</span>
-                <span class="cangkang-tab-teks">Warisan Budaya</span>
-                <span class="cangkang-tab-counter">${daftarBudaya.length}</span>
-              </button>
-              <button type="button" role="tab" class="cangkang-tab-btn" data-tab="data" aria-selected="false">
-                <span class="cangkang-tab-ikon">📊</span>
-                <span class="cangkang-tab-teks">Data &amp; Angka</span>
-              </button>
-              <button type="button" role="tab" class="cangkang-tab-btn" data-tab="wilayah" aria-selected="false">
-                <span class="cangkang-tab-ikon">📍</span>
-                <span class="cangkang-tab-teks">Kabupaten</span>
-                <span class="cangkang-tab-counter">${daftarKab.length}</span>
-              </button>
-            </nav>
-
-            <!-- Panel Scrollable Body -->
-            <div class="cangkang-tab-konten-wadah">
-
-              <!-- ==============================================
-                   TAB PANE 1: WARISAN BUDAYA (KARTU KOMPAK)
-                   ============================================== -->
-              <section class="cangkang-tab-pane is-aktif" data-pane="budaya" role="tabpanel">
-                <div class="cangkang-pane-header">
-                  <div>
-                    <span class="cangkang-kicker-tengah">ARSIP RESMI SPKT</span>
-                    <h3 class="cangkang-judul-tengah">Koleksi ${p.nama}</h3>
-                  </div>
-                  <span class="cangkang-counter-tengah">${daftarBudaya.length} Catatan</span>
+            <!-- KARTU MELAYANG KIRI BAWAH: DATA STATISTIK & WILAYAH -->
+            <aside class="cangkang-kiri-stats-card" aria-label="Ringkasan Data dan Wilayah">
+              <!-- Header Kartu Kiri -->
+              <div class="cangkang-stats-header">
+                <div>
+                  <span class="cangkang-stats-kicker">DATA RESMI WILAYAH</span>
+                  <h3 class="cangkang-stats-judul">${p.nama}</h3>
                 </div>
+                <span class="cangkang-kanan-status ${adalahKosong ? 'is-menanti' : 'is-aktif'}">
+                  ${adalahKosong ? 'Menanti Pendataan' : 'Tercatat Resmi SPKT'}
+                </span>
+              </div>
 
-                <div class="cangkang-daftar-budaya-kompak">
-                  ${
-                    !adalahKosong && daftarBudaya.length > 0
-                      ? daftarBudaya
-                          .map((item) => {
-                            const gradienBg = GRADIEN_JENIS_CSS[item.jenis] || 'linear-gradient(135deg, #FFD36B, #FFF1B8)';
-                            const fotoUrl = dapatkanGambarBudaya(item);
-                            const jenisLabel = (item.jenis_label || item.kategori || 'OPK').toUpperCase();
-                            const kabLabel = item.kabupaten_nama || p.nama;
-
-                            return `
-                            <article
-                              class="kartu-budaya-kompak"
-                              data-id="${item.id}"
-                              role="button"
-                              tabindex="0"
-                              title="Klik untuk membuka detail ${item.nama_tampil || item.nama}"
-                            >
-                              <!-- Thumbnail Square di Kiri (72x72 px) -->
-                              <div class="kartu-kompak-thumb" style="background: ${gradienBg};">
-                                <img
-                                  src="${fotoUrl}"
-                                  alt="${item.nama}"
-                                  class="kartu-kompak-img"
-                                  loading="lazy"
-                                />
-                                <span class="kartu-kompak-jenis-badge">${item.jenis ? item.jenis.toUpperCase() : 'OPK'}</span>
-                              </div>
-
-                              <!-- Info Teks Ringkas di Kanan -->
-                              <div class="kartu-kompak-info">
-                                <div class="kartu-kompak-meta">
-                                  <span class="kartu-kompak-kicker">${jenisLabel}</span>
-                                  <span class="kartu-kompak-titik">&bull;</span>
-                                  <span class="kartu-kompak-kab">${kabLabel}</span>
-                                </div>
-                                <h4 class="kartu-kompak-judul">${item.nama_tampil || item.nama}</h4>
-                                <p class="kartu-kompak-sinopsis">
-                                  ${item.ringkasan || 'SPKT belum memuat deskripsi lengkap untuk rekaman budaya ini.'}
-                                </p>
-                                <div class="kartu-kompak-bawah">
-                                  ${
-                                    item.jumlah_lokasi_gabungan && item.jumlah_lokasi_gabungan > 1
-                                      ? `<span class="kartu-kompak-gabung">📍 ${item.jumlah_lokasi_gabungan} wilayah</span>`
-                                      : ''
-                                  }
-                                  <span class="kartu-kompak-link">Baca Selengkapnya &rarr;</span>
-                                </div>
-                              </div>
-                            </article>
-                          `;
-                          })
-                          .join('')
-                      : `
-                      <!-- Keadaan Kosong yang Jujur (10 Provinsi Tanpa Data) -->
-                      <div class="cangkang-state-kosong-jujur">
-                        <div class="cangkang-kosong-ikon">🔭</div>
-                        <h3 class="cangkang-kosong-judul">Belum Tercatat di SPKT</h3>
-                        <p class="cangkang-kosong-deskripsi">
-                          Provinsi <strong>${p.nama}</strong> saat ini belum memiliki rekaman data di Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan RI per tanggal pencatatan.
-                        </p>
-                        <blockquote class="cangkang-kosong-kutipan">
-                          &ldquo;Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.&rdquo;
-                        </blockquote>
-                        <p class="cangkang-kosong-ajakan">
-                          Celah data ini mengajak kita peduli mendokumentasikan dan mendaftarkan kekayaan budaya lokal agar abadi dan dikenal dunia.
-                        </p>
-                      </div>
-                    `
-                  }
+              <!-- 3 Angka Metrik Utama -->
+              <div class="cangkang-stats-angka-grid">
+                <div class="cangkang-stats-angka-item">
+                  <span class="cangkang-stats-val">${formatAngka(p.total)}</span>
+                  <span class="cangkang-stats-lbl">Catatan Budaya</span>
                 </div>
-              </section>
-
-              <!-- ==============================================
-                   TAB PANE 2: DATA & ANGKA STATISTIK
-                   ============================================== -->
-              <section class="cangkang-tab-pane" data-pane="data" role="tabpanel" hidden>
-                <div class="cangkang-pane-header">
-                  <div>
-                    <span class="cangkang-kicker-tengah">RINGKASAN STATISTIK</span>
-                    <h3 class="cangkang-judul-tengah">Data &amp; Analisis</h3>
-                  </div>
-                  <span class="cangkang-kanan-status ${adalahKosong ? 'is-menanti' : 'is-aktif'}">
-                    ${adalahKosong ? 'Menanti Pendataan' : 'Tercatat Resmi SPKT'}
-                  </span>
+                <div class="cangkang-stats-angka-item">
+                  <span class="cangkang-stats-val">${p.peringkat_total ? '#' + p.peringkat_total : '-'}</span>
+                  <span class="cangkang-stats-lbl">Peringkat Nasional</span>
                 </div>
-
-                <!-- 2 Kotak Angka Utama -->
-                <div class="cangkang-kanan-angka-grid">
-                  <div class="cangkang-angka-kotak">
-                    <span class="cangkang-angka-val">${formatAngka(p.total)}</span>
-                    <span class="cangkang-angka-lbl">Total Catatan Budaya</span>
-                  </div>
-                  <div class="cangkang-angka-kotak">
-                    <span class="cangkang-angka-val">${p.peringkat_total ? '#' + p.peringkat_total : '-'}</span>
-                    <span class="cangkang-angka-lbl">Peringkat Nasional</span>
-                  </div>
+                <div class="cangkang-stats-angka-item">
+                  <span class="cangkang-stats-val">${daftarKab.length}</span>
+                  <span class="cangkang-stats-lbl">Wilayah Terdata</span>
                 </div>
+              </div>
 
-                <!-- Komposisi 5 Jenis OPK -->
-                <div class="cangkang-kanan-seksi">
-                  <h4 class="cangkang-seksi-judul">Objek Pemajuan Kebudayaan (OPK)</h4>
-                  <div class="cangkang-opk-list">
-                    ${daftarJenis
-                      .map((item) => {
-                        const totalP = p.total || 1;
-                        const persen = Math.round((item.jml / totalP) * 100);
-                        return `
-                      <div class="cangkang-opk-baris">
-                        <div class="cangkang-opk-teks">
-                          <span class="cangkang-opk-nama">
-                            <span class="cangkang-opk-titik" style="background-color: ${item.warna};"></span>
-                            ${item.nama}
-                          </span>
-                          <span class="cangkang-opk-nilai"><strong>${item.jml}</strong> (${persen}%)</span>
-                        </div>
-                        <div class="cangkang-opk-track">
-                          <div class="cangkang-opk-fill" style="width: ${persen}%; background-color: ${item.warna};"></div>
-                        </div>
-                      </div>
-                    `;
-                      })
-                      .join('')}
-                  </div>
-                </div>
-
-                <!-- Cagar Budaya & Sarana Prasarana -->
-                ${
-                  totalCB > 0 || totalLB > 0 || totalSP > 0
-                    ? `
-                  <div class="cangkang-kanan-seksi">
-                    <h4 class="cangkang-seksi-judul">Cagar Budaya &amp; Sarana</h4>
-                    <div class="cangkang-cb-rincian">
-                      ${cb.benda ? `<span>Benda: <strong>${cb.benda}</strong></span>` : ''}
-                      ${cb.bangunan ? `<span>Bangunan: <strong>${cb.bangunan}</strong></span>` : ''}
-                      ${cb.struktur ? `<span>Struktur: <strong>${cb.struktur}</strong></span>` : ''}
-                      ${cb.situs ? `<span>Situs: <strong>${cb.situs}</strong></span>` : ''}
-                      ${cb.kawasan ? `<span>Kawasan: <strong>${cb.kawasan}</strong></span>` : ''}
-                      ${totalLB ? `<span>Lembaga: <strong>${totalLB}</strong></span>` : ''}
-                      ${totalSP ? `<span>Sarana: <strong>${totalSP}</strong></span>` : ''}
-                    </div>
+              <!-- Komposisi 5 Jenis OPK (Mini Chips) -->
+              <div class="cangkang-stats-opk-row">
+                ${daftarJenis
+                  .map(
+                    (item) => `
+                  <div class="cangkang-stats-opk-chip" title="${item.nama}: ${item.jml} catatan">
+                    <span class="cangkang-opk-titik" style="background-color: ${item.warna};"></span>
+                    <span class="cangkang-stats-opk-nama">${item.nama.split(' ')[0]}</span>
+                    <span class="cangkang-stats-opk-num"><strong>${item.jml}</strong></span>
                   </div>
                 `
-                    : ''
-                }
+                  )
+                  .join('')}
+              </div>
 
-                <!-- Catatan Kejujuran Data (Wajib) -->
-                <div class="cangkang-kanan-seksi cangkang-kanan-seksi--kejujuran">
-                  <h4 class="cangkang-seksi-judul">Tentang Angka Ini</h4>
-                  <p class="cangkang-kejujuran-teks">
-                    Angka ini menunjukkan yang sudah tercatat di SPKT per ${tanggalAmbilData}, bukan seberapa kaya budaya ${p.nama}.
-                  </p>
+              <!-- Top Kabupaten / Kota Kontributor -->
+              ${
+                daftarKab.length > 0
+                  ? `
+                <div class="cangkang-stats-kab-seksi">
+                  <span class="cangkang-stats-sublabel">KABUPATEN / KOTA KONTRIBUTOR:</span>
+                  <div class="cangkang-stats-kab-chips">
+                    ${daftarKab
+                      .slice(0, 4)
+                      .map(
+                        (kab) => `
+                      <span class="cangkang-kab-chip">📍 ${kab.nama} <strong>(${kab.jumlah})</strong></span>
+                    `
+                      )
+                      .join('')}
+                    ${
+                      daftarKab.length > 4
+                        ? `<span class="cangkang-kab-chip cangkang-kab-chip--more">+${daftarKab.length - 4} lainnya</span>`
+                        : ''
+                    }
+                  </div>
                 </div>
+              `
+                  : ''
+              }
 
-                <!-- Aksi: Paspor, Bagikan, Tautan SPKT -->
-                <div class="cangkang-kanan-aksi">
+              <!-- Catatan Kejujuran Data & Aksi -->
+              <div class="cangkang-stats-footer">
+                <p class="cangkang-kejujuran-singkat">
+                  Data SPKT per ${tanggalAmbilData}. Tidak menyiratkan sedikitnya budaya asli.
+                </p>
+                <div class="cangkang-stats-aksi-baris">
                   <button type="button" class="btn-aksi-paspor" data-kode="${p.kode}">
-                    <span>🏷️ Tambahkan ke Paspor Budaya</span>
+                    <span>🏷️ Tambahkan ke Paspor</span>
                   </button>
-
-                  <div class="cangkang-aksi-grup-dua">
-                    <button type="button" class="btn-aksi-bagikan" title="Bagikan halaman budaya ini">
-                      <span>📤 Bagikan</span>
-                    </button>
-                    <a
-                      href="https://spkt.kemenbud.go.id"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="tautan-spkt-resmi"
-                    >
-                      <span>↗ Lihat di SPKT</span>
-                    </a>
-                  </div>
+                  <button type="button" class="btn-aksi-bagikan" title="Bagikan halaman budaya ini">
+                    <span>📤 Bagikan</span>
+                  </button>
+                  <a
+                    href="https://spkt.kemenbud.go.id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="tautan-spkt-resmi"
+                  >
+                    <span>↗ SPKT</span>
+                  </a>
                 </div>
-              </section>
+              </div>
+            </aside>
+          </div>
 
-              <!-- ==============================================
-                   TAB PANE 3: WILAYAH ADMINISTRATIF KABUPATEN
-                   ============================================== -->
-              <section class="cangkang-tab-pane" data-pane="wilayah" role="tabpanel" hidden>
-                <div class="cangkang-pane-header">
-                  <div>
-                    <span class="cangkang-kicker-tengah">PEMBAGIAN DAERAH</span>
-                    <h3 class="cangkang-judul-tengah">Kabupaten &amp; Kota</h3>
-                  </div>
-                  <span class="cangkang-counter-tengah">${daftarKab.length} Terdata</span>
-                </div>
+          <!-- ZONA KANAN: SATU PANEL DEDIKASI WARISAN BUDAYA (LUAS & GRID 2 KOLOM) -->
+          <aside class="cangkang-panel-galeri-budaya" aria-label="Galeri Warisan Budaya ${p.nama}">
+            
+            <!-- Header Galeri Budaya -->
+            <header class="cangkang-galeri-header">
+              <div class="cangkang-galeri-judul-blok">
+                <span class="cangkang-kicker-tengah">ARSIP RESMI SPKT</span>
+                <h3 class="cangkang-galeri-judul">Warisan Budaya ${p.nama}</h3>
+              </div>
+              <span class="cangkang-galeri-counter" id="galeri-counter-label">${daftarBudaya.length} Arsip</span>
+            </header>
 
-                <div class="cangkang-tab-daftar-kab">
-                  ${
-                    daftarKab.length > 0
-                      ? daftarKab
-                          .map((kab) => {
-                            const totalP = p.total || 1;
-                            const persen = Math.round((kab.jumlah / totalP) * 100);
-                            return `
-                        <div class="cangkang-kab-item">
-                          <div class="cangkang-kab-teks">
-                            <span class="cangkang-kab-nama">${kab.nama}</span>
-                            <span class="cangkang-kab-jml">${kab.jumlah} karya (${persen}%)</span>
-                          </div>
-                          <div class="cangkang-kab-bar">
-                            <div class="cangkang-kab-bar-isi" style="width: ${persen}%; background-color: ${warnaJenis};"></div>
-                          </div>
-                        </div>
-                      `;
-                          })
-                          .join('')
-                      : `
-                    <div class="cangkang-wilayah-kosong">
-                      <p>Belum ada rincian kabupaten/kota yang tercatat di SPKT untuk provinsi ini.</p>
+            <!-- Quick Filter Bar Jenis Budaya -->
+            <nav class="cangkang-galeri-filter-bar" role="tablist" aria-label="Filter Kategori Budaya">
+              <button type="button" class="galeri-filter-btn is-aktif" data-filter="semua">
+                <span>Semua (${daftarBudaya.length})</span>
+              </button>
+              ${[
+                { key: 'seni', label: 'Seni', jml: opk.seni || 0 },
+                { key: 'adat', label: 'Adat', jml: opk.adat || opk.adat_istiadat || 0 },
+                { key: 'lisan', label: 'Lisan', jml: opk.lisan || opk.tradisi_lisan || 0 },
+                { key: 'pengetahuan', label: 'Pengetahuan', jml: opk.pengetahuan || opk.pengetahuan_tradisional || 0 },
+                { key: 'kerajinan', label: 'Kerajinan', jml: opk.kerajinan || opk.teknologi_tradisional || 0 },
+                { key: 'cagar', label: 'Cagar Budaya', jml: totalCB }
+              ]
+                .filter((k) => k.jml > 0)
+                .map(
+                  (k) => `
+                <button type="button" class="galeri-filter-btn" data-filter="${k.key}">
+                  <span>${k.label} (${k.jml})</span>
+                </button>
+              `
+                )
+                .join('')}
+            </nav>
+
+            <!-- Kontainer Scrollable Galeri Grid -->
+            <div class="cangkang-galeri-scroll">
+              <div class="cangkang-galeri-grid">
+                ${
+                  !adalahKosong && daftarBudaya.length > 0
+                    ? daftarBudaya
+                        .map((item) => {
+                          const gradienBg = GRADIEN_JENIS_CSS[item.jenis_kode] || GRADIEN_JENIS_CSS[item.jenis] || 'linear-gradient(135deg, #FFD36B, #FFF1B8)';
+                          const fotoUrl = dapatkanGambarBudaya(item);
+                          const jenisLabel = (item.jenis_label || item.kategori || 'OPK').toUpperCase();
+                          const kabLabel = item.kabupaten_nama || p.nama;
+                          const warnaPill = WARNA_JENIS_HEX[item.jenis_kode] || WARNA_JENIS_HEX[item.jenis] || '#E6B14A';
+
+                          return `
+                          <article
+                            class="kartu-galeri-budaya"
+                            data-id="${item.id}"
+                            data-jenis="${item.jenis_kode || (item.kategori_kode === 'CB' ? 'cagar' : 'opk')}"
+                            role="button"
+                            tabindex="0"
+                            title="Buka kisah lengkap: ${item.nama_tampil || item.nama}"
+                          >
+                            <!-- Shimmer Highlight Bar Top -->
+                            <div class="kartu-galeri-shimmer" style="background: linear-gradient(90deg, transparent, ${warnaPill}, transparent);"></div>
+
+                            <!-- Banner Media Gambar (16:10) -->
+                            <div class="kartu-galeri-media" style="background: ${gradienBg};">
+                              <img
+                                src="${fotoUrl}"
+                                alt="${item.nama}"
+                                class="kartu-galeri-img"
+                                loading="lazy"
+                              />
+                              <!-- Kategori Tag Melayang -->
+                              <span class="kartu-galeri-badge" style="border-left: 3px solid ${warnaPill};">
+                                <span class="kartu-galeri-titik" style="background-color: ${warnaPill};"></span>
+                                ${jenisLabel}
+                              </span>
+
+                              ${
+                                item.jumlah_lokasi_gabungan && item.jumlah_lokasi_gabungan > 1
+                                  ? `<span class="kartu-galeri-gabung-tag">📍 ${item.jumlah_lokasi_gabungan} Wilayah</span>`
+                                  : ''
+                              }
+                            </div>
+
+                            <!-- Badan Informasi Kartu -->
+                            <div class="kartu-galeri-badan">
+                              <div class="kartu-galeri-lokasi">
+                                <span class="kartu-lokasi-ikon">📍</span>
+                                <span class="kartu-lokasi-teks">${kabLabel}</span>
+                              </div>
+
+                              <h4 class="kartu-galeri-judul">${item.nama_tampil || item.nama}</h4>
+
+                              <p class="kartu-galeri-sinopsis">
+                                ${item.ringkasan || 'SPKT belum memuat deskripsi lengkap untuk rekaman budaya ini.'}
+                              </p>
+
+                              <div class="kartu-galeri-footer">
+                                <span class="kartu-galeri-link">Jelajahi Kisah</span>
+                                <span class="kartu-galeri-panah">&rarr;</span>
+                              </div>
+                            </div>
+                          </article>
+                        `;
+                        })
+                        .join('')
+                    : `
+                    <!-- Keadaan Kosong Jujur untuk 10 Provinsi Tanpa Data -->
+                    <div class="cangkang-state-kosong-jujur cangkang-state-kosong-jujur--span2">
+                      <div class="cangkang-kosong-ikon">🔭</div>
+                      <h3 class="cangkang-kosong-judul">Belum Tercatat di SPKT</h3>
+                      <p class="cangkang-kosong-deskripsi">
+                        Provinsi <strong>${p.nama}</strong> saat ini belum memiliki rekaman data di Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan RI per tanggal pencatatan.
+                      </p>
+                      <blockquote class="cangkang-kosong-kutipan">
+                        &ldquo;Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.&rdquo;
+                      </blockquote>
+                      <p class="cangkang-kosong-ajakan">
+                        Celah data ini mengajak kita peduli mendokumentasikan dan mendaftarkan kekayaan budaya lokal agar abadi dan dikenal dunia.
+                      </p>
                     </div>
                   `
-                  }
-                </div>
-              </section>
-
+                }
+              </div>
             </div>
           </aside>
 
@@ -1092,22 +1057,42 @@ export function buatPengelolaModeDetail({
     const btnTutupSilang = domOverlay.querySelector('.btn-tutup-silang');
     if (btnTutupSilang) btnTutupSilang.addEventListener('click', tutup);
 
-    // Tab Navigation Switcher
-    const tabBtns = domOverlay.querySelectorAll('.cangkang-tab-btn');
-    const tabPanes = domOverlay.querySelectorAll('.cangkang-tab-pane');
-    tabBtns.forEach((btn) => {
+    // Filter Kategori Galeri Budaya
+    const filterBtns = domOverlay.querySelectorAll('.galeri-filter-btn');
+    const galeriCounter = domOverlay.querySelector('#galeri-counter-label');
+    const kartuItems = domOverlay.querySelectorAll('.kartu-galeri-budaya');
+
+    filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const targetTab = btn.dataset.tab;
-        tabBtns.forEach((b) => {
-          const aktif = b === btn;
-          b.classList.toggle('is-aktif', aktif);
-          b.setAttribute('aria-selected', aktif ? 'true' : 'false');
+        const filter = btn.dataset.filter;
+        filterBtns.forEach((b) => b.classList.toggle('is-aktif', b === btn));
+
+        let jumlahTampil = 0;
+        kartuItems.forEach((card) => {
+          const cocok = filter === 'semua' || card.dataset.jenis === filter;
+          if (cocok) {
+            card.style.display = 'flex';
+            jumlahTampil++;
+          } else {
+            card.style.display = 'none';
+          }
         });
-        tabPanes.forEach((pane) => {
-          const aktif = pane.dataset.pane === targetTab;
-          pane.classList.toggle('is-aktif', aktif);
-          pane.hidden = !aktif;
-        });
+
+        if (galeriCounter) {
+          galeriCounter.textContent = `${jumlahTampil} Arsip`;
+        }
+
+        // Animasi stagger ringan saat filter berganti
+        if (!apakahKurangiGerak()) {
+          const kartuTampil = Array.from(kartuItems).filter((c) => c.style.display !== 'none');
+          if (kartuTampil.length > 0) {
+            gsap.fromTo(
+              kartuTampil,
+              { opacity: 0, y: 12, scale: 0.98 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.03, ease: 'power2.out' }
+            );
+          }
+        }
       });
     });
 
@@ -1142,13 +1127,14 @@ export function buatPengelolaModeDetail({
         } else if (navigator.clipboard) {
           await navigator.clipboard.writeText(url);
           btnBagikan.textContent = '✓ Tersalin!';
-          setTimeout(() => { btnBagikan.textContent = '📤 Bagikan'; }, 2000);
+          setTimeout(() => {
+            btnBagikan.textContent = '📤 Bagikan';
+          }, 2000);
         }
       });
     }
 
-    // Kartu Budaya Kompak: klik kartu membuka dialog detail
-    const kartuItems = domOverlay.querySelectorAll('.kartu-budaya-kompak');
+    // Kartu Budaya: klik kartu membuka dialog detail
     kartuItems.forEach((card) => {
       const bukaDetail = () => {
         const id = card.dataset.id;
@@ -1165,6 +1151,25 @@ export function buatPengelolaModeDetail({
         }
       });
     });
+
+    // Animasi Entrance Elegan Ringan saat cangkang dibuka
+    if (!apakahKurangiGerak()) {
+      gsap.fromTo(
+        '.cangkang-kiri-stats-card',
+        { y: 35, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, delay: 0.2, ease: 'power3.out' }
+      );
+      gsap.fromTo(
+        '.cangkang-panel-galeri-budaya',
+        { x: 35, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.7, delay: 0.15, ease: 'power3.out' }
+      );
+      gsap.fromTo(
+        '.kartu-galeri-budaya',
+        { y: 20, opacity: 0, scale: 0.96 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, delay: 0.3, stagger: 0.04, ease: 'power2.out' }
+      );
+    }
   }
 
   function renderKhusus(renderer, scene, camera) {
