@@ -448,6 +448,8 @@ export function inisialisasiBagianPaspor({
       const sudahDapat = Boolean(dataStempel);
       const jenisStempel = dataStempel?.jenis || 'biasa';
       const adalahBelumTercatat = prov.status_data === 'belum_tercatat' || prov.total <= 0;
+      const noUrut = URUTAN_PROVINSI_KODE[prov.kode] || 1;
+      const noUrutStr = String(noUrut).padStart(2, '0');
 
       const petak = document.createElement('button');
       petak.type = 'button';
@@ -475,6 +477,7 @@ export function inisialisasiBagianPaspor({
         const svgStempel = buatStempelProvinsiSvg({
           kode: prov.kode,
           nama: prov.nama,
+          nomorUrut: noUrut,
           jenis: jenisStempel
         });
         bungkusVisual.appendChild(svgStempel);
