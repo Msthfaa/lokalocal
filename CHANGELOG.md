@@ -1,3 +1,15 @@
+## [2026-10-21] Penyelarasan Posisi Rata Tengah (Center Alignment) Card Header Kuis & Paspor
+- **Permintaan Pengguna:**
+  - Mengatur card ringkasan metadata pada header Kuis Budaya Nusantara dan Paspor Budaya agar posisinya presisi rata tengah (*center-aligned*).
+- **Tindakan & Perubahan:**
+  - `web/src/styles/sections.css`:
+    - Mengatur `.kuis-hero-metadata-bar` dan `.paspor-info-strip` dengan `align-self: center;`, `width: fit-content;`, `max-width: 100%;`, `margin-inline: auto;`, dan `text-align: center;` sehingga membungkus konten secara proporsional dan berada tepat di tengah halaman.
+    - Menambahkan `display: flex; flex-direction: column; align-items: center; justify-content: center;` pada `.kuis-hero-kepala` dan `.paspor-hero-kepala`.
+    - Menyelaraskan `.paspor-filter-bar` dengan `justify-content: center;`, `align-items: center;`, dan `margin-inline: auto;`.
+- **Hasil:**
+  - Card ringkasan di bagian Kuis dan Paspor kini tampil proporsional, seimbang, dan 100% rata tengah di semua ukuran layar.
+  - Build produksi (`npm run build`) sukses tanpa error dan validasi data lolos 100%.
+
 ## [2026-10-21] Penyelarasan Penomoran Paspor Budaya (No. 01 - 38)
 - **Permintaan Pengguna:**
   - Mengoreksi penomoran pada petak stempel paspor budaya yang sebelumnya melonjak hingga nomor 96 (karena mengambil kode wilayah Kemendagri: 11 s.d. 96), agar konsisten dengan total 38 provinsi di Indonesia (No. 01 s.d. 38).

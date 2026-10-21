@@ -3288,11 +3288,16 @@ body.tema-siang .hud-atribusi-teks {
 .paspor-filter-bar {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 6px;
   padding: 4px;
   border-radius: 20px;
   background: rgba(20, 16, 13, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-inline: auto;
+  width: fit-content;
+  max-width: 100%;
 }
 
 [data-tema="terang"] .paspor-filter-bar {
@@ -3666,6 +3671,10 @@ body.tema-siang .hud-atribusi-teks {
 }
 
 .paspor-hero-kepala {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-bottom: var(--ruang-5);
   position: relative;
@@ -3718,6 +3727,9 @@ body.tema-siang .hud-atribusi-teks {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  width: fit-content;
+  max-width: 100%;
   flex-wrap: wrap;
   gap: 0.75rem 1.25rem;
   padding: 0.5rem 1.25rem;
@@ -3726,7 +3738,8 @@ body.tema-siang .hud-atribusi-teks {
   border: 1px solid rgba(230, 177, 74, 0.22);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  margin-top: var(--ruang-2);
+  margin: var(--ruang-2) auto 0 auto;
+  text-align: center;
 }
 
 [data-tema="terang"] .paspor-info-strip {
@@ -6947,6 +6960,10 @@ body.tema-siang .nav-kartun-info {
    Header Hero Kuis & Pilihan Wilayah Interaktif
    ========================================================================== */
 .kuis-hero-kepala {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-bottom: var(--ruang-5);
   position: relative;
@@ -6999,6 +7016,9 @@ body.tema-siang .nav-kartun-info {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  width: fit-content;
+  max-width: 100%;
   flex-wrap: wrap;
   gap: 0.65rem 1.25rem;
   padding: 0.55rem 1.25rem;
@@ -7008,6 +7028,7 @@ body.tema-siang .nav-kartun-info {
   font-size: 0.85rem;
   color: var(--kertas-redup);
   margin: 0 auto var(--ruang-4) auto;
+  text-align: center;
 }
 
 [data-tema="terang"] .kuis-hero-metadata-bar {
