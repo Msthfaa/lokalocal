@@ -1,3 +1,18 @@
+## [2026-10-21] Penyelarasan Penomoran Paspor Budaya (No. 01 - 38)
+- **Permintaan Pengguna:**
+  - Mengoreksi penomoran pada petak stempel paspor budaya yang sebelumnya melonjak hingga nomor 96 (karena mengambil kode wilayah Kemendagri: 11 s.d. 96), agar konsisten dengan total 38 provinsi di Indonesia (No. 01 s.d. 38).
+- **Tindakan & Perubahan:**
+  - `web/src/patterns/generate.js`:
+    - Menambahkan kamus konstanta `URUTAN_PROVINSI_KODE` yang memetakan kode wilayah Kemendagri ke nomor urut resmi 1 hingga 38 (Aceh = 1 s.d. Papua Barat Daya = 38).
+    - Memperbarui fungsi `buatStempelProvinsiSvg` agar menerima parameter `nomorUrut` dan merender label bintang di stempel dengan format dua digit `★ 01 ★` s.d. `★ 38 ★`.
+  - `web/src/sections/paspor.js`:
+    - Mengimpor `URUTAN_PROVINSI_KODE` dan menghitung nomor urut resmi 1 - 38 untuk setiap kartu petak stempel.
+    - Mengganti teks kode di watermark lingkaran belum tercap dari `prov.kode` (11 s.d. 96) menjadi nomor urut dua digit (01 s.d. 38).
+    - Memperbarui label aksesibilitas `aria-label` petak paspor menjadi `Wilayah {noUrutStr}. {prov.nama}`.
+- **Hasil:**
+  - Seluruh 38 petak stempel paspor kini bernomor urut rapi dan berurutan dari 01 hingga 38 tanpa jeda dan tanpa angka 96.
+  - Build produksi (`npm run build`) sukses tanpa error dan validasi data lolos 100%.
+
 # CHANGELOG — Proyek "Atlas Budaya"
 
 ## [2026-10-20] Perbaikan Warna Hijau Peta, Penghapusan Pin 3D, dan Redesain Mode Detail (Konsep A: Satu Panel Kanan Berbasis Tab)

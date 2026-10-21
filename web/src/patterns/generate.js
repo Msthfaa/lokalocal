@@ -270,6 +270,21 @@ export function buatPolaKartuSvg({
   return svg;
 }
 
+/**
+ * Peta Nomor Urut Resmi 38 Provinsi Nusantara (No. 1 - 38).
+ * Menghindari kebingungan kode wilayah Kemendagri/BPS (11 s.d. 96) di tampilan antarmuka.
+ */
+export const URUTAN_PROVINSI_KODE = {
+  '11': 1,  '12': 2,  '13': 3,  '14': 4,  '15': 5,
+  '16': 6,  '17': 7,  '18': 8,  '19': 9,  '21': 10,
+  '31': 11, '32': 12, '33': 13, '34': 14, '35': 15, '36': 16,
+  '51': 17, '52': 18, '53': 19,
+  '61': 20, '62': 21, '63': 22, '64': 23, '65': 24,
+  '71': 25, '72': 26, '73': 27, '74': 28, '75': 29, '76': 30,
+  '81': 31, '82': 32,
+  '91': 33, '92': 34, '93': 35, '94': 36, '95': 37, '96': 38
+};
+
 export const DATA_IKON_PROVINSI = {
   '11': {
     nama: 'Aceh',
@@ -511,7 +526,7 @@ export const DATA_IKON_PROVINSI = {
  * @param {'biasa'|'penjaga'} [parameter.jenis='biasa']
  * @returns {SVGSVGElement}
  */
-export function buatStempelProvinsiSvg({ kode = '11', nama = 'Provinsi', jenis = 'biasa' } = {}) {
+export function buatStempelProvinsiSvg({ kode = '11', nama = 'Provinsi', nomorUrut = null, jenis = 'biasa' } = {}) {
   const infoIkon = DATA_IKON_PROVINSI[kode] || {
     nama: nama,
     ikon: 'Warisan Budaya',
@@ -523,6 +538,9 @@ export function buatStempelProvinsiSvg({ kode = '11', nama = 'Provinsi', jenis =
   const daftarWarna = Object.values(WARNA_JENIS_HEX);
   const warnaUtama =
     jenis === 'penjaga' ? '#E6B14A' : daftarWarna[seed % daftarWarna.length] || '#E6B14A';
+
+  const noUrut = nomorUrut != null ? nomorUrut : (URUTAN_PROVINSI_KODE[kode] || 1);
+  const noTampil = String(noUrut).padStart(2, '0');
 
   const svg = buatElSvg('svg', {
     viewBox: '0 0 80 80',
@@ -606,7 +624,7 @@ export function buatStempelProvinsiSvg({ kode = '11', nama = 'Provinsi', jenis =
     'letter-spacing': '0.08em',
     'font-family': 'Fraunces Variable, serif'
   });
-  teksKode.textContent = `★ ${kode} ★`;
+  teksKode.textContent = `★ ${noTampil} ★`;
   svg.appendChild(teksKode);
 
   return svg;

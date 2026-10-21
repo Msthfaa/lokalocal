@@ -4,7 +4,7 @@
  * Sesuai WEB_SPEC.md Bagian 8.1 & Bagian 7.2 (A-11).
  */
 
-import { buatStempelProvinsiSvg, DATA_IKON_PROVINSI } from '../patterns/generate.js';
+import { buatStempelProvinsiSvg, DATA_IKON_PROVINSI, URUTAN_PROVINSI_KODE } from '../patterns/generate.js';
 import { formatAngka } from '../util/format.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 import { tampilkanToast } from '../ui/toast.js';
@@ -466,7 +466,7 @@ export function inisialisasiBagianPaspor({
         ? 'belum dikunjungi (belum tercatat di SPKT)'
         : 'belum dikunjungi';
 
-      petak.setAttribute('aria-label', `${prov.nama}: ${statusLabel}. Klik untuk membuka di peta Jelajah 3D.`);
+      petak.setAttribute('aria-label', `Wilayah ${noUrutStr}. ${prov.nama}: ${statusLabel}. Klik untuk membuka di peta Jelajah 3D.`);
 
       const bungkusVisual = document.createElement('div');
       bungkusVisual.className = 'paspor-petak-visual';
@@ -484,7 +484,7 @@ export function inisialisasiBagianPaspor({
         watermarkSeal.className = 'paspor-stempel-watermark';
         watermarkSeal.innerHTML = `
           <span class="paspor-watermark-cincin" aria-hidden="true"></span>
-          <span class="paspor-watermark-kode">${prov.kode}</span>
+          <span class="paspor-watermark-kode">${noUrutStr}</span>
           <span class="paspor-watermark-status">BELUM TERCAP</span>
         `;
         bungkusVisual.appendChild(watermarkSeal);
