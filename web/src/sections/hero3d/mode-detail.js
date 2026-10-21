@@ -559,6 +559,7 @@ export function buatPengelolaModeDetail({
       }
 
       // Render cangkang DOM 3 Kolom terlebih dahulu agar elemen layout terukur presisi
+      document.body.classList.add('mode-detail-aktif');
       renderDom();
 
       // Hitung posisi target di kolom kiri (di ruang lokal parent) dengan koordinat dinamis yang akurat
@@ -621,6 +622,7 @@ export function buatPengelolaModeDetail({
     }
 
     state = 'keluar';
+    document.body.classList.remove('mode-detail-aktif');
     const durasi = apakahKurangiGerak() ? 0.2 : 1.2;
 
     // Kembalikan rotasi interaktif ke 0 secara mulus
@@ -981,6 +983,7 @@ export function buatPengelolaModeDetail({
                                 alt="${item.nama}"
                                 class="kartu-galeri-img"
                                 loading="lazy"
+                                onerror="this.style.opacity='0'; this.style.display='none';"
                               />
                               <!-- Kategori Tag Melayang -->
                               <span class="kartu-galeri-badge" style="border-left: 3px solid ${warnaPill};">
@@ -1249,6 +1252,7 @@ export function buatPengelolaModeDetail({
       // Keping provinsi statis menghadap ke layar POV dari atas sesuai instruksi pengguna
     },
     dispose: () => {
+      document.body.classList.remove('mode-detail-aktif');
       window.removeEventListener('keydown', onKeyDown);
       if (tweenProgress) tweenProgress.kill();
       if (garisAksen && meshAktif) {

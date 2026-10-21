@@ -1,3 +1,30 @@
+## [2026-10-21] Perbaikan Tabrakan Antarelemen (HUD & Audio Dock) pada Mode Detail Jelajah 3D
+- **Permintaan Pengguna:**
+  - Mengatasi elemen-elemen yang saling bertimpa/tumpang tindih di layar Jelajah 3D agar terlihat rapi dan tidak saling menutupi.
+- **Masalah yang Ditemukan & Diperbaiki:**
+  1. *Tabrakan Pojok Kanan Bawah:* Floating HUD toolbar peta (zoom in, zoom out, reset putar, tur sinematik) serta floating audio player dock (`#audio-backsound-dock`) tetap muncul di atas kartu galeri budaya baris ke-2 dan ke-3.
+  2. *Tabrakan Pojok Kiri Bawah:* HUD status global ("28 Tercatat • 10 Menanti Pendataan" dan atribusi SPKT) tetap mengambang di bawah kartu statistik daerah (`.cangkang-kiri-stats-card`).
+  3. *Tabrakan Alt Text Gambar Gagal:* Browser menampilkan teks alt default saat koneksi gambar Unsplash terputus/gagal, yang menabrak badge kategori dan lokasi.
+  4. *Tombol Aksi Kartu Kiri:* Tombol Paspor, Bagikan, dan SPKT kehilangan style akibat perombakan layout dan tampak seperti tombol abu-abu polos bawaan browser.
+- **Tindakan & Perubahan:**
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - Menambahkan penanda status `document.body.classList.add('mode-detail-aktif')` saat mode detail dibuka, dan menghapusnya saat ditutup atau dibersihkan (`dispose`).
+    - Menambahkan `onerror="this.style.opacity='0'; this.style.display='none';"` pada elemen `<img>` kartu budaya agar gambar yang gagal memuat langsung runtuh ke gradien tenun etnik lokal yang bersih.
+  - `web/src/styles/sections.css`:
+    - Menambahkan aturan transisi halus dan penyembunyian otomatis berstatus `mode-detail-aktif`:
+      - `.jelajah-hud-atas` bergeser dan menghilang ke atas (`transform: translate(-50%, -24px); opacity: 0; pointer-events: none;`).
+      - `.jelajah-hud-kiri-bawah`, `.jelajah-hud-kanan-bawah`, dan `.audio-backsound-dock` bergeser dan menghilang ke bawah (`transform: translateY(28px); opacity: 0; pointer-events: none;`).
+      - Saat kembali ke peta ("← Kembali ke peta"), semua HUD dan audio dock kembali tampil secara mulus.
+    - Menyelaraskan padding `.cangkang-layout-2zona`, `.cangkang-detail-wadah`, dan menghapus padding bawah berlebih pada `.cangkang-kolom--kiri`.
+    - Mengurangi padding bawah `.cangkang-galeri-scroll` dari 100px menjadi 24px yang proporsional karena dock mengambang di kanan bawah sudah tidak menghalangi.
+    - Mengembalikan styling tombol kaca berpendar modern untuk `.btn-aksi-paspor`, `.btn-aksi-bagikan`, dan `.tautan-spkt-resmi`.
+    - Menambahkan `color: transparent;` pada `.kartu-galeri-img` untuk mencegah font alt-text bawaan browser merusak badge.
+- **Hasil:**
+  - Tampilan Mode Detail kini 100% bersih, rapi, dan bebas dari elemen bertumpukan (*zero collisions*).
+  - Kartu budaya di sebelah kanan leluasa di-scroll tanpa terhalang tombol kontrol peta maupun musik.
+  - Verifikasi visual berbasis headless browser membuktikan layout kini proporsional dan transisi keluar-masuk berjalan sempurna.
+  - Build produksi (`npm run build`) dan validasi data (`tools/validate.mjs`) sukses 100%.
+
 ## [2026-10-21] Penyelarasan Posisi Rata Tengah (Center Alignment) Card Header Kuis & Paspor
 - **Permintaan Pengguna:**
   - Mengatur card ringkasan metadata pada header Kuis Budaya Nusantara dan Paspor Budaya agar posisinya presisi rata tengah (*center-aligned*).

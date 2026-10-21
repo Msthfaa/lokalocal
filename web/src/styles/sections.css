@@ -5309,6 +5309,29 @@ body.tema-siang .kartu-kanan-footer {
    - Kolom Kanan: Penjelasan Lainnya Lengkap (Metrik, OPK Bar, Cagar Budaya, Kejujuran SPKT, Paspor)
    ========================================================================== */
 
+/* Transisi mulus untuk seluruh HUD jelajah & audio dock */
+.jelajah-hud-atas,
+.jelajah-hud-kiri-bawah,
+.jelajah-hud-kanan-bawah,
+.audio-backsound-dock {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Sembunyikan floating HUD & audio dock saat Mode Detail dibuka agar tidak menimpa kartu galeri budaya */
+body.mode-detail-aktif .jelajah-hud-atas {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translate(-50%, -24px) !important;
+}
+
+body.mode-detail-aktif .jelajah-hud-kiri-bawah,
+body.mode-detail-aktif .jelajah-hud-kanan-bawah,
+body.mode-detail-aktif .audio-backsound-dock {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(28px) !important;
+}
+
 /* 1. Overlay Layar Penuh (Tepat di Bawah Navbar) */
 .mode-detail-overlay {
   position: fixed;
@@ -5348,7 +5371,8 @@ body.tema-siang .mode-detail-overlay {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - var(--tinggi-nav, 64px));
+  height: 100%;
+  max-height: 100%;
   padding: 10px 18px 16px;
   box-sizing: border-box;
   overflow: hidden;
@@ -5515,7 +5539,7 @@ body.tema-siang .btn-tutup-silang:hover {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 0 16px 16px 16px;
+  padding: 0 4px 6px 4px;
 }
 
 .cangkang-kolom {
@@ -5537,7 +5561,7 @@ body.tema-siang .btn-tutup-silang:hover {
   position: relative;
   pointer-events: none;
   gap: 14px;
-  padding-bottom: 24px;
+  padding-bottom: 0;
 }
 
 .cangkang-kiri-viewarea {
@@ -5850,7 +5874,85 @@ body.tema-siang .cangkang-kejujuran-singkat {
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 8px;
+  margin-top: 4px;
 }
+
+.btn-aksi-paspor {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.25), rgba(230, 177, 74, 0.1));
+  border: 1px solid var(--aksen);
+  color: var(--kertas);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all var(--dur-cepat);
+  box-sizing: border-box;
+}
+
+.btn-aksi-paspor:hover {
+  background: linear-gradient(135deg, rgba(230, 177, 74, 0.4), rgba(230, 177, 74, 0.2));
+  transform: translateY(-1px);
+}
+
+.btn-aksi-paspor.is-terkumpul {
+  border-color: #4CAF50;
+  background: rgba(76, 175, 80, 0.15);
+  color: #4CAF50;
+}
+
+.btn-aksi-bagikan,
+.tautan-spkt-resmi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--kertas);
+  text-decoration: none;
+  transition: all var(--dur-cepat);
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.btn-aksi-bagikan:hover,
+.tautan-spkt-resmi:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+body.tema-siang .btn-aksi-paspor {
+  background: linear-gradient(135deg, rgba(217, 155, 53, 0.2), rgba(217, 155, 53, 0.08));
+  border-color: #D99B35;
+  color: #78350F;
+}
+
+body.tema-siang .btn-aksi-bagikan,
+body.tema-siang .tautan-spkt-resmi {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1C1917;
+}
+
+body.tema-siang .btn-aksi-bagikan:hover,
+body.tema-siang .tautan-spkt-resmi:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+
 
 /* ==============================================================
    ZONA KANAN: DEDIKASI PANEL GALERI WARISAN BUDAYA (LUAS & GRID 2 KOLOM)
@@ -5989,7 +6091,7 @@ body.tema-siang .galeri-filter-btn.is-aktif {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: 16px 18px 100px 18px;
+  padding: 16px 18px 24px 18px;
   scroll-behavior: smooth;
 }
 
@@ -6073,6 +6175,7 @@ body.tema-siang .kartu-galeri-budaya:hover {
   object-fit: cover;
   display: block;
   transition: transform 0.45s ease;
+  color: transparent;
 }
 
 .kartu-galeri-budaya:hover .kartu-galeri-img {
