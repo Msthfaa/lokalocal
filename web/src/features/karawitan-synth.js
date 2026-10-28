@@ -266,11 +266,11 @@ export function bukaRuangBunyiModal() {
           <!-- Pilihan Instrumen -->
           <div class="ruang-bunyi-toggle-instrumen" role="radiogroup" aria-label="Pilih instrumen tradisional">
             <button type="button" class="ruang-bunyi-tab aktif" data-instrumen="gamelan" role="radio" aria-checked="true">
-              <span class="ruang-bunyi-tab-ikon">🪘</span>
+              <span class="ruang-bunyi-tab-ikon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></span>
               <span class="ruang-bunyi-tab-teks">Gamelan Perunggu (Saron)</span>
             </button>
             <button type="button" class="ruang-bunyi-tab" data-instrumen="angklung" role="radio" aria-checked="false">
-              <span class="ruang-bunyi-tab-ikon">🎋</span>
+              <span class="ruang-bunyi-tab-ikon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="4" height="20" rx="1"/><rect x="11" y="5" width="4" height="17" rx="1"/><rect x="18" y="9" width="4" height="13" rx="1"/></svg></span>
               <span class="ruang-bunyi-tab-teks">Angklung Bambu (Priangan)</span>
             </button>
           </div>
@@ -300,11 +300,11 @@ export function bukaRuangBunyiModal() {
           <!-- Bar Aksi Melodi Klasik -->
           <div class="ruang-bunyi-kontrol-bar">
             <button type="button" id="btn-putar-melodi-contoh" class="tombol tombol--garis ruang-bunyi-btn-melodi">
-              <span class="ruang-bunyi-btn-ikon">🎵</span>
+              <span class="ruang-bunyi-btn-ikon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
               <span>Dengarkan Tembang Klasik</span>
             </button>
             <span class="ruang-bunyi-hint-keyboard">
-              💡 Pintasan: <strong>1</strong> s/d <strong>8</strong> (bisa ditekan bersamaan / akor harmoni)
+              Pintasan keyboard: <strong>1</strong> s/d <strong>8</strong> (bisa ditekan bersamaan / akor harmoni)
             </span>
           </div>
         </div>
@@ -382,7 +382,7 @@ export function bukaRuangBunyiModal() {
 
   if (btnMelodi) {
     btnMelodi.onclick = () => {
-      tampilkanToast(`Memperdengarkan alunan tembang ${getNamaInstrumen()}... 🎶`);
+      tampilkanToast(`Memperdengarkan alunan tembang ${getNamaInstrumen()}...`);
       mainkanMelodiContoh(instrumenAktif, (idx) => {
         if (idx >= 0) {
           getarkanBilah(idx);

@@ -120,7 +120,7 @@ export function ambilHtmlOverlayGatotkaca() {
 
     <!-- 5. Toast Teks Slogan Terbang -->
     <div class="gatotkaca-toast-terbang" id="gatotkaca-toast-terbang">
-      <span aria-hidden="true">⚡</span>
+      <span class="gatotkaca-toast-ikon" aria-hidden="true">&#9650;</span>
       <span>Otot Kawat Tulang Besi, Melesat ke Nusantara!</span>
     </div>
 
@@ -141,12 +141,12 @@ export function ambilHtmlOverlayGatotkaca() {
 
           <!-- Sparks Bintang Emas & Petir -->
           <div class="gatotkaca-sparks-wadah" id="gatotkaca-sparks">
-            <span class="gatotkaca-spark" style="top: -12px; left: 16px;">✨</span>
-            <span class="gatotkaca-spark" style="top: -18px; right: 24px;">⚡</span>
-            <span class="gatotkaca-spark" style="bottom: 30px; left: -12px;">⭐</span>
-            <span class="gatotkaca-spark" style="bottom: 24px; right: -8px;">✨</span>
-            <span class="gatotkaca-spark" style="top: 45%; left: -24px;">⚡</span>
-            <span class="gatotkaca-spark" style="top: 38%; right: -22px;">🌟</span>
+            <span class="gatotkaca-spark" style="top: -12px; left: 16px;">✦</span>
+            <span class="gatotkaca-spark" style="top: -18px; right: 24px;">✦</span>
+            <span class="gatotkaca-spark" style="bottom: 30px; left: -12px;">✦</span>
+            <span class="gatotkaca-spark" style="bottom: 24px; right: -8px;">✦</span>
+            <span class="gatotkaca-spark" style="top: 45%; left: -24px;">✦</span>
+            <span class="gatotkaca-spark" style="top: 38%; right: -22px;">✦</span>
           </div>
         </div>
       </div>
@@ -165,7 +165,7 @@ export function ambilHtmlOverlayGatotkaca() {
           </p>
           <button type="button" id="gatotkaca-btn-oke" class="gatotkaca-btn-oke" aria-label="Mulai jelajahi peta 3D">
             <span>Oke, Ayo Jelajah!</span>
-            <span class="gatotkaca-btn-panah" aria-hidden="true">🚀</span>
+            <span class="gatotkaca-btn-panah" aria-hidden="true">&rarr;</span>
           </button>
           <div class="gatotkaca-dialog-hint">Tekan tombol atau Enter untuk mulai</div>
         </div>

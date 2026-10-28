@@ -446,7 +446,7 @@ export function inisialisasiBagianKuis({
         <div class="kuis-chibi-kiri">
           <button type="button" class="kuis-chibi-avatar-btn ${animasiKelas}" title="Klik untuk mengganti teman belajar (${avatarAktif.nama})">
             <img src="${fotoChibi}" alt="${avatarAktif.nama}" class="kuis-chibi-img" />
-            <span class="kuis-chibi-badge-ganti">Ganti 🔄</span>
+            <span class="kuis-chibi-badge-ganti">Ganti Teman</span>
           </button>
         </div>
         <div class="kuis-chibi-balon">

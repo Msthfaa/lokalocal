@@ -9,6 +9,7 @@
 import gsap from 'gsap';
 import { Vector3 } from 'three';
 import { tampilkanToast } from '../../ui/toast.js';
+import { ikonSpeaker } from '../../ui/ikon.js';
 
 export const DAFTAR_ZONA_TUR = [
   {
@@ -336,7 +337,7 @@ export function buatPengontrolTurSinematik({
       zonaLangkahEl.textContent = `Wilayah ${zona.nomor} dari ${DAFTAR_ZONA_TUR.length}: ${zona.pulauNama}`;
     }
     if (provinsiBadgeEl) {
-      provinsiBadgeEl.textContent = `🏝️ Fokus: ${zona.pulauNama} • ${zona.provinsiNama}`;
+      provinsiBadgeEl.textContent = `Fokus: ${zona.pulauNama} • ${zona.provinsiNama}`;
     }
     if (judulEl) {
       judulEl.textContent = zona.judul;
@@ -436,7 +437,7 @@ export function buatPengontrolTurSinematik({
     sedangDijeda = false;
     indeksZona = 0;
 
-    tampilkanToast('Memulai Tur Drone Sinematik Nusantara... Dengarkan narasi pemandu budaya 🎥🎙️✨');
+    tampilkanToast('Memulai Tur Sinematik Nusantara. Dengarkan narasi pemandu budaya.');
     terbangKeZona(0);
   }
 
@@ -515,13 +516,13 @@ export function buatPengontrolTurSinematik({
     });
 
     if (pesanManual) {
-      tampilkanToast('Tur Sinematik dihentikan. Kendali manual aktif kembali ⛵');
+      tampilkanToast('Tur Sinematik dihentikan. Kendali manual aktif kembali.');
     }
   }
 
   function selesaikanTur() {
     hentikanTur(false);
-    tampilkanToast('Perjalanan drone melintasi 6 wilayah kepulauan selesai! Selamat mengarungi khazanah Nusantara lebih dalam 🌴✨');
+    tampilkanToast('Perjalanan drone melintasi 6 wilayah kepulauan selesai. Selamat menjelajah lebih dalam.');
   }
 
   // Toggle Voice Over Narasi Suara
@@ -530,16 +531,16 @@ export function buatPengontrolTurSinematik({
       voiceOverAktif = !voiceOverAktif;
       if (voiceOverAktif) {
         btnVO.classList.remove('bisu');
-        if (ikonVO) ikonVO.textContent = '🔊';
+        if (ikonVO) ikonVO.innerHTML = ikonSpeaker(14, true);
         if (teksVO) teksVO.textContent = 'Narasi: ON';
-        tampilkanToast('Voice Over suara narator diaktifkan 🎙️');
+        tampilkanToast('Suara narator diaktifkan.');
         bicarakanNarasiZona(DAFTAR_ZONA_TUR[indeksZona]);
       } else {
         btnVO.classList.add('bisu');
-        if (ikonVO) ikonVO.textContent = '🔇';
+        if (ikonVO) ikonVO.innerHTML = ikonSpeaker(14, false);
         if (teksVO) teksVO.textContent = 'Narasi: OFF';
         hentikanVoiceOver();
-        tampilkanToast('Voice Over suara narator dibisukan 🔇');
+        tampilkanToast('Suara narator disenyapkan.');
       }
     });
   }

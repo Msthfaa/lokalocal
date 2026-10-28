@@ -18,6 +18,7 @@ import {
 import { WARNA_JENIS_HEX } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
 import { KETEBALAN_EXTRUDE } from './build-provinces.js';
+import { ikonPaspor, ikonCentang } from '../../ui/ikon.js';
 
 /**
  * Membuat pengontrol penanda kristal diorama 3D dan kartu popover
@@ -257,7 +258,7 @@ export function buatPengontrolBendera({
 
         <footer class="bendera-footer-aksi">
           <button type="button" class="bendera-tombol-paspor" data-kode="${provData.kode}">
-            <span class="bendera-ikon-stempel">🏷️</span>
+            <span class="bendera-ikon-stempel">${ikonPaspor(13)}</span>
             <span class="bendera-teks-paspor">Kumpulkan Stempel Paspor</span>
           </button>
         </footer>
@@ -301,7 +302,7 @@ export function buatPengontrolBendera({
           btnPaspor.classList.add('is-terkumpul');
           const teksPaspor = btnPaspor.querySelector('.bendera-teks-paspor');
           if (teksPaspor) {
-            teksPaspor.textContent = '✅ Stempel Berhasil Dicatat!';
+            teksPaspor.innerHTML = `${ikonCentang(13)} <span>Stempel Dicatat</span>`;
           }
         }
       });

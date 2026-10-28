@@ -1,3 +1,37 @@
+## [2026-10-28] Langkah 1 — Eliminasi Total Emoji (AI Slop) & Penerapan Ikonografi Vektor SVG Museum-Grade
+- **Permintaan & Arahan Pengguna:**
+  - Menghilangkan kesan "AI slop" akibat penggunaan emoji/emotikon berlebihan di antarmuka.
+  - Mengganti seluruh emoji dengan desain ikonografi presisi dan bahasa yang matang, elegan, serta berstandar kuratorial kelas dunia.
+- **Tindakan & Perubahan:**
+  - `web/src/ui/ikon.js`:
+    - Membuat modul pustaka ikon SVG monokromatik/duotone tipis (*stroke 1.5px - 1.75px*) yang seragam dan adaptif terhadap `currentColor`: `ikonPinLokasi`, `ikonPaspor`, `ikonBagikan`, `ikonTautanEksternal`, `ikonCentang`, `ikonCari`, `ikonKompas`, `ikonLentera`, `ikonKamera`, `ikonResetPutar`, `ikonSpeaker`.
+  - `web/src/sections/hero3d/mode-detail.js`:
+    - Mengganti teks tombol aksi menjadi bersih dan berwibawa: *Simpan ke Paspor* (disertai SVG paspor emas), *Bagikan* (SVG node share), dan *SPKT* (SVG external link).
+    - Mengganti seluruh emoji pin lokasi `📍` pada chips kabupaten/kota kontributor dan kartu galeri menjadi ikon SVG pin lokasi presisi.
+    - Mengganti emoji teropong `🔭` pada panel 10 provinsi belum berdata menjadi ikon kompas penjelajah SVG.
+    - Mengganti status stempel berhasil menjadi *Stempel Tersimpan* dengan ikon centang SVG.
+  - `web/src/sections/hero3d/panel-kanan.js`:
+    - Mengganti tombol stempel mini menjadi *Koleksi Stempel* dengan SVG paspor/centang.
+    - Mengganti emoji kaca pembesar `🔍` pada bilah cari menjadi SVG pencarian presisi.
+  - `web/src/sections/hero3d/bendera.js`:
+    - Menghapus emoji stempel dan centang, menggantinya dengan SVG paspor dan status teks *Stempel Dicatat*.
+  - `web/src/sections/hero3d/tur-sinematik.js`:
+    - Menghilangkan emoji kluster pada notifikasi toast (*camera, mic, sparkle, sailboat*).
+    - Mengganti toggle voice-over dengan ikon SVG speaker aktif / senyap dinamis.
+  - `web/jelajah.html`:
+    - Mengganti emoji toolbar HUD (*Reset Putar* dan *Tur Sinematik*) dengan inline SVG kamera dan rotasi.
+    - Mengganti emoji awan dan lumba-lumba pada layar pemuatan dengan ilustrasi SVG minimalis.
+    - Mengganti percikan emoji pada dialog sambutan Gatotkaca menjadi partikel bintang geometris tipografi (*✦*).
+  - `web/src/features/karawitan-synth.js`:
+    - Mengganti tab emoji kendang dan bambu pada instrumen virtual menjadi ikon vektor instrumen minimalis.
+  - `web/src/ui/loader-lucu.js`:
+    - Menghapus deretan emoji pada akhir kalimat lelucon budaya, mempertahankan humor cerdas Nusantara tanpa kesan pesan instan.
+- **Hasil:**
+  - Seluruh tombol, badge, kartu, dan modal dialog kini 100% bebas dari emoji bawaan sistem operasi.
+  - Antarmuka tampil jauh lebih dewasa, tenang, berwibawa, dan berkelas kurasi museum (*museum-grade*).
+  - Verifikasi visual headless browser membuktikan keselarasan estetika modern yang jauh dari stereotip *AI slop*.
+  - Build produksi (`npm run build`) sukses 100% dan validasi data (`tools/validate.mjs`) lolos tanpa galat.
+
 ## [2026-10-21] Menampilkan Seluruh 493 Khazanah Budaya & 38 Provinsi pada Spotlight Search
 - **Permintaan Pengguna:**
   - Memperbaiki modal pencarian kilat (Spotlight Search / Cmd+K) di mana sebelumnya hasil pencarian terpotong dan hanya menampilkan 40 entri awal padahal data asli memuat 493 khazanah budaya terkurasi.

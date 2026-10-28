@@ -241,7 +241,7 @@ async function mulaiHalamanJelajah() {
       loaderLucu.aturProgres(92, 'Menyalakan lentera laut & mengibarkan bendera...');
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          loaderLucu.selesai('Nusantara sudah matang dan siap dijelajahi! Selamat berlayar ⛵✨');
+          loaderLucu.selesai('Nusantara siap dijelajahi. Selamat berlayar.');
 
           // Memicu kemunculan dramatis 38 pulau satu per satu membal dari tengah nusantara
           if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {

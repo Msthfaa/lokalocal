@@ -171,7 +171,7 @@ export function gambarKartuPengelana({
     ctx.fillStyle = '#D4A017';
     ctx.font = '64px system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText('⚡', avatarX, avatarY + 22);
+    ctx.fillText('✦', avatarX, avatarY + 20);
   }
 
   // Label Lencana Bawah Avatar
@@ -439,7 +439,7 @@ export async function bukaModalCetakKartu({ pengelolaPaspor, daftarProvinsi = []
         link.download = `kartu-pengelana-${namaFileBersih}.png`;
         link.href = kanvas.toDataURL('image/png');
         link.click();
-        tampilkanToast('Kartu Pengelana Budaya berhasil diunduh! Simpan dan bagikan kebanggaanmu 🪪✨');
+        tampilkanToast('Kartu Pengelana Budaya berhasil diunduh. Simpan dan bagikan pencapaianmu.');
       } catch (err) {
         console.error('Gagal mengunduh kartu:', err);
         tampilkanToast('Gagal mengunduh kartu, coba klik kanan dan simpan gambar.');

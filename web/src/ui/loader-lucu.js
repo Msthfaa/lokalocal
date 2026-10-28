@@ -6,15 +6,15 @@
  */
 
 const PESAN_LUCU_NUSANTARA = [
-  'Menyusun 17.000 pulau satu per satu... (awas ada yang hanyut!) 🏝️',
-  'Membangunkan Komodo sebentar agar tidak menghalangi jalur kapal... 🦎💤',
-  'Memoles lambung kapal Pinisi dengan minyak kelapa wangi... ⛵✨',
-  'Menjemur kain batik sebentar biar tidak kusut di atas peta... 🎨🧺',
-  'Mengajak burung Cenderawasih latihan vokal pagi... 🦜🎶',
-  'Membungkus bekal rendang untuk pelayaran dari Sabang ke Merauke... 🍱🔥',
-  'Memanaskan oven 3D... kepulauan sebentar lagi matang dan siap santap! 🍛🔥',
-  'Menyetel kompas pelaut kuno dan lentera khatulistiwa... 🧭✨',
-  'Merajut terumbu karang bawah laut... hati-hati terantuk ya! 🐠🌊'
+  'Menyusun 17.000 pulau satu per satu... (awas ada yang hanyut!)',
+  'Membangunkan Komodo sebentar agar tidak menghalangi jalur kapal...',
+  'Memoles lambung kapal Pinisi dengan minyak kelapa wangi...',
+  'Menjemur kain batik sebentar biar tidak kusut di atas peta...',
+  'Mengajak burung Cenderawasih latihan vokal pagi...',
+  'Membungkus bekal rendang untuk pelayaran dari Sabang ke Merauke...',
+  'Memanaskan oven 3D... kepulauan sebentar lagi siap santap!',
+  'Menyetel kompas pelaut kuno dan lentera khatulistiwa...',
+  'Merajut terumbu karang bawah laut... hati-hati terantuk ya!'
 ];
 
 const KUNCI_SESI_PETA3D = 'lokalocal_peta3d_dimuat';
@@ -67,11 +67,11 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
       <!-- Panggung Maskot Kapal Pinisi Mungil "Si Kembara" -->
       <div class="jelajah-maskot-panggung" aria-hidden="true">
         <!-- Awan melayang -->
-        <div class="jelajah-maskot-awan jelajah-maskot-awan--1">☁️</div>
-        <div class="jelajah-maskot-awan jelajah-maskot-awan--2">☁️</div>
+        <div class="jelajah-maskot-awan jelajah-maskot-awan--1"><svg width="32" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" stroke="#38BDF8" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
+        <div class="jelajah-maskot-awan jelajah-maskot-awan--2"><svg width="26" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" stroke="#38BDF8" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
 
         <!-- Ikan terbang / lumba-lumba kecil sesekali melompat -->
-        <div class="jelajah-maskot-lumba">🐬</div>
+        <div class="jelajah-maskot-lumba"><svg width="28" height="28" viewBox="0 0 24 24" fill="#0284C7" stroke="#0369A1" stroke-width="1.5"><path d="M22 13c-1.5-3-4.5-5-8-5-3.5 0-6.5 2-8 5 2.5-.5 5-.5 8 0 2.5.5 5.5.5 8 0Z"/><path d="M12 8c0-3-1.5-5-3-6 1 2.5 1 4.5 0 6"/><path d="M2 14c2-1 4-1 6 0"/></svg></div>
 
         <!-- SVG Kapal Pinisi Mungil Lucu dengan Mata Berkedip & Bendera -->
         <div class="jelajah-kapal-animasi">
@@ -158,7 +158,7 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
         <div class="jelajah-loading-jalur">
           <div id="jelajah-loading-bar" class="jelajah-loading-bar" style="width: 15%;">
             <!-- Ikon kapal mini di ujung bilah -->
-            <span class="jelajah-loading-kapal-mini" aria-hidden="true">⛵</span>
+            <span class="jelajah-loading-kapal-mini" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="#D97706" stroke="#92400E" stroke-width="1.5"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><line x1="12" y1="2" x2="12" y2="10"/></svg></span>
           </div>
         </div>
 
@@ -173,7 +173,7 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
       </div>
 
       <p class="jelajah-loading-tip">
-        💡 <strong>Tahukah kamu?</strong> Di peta ini kamu bisa memutar Nusantara 360°, beralih ke Mode Malam berbintang, dan mencap paspor tiap provinsi!
+        <strong>Tahukah kamu?</strong> Di peta ini kamu bisa memutar Nusantara 360°, beralih ke Mode Malam berbintang, dan mencap paspor tiap provinsi!
       </p>
     </div>
   `;
@@ -242,7 +242,7 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
    * @param {string} [pesanPenutup='Nusantara siap dijelajahi! Selamat berlayar ⛵✨']
    * @param {Function} [onSelesai]
    */
-  function selesai(pesanPenutup = 'Nusantara siap dijelajahi! Selamat berlayar ⛵✨', onSelesai) {
+  function selesai(pesanPenutup = 'Nusantara siap dijelajahi. Selamat berlayar.', onSelesai) {
     if (sudahSelesai) return;
     sudahSelesai = true;
 
@@ -263,7 +263,7 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
     const navKartun = document.getElementById('nav-loading-kartun');
     const navKartunPesan = document.getElementById('nav-kartun-pesan');
     if (navKartunPesan) {
-      navKartunPesan.textContent = 'Siap Berlayar! ⛵✨';
+      navKartunPesan.textContent = 'Siap Berlayar!';
     }
     if (navKartun) {
       navKartun.classList.add('is-selesai');

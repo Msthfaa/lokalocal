@@ -14,6 +14,7 @@ import { normalisasiPencarian } from '../../util/teks.js';
 import { dapatkanGambarBudaya } from '../../data/gambar-budaya.js';
 import { buatSvgPieceProvinsi } from '../../map/render-piece.js';
 import { dapatkanChibiProvinsi } from '../../features/chibi.js';
+import { ikonPaspor, ikonCentang, ikonCari, ikonKompas } from '../../ui/ikon.js';
 
 /**
  * Membuat komponen Floating Card & Detail 3 Zona untuk Jelajah 3D
@@ -256,7 +257,7 @@ export function buatPanelKanan({
             </button>
 
             <button type="button" class="kartu-btn-paspor-mini ${sudahStempel ? 'is-terkumpul' : ''}" data-kode="${p.kode}" title="Kumpulkan stempel paspor">
-              ${sudahStempel ? '✅ Terkumpul' : '🏷️ Stempel'}
+              ${sudahStempel ? `${ikonCentang(13)} <span>Terkumpul</span>` : `${ikonPaspor(13)} <span>Stempel</span>`}
             </button>
           </div>
         </div>
@@ -387,7 +388,7 @@ export function buatPanelKanan({
               <!-- Bar Pencarian & Filter Kategori -->
               <div class="zona-tengah-filter-bar">
                 <div class="zona-cari-wrapper">
-                  <span class="zona-cari-ikon">🔍</span>
+                  <span class="zona-cari-ikon">${ikonCari(14)}</span>
                   <input
                     type="search"
                     class="zona-input-cari"
@@ -477,7 +478,7 @@ export function buatPanelKanan({
                     : adalahKosong
                     ? `
                   <div class="zona-state-kosong-refleksi">
-                    <div class="zona-ikon-refleksi">🔭</div>
+                    <div class="zona-ikon-refleksi">${ikonKompas(36)}</div>
                     <h3>Belum Tercatat di SPKT</h3>
                     <p>
                       Provinsi <strong>${p.nama}</strong> saat ini belum memiliki rekaman data di SPKT Kementerian Kebudayaan RI per tanggal pencatatan.
@@ -563,7 +564,7 @@ export function buatPanelKanan({
                   class="zona-btn-paspor ${sudahStempel ? 'is-stempel-sukses' : ''}"
                   data-kode="${p.kode}"
                 >
-                  <span class="zona-btn-paspor-ikon">${sudahStempel ? '✅' : '🏷️'}</span>
+                  <span class="zona-btn-paspor-ikon">${sudahStempel ? ikonCentang(15) : ikonPaspor(15)}</span>
                   <span>${sudahStempel ? 'Stempel Paspor Telah Dikoleksi' : 'Kumpulkan Stempel Paspor'}</span>
                 </button>
               </div>

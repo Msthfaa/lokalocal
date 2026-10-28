@@ -38,6 +38,14 @@ import { apakahKurangiGerak } from '../../util/motion.js';
 import { WARNA_JENIS_HEX, GRADIEN_JENIS_CSS } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
 import { dapatkanGambarBudaya } from '../../data/gambar-budaya.js';
+import {
+  ikonPinLokasi,
+  ikonPaspor,
+  ikonBagikan,
+  ikonTautanEksternal,
+  ikonCentang,
+  ikonKompas
+} from '../../ui/ikon.js';
 
 export function buatPengelolaModeDetail({
   scene,
@@ -875,7 +883,7 @@ export function buatPengelolaModeDetail({
                       .slice(0, 4)
                       .map(
                         (kab) => `
-                      <span class="cangkang-kab-chip">📍 ${kab.nama} <strong>(${kab.jumlah})</strong></span>
+                      <span class="cangkang-kab-chip">${ikonPinLokasi(11)} ${kab.nama} <strong>(${kab.jumlah})</strong></span>
                     `
                       )
                       .join('')}
@@ -897,10 +905,10 @@ export function buatPengelolaModeDetail({
                 </p>
                 <div class="cangkang-stats-aksi-baris">
                   <button type="button" class="btn-aksi-paspor" data-kode="${p.kode}">
-                    <span>🏷️ Tambahkan ke Paspor</span>
+                    ${ikonPaspor(14)} <span>Simpan ke Paspor</span>
                   </button>
                   <button type="button" class="btn-aksi-bagikan" title="Bagikan halaman budaya ini">
-                    <span>📤 Bagikan</span>
+                    ${ikonBagikan(14)} <span>Bagikan</span>
                   </button>
                   <a
                     href="https://spkt.kemenbud.go.id"
@@ -908,7 +916,7 @@ export function buatPengelolaModeDetail({
                     rel="noopener noreferrer"
                     class="tautan-spkt-resmi"
                   >
-                    <span>↗ SPKT</span>
+                    <span>SPKT</span> ${ikonTautanEksternal(12)}
                   </a>
                 </div>
               </div>
@@ -993,7 +1001,7 @@ export function buatPengelolaModeDetail({
 
                               ${
                                 item.jumlah_lokasi_gabungan && item.jumlah_lokasi_gabungan > 1
-                                  ? `<span class="kartu-galeri-gabung-tag">📍 ${item.jumlah_lokasi_gabungan} Wilayah</span>`
+                                  ? `<span class="kartu-galeri-gabung-tag">${ikonPinLokasi(10)} ${item.jumlah_lokasi_gabungan} Wilayah</span>`
                                   : ''
                               }
                             </div>
@@ -1001,7 +1009,7 @@ export function buatPengelolaModeDetail({
                             <!-- Badan Informasi Kartu -->
                             <div class="kartu-galeri-badan">
                               <div class="kartu-galeri-lokasi">
-                                <span class="kartu-lokasi-ikon">📍</span>
+                                <span class="kartu-lokasi-ikon">${ikonPinLokasi(11)}</span>
                                 <span class="kartu-lokasi-teks">${kabLabel}</span>
                               </div>
 
@@ -1023,7 +1031,7 @@ export function buatPengelolaModeDetail({
                     : `
                     <!-- Keadaan Kosong Jujur untuk 10 Provinsi Tanpa Data -->
                     <div class="cangkang-state-kosong-jujur cangkang-state-kosong-jujur--span2">
-                      <div class="cangkang-kosong-ikon">🔭</div>
+                      <div class="cangkang-kosong-ikon">${ikonKompas(36)}</div>
                       <h3 class="cangkang-kosong-judul">Belum Tercatat di SPKT</h3>
                       <p class="cangkang-kosong-deskripsi">
                         Provinsi <strong>${p.nama}</strong> saat ini belum memiliki rekaman data di Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan RI per tanggal pencatatan.
@@ -1107,7 +1115,7 @@ export function buatPengelolaModeDetail({
         if (typeof onCatatStempel === 'function') {
           onCatatStempel(kode, 'detail');
         }
-        btnPaspor.innerHTML = '<span>✅ Stempel Paspor Terkumpul</span>';
+        btnPaspor.innerHTML = `${ikonCentang(14)} <span>Stempel Tersimpan</span>`;
         btnPaspor.classList.add('is-terkumpul');
       });
     }
@@ -1129,9 +1137,9 @@ export function buatPengelolaModeDetail({
           }
         } else if (navigator.clipboard) {
           await navigator.clipboard.writeText(url);
-          btnBagikan.textContent = '✓ Tersalin!';
+          btnBagikan.innerHTML = `${ikonCentang(14)} <span>Tautan Disalin</span>`;
           setTimeout(() => {
-            btnBagikan.textContent = '📤 Bagikan';
+            btnBagikan.innerHTML = `${ikonBagikan(14)} <span>Bagikan</span>`;
           }, 2000);
         }
       });
