@@ -689,6 +689,36 @@ export function inisialisasiJelajah3D({
     }
   });
 
+  // Pasang Pengontrol Rute Cerita Tematik (Story Trails)
+  const btnRuteTematik = document.getElementById('hud-rute-cerita');
+  if (btnRuteTematik) {
+    btnRuteTematik.addEventListener('click', () => {
+      import('../../features/pengontrol-rute.js').then(({ bukaModalPemilihRute }) => {
+        bukaModalPemilihRute({
+          gerakkanKamera: (pos, lookAt, durasi = 1.8) => {
+            gsap.to(cameraTargetPos, {
+              x: pos.x,
+              y: pos.y,
+              z: pos.z,
+              duration: durasi,
+              ease: 'power2.inOut'
+            });
+            gsap.to(cameraTargetLookAt, {
+              x: lookAt.x,
+              y: lookAt.y,
+              z: lookAt.z,
+              duration: durasi,
+              ease: 'power2.inOut'
+            });
+          },
+          bukaDetailProvinsi: (kode) => {
+            bukaModeDetail(kode);
+          }
+        });
+      });
+    });
+  }
+
   // Loop Render dengan buttery-smooth spring interpolation
   function loop(sekarang) {
     if (!sedangAktif || !tabAktif) {

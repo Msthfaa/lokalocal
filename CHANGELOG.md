@@ -1,3 +1,31 @@
+## [2026-10-29] Langkah 3 — Rute Cerita Tematik (Story Trails) & Nyalakan Lentera Pendataan Virtual
+- **Permintaan & Arahan Pengguna:**
+  - Mengembangkan pengalaman interaktif bertutur (*guided storytelling*) agar pengunjung umum tidak bingung saat menjelajahi 493 khazanah budaya Nusantara.
+  - Memberikan fitur partisipatif bermakna (*Nyalakan Lentera Pendataan Virtual*) untuk 10 provinsi yang belum berdata di SPKT, mewujudkan pesan sosial utama situs.
+- **Tindakan & Perubahan:**
+  - `web/src/features/rute-tematik.js`:
+    - Membuat kurasi 3 Rute Cerita Tematik Nusantara (*Story Trails*):
+      1. *Jalur Rempah & Maritim Nusantara* (Ternate Maluku Utara -> Makassar Sulsel -> Selat Malaka Riau -> Sunda Kelapa Batavia).
+      2. *Jejak Ritus Tari & Mistisisme Nusantara* (Tari Saman Aceh -> Reog Ponorogo Jatim -> Tari Kecak & Sanghyang Bali -> Ritus Hudoq Kaltim).
+      3. *Mahakarya Kriya Tenun & Batik Pusaka* (Tenun Ulos Batak -> Songket Pandai Sikek Minang -> Batik Keraton Solo/Jogja -> Tenun Ikat Sumba NTT).
+    - Masing-masing waypoint dilengkapi data narasi mendalam, fokus objek budaya, kilas sejarah, serta koordinat target kamera 3D (`lookAt` & `position`).
+  - `web/src/features/pengontrol-rute.js`:
+    - Membangun pengontrol dialog pemilih rute dan kartu cerita melayang (*floating vignette overlay*).
+    - Mengintegrasikan navigasi langkah demi langkah (*sebelumnya*, *titik berikutnya*, *buka provinsi*, *selesaikan rute*), lengkap dengan transisi sinematik interpolasi kamera Three.js dan micro-SFX kendang & gong.
+  - `web/src/features/lentera.js`:
+    - Mengembangkan sistem state empati pendataan virtual berbasis `localStorage` (`lokalocal:lentera:v1`).
+    - Menyediakan fungsi `nyalakanLentera(kode, nama)` dengan umpan balik taktil suara Gong & Kendhang sakral, notifikasi toast, serta penghitung lentera aktif (X dari 10 lentera).
+  - `web/src/sections/hero3d/mode-detail.js` & `web/src/sections/gelap.js`:
+    - Memperbarui keadaan kosong jujur pada 10 provinsi yang belum berdata dengan tombol aksi *"Nyalakan Lentera Pendataan"*, animasi denyut cahaya lentera emas (`.cangkang-kosong-ikon--bercahaya`), dan counter empati.
+  - `web/jelajah.html` & `web/src/sections/hero3d/jelajah3d.js`:
+    - Menyematkan tombol *"Rute Tematik"* dengan ikon kompas SVG di bilah alat kontrol HUD 3D, terhubung langsung ke pengontrol rute.
+  - `web/src/styles/components.css`:
+    - Menerapkan desain kartu vignette kaca buram (*glassmorphism*), kartu pemilih rute museum-grade, serta animasi cahaya lentera yang hangat dan tidak berlebihan.
+- **Hasil & Pengujian:**
+  - Pengujian headless Edge CDP membuktikan pembukaan modal pemilih rute, peluncuran rute terpandu, dan aktivasi lentera pendataan berjalan 100% mulus tanpa galat.
+  - Tangkapan layar visual ([`preview_modal_rute.png`](file:///c:/Users/Tyoo/.gemini/antigravity/brain/851aacc5-0564-4983-9567-f17c419af95a/preview_modal_rute.png) dan [`preview_rute_vignette.png`](file:///c:/Users/Tyoo/.gemini/antigravity/brain/851aacc5-0564-4983-9567-f17c419af95a/preview_rute_vignette.png)) memverifikasi tipografi, hierarki, dan estetika yang sangat matang.
+  - Build produksi (`npm run build`) sukses tanpa error dan validasi dataset (`tools/validate.mjs`) tetap lolos 100%.
+
 ## [2026-10-29] Langkah 2 — Transformasi Audio Akustik Asli (Sampel Fisik Gamelan & Bonang) + Micro-SFX Tradisional
 - **Permintaan & Arahan Pengguna:**
   - Mengatasi masalah bunyi synthesizer sebelumnya yang terdengar sangat jauh dari instrumen aslinya (terlalu sintetis/palsu seperti nada dering game 8-bit).

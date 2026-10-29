@@ -44,8 +44,14 @@ import {
   ikonBagikan,
   ikonTautanEksternal,
   ikonCentang,
-  ikonKompas
+  ikonKompas,
+  ikonLentera
 } from '../../ui/ikon.js';
+import {
+  apakahLenteraMenyala,
+  nyalakanLentera,
+  hitungTotalLenteraMenyala
+} from '../../features/lentera.js';
 
 export function buatPengelolaModeDetail({
   scene,
@@ -1029,9 +1035,11 @@ export function buatPengelolaModeDetail({
                         })
                         .join('')
                     : `
-                    <!-- Keadaan Kosong Jujur untuk 10 Provinsi Tanpa Data -->
+                    <!-- Keadaan Kosong Jujur & Fitur Lentera Pendataan Virtual -->
                     <div class="cangkang-state-kosong-jujur cangkang-state-kosong-jujur--span2">
-                      <div class="cangkang-kosong-ikon">${ikonKompas(36)}</div>
+                      <div class="cangkang-kosong-ikon ${apakahLenteraMenyala(p.kode) ? 'cangkang-kosong-ikon--bercahaya' : ''}">
+                        ${ikonLentera(42, 'cangkang-lentera-ikon-emas')}
+                      </div>
                       <h3 class="cangkang-kosong-judul">Belum Tercatat di SPKT</h3>
                       <p class="cangkang-kosong-deskripsi">
                         Provinsi <strong>${p.nama}</strong> saat ini belum memiliki rekaman data di Sistem Pendataan Kebudayaan Terpadu (SPKT), Kementerian Kebudayaan RI per tanggal pencatatan.
@@ -1039,9 +1047,26 @@ export function buatPengelolaModeDetail({
                       <blockquote class="cangkang-kosong-kutipan">
                         &ldquo;Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat.&rdquo;
                       </blockquote>
-                      <p class="cangkang-kosong-ajakan">
-                        Celah data ini mengajak kita peduli mendokumentasikan dan mendaftarkan kekayaan budaya lokal agar abadi dan dikenal dunia.
-                      </p>
+
+                      <!-- Aksi Interaktif Nyalakan Lentera Pendataan -->
+                      <div class="lentera-aksi-box">
+                        <button
+                          type="button"
+                          class="tombol tombol--utama btn-nyalakan-lentera ${apakahLenteraMenyala(p.kode) ? 'lentera-sudah-aktif' : ''}"
+                          data-kode="${p.kode}"
+                          data-nama="${p.nama}"
+                          aria-label="Nyalakan Lentera Pendataan untuk ${p.nama}"
+                        >
+                          <span class="lentera-btn-svg" aria-hidden="true">${ikonLentera(18)}</span>
+                          <span class="lentera-btn-teks">${apakahLenteraMenyala(p.kode) ? 'Lentera Telah Menyala' : 'Nyalakan Lentera Pendataan'}</span>
+                        </button>
+                        <p class="lentera-sub-pesan">
+                          ${apakahLenteraMenyala(p.kode)
+                            ? `Lentera harapan untuk ${p.nama} sedang menyala. Anda telah menyalakan ${hitungTotalLenteraMenyala()} dari 10 lentera kebudayaan.`
+                            : `Nyalakan lentera virtual sebagai wujud kepedulian dan dorongan moral agar kebudayaan ${p.nama} segera tercatat resmi di SPKT.`
+                          }
+                        </p>
+                      </div>
                     </div>
                   `
                 }
@@ -1067,6 +1092,27 @@ export function buatPengelolaModeDetail({
 
     const btnTutupSilang = domOverlay.querySelector('.btn-tutup-silang');
     if (btnTutupSilang) btnTutupSilang.addEventListener('click', tutup);
+
+    // Listener Tombol Nyalakan Lentera Pendataan
+    const btnLentera = domOverlay.querySelector('.btn-nyalakan-lentera');
+    if (btnLentera) {
+      btnLentera.addEventListener('click', () => {
+        const kode = btnLentera.dataset.kode;
+        const nama = btnLentera.dataset.nama;
+        const res = nyalakanLentera(kode, nama);
+        if (res.berhasil) {
+          btnLentera.classList.add('lentera-sudah-aktif');
+          const teksEl = btnLentera.querySelector('.lentera-btn-teks');
+          if (teksEl) teksEl.textContent = 'Lentera Telah Menyala';
+          const ikonWadah = domOverlay.querySelector('.cangkang-kosong-ikon');
+          if (ikonWadah) ikonWadah.classList.add('cangkang-kosong-ikon--bercahaya');
+          const subEl = domOverlay.querySelector('.lentera-sub-pesan');
+          if (subEl) {
+            subEl.textContent = `Lentera harapan untuk ${nama} sedang menyala. Anda telah menyalakan ${res.total} dari 10 lentera kebudayaan.`;
+          }
+        }
+      });
+    }
 
     // Filter Kategori Galeri Budaya
     const filterBtns = domOverlay.querySelectorAll('.galeri-filter-btn');

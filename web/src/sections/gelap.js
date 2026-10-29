@@ -8,6 +8,8 @@ import { renderPetaSvg } from '../map/render.js';
 import { pasangInteraksiPeta } from '../map/interactions.js';
 import { gsap, ScrollTrigger, pasangMatchMediaAnimasi } from '../util/motion.js';
 import { formatAngka } from '../util/format.js';
+import { ikonLentera } from '../ui/ikon.js';
+import { apakahLenteraMenyala, nyalakanLentera } from '../features/lentera.js';
 
 /**
  * Menginisialisasi bagian S4 (10 Provinsi Belum Tercatat di SPKT).
@@ -93,6 +95,32 @@ export function inisialisasiBagianGelap({ statistik, provinsi, geoProvinsi, meta
     }
 
     wadahDetailKosong.append(kepala, deskripsi);
+
+    if (targetProv.status_data === 'belum_tercatat') {
+      const boxLentera = document.createElement('div');
+      boxLentera.className = 's4-lentera-box';
+      boxLentera.style.marginTop = 'var(--ruang-2)';
+      boxLentera.style.marginBottom = 'var(--ruang-2)';
+
+      const sudahMenyala = apakahLenteraMenyala(targetProv.kode);
+      const btnLentera = document.createElement('button');
+      btnLentera.type = 'button';
+      btnLentera.className = `tombol tombol--utama btn-s4-lentera ${sudahMenyala ? 'lentera-sudah-aktif' : ''}`;
+      btnLentera.innerHTML = `
+        <span class="lentera-btn-svg" aria-hidden="true">${ikonLentera(18)}</span>
+        <span class="lentera-btn-teks">${sudahMenyala ? 'Lentera Telah Menyala' : 'Nyalakan Lentera Pendataan'}</span>
+      `;
+      btnLentera.addEventListener('click', () => {
+        const res = nyalakanLentera(targetProv.kode, targetProv.nama);
+        if (res.berhasil) {
+          btnLentera.classList.add('lentera-sudah-aktif');
+          const teks = btnLentera.querySelector('.lentera-btn-teks');
+          if (teks) teks.textContent = 'Lentera Telah Menyala';
+        }
+      });
+      boxLentera.appendChild(btnLentera);
+      wadahDetailKosong.appendChild(boxLentera);
+    }
 
     if (typeof opsi.saatPilihProvinsiKeJelajah === 'function') {
       const aksi = document.createElement('div');
