@@ -20,6 +20,19 @@
     <link rel="icon" type="image/png" href="./favicon.png" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./assets/logo-emblem.png" />
+    <script>
+      // Teruskan akses langsung ke shell SPA terpadu (seamless single-page app)
+      (function () {
+        try {
+          var p = new URLSearchParams(window.location.search);
+          var prov = p.get('provinsi');
+          var hash = '#jelajah' + (prov ? '?provinsi=' + encodeURIComponent(prov) : '');
+          window.location.replace('./index.html' + hash);
+        } catch (e) {
+          window.location.replace('./index.html#jelajah');
+        }
+      })();
+    </script>
 
     <script>
       (function () {

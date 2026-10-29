@@ -15,7 +15,7 @@ import { muatDataAwal, jadwalkanMuatDataLengkap } from './data/loader.js';
 import { formatAngka } from './util/format.js';
 import { segarkanScrollTrigger } from './util/motion.js';
 import { inisialisasiNavigasi } from './ui/nav.js';
-import { inisialisasiTema } from './ui/tema.js';
+import { inisialisasiTema, ambilTemaSaatIni } from './ui/tema.js';
 import { inisialisasiBacksound } from './ui/audio.js';
 import { inisialisasiDialogTentang, inisialisasiDialogTentangKami, perbaruiAtribusiFooter } from './ui/footer.js';
 import { tampilkanToast } from './ui/toast.js';
@@ -366,6 +366,146 @@ async function jalankanPemuatanData(paksaUlang = false) {
 /**
  * Menginisialisasi interaksi kartu Bento Tempat Bersejarah.
  */
+
+/**
+ * Memasang pengendali tombol Floating HUD Kamera 3D
+ */
+function pasangKontrolHud(kontroler) {
+  if (!kontroler) return;
+
+  const btnZoomIn = document.getElementById('hud-zoom-in');
+  const btnZoomOut = document.getElementById('hud-zoom-out');
+  const btnZoomReset = document.getElementById('hud-zoom-reset');
+  const btnResetPutar = document.getElementById('hud-reset-putar');
+
+  function perbaruiLabelZoom(persen) {
+    if (btnZoomReset) {
+      const nilaiPersen = typeof persen === 'number' ? persen : (kontroler.getZoomPersen ? kontroler.getZoomPersen() : 100);
+      btnZoomReset.textContent = `${nilaiPersen}%`;
+      btnZoomReset.setAttribute('title', `Atur Ulang Zoom Kamera (Sekarang ${nilaiPersen}%)`);
+    }
+  }
+
+  perbaruiLabelZoom();
+
+  if (btnZoomIn && !btnZoomIn.dataset.bound) {
+    btnZoomIn.dataset.bound = 'true';
+    btnZoomIn.addEventListener('click', () => {
+      const p = kontroler.zoomIn();
+      perbaruiLabelZoom(p);
+    });
+  }
+
+  if (btnZoomOut && !btnZoomOut.dataset.bound) {
+    btnZoomOut.dataset.bound = 'true';
+    btnZoomOut.addEventListener('click', () => {
+      const p = kontroler.zoomOut();
+      perbaruiLabelZoom(p);
+    });
+  }
+
+  if (btnZoomReset && !btnZoomReset.dataset.bound) {
+    btnZoomReset.dataset.bound = 'true';
+    btnZoomReset.addEventListener('click', () => {
+      const p = kontroler.zoomReset();
+      perbaruiLabelZoom(p);
+    });
+  }
+
+  if (btnResetPutar && !btnResetPutar.dataset.bound) {
+    btnResetPutar.dataset.bound = 'true';
+    btnResetPutar.addEventListener('click', () => kontroler.resetRotasi());
+  }
+
+  const btnTentangHud = document.getElementById('hud-tombol-tentang');
+  if (btnTentangHud && !btnTentangHud.dataset.bound) {
+    btnTentangHud.dataset.bound = 'true';
+    btnTentangHud.addEventListener('click', (e) => {
+      const dialog = inisialisasiDialogTentang();
+      if (dialog) dialog.buka(e.currentTarget);
+    });
+  }
+}
+
+/**
+ * Memastikan modul dan instans Jelajah 3D Three.js siap digunakan di SPA view
+ */
+async function pastikanJelajah3DSiap(provinsiTarget = null) {
+  if (kontroler3D) {
+    if (typeof kontroler3D.lanjutkanRender === 'function') {
+      kontroler3D.lanjutkanRender();
+    }
+    if (typeof kontroler3D.perbaruiUkuran === 'function') {
+      kontroler3D.perbaruiUkuran();
+    }
+    if (provinsiTarget && typeof kontroler3D.pilihProvinsi === 'function') {
+      kontroler3D.pilihProvinsi(provinsiTarget);
+    }
+    return kontroler3D;
+  }
+
+  const wadahPeta = document.getElementById('s5-peta-wadah');
+  if (!wadahPeta) return null;
+
+  try {
+    const [{ inisialisasiJelajah3D }, { buatProyeksiIndonesia }] = await Promise.all([
+      import('./sections/hero3d/jelajah3d.js'),
+      import('./map/projection.js')
+    ]);
+
+    const dataAwal = await muatDataAwal();
+    const { provinsi, geoProvinsi, meta } = dataAwal;
+    const proyeksi = buatProyeksiIndonesia(geoProvinsi);
+
+    kontroler3D = inisialisasiJelajah3D({
+      wadahEl: wadahPeta,
+      geoProvinsi,
+      daftarProvinsi: provinsi,
+      daftarBudaya: dataLengkapCache?.budaya || [],
+      proyeksi,
+      saatPilihProvinsi: (kode) => {},
+      onZoomUbah: (persen) => {
+        const btnReset = document.getElementById('hud-zoom-reset');
+        if (btnReset) {
+          btnReset.textContent = `${persen}%`;
+          btnReset.setAttribute('title', `Atur Ulang Zoom Kamera (Sekarang ${persen}%)`);
+        }
+      },
+      onBukaDetailRekaman: (rekaman, pemicuEl) => {
+        bukaDetailRekamanDinamis(rekaman, pemicuEl);
+      },
+      onCatatStempel: (kode, jenis) => {
+        if (pengelolaPaspor) {
+          pengelolaPaspor.catatStempel(kode, jenis);
+        } else {
+          antreanStempel.push({ kode, jenis });
+        }
+      }
+    });
+
+    window.kontrolJelajah3D = kontroler3D;
+    pasangKontrolHud(kontroler3D);
+
+    const temaSaatIni = ambilTemaSaatIni();
+    if (typeof kontroler3D.aturModeWaktu === 'function') {
+      kontroler3D.aturModeWaktu(temaSaatIni === 'terang' ? 'siang' : 'malam');
+    }
+
+    if (spaRouter) {
+      spaRouter.aturKontroler3D(kontroler3D);
+    }
+
+    if (provinsiTarget && typeof kontroler3D.pilihProvinsi === 'function') {
+      kontroler3D.pilihProvinsi(provinsiTarget);
+    }
+
+    return kontroler3D;
+  } catch (err) {
+    console.warn('Gagal memuat diorama 3D di SPA:', err);
+    return null;
+  }
+}
+
 function inisialisasiBentoEditorial() {
 
   const kartuKoleksiBeranda = [
