@@ -1,3 +1,37 @@
+## [2026-10-29] Langkah 4 — Gamifikasi Paspor Budaya (7 Peringkat Kehormatan) & Generator Instagram Story (9:16)
+- **Permintaan & Arahan Pengguna:**
+  - Meningkatkan motivasi dan kepuasan pengunjung dalam menjelajahi budaya lewat sistem gamifikasi yang bermakna, kuratorial, dan bebas AI slop.
+  - Menyediakan generator kartu identitas paspor yang dapat dibagikan secara instan ke media sosial, khususnya format Instagram Story (vertikal 9:16) dan dokumen kartu lanskap.
+- **Tindakan & Perubahan:**
+  - `web/src/features/peringkat-paspor.js`:
+    - Merancang sistem 7 Peringkat Kehormatan Penjelajah Nusantara (*Honorary Cultural Explorer Tiers*):
+      1. *Musafir Pemula* (0 stempel) — Perintis Jejak
+      2. *Musafir Pesisir* (1–4 stempel) — Penghimpun Beranda
+      3. *Penjelajah Samudra* (5–11 stempel) — Pengarung Kepulauan
+      4. *Penjaga Cerita* (12–21 stempel) — Perawat Memori
+      5. *Pujangga Nusantara* (22–30 stempel) — Penenun Hikmah
+      6. *Mpu Budaya* (31–37 stempel) — Saksi Luhur
+      7. *Mahaguru Adiluhung Nusantara* (38/38 Paripurna) — Ksatria Paripurna 38/38
+    - Mengekspos fungsi terpadu `hitungPeringkatPaspor(totalStempel, totalProvinsi)` yang menghitung sisa stempel menuju target peringkat berikutnya, rasio progres, serta status paripurna.
+  - `web/src/sections/paspor.js`:
+    - Mengintegrasikan `hitungPeringkatPaspor` ke kartu identitas paspor utama.
+    - Menampilkan lencana kehormatan dinamis, kicker tingkat, narasi filosofis, serta teks petunjuk progres (`.paspor-progres-target-hint`, misal *"4 stempel lagi menuju Pujangga Nusantara"*).
+  - `web/src/features/paspor-canvas.js`:
+    - Merombak arsitektur kanvas HTML5 client-side beresolusi tinggi (0 ms latensi tanpa ketergantungan server) dengan 2 format cetak:
+      1. **Kartu Tanda Pengelana (Lanskap 1200×675 px)**: Dilengkapi avatar Gatotkaca bercahaya emas, nomor registrasi resmi, cap segel Kemendikbud/SPKT, dan kutipan filosofis.
+      2. **Instagram Story HD (Vertikal 1080×1920 px / Rasio 9:16)**: Format khusus media sosial (Instagram Story, TikTok, WhatsApp Status) menampilkan avatar Gatotkaca, nama kustom pengguna, pita tingkat gelar, matriks 38 petak stempel provinsi (dengan stempel terkumpul menyala emas berornamen ganda), cap segel resmi *Sepakat Merawat Nusantara*, dan kutipan sosial *"Budaya Indonesia tidak sedikit. Yang sedikit adalah yang sudah tercatat."*.
+    - Menambahkan tab kontrol rasio format instan di modal preview dialog, input nama interaktif real-time, dan tombol unduh resolusi tinggi otomatis.
+  - `web/src/styles/components.css` & `web/src/styles/sections.css`:
+    - Menambahkan gaya visual modern untuk kontrol modal kartu cetak (`.modal-kartu-baris-kontrol`, `.modal-kartu-tab-format`, `.kartu-format-tab`, `.modal-kartu-kanvas-pembungkus.mode-story`).
+    - Memastikan kanvas Instagram Story vertikal tetap proporsional dan nyaman dilihat di layar desktop maupun ponsel tanpa overflow.
+- **Hasil & Pengujian:**
+  - Pengujian headless Edge CDP dengan injeksi 18 stempel membuktikan:
+    - Status peringkat di antarmuka paspor terhitung tepat sebagai *Tingkat 4 dari 6: Penjaga Cerita (Perawat Memori)* dengan sisa 4 stempel menuju *Pujangga Nusantara*.
+    - Pergantian format kartu dari Lanskap (1200×675 px) ke Instagram Story (1080×1920 px) berjalan instan.
+    - Matriks 38 stempel pada kanvas 9:16 merender 18 stempel terkumpul menyala emas dan 20 stempel belum terkumpul dengan kontras elegan.
+    - Tangkapan layar visual diverifikasi di `preview_canvas_story.png` dan `preview_canvas_lanskap.png`.
+  - Build produksi `npm run build` sukses (2.80s) dan validasi data `tools/validate.mjs` lolos 100%.
+
 ## [2026-10-29] Langkah 3 — Rute Cerita Tematik (Story Trails) & Nyalakan Lentera Pendataan Virtual
 - **Permintaan & Arahan Pengguna:**
   - Mengembangkan pengalaman interaktif bertutur (*guided storytelling*) agar pengunjung umum tidak bingung saat menjelajahi 493 khazanah budaya Nusantara.

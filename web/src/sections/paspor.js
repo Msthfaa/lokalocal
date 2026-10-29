@@ -9,6 +9,7 @@ import { formatAngka } from '../util/format.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 import { tampilkanToast } from '../ui/toast.js';
 import { DAFTAR_CHIBI, ambilAvatarPengguna, simpanAvatarPengguna, dapatkanChibi } from '../features/chibi.js';
+import { hitungPeringkatPaspor, TINGKAT_GELAR } from '../features/peringkat-paspor.js';
 
 const GUGUS_WILAYAH = [
   { id: 'semua', label: 'Semua', kodeSet: null },
@@ -188,7 +189,7 @@ export function inisialisasiBagianPaspor({
 
     const jumlahBiasa = kodeTerkumpul.filter((k) => semuaStempel[k]?.jenis !== 'penjaga').length;
     const jumlahPenjaga = kodeTerkumpul.filter((k) => semuaStempel[k]?.jenis === 'penjaga').length;
-    const infoGelar = hitungGelarPaspor(jumlahTerkumpul, totalProvinsi);
+    const infoGelar = hitungPeringkatPaspor(jumlahTerkumpul, totalProvinsi);
 
     wadahUtama.textContent = '';
 
@@ -279,9 +280,9 @@ export function inisialisasiBagianPaspor({
     const badgeGelar = document.createElement('div');
     badgeGelar.className = 'paspor-gelar-badge';
     badgeGelar.innerHTML = `
-      <span class="paspor-gelar-tingkat">Gelar Penjelajah</span>
+      <span class="paspor-gelar-tingkat">${infoGelar.kicker}</span>
       <strong class="paspor-gelar-nama">${infoGelar.gelar}</strong>
-      <span class="paspor-gelar-tahap">${infoGelar.tingkat}</span>
+      <span class="paspor-gelar-tahap">${infoGelar.lencana}</span>
     `;
 
     const ringkasanKoleksi = document.createElement('div');
@@ -308,6 +309,10 @@ export function inisialisasiBagianPaspor({
     const barisBawah = document.createElement('div');
     barisBawah.className = 'paspor-detail-baris-bawah';
 
+    const targetHintTeks = infoGelar.isParipurna
+      ? 'Gelar Paripurna Tertinggi 38/38 Tercapai'
+      : `${infoGelar.sisaKeTarget} stempel lagi menuju ${TINGKAT_GELAR[infoGelar.tingkat]?.gelar || 'Peringkat Berikutnya'}`;
+
     const kotakProgres = document.createElement('div');
     kotakProgres.className = 'paspor-progres-kotak-kiri';
     kotakProgres.innerHTML = `
@@ -319,6 +324,7 @@ export function inisialisasiBagianPaspor({
       <div class="paspor-progres-trek" role="progressbar" aria-valuenow="${persen}" aria-valuemin="0" aria-valuemax="100" aria-label="Kemajuan paspor: ${persen}%">
         <div class="paspor-progres-isi" style="width: ${persen}%;"></div>
       </div>
+      <span class="paspor-progres-target-hint">${targetHintTeks}</span>
     `;
 
     const btnCetakKartu = document.createElement('button');

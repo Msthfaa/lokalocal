@@ -9952,6 +9952,20 @@ body.tema-siang .nav-kartun-info {
   color: #1C1917;
 }
 
+.paspor-progres-target-hint {
+  font-size: 0.72rem;
+  font-family: var(--font-kode, monospace);
+  color: var(--aksen);
+  letter-spacing: 0.03em;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+[data-tema="terang"] .paspor-progres-target-hint {
+  color: #B87314;
+}
+
+
 .paspor-btn-cetak {
   font-size: 0.85rem;
   font-weight: 600;

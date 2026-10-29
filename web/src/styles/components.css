@@ -1593,6 +1593,91 @@
   color: #1C1917;
 }
 
+
+.modal-kartu-baris-kontrol {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.modal-kartu-input-grup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.modal-kartu-tab-format {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 4px;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  gap: 4px;
+}
+
+[data-tema="terang"] .modal-kartu-tab-format {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(180, 83, 9, 0.2);
+}
+
+.kartu-format-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: var(--c-teks-redup, #A89F91);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kartu-format-tab:hover {
+  color: var(--c-teks, #F5F0EB);
+}
+
+[data-tema="terang"] .kartu-format-tab {
+  color: #78716C;
+}
+
+[data-tema="terang"] .kartu-format-tab:hover {
+  color: #1C1917;
+}
+
+.kartu-format-tab.aktif {
+  background: var(--c-emas, #D4A017);
+  color: #14100C;
+  box-shadow: 0 2px 8px rgba(212, 160, 23, 0.35);
+}
+
+[data-tema="terang"] .kartu-format-tab.aktif {
+  background: var(--c-emas, #D4A017);
+  color: #14100C;
+}
+
+.modal-kartu-kanvas-pembungkus.mode-story {
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  border-color: rgba(212, 160, 23, 0.45);
+}
+
+.modal-kartu-kanvas-pembungkus.mode-story .modal-kartu-kanvas {
+  aspect-ratio: 1080 / 1920;
+  max-height: 54vh;
+  width: auto;
+  margin: 0 auto;
+}
+
 .modal-kartu-kanvas-pembungkus {
   width: 100%;
   border-radius: 12px;
