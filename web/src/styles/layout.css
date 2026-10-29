@@ -80,12 +80,14 @@
   text-decoration: none;
   min-height: 40px;
   flex-shrink: 0;
+  position: relative;
+  overflow: visible;
   transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
 }
 
 .nav-merek:hover {
   transform: translateY(-1px) scale(1.02);
-  opacity: 0.96;
+  opacity: 0.98;
 }
 
 .nav-merek:focus-visible {
@@ -94,18 +96,114 @@
   border-radius: var(--r-sm);
 }
 
+/* Kilauan Bintang Emas pada Lambang Pin (Twinkle Sparkle Star) */
+.nav-merek::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 7px;
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, #ffffff 18%, rgba(255, 230, 130, 0.95) 45%, rgba(230, 177, 74, 0.45) 70%, transparent 80%);
+  clip-path: polygon(
+    50% 0%, 62% 38%, 100% 50%, 62% 62%,
+    50% 100%, 38% 62%, 0% 50%, 38% 38%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.1) rotate(0deg);
+  z-index: 3;
+  animation: kilau-bintang 5.2s ease-in-out infinite;
+}
+
+/* Sapuan Cahaya Berkilau Sepanjang Logo (Golden Shimmer Sweep) */
+.nav-merek::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.2) 38%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(240, 190, 85, 0.9) 56%,
+    transparent 74%
+  );
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  -webkit-mask-image: url("/assets/logo-lokalocal.png");
+  mask-image: url("/assets/logo-lokalocal.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  pointer-events: none;
+  z-index: 2;
+  animation: kilau-sapuan 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes kilau-bintang {
+  0%, 20%, 50%, 100% {
+    opacity: 0;
+    transform: scale(0.1) rotate(0deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.35) rotate(45deg);
+    filter: drop-shadow(0 0 4px #ffffff) drop-shadow(0 0 10px rgba(255, 220, 120, 0.95));
+  }
+  38% {
+    opacity: 0.85;
+    transform: scale(0.85) rotate(90deg);
+  }
+  44% {
+    opacity: 0;
+    transform: scale(0.2) rotate(135deg);
+  }
+}
+
+@keyframes kilau-sapuan {
+  0%, 18% {
+    background-position: 230% 0;
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  44% {
+    background-position: -130% 0;
+    opacity: 1;
+  }
+  50%, 100% {
+    background-position: -130% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes pendar-berkilau {
+  0%, 18%, 52%, 100% {
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
+  32% {
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 14px rgba(230, 177, 74, 0.85)) drop-shadow(0 0 28px rgba(255, 230, 140, 0.55)) brightness(1.24);
+  }
+}
+
 .nav-merek-logo {
-  height: 40px;
+  height: 38px;
   width: auto;
-  max-width: 145px;
+  max-width: 175px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
-  transition: filter 0.25s ease;
+  animation: pendar-berkilau 5.2s ease-in-out infinite;
+  transition: filter 0.3s ease;
 }
 
 .nav-merek:hover .nav-merek-logo {
-  filter: drop-shadow(0 4px 14px rgba(230, 177, 74, 0.35));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 16px rgba(230, 177, 74, 0.95)) drop-shadow(0 0 32px rgba(255, 235, 160, 0.75)) brightness(1.26);
 }
 
 [data-tema="terang"] .nav-merek-logo {
@@ -113,13 +211,27 @@
 }
 
 [data-tema="terang"] .nav-merek:hover .nav-merek-logo {
-  filter: drop-shadow(0 3px 10px rgba(184, 115, 20, 0.25));
+  filter: drop-shadow(0 2px 8px rgba(184, 115, 20, 0.4)) brightness(1.15);
 }
 
 @media (max-width: 480px) {
   .nav-merek-logo {
-    height: 33px;
-    max-width: 120px;
+    height: 32px;
+    max-width: 144px;
+  }
+  .nav-merek::before {
+    top: 2px;
+    left: 5px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-merek::before,
+  .nav-merek::after,
+  .nav-merek-logo {
+    animation: none !important;
   }
 }
 
@@ -168,6 +280,8 @@
   left: 1rem;
   right: 1rem;
   bottom: auto;
+  max-width: 380px;
+  margin-inline: auto;
   max-height: calc(100vh - 6rem);
   background: rgba(18, 15, 13, 0.96);
   backdrop-filter: blur(12px);
@@ -177,12 +291,29 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   padding: var(--ruang-4);
   gap: var(--ruang-2);
   overflow-y: auto;
   z-index: 510;
   list-style: none;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.nav-daftar.terbuka li {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-daftar.terbuka .nav-tautan {
+  width: auto;
+  min-width: 140px;
+  justify-content: center;
+  text-align: center;
 }
 
 .nav-tautan {
@@ -655,7 +786,7 @@ main {
 .footer-merek-logo {
   height: 48px;
   width: auto;
-  max-width: 175px;
+  max-width: 215px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));

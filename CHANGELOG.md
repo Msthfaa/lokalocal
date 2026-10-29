@@ -1,3 +1,27 @@
+## [2026-10-29] Pembaruan Logo Resmi Lokalocal Berkilau & Penyelarasan Rata Tengah Menu Navigasi Mobile
+- **Permintaan Pengguna:**
+  1. Mengganti logo merek menjadi aset baru (logo emblem pin garuda + teks serif "Lokalocal") dan membuatnya memiliki efek berkilau ("berkilau").
+  2. Mengatur bilah navigasi ponsel (modal drawer menu) agar seluruh tautan dan kapsul aktif menjadi rata tengah (*centered*).
+- **Tindakan & Solusi:**
+  - `web/public/assets/logo-lokalocal.png`:
+    - Mengganti file logo dengan aset resmi resolusi tinggi baru (1024 × 229, rasio aspek 4,47 : 1).
+  - `web/src/styles/layout.css`:
+    - Menyesuaikan dimensi `.nav-merek-logo` menjadi `height: 38px; max-width: 175px;` (desktop) dan `height: 32px; max-width: 144px;` (ponsel) agar logo tampil proporsional tanpa terdistorsi.
+    - Menambahkan efek berkilau bertingkat (*multi-layered sheen & sparkle*):
+      - `.nav-merek::after`: Sapuan cahaya diagonal linear-gradient emas-putih yang bergerak menyapu logo secara periodik (setiap 5,2 detik). Dilengkapi masking tepat mengikuti kontur logo (`-webkit-mask-image: url("/assets/logo-lokalocal.png")`) sehingga sapuan cahaya hanya memendari piksel logo tanpa bocor ke latar belakang.
+      - `.nav-merek::before`: Kilauan bintang 4 sudut (*twinkle sparkle star*) dengan `clip-path` geometris yang berpendar lembut di atas lambang pin Garuda.
+      - `.nav-merek-logo`: Animasi pendar emas lembut (`@keyframes pendar-berkilau`) dengan `drop-shadow` keemasan yang sinkron dengan sapuan cahaya.
+      - Menghormati `prefers-reduced-motion` dengan mematikan animasi bagi pengguna yang sensitif terhadap gerakan.
+    - Menyelaraskan menu navigasi ponsel (`.nav-daftar.terbuka`):
+      - Menambahkan `align-items: center; text-align: center; max-width: 380px; margin-inline: auto;`.
+      - Mengatur setiap `li` dan `.nav-tautan` agar berada di tengah (`justify-content: center; text-align: center; width: auto; min-width: 140px;`).
+      - Kapsul emas halaman aktif kini tampil simetris dan rapi di poros tengah dropdown ponsel.
+- **Hasil & Verifikasi:**
+  - Pengujian visual browser (Edge headless CDP):
+    - `verif_mobile_menu_centered.png`: Menu navigasi ponsel (Cerita, Jelajah, Paspor, Kuis, Tentang data, Tentang kami) beserta kapsul emas aktif 'Paspor' 100% rata tengah.
+    - `verif_desktop_logo_gleam.png`: Logo baru Lokalocal tampil tajam, anggun, dan berpadu selaras dengan header mengambang.
+  - `npm --prefix web run build` sukses (3.04s, 0 error).
+
 ## [2026-10-29] Perbaikan Total & Analisis Menyeluruh — Pemulihan Arsitektur Jelajah 3D, Eliminasi Bug Navbar & Modal Menutupi Header
 - **Analisis Akar Masalah (Mengapa Bug Parah Terjadi Sebelumnya?):**
   1. *Jelajah 3D Rusak / Cacat*: Pada percobaan transisi "liquid", halaman `jelajah.html` di-hijack oleh skrip redirect inline ke `index.html#jelajah` dan canvas Three.js di-mount ke dalam kontainer yang berstatus `display: none`. Hal ini menyebabkan dimensi kanvas bernilai 0×0, rasio kamera menghasilkan `NaN`, latar belakang transparan membocorkan gambar pola gelap `bg-budaya-kuis.jpg` di sudut layar, dan tombol kanan navbar salah menampilkan "Jelajah 3D" (padahal sedang berada di Jelajah).
