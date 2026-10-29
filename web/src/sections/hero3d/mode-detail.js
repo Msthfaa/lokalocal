@@ -469,6 +469,12 @@ export function buatPengelolaModeDetail({
   function buka(provData, mesh) {
     if (!provData || !mesh) return;
 
+    const ruteOverlay = document.getElementById('jelajah-rute-overlay');
+    if (ruteOverlay) {
+      ruteOverlay.style.display = 'none';
+      ruteOverlay.setAttribute('hidden', '');
+    }
+
     try {
       // Bersihkan aksen dan reset mesh aktif sebelumnya jika berbeda
       if (meshAktif && meshAktif !== mesh) {

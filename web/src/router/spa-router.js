@@ -4,18 +4,17 @@
  * Mengelola perpindahan tampilan antar halaman ('cerita', 'jelajah', 'paspor', 'kuis')
  * secara in-memory tanpa reload browser, menyinkronkan URL hash & history browser,
  * menghentikan/menjalankan render loop Three.js sesuai kebutuhan,
- * serta memicu animasi sinematik Gatotkaca Chibi secara persisten tanpa kedip layar.
+ * serta memicu animasi sinematik Pesawat Kartun Budaya saat menuju halaman Jelajah.
  */
 
 import { terbangkanGatotkacaLepasLandas } from '../ui/transisi-gatotkaca.js';
 import { NAMA_SITUS } from '../config.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 
-export const DAFTAR_TAMPILAN = ['cerita', 'jelajah', 'paspor', 'kuis'];
+export const DAFTAR_TAMPILAN = ['cerita', 'paspor', 'kuis'];
 
 const JUDUL_TAMPILAN = {
   cerita: `${NAMA_SITUS} — Cerita Kebudayaan Nusantara`,
-  jelajah: `${NAMA_SITUS} — Jelajah Peta 3D Nusantara`,
   paspor: `${NAMA_SITUS} — Paspor Budaya Nusantara`,
   kuis: `${NAMA_SITUS} — Kuis Budaya Nusantara`
 };
@@ -23,20 +22,17 @@ const JUDUL_TAMPILAN = {
 export class SpaRouter {
   /**
    * @param {object} parameter
-   * @param {(tampilan: string, asal: string) => void} [parameter.saatGantiTampilan]
-   * @param {(provinsiKode?: string) => Promise<void>} [parameter.onBukaJelajah]
+   * @param {(tampilan: string) => void} [parameter.saatGantiTampilan]
    * @param {object} [parameter.kontroler3D]
    */
-  constructor({ saatGantiTampilan, onBukaJelajah = null, kontroler3D = null } = {}) {
+  constructor({ saatGantiTampilan, kontroler3D = null } = {}) {
     this.tampilanAktif = 'cerita';
     this.saatGantiTampilan = saatGantiTampilan;
-    this.onBukaJelajah = onBukaJelajah;
     this.kontroler3D = kontroler3D;
     this.sedangTransisi = false;
 
     this.elemenViews = {
       cerita: document.getElementById('view-cerita'),
-      jelajah: document.getElementById('view-jelajah'),
       paspor: document.getElementById('view-paspor'),
       kuis: document.getElementById('view-kuis')
     };
@@ -52,11 +48,9 @@ export class SpaRouter {
    * Mengambil nama tampilan awal dari hash URL atau parameter pencarian
    */
   dapatkanTampilanDariUrl() {
-    const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
-    const hashUtama = rawHash.split('?')[0].toLowerCase();
-
-    if (DAFTAR_TAMPILAN.includes(hashUtama)) {
-      return hashUtama;
+    const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase().trim();
+    if (DAFTAR_TAMPILAN.includes(hash)) {
+      return hash;
     }
 
     const searchParams = new URLSearchParams(window.location.search);
@@ -69,30 +63,14 @@ export class SpaRouter {
   }
 
   /**
-   * Mengambil kode provinsi dari parameter URL atau hash jika ada
-   */
-  dapatkanProvinsiDariUrl() {
-    const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
-    if (rawHash.includes('?')) {
-      const queryStr = rawHash.split('?')[1];
-      const params = new URLSearchParams(queryStr);
-      const prov = params.get('provinsi') || params.get('prov');
-      if (prov) return prov;
-    }
-    const searchParams = new URLSearchParams(window.location.search);
-    return searchParams.get('provinsi') || searchParams.get('prov') || null;
-  }
-
-  /**
    * Memasang listener klik tautan internal, popstate, dan hashchange
    */
   pasangListenerGlobal() {
     // Tangani tombol Back / Forward browser
     window.addEventListener('hashchange', () => {
       const target = this.dapatkanTampilanDariUrl();
-      const prov = this.dapatkanProvinsiDariUrl();
-      if ((target !== this.tampilanAktif || prov) && !this.sedangTransisi) {
-        this.navigasiKe(target, { updateUrl: false, animasiPesawat: false, provinsi: prov });
+      if (target !== this.tampilanAktif && !this.sedangTransisi) {
+        this.navigasiKe(target, { updateUrl: false });
       }
     });
 
@@ -111,16 +89,10 @@ export class SpaRouter {
 
       // Deteksi target tampilan dari href
       let targetTampilan = null;
-      let targetProvinsi = tautan.dataset.provinsi || null;
-
       if (tautan.dataset.navId === 'jelajah' || href.includes('jelajah.html') || href === '#jelajah' || href === '#/jelajah') {
-        targetTampilan = 'jelajah';
-        if (!targetProvinsi && href.includes('provinsi=')) {
-          try {
-            const urlObj = new URL(href, window.location.origin);
-            targetProvinsi = urlObj.searchParams.get('provinsi');
-          } catch {}
-        }
+        e.preventDefault();
+        this.navigasiKeJelajahDedicated();
+        return;
       } else if (tautan.dataset.navId && DAFTAR_TAMPILAN.includes(tautan.dataset.navId)) {
         targetTampilan = tautan.dataset.navId;
       } else if (href.includes('paspor.html') || href === '#paspor' || href === '#/paspor') {
@@ -133,35 +105,59 @@ export class SpaRouter {
 
       if (targetTampilan) {
         e.preventDefault();
-        const butuhAnimasiPesawat = targetTampilan === 'jelajah' && this.tampilanAktif !== 'jelajah';
-        this.navigasiKe(targetTampilan, { animasiPesawat: butuhAnimasiPesawat, provinsi: targetProvinsi });
+        this.navigasiKe(targetTampilan);
       }
     });
   }
 
   /**
-   * Navigasi khusus ke halaman Jelajah 3D
+   * Navigasi khusus ke halaman Jelajah 3D tersendiri (jelajah.html)
+   * dengan memicu animasi terbang Pesawat Kartun Budaya lepas landas
    * @param {object} [opsiTambahan]
    * @param {string} [opsiTambahan.provinsi]
    */
   navigasiKeJelajahDedicated(opsiTambahan = {}) {
-    this.navigasiKe('jelajah', {
-      animasiPesawat: this.tampilanAktif !== 'jelajah',
-      provinsi: opsiTambahan.provinsi || null
-    });
+    if (this.sedangTransisi) return;
+    this.sedangTransisi = true;
+
+    try {
+      sessionStorage.setItem('lokalocal_mendarat_pesawat', '1');
+    } catch {}
+
+    const queryParams = [];
+    queryParams.push('mendarat=1');
+    if (opsiTambahan.provinsi) {
+      queryParams.push(`provinsi=${encodeURIComponent(opsiTambahan.provinsi)}`);
+    }
+
+    const targetUrl = `./jelajah.html?${queryParams.join('&')}`;
+
+    try {
+      terbangkanGatotkacaLepasLandas({
+        onTerbangTinggi: () => {
+          window.location.href = targetUrl;
+        }
+      });
+    } catch {
+      window.location.href = targetUrl;
+    }
   }
 
   /**
-   * Berpindah ke tampilan halaman yang dituju dengan transisi liquid halus tanpa kedip
+   * Berpindah ke tampilan halaman yang dituju
    * @param {'cerita'|'jelajah'|'paspor'|'kuis'} targetTampilan
    * @param {object} [opsi]
    * @param {boolean} [opsi.updateUrl=true]
-   * @param {boolean} [opsi.animasiPesawat=true]
-   * @param {string|null} [opsi.provinsi=null]
+   * @param {boolean} [opsi.paksaPesawat=false]
    */
-  async navigasiKe(targetTampilan, { updateUrl = true, animasiPesawat = true, provinsi = null } = {}) {
+  navigasiKe(targetTampilan, { updateUrl = true, paksaPesawat = false, animasiPesawat = true, provinsi = null } = {}) {
+    if (targetTampilan === 'jelajah') {
+      this.navigasiKeJelajahDedicated({ provinsi });
+      return;
+    }
+
     if (!DAFTAR_TAMPILAN.includes(targetTampilan)) return;
-    if (this.tampilanAktif === targetTampilan && !provinsi) return;
+    if (this.tampilanAktif === targetTampilan) return;
     if (this.sedangTransisi) return;
 
     const asalTampilan = this.tampilanAktif;
@@ -169,92 +165,18 @@ export class SpaRouter {
 
     // Perbarui URL hash & judul tab
     if (updateUrl) {
-      window.location.hash = `#${targetTampilan}` + (provinsi ? `?provinsi=${encodeURIComponent(provinsi)}` : '');
+      window.location.hash = `#${targetTampilan}`;
     }
     document.title = JUDUL_TAMPILAN[targetTampilan] || NAMA_SITUS;
 
-    // Gerakkan liquid indicator pill di navbar seketika dengan fluid physics
-    this.perbaruiStatusNav(targetTampilan);
-
-    // KASUS 1: BERPINDAH KE JELAJAH 3D
-    if (targetTampilan === 'jelajah') {
-      const elAsal = this.elemenViews[asalTampilan];
-      const elTarget = this.elemenViews['jelajah'];
-
-      const selesaikanMasukJelajah = async () => {
-        this.tukarTampilanDom(asalTampilan, 'jelajah');
-        if (typeof this.onBukaJelajah === 'function') {
-          await this.onBukaJelajah(provinsi);
-        } else if (this.kontroler3D) {
-          if (typeof this.kontroler3D.lanjutkanRender === 'function') {
-            this.kontroler3D.lanjutkanRender();
-          }
-          if (typeof this.kontroler3D.perbaruiUkuran === 'function') {
-            this.kontroler3D.perbaruiUkuran();
-          }
-          if (provinsi && typeof this.kontroler3D.pilihProvinsi === 'function') {
-            this.kontroler3D.pilihProvinsi(provinsi);
-          }
-        }
-      };
-
-      if (animasiPesawat && !apakahKurangiGerak()) {
-        try {
-          const { sambutGatotkacaDiJelajah } = await import('../ui/transisi-gatotkaca.js');
-          terbangkanGatotkacaLepasLandas({
-            onTerbangTinggi: async () => {
-              await selesaikanMasukJelajah();
-              await sambutGatotkacaDiJelajah();
-              this.sedangTransisi = false;
-            }
-          });
-          return;
-        } catch {
-          // Lanjutkan jika ada kendala modul
-        }
-      }
-
-      // Transisi crossfade liquid halus
-      if (elAsal && elTarget && !apakahKurangiGerak()) {
-        gsap.to(elAsal, {
-          opacity: 0,
-          duration: 0.2,
-          ease: 'power2.out',
-          onComplete: async () => {
-            await selesaikanMasukJelajah();
-            gsap.fromTo(
-              elTarget,
-              { opacity: 0 },
-              {
-                opacity: 1,
-                duration: 0.25,
-                ease: 'power2.inOut',
-                onComplete: () => {
-                  this.sedangTransisi = false;
-                }
-              }
-            );
-          }
-        });
-        return;
-      }
-
-      await selesaikanMasukJelajah();
-      this.sedangTransisi = false;
-      return;
-    }
-
-    // KASUS 2: BERPINDAH DARI JELAJAH KE HALAMAN LAIN (CERITA / PASPOR / KUIS)
-    if (asalTampilan === 'jelajah' && this.kontroler3D && typeof this.kontroler3D.jedaRender === 'function') {
-      this.kontroler3D.jedaRender();
-    }
-
+    // PERPINDAHAN ANTAR HALAMAN LAINNYA -> BUTTERY-SMOOTH CROSSFADE CEPAT
     const elAsal = this.elemenViews[asalTampilan];
     const elTarget = this.elemenViews[targetTampilan];
 
-    if (!elAsal || !elTarget || apakahKurangiGerak()) {
+    if (!animasiPesawat || !elAsal || !elTarget || apakahKurangiGerak()) {
       this.tukarTampilanDom(asalTampilan, targetTampilan);
       this.sedangTransisi = false;
+      this.perbaruiStatusNav(targetTampilan);
       return;
     }
 
@@ -276,6 +198,7 @@ export class SpaRouter {
               ease: 'power1.in',
               onComplete: () => {
                 this.sedangTransisi = false;
+                this.perbaruiStatusNav(targetTampilan);
               }
             }
           );
@@ -284,6 +207,7 @@ export class SpaRouter {
     } catch (e) {
       this.tukarTampilanDom(asalTampilan, targetTampilan);
       this.sedangTransisi = false;
+      this.perbaruiStatusNav(targetTampilan);
     }
   }
 
@@ -338,49 +262,18 @@ export class SpaRouter {
   }
 
   /**
-   * Memperbarui atribut aria-current dan posisi liquid indicator pill pada navbar
+   * Memperbarui atribut aria-current dan kelas aktif pada navbar
    * @param {string} idNav
    */
   perbaruiStatusNav(idNav) {
-    if (typeof window.tandaiNavAktif === 'function') {
-      window.tandaiNavAktif(idNav);
-    } else {
-      const daftarTautan = document.querySelectorAll('.nav-tautan[data-nav-id]');
-      daftarTautan.forEach((tautan) => {
-        const cocok = tautan.dataset.navId === idNav;
-        if (cocok) {
-          tautan.setAttribute('aria-current', 'page');
-        } else {
-          tautan.removeAttribute('aria-current');
-        }
-      });
-    }
-
-    // Perbarui tombol aksi kanan navbar (Jelajah 3D <-> Baca Cerita)
-    const btnAksiKanan = document.getElementById('nav-tombol-aksi-kanan') || document.querySelector('.nav-tombol-aksi');
-    if (btnAksiKanan) {
-      if (idNav === 'jelajah') {
-        btnAksiKanan.setAttribute('href', '#cerita');
-        btnAksiKanan.setAttribute('title', 'Kembali ke Cerita Budaya');
-        btnAksiKanan.innerHTML = `
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-          </svg>
-          <span>Baca Cerita</span>
-        `;
+    const daftarTautan = document.querySelectorAll('.nav-tautan[data-nav-id]');
+    daftarTautan.forEach((tautan) => {
+      const cocok = tautan.dataset.navId === idNav;
+      if (cocok) {
+        tautan.setAttribute('aria-current', 'page');
       } else {
-        btnAksiKanan.setAttribute('href', '#jelajah');
-        btnAksiKanan.setAttribute('title', 'Jelajah Peta 3D Nusantara');
-        btnAksiKanan.innerHTML = `
-          <svg class="nav-merek-ikon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <span>Jelajah 3D</span>
-        `;
+        tautan.removeAttribute('aria-current');
       }
-    }
+    });
   }
 }

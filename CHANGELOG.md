@@ -1,3 +1,35 @@
+## [2026-10-29] Perbaikan Total & Analisis Menyeluruh — Pemulihan Arsitektur Jelajah 3D, Eliminasi Bug Navbar & Modal Menutupi Header
+- **Analisis Akar Masalah (Mengapa Bug Parah Terjadi Sebelumnya?):**
+  1. *Jelajah 3D Rusak / Cacat*: Pada percobaan transisi "liquid", halaman `jelajah.html` di-hijack oleh skrip redirect inline ke `index.html#jelajah` dan canvas Three.js di-mount ke dalam kontainer yang berstatus `display: none`. Hal ini menyebabkan dimensi kanvas bernilai 0×0, rasio kamera menghasilkan `NaN`, latar belakang transparan membocorkan gambar pola gelap `bg-budaya-kuis.jpg` di sudut layar, dan tombol kanan navbar salah menampilkan "Jelajah 3D" (padahal sedang berada di Jelajah).
+  2. *Modal Tentang Data & Tentang Kami Menutupi Navbar*: CSS `.dialog-modal` sebelumnya memakai `margin: auto; max-height: 88vh;`. Pada viewport laptop/desktop standar (tinggi 768px-900px), dialog setinggi ~700px diposisikan browser di `top: ~34px`, sehingga menimpa dan menutupi bilah navigasi `#header-utama` (yang mengambang di `top: 20px-66px`).
+  3. *Navbar Mengalami Bug / Kapsul Emas Menggantung (Sagging)*: Percobaan indikator gerak JavaScript `.nav-liquid-pill` menghitung offset posisi secara absolut di dalam flexbox tanpa memperhitungkan border-box vs padding-box dan sub-pixel rendering, menyebabkan kapsul emas bergeser turun melebihi batas navigasi ("menggantung"). Selain itu, tombol modal ("Tentang data" & "Tentang kami") sempat memicu event yang mengacaukan status navigasi aktif.
+  4. *Awan 3D Menghalangi Pemandangan Tur Tematik & Elevasi Terlalu Tinggi*: Pemanggilan `kembalikanSorotanRute()` di awal fungsi `sorotProvinsiRute()` secara tidak sengaja mengembalikan `grupAwan.visible = true`, sehingga awan 3D melayang di depan kamera saat fokus ke Sumatera Utara. Elevasi keping pulau `+0.20` juga dirasa terlalu tinggi oleh pengguna.
+- **Tindakan & Solusi:**
+  - `web/src/styles/components.css`:
+    - Mengatur ulang posisi `.dialog-modal` menjadi `position: fixed; top: 5.5rem; left: 50%; transform: translateX(-50%); margin: 0; max-height: calc(100vh - 6.75rem);`.
+    - Modal kini memiliki jarak aman 22px+ di bawah bilah navigasi, menjamin `#header-utama` 100% selalu terlihat jelas dan tidak pernah tertutup oleh dialog apapun.
+  - `web/src/ui/nav.js` & `web/src/styles/layout.css`:
+    - Menghapus total JavaScript `.nav-liquid-pill`. Mengembalikan styling native CSS murni `.nav-tautan[aria-current="page"]` dengan `transition: color 0.15s ease, background-color 0.15s ease`.
+    - Kapsul emas aktif kini 100% presisi di tengah, simetris, bebas bug kalkulasi koordinat, dan tidak pernah menggantung atau bocor ke bawah di semua halaman (Cerita, Paspor, Kuis, Jelajah).
+    - Memastikan tombol modal ("Tentang data" dan "Tentang kami") tidak pernah mencuri atribut `aria-current="page"`.
+  - `web/src/sections/hero3d/jelajah3d.js` & `mode-detail.js`:
+    - Memulihkan `jelajah.html` sebagai halaman mandiri dedicated 3D tanpa script redirect.
+    - Merendahkan elevasi pulau saat tur tematik dari `+0.20` menjadi `+0.08 unit` (halus, proporsional, dan elegan).
+    - Memisahkan fungsi pembersihan material (`bersihkanSorotanProvinsi()`) dari pemulihan awan, sehingga selama rute tematik berlangsung, seluruh awan 3D dijamin tersembunyi (`grupAwan.visible = false`).
+    - Menambahkan logika penanganan klik latar laut: mengeklik laut kosong saat tur tematik berlangsung kini secara elegan memicu `keluarRute()`, mengembalikan kamera ke tampilan luas Nusantara dan menurunkan pulau target dengan aman tanpa error.
+    - Menjamin kartu narasi tur tematik (`#jelajah-rute-overlay`) otomatis disembunyikan saat mode arsip detail SPKT dibuka agar tidak saling bertumpuk di layar.
+- **Hasil & Pengujian:**
+  - Pengujian headless Edge CDP dengan screenshot terverifikasi:
+    - `verif_1_beranda_nav.png`: Kapsul navigasi 'Cerita' presisi di tengah.
+    - `verif_2_tentang_data_modal.png`: Dialog Tentang Data terbuka di `top: 88px`, navbar di atasnya terlihat utuh tanpa tertutup sedikitpun.
+    - `verif_3_tentang_kami_modal.png`: Dialog Tentang Kami terbuka rapi dengan jarak aman 22.4px dari bilah navigasi.
+    - `verif_4_kuis_nav.png`: Kapsul emas 'Kuis' presisi, tanpa sagging/hanging.
+    - `verif_5_jelajah_overview.png`: Halaman Jelajah 3D memuat lancar, tombol kanan menampilkan "Baca Cerita" menuju beranda.
+    - `verif_rute_sumut_clean.png`: Tur Sumatera Utara jernih 100%, awan penghalang hilang, elevasi pulau lembut (+0.08), panel samping tertutup bersih.
+    - `verif_rute_closed.png`: Menutup tur mengembalikan seluruh pulau dan awan ke posisi lanskap normal.
+  - Validasi data `tools/validate.mjs` lolos 14/14 aturan (0 error).
+  - Build produksi `npm run build` sukses (2.90s).
+
 ## [2026-10-29] Perbaikan Interaksi 3D & Proporsi Tur Tematik — Abaikan Klik Laut, Penguncian Mode Eksklusif, & Elevasi Halus (+0.20)
 - **Permintaan & Masukan Pengguna (Berdasarkan 3 Tangkapan Layar):**
   1. *Klik kanvas laut me-reset kamera secara tidak sengaja (Gambar 1)*: Saat tur sedang zoom-in, klik di latar belakang/laut menyebabkan kamera zoom-out sendiri sementara kartu tur tetap menggantung di tengah layar.

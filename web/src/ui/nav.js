@@ -82,6 +82,8 @@ export function inisialisasiNavigasi({ bukaDialogTentang, bukaDialogTentangKami,
     }
   });
 
+  // Navbar tetap diam di posisi atas (tanpa animasi saat scroll)
+
   // Tandai navigasi aktif berdasarkan halaman aktif saat ini
   function tandaiNavAktif(idNav) {
     for (const tautan of tautanNav) {

@@ -22,7 +22,7 @@
   top: 1.25rem;
   left: 0;
   right: 0;
-  z-index: 100010 !important; /* Di atas seluruh overlay transisi awan/Gatotkaca */
+  z-index: 500;
   height: auto;
   display: flex;
   justify-content: center;
@@ -185,9 +185,6 @@
   margin: 0;
 }
 
-
-
-
 .nav-tautan {
   display: inline-flex;
   align-items: center;
@@ -202,7 +199,7 @@
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .nav-tautan:hover {
@@ -210,12 +207,16 @@
   background-color: rgba(255, 255, 255, 0.12);
 }
 
+.nav-tautan:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .nav-tautan[aria-current="page"] {
-  color: #14110F !important;
-  background-color: var(--aksen) !important;
+  color: #14110F;
+  background-color: var(--aksen);
   font-weight: 700;
   border-radius: 9999px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* Bagian 3: Tombol Aksi "Jelajah 3D" & Tema di Kanan */
@@ -405,7 +406,7 @@
   .nav-daftar.terbuka {
     justify-self: center;
     pointer-events: auto;
-    position: relative !important;
+    position: static;
     height: auto;
     display: flex;
     flex-direction: row;
@@ -1121,20 +1122,6 @@ main {
   display: none !important;
 }
 
-#view-jelajah {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  overflow: hidden;
-  background-color: #0E0B09;
-}
-
-body.halaman-fullscreen-body {
-  overflow: hidden !important;
-}
-
 body.halaman-fullscreen-body #view-cerita,
 body.halaman-fullscreen-body #view-paspor,
 body.halaman-fullscreen-body #view-kuis {
@@ -1143,17 +1130,5 @@ body.halaman-fullscreen-body #view-kuis {
 
 body.halaman-fullscreen-body #view-jelajah {
   display: block !important;
-}
-
-/* Latar Siang pada Jelajah */
-body.tema-siang #view-jelajah,
-[data-tema="terang"] #view-jelajah {
-  background: radial-gradient(ellipse 95% 75% at 50% 46%, #7AA3F5 0%, #4D76D4 38%, #2D54AA 75%, #1C3D82 100%) !important;
-}
-
-/* Latar Malam pada Jelajah */
-body.tema-malam #view-jelajah,
-[data-tema="gelap"] #view-jelajah {
-  background: radial-gradient(ellipse 95% 75% at 50% 46%, #1A284D 0%, #0F1A34 42%, #070D1C 80%, #03060E 100%) !important;
 }
 

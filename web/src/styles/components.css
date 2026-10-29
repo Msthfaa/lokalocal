@@ -204,10 +204,14 @@
 }
 
 .dialog-modal {
-  margin: auto;
+  position: fixed;
+  top: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
   width: calc(100% - 2rem);
   max-width: 680px;
-  max-height: 88vh;
+  max-height: calc(100vh - 6.75rem);
   background-color: rgba(26, 22, 19, 0.88);
   color: #F5F0EB;
   border: 1px solid rgba(230, 177, 74, 0.35);

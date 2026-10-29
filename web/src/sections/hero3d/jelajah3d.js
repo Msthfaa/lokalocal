@@ -202,8 +202,13 @@ export function inisialisasiJelajah3D({
     onCatatStempel,
     ambilBudayaProvinsi,
     onBukaModeDetail: (provData) => {
+      const overlayRute = document.getElementById('jelajah-rute-overlay');
+      if (overlayRute) {
+        overlayRute.style.display = 'none';
+        overlayRute.setAttribute('hidden', '');
+      }
       if (ruteTematikSedangAktif) {
-        import('../../features/pengontrol-rute.js').then(({ keluarRute }) => keluarRute());
+        ruteTematikSedangAktif = false;
       }
       if (meshTerpilih) {
         pengelolaDetail.buka(provData, meshTerpilih);
@@ -468,6 +473,9 @@ export function inisialisasiJelajah3D({
         e.target.closest('.jelajah-hud-kanan-bawah') ||
         e.target.closest('.jelajah-hud-kiri-bawah') ||
         e.target.closest('.jelajah-hud-atas') ||
+        e.target.closest('.rute-cerita-overlay') ||
+        e.target.closest('#jelajah-rute-overlay') ||
+        e.target.closest('.rute-pemilih-dialog') ||
         e.target.closest('.nav-wadah') ||
         e.target.closest('.dialog-rekaman') ||
         e.target.closest('.dialog-tentang'))
@@ -485,7 +493,10 @@ export function inisialisasiJelajah3D({
 
   function eksekusiKlikLayar(clientX, clientY) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
-    if (ruteTematikSedangAktif) return;
+    if (ruteTematikSedangAktif) {
+      import('../../features/pengontrol-rute.js').then(({ keluarRute }) => keluarRute());
+      return;
+    }
     if (!animasiMasukSelesai && !kurangiGerak) return;
 
     const rect = kanvas.getBoundingClientRect();
@@ -696,10 +707,37 @@ export function inisialisasiJelajah3D({
   let meshRuteSorotan = null;
   let ruteTematikSedangAktif = false;
 
+  function bersihkanSorotanProvinsi() {
+    for (const m of elemenAdegan.daftarProvinsiMesh) {
+      const u = m.userData;
+      if (!u) continue;
+      u.offsetTerpilih = 0;
+      if (m.material) {
+        m.material.transparent = false;
+        m.material.opacity = 1.0;
+        m.material.emissive.set('#000000');
+        m.material.emissiveIntensity = 0;
+        if (u.teksturTopo) {
+          m.material.map = u.teksturTopo;
+          m.material.color.set(0xffffff);
+        } else {
+          m.material.color.set(u.warnaNormal || '#6EC443');
+        }
+      }
+    }
+    pengontrolBendera.sembunyikan();
+  }
+
   function sorotProvinsiRute(kode) {
     ruteTematikSedangAktif = true;
     panelKanan.sembunyikan();
-    kembalikanSorotanRute();
+    bersihkanSorotanProvinsi();
+
+    // Sembunyikan gugus awan selama tur agar tidak menutupi pulau yang dibahas
+    if (elemenAdegan.grupAwan) {
+      elemenAdegan.grupAwan.visible = false;
+    }
+
     if (!kode) return;
     const kodeCari = String(kode).padStart(2, '0');
     const mesh = elemenAdegan.daftarProvinsiMesh.find(
@@ -709,31 +747,26 @@ export function inisialisasiJelajah3D({
 
     meshRuteSorotan = mesh;
 
-    // Sembunyikan gugus awan selama tur agar tidak menutupi pulau yang dibahas
-    if (elemenAdegan.grupAwan) {
-      elemenAdegan.grupAwan.visible = false;
-    }
-
     // 1. Redupkan seluruh provinsi lain dan tonjolkan provinsi yang sedang dibahas
     for (const m of elemenAdegan.daftarProvinsiMesh) {
       const u = m.userData;
       if (!u) continue;
       const kStr = String(u.kode).padStart(2, '0');
       if (kStr === kodeCari) {
-        // Provinsi target: elevasi lembut dan proporsional (+0.20 unit), opaque solid, berpendar emas
-        u.offsetTerpilih = 0.20;
+        // Provinsi target: elevasi lembut dan proporsional (+0.08 unit), opaque solid, berpendar emas
+        u.offsetTerpilih = 0.08;
         if (m.material) {
           m.material.transparent = false;
           m.material.opacity = 1.0;
           m.material.emissive.set('#FFD700');
-          m.material.emissiveIntensity = 0.85;
+          m.material.emissiveIntensity = 0.70;
         }
       } else {
-        // Provinsi lain di luar target: sedikit diturunkan dan diredupkan semi-transparan
-        u.offsetTerpilih = -0.02;
+        // Provinsi lain di luar target: tetap di permukaan laut dan diredupkan semi-transparan
+        u.offsetTerpilih = 0;
         if (m.material) {
           m.material.transparent = true;
-          m.material.opacity = 0.28;
+          m.material.opacity = 0.32;
           m.material.emissive.set('#000000');
           m.material.emissiveIntensity = 0;
         }
@@ -755,33 +788,13 @@ export function inisialisasiJelajah3D({
 
   function kembalikanSorotanRute() {
     ruteTematikSedangAktif = false;
+    meshRuteSorotan = null;
+    bersihkanSorotanProvinsi();
+
     // Tampilkan kembali gugus awan
     if (elemenAdegan.grupAwan) {
       elemenAdegan.grupAwan.visible = true;
     }
-
-    // Sembunyikan tiang bendera
-    pengontrolBendera.sembunyikan();
-
-    // Kembalikan semua mesh provinsi ke keadaan normal
-    for (const m of elemenAdegan.daftarProvinsiMesh) {
-      const u = m.userData;
-      if (!u) continue;
-      u.offsetTerpilih = 0;
-      if (m.material) {
-        m.material.transparent = false;
-        m.material.opacity = 1.0;
-        m.material.emissive.set('#000000');
-        m.material.emissiveIntensity = 0;
-        if (u.teksturTopo) {
-          m.material.map = u.teksturTopo;
-          m.material.color.set(0xffffff);
-        } else {
-          m.material.color.set(u.warnaNormal || '#6EC443');
-        }
-      }
-    }
-    meshRuteSorotan = null;
   }
 
   function resetKameraKeOverview(durasi = 1.8) {
