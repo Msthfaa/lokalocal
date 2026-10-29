@@ -1,3 +1,31 @@
+## [2026-10-29] Optimasi Responsivitas Layar HP Jelajah 3D — Eliminasi Tabrakan HUD, Toolbar Tengah & Pill Status Ringkas
+- **Permintaan Pengguna:**
+  - Mengoptimalkan tampilan Jelajah 3D agar responsif, tidak terpotong, dan tetap nyaman serta bagus saat digunakan di layar HP/ponsel.
+- **Analisis Masalah pada Layar Ponsel:**
+  1. *HUD Atas Terpotong*: Pill teks interaksi memuat 85 karakter dengan `white-space: nowrap` sehingga lebarnya ~440px dan terpotong di kedua sisi layar ponsel (360px–390px).
+  2. *Toolbar Zoom & Aksi Terlalu Lebar*: Toolbar horizontal di `bottom: 74px; right: 16px;` memuat 6 tombol berteks penuh sehingga tombol perbesaran terdorong ke luar layar sebelah kiri.
+  3. *Tabrakan Docking di Bagian Bawah*: Legenda status data (`● 28 Tercatat ● 10 Menanti`) dan atribusi di sisi kiri bertabrakan serta tertimpa oleh pemutar musik audio backsound di sisi kanan layar.
+- **Tindakan & Solusi:**
+  - `web/jelajah.html`:
+    - Menambahkan span kondisional `.hud-petunjuk-desktop` dan `.hud-petunjuk-mobile`.
+    - Mengintegrasikan status data dan petunjuk gestur pada HUD atas mobile: `● 28 Tercatat • ● 10 Menanti • Geser 360°`.
+    - Mempersingkat teks tombol toolbar pada mobile (`Reset Putar` -> `Reset`, `Tur Sinematik` -> `Tur`, `Rute Tematik` -> `Rute`).
+    - Mempersingkat atribusi data mobile menjadi `Data: SPKT Kemenbud RI`.
+  - `web/src/styles/sections.css`:
+    - Menyelaraskan `.jelajah-hud-atas` pada mobile: `left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px);`.
+    - Memposisikan `.jelajah-hud-kanan-bawah` (toolbar kontrol) di poros tengah layar: `bottom: 54px; left: 50%; transform: translateX(-50%);` dengan tombol ramah sentuhan berdimensi pas (~285px total).
+    - Memposisikan `.jelajah-hud-kiri-bawah` di `bottom: 12px; left: 12px;` khusus menampilkan atribusi data ringkas tanpa benturan.
+  - `web/src/styles/components.css`:
+    - Mengatur `.audio-backsound-dock` di `bottom: 10px; right: 12px;` dengan kapsul audio ramping (~150px).
+    - Jarak horizontal antara atribusi data (kiri) dan pemutar audio (kanan) kini mencapai 85px+ di layar 390px dan 50px+ di layar 360px (bebas tabrakan 100%).
+    - Menyesuaikan ukuran overlay Tur Sinematik dan Rute Tematik (`.jelajah-tur-kartu` & `.rute-vignette-kartu`) agar proporsional dan tidak menembus batas bawah layar HP.
+- **Hasil & Verifikasi:**
+  - Pengujian visual browser (Edge headless CDP):
+    - `verif_jelajah_mobile_390.png`: Layar iPhone 14/Android 390px bebas tumpang tindih, simetris, dan lapang.
+    - `verif_jelajah_mobile_360.png`: Layar ultra-sempit 360px tetap tertata rapi tanpa horizontal scroll.
+    - `verif_jelajah_desktop_verify.png`: Tampilan desktop 1440px tetap gagah dan tidak terpengaruh sedikitpun.
+  - `npm --prefix web run build` sukses (5.80s, 0 error).
+
 ## [2026-10-29] Pembaruan Logo Resmi Lokalocal Berkilau & Penyelarasan Rata Tengah Menu Navigasi Mobile
 - **Permintaan Pengguna:**
   1. Mengganti logo merek menjadi aset baru (logo emblem pin garuda + teks serif "Lokalocal") dan membuatnya memiliki efek berkilau ("berkilau").

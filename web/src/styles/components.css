@@ -760,8 +760,101 @@
 
 @media (max-width: 640px) {
   .audio-backsound-dock {
-    bottom: 16px;
-    right: 16px;
+    position: fixed !important;
+    bottom: 10px !important;
+    right: 12px !important;
+    z-index: 95;
+  }
+
+  .audio-kapsul {
+    padding: 3px 8px 3px 4px;
+    gap: 6px;
+    max-width: 155px;
+  }
+
+  .audio-tombol-ikon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .audio-equalizer {
+    height: 11px;
+    gap: 2px;
+  }
+
+  .audio-info-teks {
+    max-width: 90px;
+    overflow: hidden;
+  }
+
+  .audio-lagu-judul {
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .audio-lagu-daerah {
+    display: none !important;
+  }
+
+  .audio-aksi-cepat {
+    gap: 2px;
+  }
+
+  .audio-tombol-kecil {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+  }
+
+  /* Overlay Tur Sinematik & Rute di HP */
+  .jelajah-tur-kartu {
+    padding: 12px 14px;
+    gap: 8px;
+    border-radius: 14px;
+    max-width: calc(100vw - 20px);
+  }
+
+  .jelajah-tur-judul {
+    font-size: 0.95rem;
+  }
+
+  .jelajah-tur-deskripsi {
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  .jelajah-tur-ctrl-btn {
+    padding: 4px 9px;
+    font-size: 0.72rem;
+  }
+
+  .jelajah-tur-hint-drag {
+    display: none !important;
+  }
+
+  .rute-vignette-kartu {
+    padding: 14px 14px 12px 14px;
+    border-radius: 14px;
+    max-width: calc(100vw - 20px);
+    max-height: 80vh;
+  }
+
+  .rute-vignette-judul {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+
+  .rute-vignette-narasi {
+    font-size: 0.76rem;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+
+  .rute-vignette-fakta {
+    padding: 6px 10px;
+    font-size: 0.72rem;
   }
 }
 
