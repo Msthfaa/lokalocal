@@ -202,6 +202,9 @@ export function inisialisasiJelajah3D({
     onCatatStempel,
     ambilBudayaProvinsi,
     onBukaModeDetail: (provData) => {
+      if (ruteTematikSedangAktif) {
+        import('../../features/pengontrol-rute.js').then(({ keluarRute }) => keluarRute());
+      }
       if (meshTerpilih) {
         pengelolaDetail.buka(provData, meshTerpilih);
       }
@@ -482,6 +485,7 @@ export function inisialisasiJelajah3D({
 
   function eksekusiKlikLayar(clientX, clientY) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
+    if (ruteTematikSedangAktif) return;
     if (!animasiMasukSelesai && !kurangiGerak) return;
 
     const rect = kanvas.getBoundingClientRect();
@@ -690,8 +694,11 @@ export function inisialisasiJelajah3D({
   });
 
   let meshRuteSorotan = null;
+  let ruteTematikSedangAktif = false;
 
   function sorotProvinsiRute(kode) {
+    ruteTematikSedangAktif = true;
+    panelKanan.sembunyikan();
     kembalikanSorotanRute();
     if (!kode) return;
     const kodeCari = String(kode).padStart(2, '0');
@@ -713,13 +720,13 @@ export function inisialisasiJelajah3D({
       if (!u) continue;
       const kStr = String(u.kode).padStart(2, '0');
       if (kStr === kodeCari) {
-        // Provinsi target: timbul jelas (+0.48 unit), opaque solid, berpendar emas
-        u.offsetTerpilih = 0.48;
+        // Provinsi target: elevasi lembut dan proporsional (+0.20 unit), opaque solid, berpendar emas
+        u.offsetTerpilih = 0.20;
         if (m.material) {
           m.material.transparent = false;
           m.material.opacity = 1.0;
           m.material.emissive.set('#FFD700');
-          m.material.emissiveIntensity = 0.90;
+          m.material.emissiveIntensity = 0.85;
         }
       } else {
         // Provinsi lain di luar target: sedikit diturunkan dan diredupkan semi-transparan
@@ -743,9 +750,11 @@ export function inisialisasiJelajah3D({
         status_data: 'belum_tercatat'
       };
     pengontrolBendera.tampilkan(provData, mesh);
+    panelKanan.sembunyikan();
   }
 
   function kembalikanSorotanRute() {
+    ruteTematikSedangAktif = false;
     // Tampilkan kembali gugus awan
     if (elemenAdegan.grupAwan) {
       elemenAdegan.grupAwan.visible = true;
@@ -776,7 +785,9 @@ export function inisialisasiJelajah3D({
   }
 
   function resetKameraKeOverview(durasi = 1.8) {
+    ruteTematikSedangAktif = false;
     kembalikanSorotanRute();
+    panelKanan.sembunyikan();
     gsap.to(cameraTargetPos, {
       x: cameraBasePos.x,
       y: cameraBasePos.y,
@@ -797,8 +808,16 @@ export function inisialisasiJelajah3D({
   const btnRuteTematik = document.getElementById('hud-rute-cerita');
   if (btnRuteTematik) {
     btnRuteTematik.addEventListener('click', () => {
+      if (pengelolaDetail && typeof pengelolaDetail.isAktif === 'function' && pengelolaDetail.isAktif()) {
+        pengelolaDetail.tutup();
+      }
+      panelKanan.sembunyikan();
       import('../../features/pengontrol-rute.js').then(({ bukaModalPemilihRute }) => {
         bukaModalPemilihRute({
+          onMulaiRute: () => {
+            ruteTematikSedangAktif = true;
+            panelKanan.sembunyikan();
+          },
           gerakkanKamera: (pos, lookAt, durasi = 1.8) => {
             gsap.to(cameraTargetPos, {
               x: pos.x,
@@ -1075,6 +1094,9 @@ export function inisialisasiJelajah3D({
       panelKanan.sembunyikan();
     },
     bukaDetailWilayah: (provData, mesh) => {
+      if (ruteTematikSedangAktif) {
+        import('../../features/pengontrol-rute.js').then(({ keluarRute }) => keluarRute());
+      }
       const dataTarget = provData || provTerpilihData;
       const meshTarget = mesh || meshTerpilih;
       if (dataTarget && meshTarget && pengelolaDetail) {

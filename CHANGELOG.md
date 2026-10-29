@@ -1,3 +1,26 @@
+## [2026-10-29] Perbaikan Interaksi 3D & Proporsi Tur Tematik — Abaikan Klik Laut, Penguncian Mode Eksklusif, & Elevasi Halus (+0.20)
+- **Permintaan & Masukan Pengguna (Berdasarkan 3 Tangkapan Layar):**
+  1. *Klik kanvas laut me-reset kamera secara tidak sengaja (Gambar 1)*: Saat tur sedang zoom-in, klik di latar belakang/laut menyebabkan kamera zoom-out sendiri sementara kartu tur tetap menggantung di tengah layar.
+  2. *Kartu samping & Mode Detail bertumpukan dengan Tur (Gambar 2 & 3)*: Kartu samping kanan atas tetap muncul saat tur dan memungkinkan membuka Mode Detail 3 kolom tanpa menutup tur tematik.
+  3. *Pulau terangkat terlalu tinggi (Gambar 2)*: Elevasi +0.48 pada pulau-pulau kecil (seperti Maluku Utara) tampak seperti menara tiang melayang yang terlalu ekstrim.
+- **Tindakan & Solusi:**
+  - `web/src/sections/hero3d/jelajah3d.js`:
+    - Menambahkan pelindung status `ruteTematikSedangAktif`:
+      - Di dalam `eksekusiKlikLayar`, jika `ruteTematikSedangAktif` bernilai true, seluruh klik raycaster pada laut maupun keping daratan diabaikan 100%. Kamera tidak akan pernah zoom-out tidak sengaja saat pengguna mengeklik atau menyentuh layar.
+    - Menerapkan isolasi mode eksklusif (*mutually exclusive*):
+      - Kartu samping kanan atas (`panelKanan.sembunyikan()`) disembunyikan total selama tur tematik berlangsung.
+      - Jika pengguna membuka Tur Tematik saat Mode Detail 3-kolom sedang aktif, Mode Detail otomatis ditutup terlebih dahulu (`pengelolaDetail.tutup()`).
+      - Sebaliknya, jika pengguna membuka Mode Detail wilayah, Tur Tematik otomatis ditutup bersih via `keluarRute()`.
+    - Merendahkan elevasi pulau target dari `+0.48 unit` menjadi `+0.20 unit`:
+      - Keping daratan tetap terangkat secara anggun (1,5× ketebalan pulau) di atas laut dan pulau sekitar, berpendar emas cerah (`#FFD700`, 0.85), dengan proporsi diorama yang sangat alami dan sedap dipandang.
+- **Hasil & Pengujian:**
+  - Pengujian headless Edge CDP membuktikan:
+    - Keping Maluku Utara terangkat proporsional (+0.20) dengan pendar emas dan tiang bendera 3D, tanpa adanya kartu samping yang bocor (`preview_maluku_utara_proporsional.png`).
+    - Simulasi klik mouse di koordinat laut (250, 250) diabaikan secara stabil; kamera tetap terkunci di waypoint tur dan kartu narasi tetap aktif (`preview_after_click_ocean_stable.png`).
+    - Menutup tur via tombol '✕' mengembalikan kamera secara mulus ke pandangan luas Nusantara (`preview_overview_after_tour.png`).
+  - Validasi data `tools/validate.mjs` lolos 14/14 aturan.
+  - Build produksi `npm run build` sukses (3.57s).
+
 ## [2026-10-29] Perbaikan Final Tur Tematik 3D — Parameter Wiring, Spotlight Efek, Awan Bebas Halangan, & Reset Kamera
 - **Permintaan & Masukan Pengguna (Berdasarkan Hasil Uji Coba Langsung):**
   1. *Kamera tetap zoom in*: Saat tur ditutup dengan tombol '✕', kamera masih terkunci dalam posisi zoom in dan tidak kembali ke pandangan luas Nusantara.
