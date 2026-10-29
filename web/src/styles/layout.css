@@ -186,38 +186,7 @@
 }
 
 
-/* Liquid Sliding Active Pill Indicator */
-.nav-liquid-pill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 9999px;
-  background-color: var(--aksen);
-  box-shadow: 0 3px 14px rgba(230, 177, 74, 0.45);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transform: translate3d(0, 0, 0);
-  transition: transform 0.42s cubic-bezier(0.25, 1.35, 0.45, 1),
-              width 0.38s cubic-bezier(0.25, 1.35, 0.45, 1),
-              height 0.38s cubic-bezier(0.25, 1.35, 0.45, 1),
-              opacity 0.2s ease;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .nav-liquid-pill {
-    transition: opacity 0.15s ease !important;
-  }
-}
-
-.nav-daftar > li {
-  position: relative;
-  z-index: 2;
-  list-style: none;
-}
 
 .nav-tautan {
   display: inline-flex;
@@ -233,7 +202,7 @@
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition: color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .nav-tautan:hover {
@@ -243,10 +212,10 @@
 
 .nav-tautan[aria-current="page"] {
   color: #14110F !important;
-  background-color: transparent !important;
+  background-color: var(--aksen) !important;
   font-weight: 700;
   border-radius: 9999px;
-  box-shadow: none !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* Bagian 3: Tombol Aksi "Jelajah 3D" & Tema di Kanan */
@@ -1159,6 +1128,7 @@ main {
   height: 100vh;
   z-index: 10;
   overflow: hidden;
+  background-color: #0E0B09;
 }
 
 body.halaman-fullscreen-body {
@@ -1173,5 +1143,17 @@ body.halaman-fullscreen-body #view-kuis {
 
 body.halaman-fullscreen-body #view-jelajah {
   display: block !important;
+}
+
+/* Latar Siang pada Jelajah */
+body.tema-siang #view-jelajah,
+[data-tema="terang"] #view-jelajah {
+  background: radial-gradient(ellipse 95% 75% at 50% 46%, #7AA3F5 0%, #4D76D4 38%, #2D54AA 75%, #1C3D82 100%) !important;
+}
+
+/* Latar Malam pada Jelajah */
+body.tema-malam #view-jelajah,
+[data-tema="gelap"] #view-jelajah {
+  background: radial-gradient(ellipse 95% 75% at 50% 46%, #1A284D 0%, #0F1A34 42%, #070D1C 80%, #03060E 100%) !important;
 }
 

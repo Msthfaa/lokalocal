@@ -355,5 +355,32 @@ export class SpaRouter {
         }
       });
     }
+
+    // Perbarui tombol aksi kanan navbar (Jelajah 3D <-> Baca Cerita)
+    const btnAksiKanan = document.getElementById('nav-tombol-aksi-kanan') || document.querySelector('.nav-tombol-aksi');
+    if (btnAksiKanan) {
+      if (idNav === 'jelajah') {
+        btnAksiKanan.setAttribute('href', '#cerita');
+        btnAksiKanan.setAttribute('title', 'Kembali ke Cerita Budaya');
+        btnAksiKanan.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <span>Baca Cerita</span>
+        `;
+      } else {
+        btnAksiKanan.setAttribute('href', '#jelajah');
+        btnAksiKanan.setAttribute('title', 'Jelajah Peta 3D Nusantara');
+        btnAksiKanan.innerHTML = `
+          <svg class="nav-merek-ikon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span>Jelajah 3D</span>
+        `;
+      }
+    }
   }
 }

@@ -549,6 +549,10 @@ function init() {
   });
 
   inisialisasiTema();
+  const temaAwal = ambilTemaSaatIni();
+  const adalahSiangAwal = temaAwal === 'terang';
+  document.body.classList.toggle('tema-siang', adalahSiangAwal);
+  document.body.classList.toggle('tema-malam', !adalahSiangAwal);
   inisialisasiBacksound();
 
   isiTeks('nav-nama-situs', NAMA_SITUS);
