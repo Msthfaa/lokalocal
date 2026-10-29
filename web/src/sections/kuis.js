@@ -446,7 +446,10 @@ export function inisialisasiBagianKuis({
         <div class="kuis-chibi-kiri">
           <button type="button" class="kuis-chibi-avatar-btn ${animasiKelas}" title="Klik untuk mengganti teman belajar (${avatarAktif.nama})">
             <img src="${fotoChibi}" alt="${avatarAktif.nama}" class="kuis-chibi-img" />
-            <span class="kuis-chibi-badge-ganti">Ganti Teman</span>
+          </button>
+          <button type="button" class="kuis-chibi-badge-ganti" id="kuis-btn-ganti-teman" title="Klik untuk mengganti teman belajar (${avatarAktif.nama})">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+            <span>Ganti</span>
           </button>
         </div>
         <div class="kuis-chibi-balon">
@@ -459,12 +462,13 @@ export function inisialisasiBagianKuis({
       `;
 
       const btnGantiChibi = blokChibi.querySelector('.kuis-chibi-avatar-btn');
-      if (btnGantiChibi) {
-        btnGantiChibi.addEventListener('click', () => {
-          menuGantiAvatarBuka = !menuGantiAvatarBuka;
-          render();
-        });
-      }
+      const btnGantiLink = blokChibi.querySelector('#kuis-btn-ganti-teman');
+      const picuMenuGanti = () => {
+        menuGantiAvatarBuka = !menuGantiAvatarBuka;
+        render();
+      };
+      if (btnGantiChibi) btnGantiChibi.addEventListener('click', picuMenuGanti);
+      if (btnGantiLink) btnGantiLink.addEventListener('click', picuMenuGanti);
 
       badanSoal.append(judulTanya, blokChibi);
 
@@ -742,15 +746,37 @@ export function inisialisasiBagianKuis({
       bannerBhinneka.className = 'kuis-hasil-bhinneka-banner';
       bannerBhinneka.innerHTML = `
         <div class="kuis-hasil-chibi-celebrate">
-          <img src="${avatarAktif.senang}" alt="${avatarAktif.nama}" class="kuis-chibi-celebrate-img" />
+          <div class="kuis-chibi-celebrate-frame">
+            <img src="${avatarAktif.senang}" alt="${avatarAktif.nama}" class="kuis-chibi-celebrate-img" />
+          </div>
           <div class="kuis-celebrate-balon">
             <strong class="kuis-celebrate-nama">${avatarAktif.nama}:</strong>
             <p class="kuis-celebrate-teks">“Terima kasih telah menjelajahi khasanah tradisi bersama kami! Budaya Nusantara sangat kaya, mari terus lestarikan dan catat bersama.”</p>
           </div>
         </div>
         <div class="kuis-bhinneka-lineup-wrap">
-          <img src="/assets/chibi/barisan_nusantara_belakang.png" alt="Barisan Nusantara Beragam Suku" class="kuis-lineup-img" />
-          <img src="/assets/chibi/slogan_bhinneka.png" alt="Berbeda-beda tapi tetap satu Indonesia" class="kuis-slogan-img" />
+          <div class="kuis-lineup-chibi-grid" aria-label="8 Karakter Budaya Nusantara">
+            ${DAFTAR_CHIBI.map(c => `
+              <div class="kuis-lineup-chibi-item" title="${c.nama} (${c.suku} - ${c.daerah})">
+                <div class="kuis-lineup-avatar-frame">
+                  <img src="${c.foto}" alt="${c.nama}" class="kuis-lineup-avatar-img" loading="lazy" />
+                </div>
+                <span class="kuis-lineup-avatar-label">${c.panggilan || c.nama.split(' ')[0]}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="kuis-slogan-vektor">
+            <div class="kuis-slogan-aksen-garis"></div>
+            <div class="kuis-slogan-badge">
+              <span class="kuis-slogan-bintang">✦</span>
+              <span class="kuis-slogan-teks">Berbeda-beda tapi tetap satu Indonesia</span>
+              <span class="kuis-slogan-hati" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#E11D48" stroke="#E11D48"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </span>
+              <span class="kuis-slogan-bintang">✦</span>
+            </div>
+            <div class="kuis-slogan-aksen-garis"></div>
+          </div>
         </div>
       `;
       badanHasil.appendChild(bannerBhinneka);

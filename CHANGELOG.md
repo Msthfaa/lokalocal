@@ -1,3 +1,37 @@
+## [2026-10-29] Perbaikan UX & Visual — Onboarding Gatotkaca, Elevasi Rute 3D, Framing Avatar Kuis, & Kebersihan Mode Malam
+- **Permintaan & Masukan Pengguna (Berdasarkan 3 Tangkapan Layar):**
+  1. *Pop-up Gatotkaca di Jelajah*: Terlalu mengganggu karena selalu muncul tiap kali membuka Jelajah, dan wajib mengklik "Oke, Ayo Jelajah!" tanpa bisa ditutup dengan klik di luar dialog.
+  2. *Tur Tematik 3D (Gambar 1)*: Saat kamera memperbesar ke titik waypoint, pengunjung bingung pulau/provinsi mana yang sedang dibahas karena tidak ada pembeda visual; dan saat tur ditutup (klik '✕'), kamera tetap terkunci di posisi zoom in tanpa kembali ke posisi normal.
+  3. *Balon Tanggapan Kuis (Gambar 2)*: Wajah avatar Uni Minang terpotong parah dan tertutup penuh oleh tombol lencana "Ganti Teman".
+  4. *Layar Hasil Kuis Mode Malam (Gambar 3)*: Latar belakang avatar dan elemen grafis memiliki artefak piksel putih/abu-abu kotak yang kotor (*alpha compression halos*).
+- **Tindakan & Solusi:**
+  - `web/src/ui/transisi-gatotkaca.js` & `web/src/styles/transisi-gatotkaca.css`:
+    - Menambahkan tombol tutup silang (`#gatotkaca-btn-tutup`), klik backdrop luar dialog untuk menutup instan, serta dukungan tombol keyboard `Escape` dan `Enter`.
+    - Menyimpan status kunjungan di `localStorage` (`lokalocal_sambutan_jelajah_selesai = 'true'`), sehingga sambutan Gatotkaca hanya muncul sekali saat pertama kali mengunjungi Jelajah.
+  - `web/src/router/spa-router.js`:
+    - Mengintegrasikan pengecekan `localStorage` pada navigasi SPA/beranda, sehingga pengunjung yang sudah pernah melihat sambutan tidak lagi diarahkan ke alur pendaratan ulang.
+  - `web/jelajah.html` & `web/src/sections/hero3d/jelajah3d.js`:
+    - Menambahkan tombol on-demand `Panduan` di HUD terapung 3D (`#hud-panduan-3d`) agar pengunjung tetap bisa memanggil kembali panduan Gatotkaca kapan saja secara sukarela.
+    - Menambahkan fungsi `sorotProvinsiRute(kode)`: mengangkat keping mesh pulau/provinsi yang sedang dibahas setinggi `+0.55 unit` secara elastis serta menyalakan efek emissive emas (`#D4A017`, intensitas `0.85`).
+    - Menambahkan fungsi `kembalikanSorotanRute()` dan `resetKameraKeOverview(1.8)` yang mengembalikan posisi kamera dan rotasi ke pandangan luas (*overview*) nusantara secara mulus saat tur ditutup atau selesai.
+  - `web/src/features/pengontrol-rute.js`:
+    - Menghubungkan fungsi sorot dan elevasi mesh pulau ke setiap perpindahan titik waypoint tur tematik.
+    - Menghubungkan pemulihan sorotan dan reset kamera saat pengunjung mengklik tombol keluar (✕) atau menyelesaikan tur.
+  - `web/src/sections/kuis.js` & `web/src/styles/sections.css`:
+    - Membesarkan bingkai avatar tanggapan kuis dari 64 px menjadi 78 px dengan rasio proporsional (`scale(1.08)` dan `object-position: center top`), sehingga seluruh wajah, mata, ekspresi, dan hiasan kepala tradisional (*Tingkuluak Tanduk*) terlihat utuh dan leluasa.
+    - Memindahkan tombol "Ganti Teman" ke bawah lingkaran avatar secara mandiri dan bersih tanpa menutupi dagu atau wajah karakter.
+  - Pembersihan Aset Grafis & Layar Hasil Kuis:
+    - Menjalankan pembersihan piksel (*lossless alpha halo filter*) terhadap seluruh 42 berkas PNG chibi di `web/public/assets/chibi/`, mengeliminasi kabut artefak kompresi matte semi-transparan ($a < 70$ pada piksel terang).
+    - Merombak layar hasil kuis (`tampilkanLayarHasil`): mengganti berkas raster berisik `slogan_bhinneka.png` dengan tipografi vektor murni `.kuis-slogan-vektor` (aksen bintang emas dan hati merah), serta mengganti grafis tampak belakang dengan deretan 8 Duta Budaya Nusantara menghadap depan berbingkai medali emas (`DAFTAR_CHIBI`).
+- **Hasil & Pengujian:**
+  - Verifikasi headless browser CDP membuktikan:
+    - Dialog Gatotkaca dapat ditutup melalui tombol '✕', klik di luar dialog, atau tombol `Escape`, dan tidak muncul lagi pada kunjungan Jelajah berikutnya.
+    - Tombol panduan di HUD 3D sukses membuka dialog sambutan secara on-demand.
+    - Pada tur tematik, mesh provinsi target terangkat dan berpendar emas, serta kamera kembali mulus ke overview saat tur ditutup (`preview_rute_timbul.png`).
+    - Balon dialog tanggapan kuis menampilkan wajah Uni Minang dengan jernih tanpa tabrakan tombol (`preview_kuis_avatar_clear.png`).
+    - Layar hasil kuis pada mode malam tampil 100% bersih tanpa artefak putih, dengan 8 duta budaya berbingkai medali emas dan tipografi slogan vektor yang tajam (`preview_kuis_hasil_clean.png`).
+  - Build produksi `npm run build` sukses (2.96s) dan validasi data `tools/validate.mjs` lolos 100% tanpa error.
+
 ## [2026-10-29] Langkah 4 — Gamifikasi Paspor Budaya (7 Peringkat Kehormatan) & Generator Instagram Story (9:16)
 - **Permintaan & Arahan Pengguna:**
   - Meningkatkan motivasi dan kepuasan pengunjung dalam menjelajahi budaya lewat sistem gamifikasi yang bermakna, kuratorial, dan bebas AI slop.

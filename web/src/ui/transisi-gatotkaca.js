@@ -155,6 +155,12 @@ export function ambilHtmlOverlayGatotkaca() {
       <div class="gatotkaca-dialog-wadah" id="gatotkaca-dialog-wadah">
         <div class="gatotkaca-dialog-kartu">
           <div class="gatotkaca-dialog-panah" aria-hidden="true"></div>
+          <button type="button" id="gatotkaca-btn-tutup" class="gatotkaca-dialog-tutup" aria-label="Tutup panduan">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
           <div class="gatotkaca-lencana">
             <span class="gatotkaca-lencana-titik" aria-hidden="true"></span>
             <span>Ksatria Budaya Nusantara</span>
@@ -207,13 +213,50 @@ function pastikanDomSiap() {
   btnOkeEl = overlayEl.querySelector('#gatotkaca-btn-oke');
   toastTerbangEl = overlayEl.querySelector('#gatotkaca-toast-terbang');
 
+  function tutupSambutan() {
+    try {
+      localStorage.setItem('lokalocal_sambutan_jelajah_selesai', 'true');
+    } catch {}
+    if (typeof resolveTungguOke === 'function') {
+      resolveTungguOke();
+      resolveTungguOke = null;
+    }
+  }
+
   // Pasang listener tombol Oke
   if (btnOkeEl && !btnOkeEl.dataset.listenerTerpasang) {
     btnOkeEl.dataset.listenerTerpasang = 'true';
-    btnOkeEl.addEventListener('click', () => {
-      if (typeof resolveTungguOke === 'function') {
-        resolveTungguOke();
-        resolveTungguOke = null;
+    btnOkeEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tutupSambutan();
+    });
+  }
+
+  // Pasang listener tombol Tutup Silang
+  const btnTutupEl = overlayEl.querySelector('#gatotkaca-btn-tutup');
+  if (btnTutupEl && !btnTutupEl.dataset.listenerTerpasang) {
+    btnTutupEl.dataset.listenerTerpasang = 'true';
+    btnTutupEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tutupSambutan();
+    });
+  }
+
+  // Pasang listener klik di luar kartu (Backdrop Click Dismiss)
+  if (!overlayEl.dataset.backdropTerpasang) {
+    overlayEl.dataset.backdropTerpasang = 'true';
+    overlayEl.addEventListener('click', (e) => {
+      if (e.target.closest('.gatotkaca-dialog-kartu') || e.target.closest('#gatotkaca-aktor-posisi')) {
+        return;
+      }
+      tutupSambutan();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (overlayEl && overlayEl.classList.contains('is-aktif')) {
+        if (e.key === 'Escape' || e.key === 'Enter') {
+          tutupSambutan();
+        }
       }
     });
   }
@@ -543,7 +586,23 @@ export function siapkanGatotkacaMendarat() {
  * @param {() => void} [parameter.onTouchdown] - Dipanggil saat dialog ditutup dan peta siap
  * @param {() => void} [parameter.onSelesai] - Dipanggil setelah Gatotkaca tuntas melesat keluar layar
  */
-export async function sambutGatotkacaDiJelajah({ onTouchdown, onSelesai } = {}) {
+export async function sambutGatotkacaDiJelajah({ onTouchdown, onSelesai, paksaTampil = false } = {}) {
+  const KUNCI_SEEN = 'lokalocal_sambutan_jelajah_selesai';
+  let sudahSeen = false;
+  try {
+    sudahSeen = localStorage.getItem(KUNCI_SEEN) === 'true';
+  } catch {}
+
+  if (sudahSeen && !paksaTampil) {
+    pastikanDomSiap();
+    if (overlayEl) {
+      overlayEl.classList.remove('is-aktif');
+      overlayEl.style.display = 'none';
+    }
+    if (typeof onTouchdown === 'function') onTouchdown();
+    if (typeof onSelesai === 'function') onSelesai();
+    return;
+  }
   pastikanDomSiap();
 
   const kurangiGerak =

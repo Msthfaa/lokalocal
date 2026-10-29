@@ -9033,24 +9033,27 @@ body.tema-siang .nav-kartun-info {
 }
 
 .kuis-chibi-kiri {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   flex-shrink: 0;
 }
 
 .kuis-chibi-avatar-btn {
-  width: 64px;
-  height: 64px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(230, 177, 74, 0.25), rgba(28, 22, 17, 0.6));
+  background: radial-gradient(circle, rgba(230, 177, 74, 0.28) 0%, rgba(28, 22, 17, 0.8) 100%);
   border: 2px solid var(--aksen);
   cursor: pointer;
   position: relative;
-  overflow: visible;
-  padding: 0;
+  overflow: hidden;
+  padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
 }
 
@@ -9083,26 +9086,35 @@ body.tema-siang .nav-kartun-info {
 }
 
 .kuis-chibi-img {
-  width: 58px;
-  height: 58px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  transform: translateY(2px);
+  object-position: center top;
+  transform: translateY(1px) scale(1.08);
 }
 
 .kuis-chibi-badge-ganti {
-  position: absolute;
-  bottom: -4px;
-  right: -6px;
-  background: var(--tinta-latar, #1C1611);
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
   color: var(--aksen);
-  border: 1px solid var(--aksen);
+  border: 1px solid rgba(230, 177, 74, 0.4);
   border-radius: 9999px;
   font-size: 0.65rem;
   font-weight: 700;
-  padding: 1px 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
+  padding: 2px 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
   white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.kuis-chibi-badge-ganti:hover {
+  background: var(--aksen);
+  color: #1C1611;
+  box-shadow: 0 2px 8px rgba(230, 177, 74, 0.4);
 }
 
 [data-tema="terang"] .kuis-chibi-badge-ganti {
@@ -9272,12 +9284,27 @@ body.tema-siang .nav-kartun-info {
   text-align: left;
 }
 
-.kuis-chibi-celebrate-img {
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
+.kuis-chibi-celebrate-frame {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 177, 74, 0.3) 0%, rgba(28, 22, 17, 0.8) 100%);
+  border: 2px solid var(--aksen);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  animation: chibiLompat 1.2s infinite ease-in-out;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  animation: chibiLompat 1.4s infinite ease-in-out;
+}
+
+.kuis-chibi-celebrate-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  transform: translateY(2px) scale(1.08);
 }
 
 .kuis-celebrate-balon {
@@ -9309,22 +9336,119 @@ body.tema-siang .nav-kartun-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding-top: 0.85rem;
+  gap: 1rem;
+  padding-top: 1rem;
   border-top: 1px dashed rgba(230, 177, 74, 0.25);
 }
 
-.kuis-lineup-img {
-  max-width: 100%;
-  height: auto;
-  max-height: 60px;
+.kuis-lineup-chibi-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 620px;
+}
+
+.kuis-lineup-chibi-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.2s ease;
+}
+
+.kuis-lineup-chibi-item:hover {
+  transform: translateY(-4px);
+}
+
+.kuis-lineup-avatar-frame {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(230, 177, 74, 0.35);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kuis-lineup-chibi-item:hover .kuis-lineup-avatar-frame {
+  border-color: var(--aksen);
+  box-shadow: 0 4px 12px rgba(230, 177, 74, 0.35);
+}
+
+.kuis-lineup-avatar-img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
-.kuis-slogan-img {
-  max-width: 280px;
-  height: auto;
-  object-fit: contain;
+.kuis-lineup-avatar-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--kertas-redup, #A89F91);
+  letter-spacing: 0.02em;
+}
+
+/* Slogan Vektor Bersih Bebas Noise */
+.kuis-slogan-vektor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 4px;
+}
+
+.kuis-slogan-aksen-garis {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230, 177, 74, 0), rgba(230, 177, 74, 0.4), rgba(230, 177, 74, 0));
+}
+
+.kuis-slogan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(230, 177, 74, 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+[data-tema="terang"] .kuis-slogan-badge {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(184, 115, 20, 0.25);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.kuis-slogan-teks {
+  font-family: var(--font-display, serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--kertas, #FAF6EE);
+  letter-spacing: 0.04em;
+}
+
+[data-tema="terang"] .kuis-slogan-teks {
+  color: #1C1917;
+}
+
+.kuis-slogan-bintang {
+  color: var(--aksen, #D4A017);
+  font-size: 0.75rem;
+}
+
+.kuis-slogan-hati {
+  display: inline-flex;
+  align-items: center;
 }
 
 /* 5. Foto Resmi Penjelajah di Paspor Budaya */

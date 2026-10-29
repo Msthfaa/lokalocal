@@ -13,6 +13,9 @@ let overlayRuteEl = null;
 let modalPemilihEl = null;
 let fungsiGerakKamera = null;
 let fungsiBukaDetail = null;
+let fungsiSorotProvinsi = null;
+let fungsiKembalikanSorotan = null;
+let fungsiResetKamera = null;
 
 /**
  * Membuka Dialog Pemilih Rute Cerita Tematik.
@@ -116,6 +119,9 @@ export function mulaiRute(ruteId, opsi = {}) {
   indeksTitikAktif = 0;
   if (opsi.gerakkanKamera) fungsiGerakKamera = opsi.gerakkanKamera;
   if (opsi.bukaDetailProvinsi) fungsiBukaDetail = opsi.bukaDetailProvinsi;
+  if (opsi.sorotProvinsi) fungsiSorotProvinsi = opsi.sorotProvinsi;
+  if (opsi.kembalikanSorotan) fungsiKembalikanSorotan = opsi.kembalikanSorotan;
+  if (opsi.resetKamera) fungsiResetKamera = opsi.resetKamera;
 
   bunyikanKendangTak(0.5);
   tampilkanToast(`Memulai rute: ${rute.judul}`);
@@ -205,6 +211,11 @@ function perbaruiTampilanTitik() {
     fungsiGerakKamera(titik.posisiKamera.pos, titik.posisiKamera.lookAt, 1.8);
   }
 
+  // Timbul & sorot pulau provinsi yang sedang dibahas
+  if (typeof fungsiSorotProvinsi === 'function' && titik.provinsiKode) {
+    fungsiSorotProvinsi(titik.provinsiKode);
+  }
+
   // Pasang Listener tombol
   const btnKeluar = overlayRuteEl.querySelector('#rute-btn-keluar');
   if (btnKeluar) btnKeluar.onclick = keluarRute;
@@ -259,5 +270,15 @@ export function keluarRute() {
   if (overlayRuteEl) {
     overlayRuteEl.setAttribute('hidden', '');
     overlayRuteEl.style.display = 'none';
+  }
+
+  // Kembalikan pulau yang timbul ke elevasi normal
+  if (typeof fungsiKembalikanSorotan === 'function') {
+    fungsiKembalikanSorotan();
+  }
+
+  // Kembalikan POV kamera ke lanskap normal kepulauan Indonesia
+  if (typeof fungsiResetKamera === 'function') {
+    fungsiResetKamera(1.8);
   }
 }

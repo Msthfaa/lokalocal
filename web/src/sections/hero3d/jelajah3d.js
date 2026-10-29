@@ -689,6 +689,54 @@ export function inisialisasiJelajah3D({
     }
   });
 
+  let meshRuteSorotan = null;
+
+  function sorotProvinsiRute(kode) {
+    kembalikanSorotanRute();
+    if (!kode) return;
+    const kodeCari = String(kode).padStart(2, '0');
+    const mesh = elemenAdegan.daftarProvinsiMesh.find(
+      (m) => String(m.userData.kode).padStart(2, '0') === kodeCari
+    );
+    if (!mesh) return;
+
+    meshRuteSorotan = mesh;
+    // Angkat keping pulau lebih tinggi (+0.55 unit) agar jelas timbul secara 3D
+    mesh.userData.offsetTerpilih = 0.55;
+    if (mesh.material) {
+      mesh.material.emissive = new Color('#D4A017');
+      mesh.material.emissiveIntensity = 0.85;
+    }
+  }
+
+  function kembalikanSorotanRute() {
+    if (meshRuteSorotan) {
+      meshRuteSorotan.userData.offsetTerpilih = 0;
+      if (meshRuteSorotan.material) {
+        meshRuteSorotan.material.emissive.set('#000000');
+        meshRuteSorotan.material.emissiveIntensity = 0;
+      }
+      meshRuteSorotan = null;
+    }
+  }
+
+  function resetKameraKeOverview(durasi = 1.8) {
+    gsap.to(cameraTargetPos, {
+      x: 0,
+      y: -45,
+      z: 50,
+      duration: durasi,
+      ease: 'power2.inOut'
+    });
+    gsap.to(cameraTargetLookAt, {
+      x: 0,
+      y: 0,
+      z: 0,
+      duration: durasi,
+      ease: 'power2.inOut'
+    });
+  }
+
   // Pasang Pengontrol Rute Cerita Tematik (Story Trails)
   const btnRuteTematik = document.getElementById('hud-rute-cerita');
   if (btnRuteTematik) {
@@ -711,10 +759,23 @@ export function inisialisasiJelajah3D({
               ease: 'power2.inOut'
             });
           },
+          sorotProvinsi: sorotProvinsiRute,
+          kembalikanSorotan: kembalikanSorotanRute,
+          resetKamera: resetKameraKeOverview,
           bukaDetailProvinsi: (kode) => {
             bukaModeDetail(kode);
           }
         });
+      });
+    });
+  }
+
+  // Pasang Pengontrol Tombol Panduan Sukarela di HUD
+  const btnPanduanHud = document.getElementById('hud-panduan-3d');
+  if (btnPanduanHud) {
+    btnPanduanHud.addEventListener('click', () => {
+      import('../../ui/transisi-gatotkaca.js').then(({ sambutGatotkacaDiJelajah }) => {
+        sambutGatotkacaDiJelajah({ paksaTampil: true });
       });
     });
   }
