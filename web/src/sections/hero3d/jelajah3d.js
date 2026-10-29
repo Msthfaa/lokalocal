@@ -701,36 +701,92 @@ export function inisialisasiJelajah3D({
     if (!mesh) return;
 
     meshRuteSorotan = mesh;
-    // Angkat keping pulau lebih tinggi (+0.55 unit) agar jelas timbul secara 3D
-    mesh.userData.offsetTerpilih = 0.55;
-    if (mesh.material) {
-      mesh.material.emissive = new Color('#D4A017');
-      mesh.material.emissiveIntensity = 0.85;
+
+    // Sembunyikan gugus awan selama tur agar tidak menutupi pulau yang dibahas
+    if (elemenAdegan.grupAwan) {
+      elemenAdegan.grupAwan.visible = false;
     }
+
+    // 1. Redupkan seluruh provinsi lain dan tonjolkan provinsi yang sedang dibahas
+    for (const m of elemenAdegan.daftarProvinsiMesh) {
+      const u = m.userData;
+      if (!u) continue;
+      const kStr = String(u.kode).padStart(2, '0');
+      if (kStr === kodeCari) {
+        // Provinsi target: timbul jelas (+0.48 unit), opaque solid, berpendar emas
+        u.offsetTerpilih = 0.48;
+        if (m.material) {
+          m.material.transparent = false;
+          m.material.opacity = 1.0;
+          m.material.emissive.set('#FFD700');
+          m.material.emissiveIntensity = 0.90;
+        }
+      } else {
+        // Provinsi lain di luar target: sedikit diturunkan dan diredupkan semi-transparan
+        u.offsetTerpilih = -0.02;
+        if (m.material) {
+          m.material.transparent = true;
+          m.material.opacity = 0.28;
+          m.material.emissive.set('#000000');
+          m.material.emissiveIntensity = 0;
+        }
+      }
+    }
+
+    // 2. Tancapkan tiang bendera 3D dengan nama provinsi tepat di atas keping daratan
+    const provData =
+      daftarProvinsi.find((p) => String(p.kode).padStart(2, '0') === kodeCari) ||
+      mesh.userData.info || {
+        nama: mesh.userData.nama,
+        kode: mesh.userData.kode,
+        total: 0,
+        status_data: 'belum_tercatat'
+      };
+    pengontrolBendera.tampilkan(provData, mesh);
   }
 
   function kembalikanSorotanRute() {
-    if (meshRuteSorotan) {
-      meshRuteSorotan.userData.offsetTerpilih = 0;
-      if (meshRuteSorotan.material) {
-        meshRuteSorotan.material.emissive.set('#000000');
-        meshRuteSorotan.material.emissiveIntensity = 0;
-      }
-      meshRuteSorotan = null;
+    // Tampilkan kembali gugus awan
+    if (elemenAdegan.grupAwan) {
+      elemenAdegan.grupAwan.visible = true;
     }
+
+    // Sembunyikan tiang bendera
+    pengontrolBendera.sembunyikan();
+
+    // Kembalikan semua mesh provinsi ke keadaan normal
+    for (const m of elemenAdegan.daftarProvinsiMesh) {
+      const u = m.userData;
+      if (!u) continue;
+      u.offsetTerpilih = 0;
+      if (m.material) {
+        m.material.transparent = false;
+        m.material.opacity = 1.0;
+        m.material.emissive.set('#000000');
+        m.material.emissiveIntensity = 0;
+        if (u.teksturTopo) {
+          m.material.map = u.teksturTopo;
+          m.material.color.set(0xffffff);
+        } else {
+          m.material.color.set(u.warnaNormal || '#6EC443');
+        }
+      }
+    }
+    meshRuteSorotan = null;
   }
 
   function resetKameraKeOverview(durasi = 1.8) {
+    kembalikanSorotanRute();
     gsap.to(cameraTargetPos, {
-      x: 0,
-      y: -45,
-      z: 50,
+      x: cameraBasePos.x,
+      y: cameraBasePos.y,
+      z: cameraBasePos.z,
       duration: durasi,
       ease: 'power2.inOut'
     });
     gsap.to(cameraTargetLookAt, {
       x: 0,
-      y: 0,
+      y: 0.12,
       z: 0,
       duration: durasi,
       ease: 'power2.inOut'
@@ -763,19 +819,9 @@ export function inisialisasiJelajah3D({
           kembalikanSorotan: kembalikanSorotanRute,
           resetKamera: resetKameraKeOverview,
           bukaDetailProvinsi: (kode) => {
-            bukaModeDetail(kode);
+            pilihProvinsi(kode);
           }
         });
-      });
-    });
-  }
-
-  // Pasang Pengontrol Tombol Panduan Sukarela di HUD
-  const btnPanduanHud = document.getElementById('hud-panduan-3d');
-  if (btnPanduanHud) {
-    btnPanduanHud.addEventListener('click', () => {
-      import('../../ui/transisi-gatotkaca.js').then(({ sambutGatotkacaDiJelajah }) => {
-        sambutGatotkacaDiJelajah({ paksaTampil: true });
       });
     });
   }

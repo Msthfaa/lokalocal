@@ -21,9 +21,19 @@ let fungsiResetKamera = null;
  * Membuka Dialog Pemilih Rute Cerita Tematik.
  */
 export function bukaModalPemilihRute(opsi = {}) {
-  const { onMulaiRute, gerakkanKamera, bukaDetailProvinsi } = opsi;
+  const {
+    onMulaiRute,
+    gerakkanKamera,
+    bukaDetailProvinsi,
+    sorotProvinsi,
+    kembalikanSorotan,
+    resetKamera
+  } = opsi;
   if (gerakkanKamera) fungsiGerakKamera = gerakkanKamera;
   if (bukaDetailProvinsi) fungsiBukaDetail = bukaDetailProvinsi;
+  if (sorotProvinsi) fungsiSorotProvinsi = sorotProvinsi;
+  if (kembalikanSorotan) fungsiKembalikanSorotan = kembalikanSorotan;
+  if (resetKamera) fungsiResetKamera = resetKamera;
 
   if (!modalPemilihEl) {
     modalPemilihEl = document.createElement('dialog');
@@ -87,7 +97,13 @@ export function bukaModalPemilihRute(opsi = {}) {
         const id = el.dataset.ruteId || el.closest('[data-rute-id]')?.dataset.ruteId;
         if (id) {
           tutupModalPemilihRute();
-          mulaiRute(id, { gerakkanKamera: fungsiGerakKamera, bukaDetailProvinsi: fungsiBukaDetail });
+          mulaiRute(id, {
+            gerakkanKamera: fungsiGerakKamera,
+            bukaDetailProvinsi: fungsiBukaDetail,
+            sorotProvinsi: fungsiSorotProvinsi,
+            kembalikanSorotan: fungsiKembalikanSorotan,
+            resetKamera: fungsiResetKamera
+          });
           if (typeof onMulaiRute === 'function') onMulaiRute(id);
         }
       });
@@ -192,9 +208,6 @@ function perbaruiTampilanTitik() {
           <button type="button" class="tombol tombol--garis rute-nav-btn" id="rute-btn-prev" ${isAwal ? 'disabled style="opacity: 0.35; pointer-events: none;"' : ''}>
             <span>&larr; Sebelumnya</span>
           </button>
-          <button type="button" class="tombol tombol--garis rute-nav-btn" id="rute-btn-detail" title="Lihat semua rekaman budaya provinsi ini">
-            <span>Buka Provinsi</span>
-          </button>
         </div>
 
         <div class="rute-vignette-nav-kanan">
@@ -241,13 +254,6 @@ function perbaruiTampilanTitik() {
         bunyikanKendangThung(0.5);
         perbaruiTampilanTitik();
       }
-    };
-  }
-
-  const btnDetail = overlayRuteEl.querySelector('#rute-btn-detail');
-  if (btnDetail && typeof fungsiBukaDetail === 'function') {
-    btnDetail.onclick = () => {
-      fungsiBukaDetail(titik.provinsiKode);
     };
   }
 }

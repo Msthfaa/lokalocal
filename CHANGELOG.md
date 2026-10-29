@@ -1,3 +1,30 @@
+## [2026-10-29] Perbaikan Final Tur Tematik 3D — Parameter Wiring, Spotlight Efek, Awan Bebas Halangan, & Reset Kamera
+- **Permintaan & Masukan Pengguna (Berdasarkan Hasil Uji Coba Langsung):**
+  1. *Kamera tetap zoom in*: Saat tur ditutup dengan tombol '✕', kamera masih terkunci dalam posisi zoom in dan tidak kembali ke pandangan luas Nusantara.
+  2. *Provinsi yang dibahas tidak jelas & terhalang*: Sebongkah awan 3D melayang persis di depan pulau Sumatera sehingga menutupi wilayah yang dibahas; kontras pembeda pulau masih belum mencolok.
+  3. *Tombol "Buka Provinsi" tidak berguna*: Muncul di kartu cerita tur namun melempar galat internal dan membingungkan alur tur yang terpandu.
+  4. *Tombol "Panduan" di HUD tidak responsif*: Tombol baru di bilah bawah tidak diminta dan tidak berfungsi.
+- **Tindakan & Solusi:**
+  - `web/src/features/pengontrol-rute.js`:
+    - Memperbaiki *parameter destructuring* pada `bukaModalPemilihRute` dan pemanggilan `mulaiRute` agar `sorotProvinsi`, `kembalikanSorotan`, dan `resetKamera` tersambung 100% ke kontroler 3D saat runtime.
+    - Menghapus tombol "Buka Provinsi" (`#rute-btn-detail`) dari footer kartu cerita tur; navigasi kartu kini terfokus dan bersih: `[ ← Sebelumnya ]` dan `[ Titik Berikutnya → ]` (atau `[ Selesaikan Rute ✓ ]`).
+  - `web/src/sections/hero3d/jelajah3d.js`:
+    - Mengintegrasikan penyembunyian awan otomatis: saat tur berlangsung, seluruh gugus awan 3D dinonaktifkan (`elemenAdegan.grupAwan.visible = false`) agar bidang daratan dan kepulauan terlihat 100% jernih tanpa halangan; dimunculkan kembali saat tur selesai/ditutup.
+    - Menerapkan efek *Spotlight Wilayah*: keping provinsi target terangkat jelas (`+0.48 unit`), solid, dan berpendar emas cerah (`#FFD700`, intensitas 0.90), sementara seluruh 37 provinsi lain di Indonesia diredupkan menjadi semi-transparan (`opacity: 0.28`).
+    - Menancapkan panji bendera 3D (`pengontrolBendera.tampilkan`) tepat di atas keping daratan provinsi yang dibahas lengkap dengan label nama provinsi dan cincin suar bercahaya.
+    - Memperbaiki koordinat `resetKameraKeOverview` agar menginterpolasikan target kamera secara presisi ke posisi pandangan luas adaptif `cameraBasePos` (`lookAt: 0, 0.12, 0`).
+  - `web/jelajah.html`:
+    - Menghapus tombol `#hud-panduan-3d` dari bilah alat bawah (*floating HUD*), mengembalikan bilah kontrol ke 4 fungsi esensial: Zoom, Reset Putar, Tur Sinematik, dan Rute Tematik.
+- **Hasil & Pengujian:**
+  - Pengujian headless Edge CDP membuktikan:
+    - Kunjungan ke Rute 3 (Mahakarya Kriya Tenun & Batik Pusaka - Sumatera Utara) menampilkan Sumatera Utara yang terangkat jelas di atas pulau Sumatera, berpendar emas cerah, dengan tiang bendera 3D dan cincin suar berdiri tegak di tengahnya (`preview_rute_sumut_clear.png`).
+    - Gugus awan tidak lagi menghalangi pemandangan kamera.
+    - Seluruh provinsi di luar target tampak redup semi-transparan sehingga fokus mata langsung tertuju ke Sumatera Utara.
+    - Kartu narasi bebas dari tombol "Buka Provinsi".
+    - Menutup tur via tombol '✕' mengembalikan kamera secara mulus ke pandangan luas Nusantara 100%, awan kembali melayang alami, dan semua pulau pulih ke warna hijau zamrud (`preview_rute_overview_restored.png`).
+  - Validasi data `tools/validate.mjs` lolos 14/14 aturan (0 error).
+  - Build produksi `npm run build` sukses (3.04s).
+
 ## [2026-10-29] Perbaikan UX & Visual — Onboarding Gatotkaca, Elevasi Rute 3D, Framing Avatar Kuis, & Kebersihan Mode Malam
 - **Permintaan & Masukan Pengguna (Berdasarkan 3 Tangkapan Layar):**
   1. *Pop-up Gatotkaca di Jelajah*: Terlalu mengganggu karena selalu muncul tiap kali membuka Jelajah, dan wajib mengklik "Oke, Ayo Jelajah!" tanpa bisa ditutup dengan klik di luar dialog.
