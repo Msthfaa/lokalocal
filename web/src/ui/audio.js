@@ -373,8 +373,8 @@ function bangunWidgetUI(audio) {
           style="width: 100%; font-size: 0.8rem; padding: 7px 12px; min-height: 38px; display: flex; align-items: center; justify-content: center; gap: 8px;"
           title="Buka Ruang Laras Gamelan & Angklung Virtual"
         >
-          <span aria-hidden="true">🪘</span>
-          <span>Mainkan Gamelan & Angklung</span>
+          <span class="audio-btn-ikon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="7" y1="5" x2="7" y2="19"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="17" y1="5" x2="17" y2="19"/></svg></span>
+          <span>Ruang Laras Bunyi Nusantara</span>
         </button>
       </div>
 

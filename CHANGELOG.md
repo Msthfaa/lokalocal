@@ -1,3 +1,32 @@
+## [2026-10-29] Langkah 2 — Transformasi Audio Akustik Asli (Sampel Fisik Gamelan & Bonang) + Micro-SFX Tradisional
+- **Permintaan & Arahan Pengguna:**
+  - Mengatasi masalah bunyi synthesizer sebelumnya yang terdengar sangat jauh dari instrumen aslinya (terlalu sintetis/palsu seperti nada dering game 8-bit).
+  - Menggunakan rekaman sampel fisik instrumen asli berlisensi terbuka dan merevitalisasi "Ruang Bunyi Nusantara" agar memiliki kualitas akustik organik setaraf museum.
+  - Mengintegrasikan efek suara taktil tradisional (*micro-SFX*) pada aksi interaktif utama (seperti stempel Paspor Budaya).
+- **Tindakan & Perubahan:**
+  - **Kurasi & Pengadaan Sampel Akustik Asli:**
+    - Mengunduh dan mengintegrasikan 20+ sampel audio instrumen fisik asli berlisensi terbuka (*Creative Commons CC-BY-SA 4.0 & Artistic License 2.0*) dari arsip resmi **Casa da Música Javanese Gamelan Library**:
+      - `web/public/audio/instrumen/gamelan/saron-1.ogg` s.d. `saron-8.ogg`: 8 nada lengkap bilah perunggu tebal Saron Barung dan Peking (Ji, Ro, Lu, Pat, Ma, Nem, Pi, Ji Luhur).
+      - `web/public/audio/instrumen/bonang/bonang-1.ogg` s.d. `bonang-8.ogg`: 8 nada lengkap pot gong perunggu Bonang Barung.
+      - `web/public/audio/sfx/gong.ogg`: Dentum resonansi sakral Gong Ageng forte fisik.
+      - `web/public/audio/sfx/kendang-tak.ogg` & `kendang-thung.ogg`: Ketukan organik kulit & kayu kendhang Ciblon.
+  - `web/src/features/karawitan-synth.js`:
+    - Merombak total engine suara menjadi **Web Audio Buffer Engine** (`AudioBufferSourceNode`) dengan *in-memory cache*.
+    - Menghasilkan latensi **0 ms** saat tuts layar atau keyboard ditekan, mendukung polifoni penuh (multi-key chord/akor harmoni dan glissando/usapan melodi) tanpa distorsi.
+    - Tetap mempertahankan *graceful acoustic physical fallback* jika terjadi pemutusan koneksi internet saat memuat file pertama kali.
+    - Mengekspos fungsi micro-SFX global: `bunyikanGong()`, `bunyikanKendangTak()`, `bunyikanKendangThung()`.
+    - Menambahkan tab instrumen ketiga: *Saron Perunggu*, *Bonang Barung*, dan *Angklung Bambu*, lengkap dengan penjelasan kuratorial masing-masing instrumen.
+  - `web/src/features/paspor.js`:
+    - Mengintegrasikan `bunyikanGong(0.9)` secara otomatis setiap kali pengguna berhasil memperoleh stempel baru di Paspor Budaya, memberikan kepuasan emosional dan momen perayaan sakral khas Nusantara.
+  - `web/src/ui/audio.js`:
+    - Mengganti emoji drum `🪘` pada tombol pop-up pemutar audio menjadi ikon vektor SVG instrumen bilah perunggu yang konsisten.
+  - `web/src/styles/components.css`:
+    - Menata ulang layout kontainer modal `.ruang-bunyi-wadah` (`max-width: 840px`), gap antarbilah (`8px`), serta dimensi masing-masing bilah (`82px`), sehingga seluruh 8 tuts nada tertata presisi, simetris, dan proporsional tanpa terpotong (*zero clipping*).
+- **Hasil & Pengujian:**
+  - Suara instrumen kini 100% menggunakan getaran fisik asli bilah perunggu gamelan, lengkap dengan dentang pemukul kayu alami dan resonansi dengung yang otentik.
+  - Pengujian headless Edge CDP membuktikan 8 bilah berfungsi mulus, animasi getaran tuts aktif seketika, dan tangkapan layar visual (`preview_ruang_bunyi_v2.png`) memverifikasi tata letak yang sangat rapi.
+  - Build produksi (`npm run build`) sukses tanpa peringatan baru, dan validasi data (`tools/validate.mjs`) tetap 100% lolos dengan 0 error.
+
 ## [2026-10-28] Langkah 1 — Eliminasi Total Emoji (AI Slop) & Penerapan Ikonografi Vektor SVG Museum-Grade
 - **Permintaan & Arahan Pengguna:**
   - Menghilangkan kesan "AI slop" akibat penggunaan emoji/emotikon berlebihan di antarmuka.

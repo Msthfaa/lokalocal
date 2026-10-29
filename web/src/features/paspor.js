@@ -119,6 +119,14 @@ export function buatPengelolaPaspor(opsi = {}) {
     const baruDitambahkan = !sudahAda;
     const baruSelesai38 = jumlahSebelum < 38 && jumlahSesudah >= 38;
 
+    if (baruDitambahkan) {
+      import('./karawitan-synth.js')
+        .then(({ bunyikanGong }) => {
+          bunyikanGong(0.9);
+        })
+        .catch(() => {});
+    }
+
     beritahuPendengar({
       aksi: 'tambah',
       kode: k,
