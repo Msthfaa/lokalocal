@@ -23,6 +23,18 @@
   - Validasi data `node tools/validate.mjs` lolos 100% (0 error).
   - Build produksi `npm --prefix web run build` sukses tanpa error (2.45s).
 
+## [2026-10-30] Penghapusan Indikator Loading Duplikat di Samping Navbar Jelajah
+- **Permintaan Pengguna:**
+  - Menghapus pill loading kecil di sebelah navbar atas pada halaman Jelajah (`#nav-loading-kartun`), sehingga hanya kartu Kapal Pinisi di tengah layar yang menjadi indikator pemuatan.
+- **Tindakan & Solusi:**
+  - `web/jelajah.html`: Menghapus elemen `#nav-loading-kartun` beserta kontainer `.nav-kiri`, menyelaraskan struktur navbar Jelajah agar identik dan konsisten dengan halaman Beranda, Paspor, dan Kuis.
+  - `web/src/ui/loader-lucu.js`: Menghapus pembaruan progres DOM ke elemen navbar (`#nav-kartun-pesan`, `#nav-kartun-persen`, `#nav-loading-kartun`).
+  - `web/src/styles/sections.css`: Menghapus seluruh CSS spesifik `.nav-loading-kartun` dan keyframe terkait untuk membersihkan ukuran stylesheet.
+- **Hasil & Verifikasi:**
+  - `verif_desktop_loader_kapal.png`: Header navbar bersih dan simetris rata tengah tanpa pill loading ganda di samping logo.
+  - `verif_loader_kapal_pinisi.png`: Tampilan layar muat di HP tetap fokus dan elegan pada kartu tengah Kapal Pinisi.
+  - Build produksi: `npm --prefix web run build` sukses (3.56s, 0 error).
+
 ## [2026-10-30] Pemulihan Penuh Layar Muat Kapal Pinisi Nusantara ("Si Kembara") Menuju Halaman Jelajah
 - **Permintaan Pengguna:**
   - Pengguna meminta agar transisi/layar muat saat menuju halaman Jelajah menggunakan layar muat asli yang memuat animasi maskot Kapal Pinisi secara eksklusif.
@@ -1055,7 +1067,7 @@
 - **Hasil:**
   - Seluruh area halaman Beranda dari bawah Hero, melintasi Bento Grid tempat bersejarah, 5 tradisi UNESCO, modul penutup, hingga area footer kini memiliki satu latar belakang arsitektur nusantara yang megah, konsisten, dan elegan.
   - Kartu-kartu kaca bento, kartu penutup, dan panel atribusi (80% tembus pandang) mengapung indah di depan latar kultural tanpa mengorbankan keterbacaan teks.
->>>>>>> fe1e4da29ccc406c84428633efd936a88f249ec8
+
 
 ## [2026-10-18] Perbaikan Masalah Akses Halaman Paspor & Kuis (Eliminasi Error 'gsap is not defined')
 - **Dibuat/diubah:**

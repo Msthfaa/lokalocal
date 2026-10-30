@@ -28,15 +28,11 @@ const KUNCI_SESI_PETA3D = 'lokalocal_peta3d_dimuat';
  */
 export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = false } = {}) {
   let elemenLoader = document.getElementById('jelajah-loading-screen');
-  const navKartun = document.getElementById('nav-loading-kartun');
 
   if (lewati) {
     if (elemenLoader) {
       elemenLoader.style.display = 'none';
       elemenLoader.setAttribute('aria-hidden', 'true');
-    }
-    if (navKartun) {
-      navKartun.style.display = 'none';
     }
     return {
       aturProgres: () => {},
@@ -228,17 +224,6 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
       pesanEl.style.opacity = '1';
       pesanEl.style.transform = 'translateY(0)';
     }
-
-    // Sinkronkan ke maskot kartun penunggu di navbar
-    const navKartunPesan = document.getElementById('nav-kartun-pesan');
-    const navKartunPersen = document.getElementById('nav-kartun-persen');
-    if (navKartunPersen) {
-      navKartunPersen.textContent = `${target}%`;
-    }
-    if (pesanKustom && navKartunPesan) {
-      const pesanRingkas = pesanKustom.length > 26 ? pesanKustom.slice(0, 24) + '...' : pesanKustom;
-      navKartunPesan.textContent = pesanRingkas;
-    }
   }
 
   /**
@@ -263,16 +248,6 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
 
     aturProgres(100, pesanPenutup);
 
-    // Animasi maskot kartun navbar melambai gembira
-    const navKartun = document.getElementById('nav-loading-kartun');
-    const navKartunPesan = document.getElementById('nav-kartun-pesan');
-    if (navKartunPesan) {
-      navKartunPesan.textContent = 'Siap Berlayar!';
-    }
-    if (navKartun) {
-      navKartun.classList.add('is-selesai');
-    }
-
     // Beri jeda manis 450ms agar mata pengguna melihat 100% dan pesan sukses
     setTimeout(() => {
       elemenLoader.classList.add('is-selesai');
@@ -280,9 +255,6 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
       setTimeout(() => {
         elemenLoader.setAttribute('aria-hidden', 'true');
         elemenLoader.style.display = 'none';
-        if (navKartun) {
-          navKartun.style.display = 'none';
-        }
         if (typeof onSelesai === 'function') {
           onSelesai();
         }
