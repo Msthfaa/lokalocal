@@ -190,7 +190,14 @@ export function dapatkanChibiProvinsi(kodeProv) {
   // Nusa Tenggara
   if (['52', '53'].includes(k)) return dapatkanChibi('bali_pria');
   // Kalimantan
-  if (['61', '62', '63', '64', '65'].includes(k)) return dapatkanChibi('jawa');
+  if (['61', '62', '63', '64', '65'].includes(k)) {
+    return {
+      ...dapatkanChibi('bugis'),
+      nama: 'Ksatria Dayak',
+      suku: 'Dayak',
+      daerah: 'Kalimantan'
+    };
+  }
   // Sulawesi
   if (['71', '72', '73', '74', '75', '76'].includes(k)) return dapatkanChibi('bugis');
   // Maluku & Papua

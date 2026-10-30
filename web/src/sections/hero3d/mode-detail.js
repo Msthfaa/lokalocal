@@ -53,6 +53,24 @@ import {
   nyalakanLentera,
   hitungTotalLenteraMenyala
 } from '../../features/lentera.js';
+import { KUNCI_STORAGE_PASPOR } from '../../features/paspor.js';
+
+function apakahSudahStempelDiStorage(kode) {
+  if (!kode) return false;
+  const k = String(kode).trim();
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const raw = window.localStorage.getItem(KUNCI_STORAGE_PASPOR);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && parsed[k]) {
+          return true;
+        }
+      }
+    }
+  } catch {}
+  return false;
+}
 
 export function buatPengelolaModeDetail({
   scene,
@@ -917,8 +935,8 @@ export function buatPengelolaModeDetail({
                   Data SPKT per ${tanggalAmbilData}. Tidak menyiratkan sedikitnya budaya asli.
                 </p>
                 <div class="cangkang-stats-aksi-baris">
-                  <button type="button" class="btn-aksi-paspor" data-kode="${p.kode}">
-                    ${ikonPaspor(14)} <span>Simpan ke Paspor</span>
+                  <button type="button" class="btn-aksi-paspor ${apakahSudahStempelDiStorage(p.kode) ? 'is-terkumpul' : ''}" data-kode="${p.kode}">
+                    ${apakahSudahStempelDiStorage(p.kode) ? ikonCentang(14) : ikonPaspor(14)} <span>${apakahSudahStempelDiStorage(p.kode) ? 'Stempel Tersimpan' : 'Simpan ke Paspor'}</span>
                   </button>
                   <button type="button" class="btn-aksi-bagikan" title="Bagikan halaman budaya ini">
                     ${ikonBagikan(14)} <span>Bagikan</span>

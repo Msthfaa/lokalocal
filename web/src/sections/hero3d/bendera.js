@@ -19,6 +19,24 @@ import { WARNA_JENIS_HEX } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
 import { KETEBALAN_EXTRUDE } from './build-provinces.js';
 import { ikonPaspor, ikonCentang } from '../../ui/ikon.js';
+import { KUNCI_STORAGE_PASPOR } from '../../features/paspor.js';
+
+function apakahSudahStempelDiStorage(kode) {
+  if (!kode) return false;
+  const k = String(kode).trim();
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const raw = window.localStorage.getItem(KUNCI_STORAGE_PASPOR);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && parsed[k]) {
+          return true;
+        }
+      }
+    }
+  } catch {}
+  return false;
+}
 
 /**
  * Membuat pengontrol penanda kristal diorama 3D dan kartu popover
@@ -142,7 +160,7 @@ export function buatPengontrolBendera({
 
     provinsiAktif = provData;
     meshAktif = mesh;
-    stempelTerkumpul = false;
+    stempelTerkumpul = apakahSudahStempelDiStorage(provData.kode);
     waktuMulaiTampil = performance.now();
 
     // Posisikan penanda tepat di daratan utama (bukan di tengah laut!)
@@ -257,9 +275,9 @@ export function buatPengontrolBendera({
         ` : ''}
 
         <footer class="bendera-footer-aksi">
-          <button type="button" class="bendera-tombol-paspor" data-kode="${provData.kode}">
-            <span class="bendera-ikon-stempel">${ikonPaspor(13)}</span>
-            <span class="bendera-teks-paspor">Kumpulkan Stempel Paspor</span>
+          <button type="button" class="bendera-tombol-paspor ${stempelTerkumpul ? 'is-terkumpul' : ''}" data-kode="${provData.kode}">
+            <span class="bendera-ikon-stempel">${stempelTerkumpul ? ikonCentang(13) : ikonPaspor(13)}</span>
+            <span class="bendera-teks-paspor">${stempelTerkumpul ? 'Stempel Dicatat' : 'Kumpulkan Stempel Paspor'}</span>
           </button>
         </footer>
       </div>
