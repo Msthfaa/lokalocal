@@ -336,7 +336,33 @@ function pasangKontrolHud(kontroler) {
   }
 
   if (btnResetPutar) {
-    btnResetPutar.addEventListener('click', () => kontroler.resetRotasi());
+    btnResetPutar.addEventListener('click', () => {
+      kontroler.resetRotasi();
+      if (typeof kontroler.fokusGugusWilayah === 'function') {
+        kontroler.fokusGugusWilayah('semua');
+      }
+      const pitaWilayah = document.getElementById('jelajah-pita-wilayah');
+      if (pitaWilayah) {
+        pitaWilayah.querySelectorAll('.pita-chip').forEach((b) => {
+          b.classList.toggle('aktif', b.dataset.gugus === 'semua');
+        });
+      }
+    });
+  }
+
+  // Pasang Pita Pilihan Cepat 6 Gugus Wilayah
+  const pitaWilayah = document.getElementById('jelajah-pita-wilayah');
+  if (pitaWilayah && typeof kontroler.fokusGugusWilayah === 'function') {
+    const chipBtns = pitaWilayah.querySelectorAll('.pita-chip');
+    chipBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const gugus = btn.dataset.gugus;
+        chipBtns.forEach((b) => b.classList.remove('aktif'));
+        btn.classList.add('aktif');
+        kontroler.fokusGugusWilayah(gugus);
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+    });
   }
 }
 

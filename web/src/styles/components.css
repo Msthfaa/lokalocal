@@ -758,7 +758,7 @@
   align-items: flex-end;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 860px) {
   .audio-backsound-dock {
     position: fixed !important;
     bottom: 10px !important;
@@ -2212,18 +2212,27 @@
   inset: 0;
   pointer-events: none;
   z-index: 9990;
-  display: flex;
+  display: none !important;
   align-items: flex-end;
   justify-content: center;
   padding-bottom: clamp(24px, 6vh, 50px);
   padding-inline: 16px;
   opacity: 0;
+  visibility: hidden;
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .jelajah-tur-overlay.aktif {
+  display: flex !important;
   opacity: 1;
+  visibility: visible;
   pointer-events: none !important;
+}
+
+.jelajah-tur-overlay:not(.aktif) .jelajah-tur-kartu,
+.jelajah-tur-overlay[hidden] .jelajah-tur-kartu {
+  pointer-events: none !important;
+  display: none !important;
 }
 
 .jelajah-tur-kartu {
@@ -2797,10 +2806,22 @@
   inset: 0;
   pointer-events: none;
   z-index: 9994;
-  display: flex;
+  display: none !important;
   align-items: flex-end;
   justify-content: center;
   padding: 0 20px 24px 20px;
+}
+
+.rute-cerita-overlay[style*="display: flex"],
+.rute-cerita-overlay.aktif {
+  display: flex !important;
+  pointer-events: none !important;
+}
+
+.rute-cerita-overlay[hidden] .rute-vignette-kartu,
+.rute-cerita-overlay:not([style*="display: flex"]):not(.aktif) .rute-vignette-kartu {
+  pointer-events: none !important;
+  display: none !important;
 }
 
 .rute-vignette-kartu {

@@ -465,7 +465,7 @@ export function inisialisasiJelajah3D({
       kanvas.style.cursor = 'grab';
     }
 
-    // Jika pointerUp terjadi di atas kartu mengambang, HUD, atau dialog, JANGAN batalkan pilihan pulau!
+    // Jika pointerUp terjadi di atas kartu mengambang, HUD, pita wilayah, atau dialog, JANGAN batalkan pilihan pulau!
     if (
       e.target &&
       (e.target.closest('.mode-detail-overlay') ||
@@ -473,6 +473,7 @@ export function inisialisasiJelajah3D({
         e.target.closest('.jelajah-hud-kanan-bawah') ||
         e.target.closest('.jelajah-hud-kiri-bawah') ||
         e.target.closest('.jelajah-hud-atas') ||
+        e.target.closest('.jelajah-pita-wilayah') ||
         e.target.closest('.rute-cerita-overlay') ||
         e.target.closest('#jelajah-rute-overlay') ||
         e.target.closest('.rute-pemilih-dialog') ||
@@ -483,15 +484,19 @@ export function inisialisasiJelajah3D({
       return;
     }
 
-    // Eksekusi klik langsung di pointerup jika jarak geser kecil (< 22px) dan durasi wajar (< 650ms)
+    // Eksekusi klik langsung di pointerup jika jarak geser kecil dan durasi wajar
+    // Toleransi sentuhan jari ponsel/tablet diperbesar agar lebih mudah & responsif
+    const isTouch = e.pointerType === 'touch';
     const distTotal = Math.hypot(e.clientX - pointerDownX, e.clientY - pointerDownY);
     const durasi = performance.now() - waktuPointerDown;
-    if (distTotal < 22 && durasi < 650) {
-      eksekusiKlikLayar(e.clientX, e.clientY);
+    const batasJarak = isTouch ? 32 : 22;
+    const batasDurasi = isTouch ? 750 : 650;
+    if (distTotal < batasJarak && durasi < batasDurasi) {
+      eksekusiKlikLayar(e.clientX, e.clientY, isTouch);
     }
   }
 
-  function eksekusiKlikLayar(clientX, clientY) {
+  function eksekusiKlikLayar(clientX, clientY, isTouch = false) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
     if (ruteTematikSedangAktif) {
       import('../../features/pengontrol-rute.js').then(({ keluarRute }) => keluarRute());
@@ -505,7 +510,27 @@ export function inisialisasiJelajah3D({
 
     raycaster.setFromCamera(pointerRay, camera);
 
-    const intersects = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
+    let intersects = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
+
+    // Pada layar sentuh (mobile/tablet), lakukan uji toleransi kedekatan (proximity)
+    // jika sentuhan meleset sedikit (8-16px) agar pulau-pulau kecil (Bali, Lombok, DIY, Maluku) mudah dipilih
+    if (intersects.length === 0 && isTouch) {
+      const offsets = [
+        [0, 10], [0, -10], [10, 0], [-10, 0],
+        [8, 8], [-8, 8], [8, -8], [-8, -8],
+        [0, 16], [0, -16], [16, 0], [-16, 0]
+      ];
+      for (const [ox, oy] of offsets) {
+        const rx = ((clientX + ox - rect.left) / rect.width) * 2 - 1;
+        const ry = -((clientY + oy - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera({ x: rx, y: ry }, camera);
+        const subHits = raycaster.intersectObjects(elemenAdegan.daftarProvinsiMesh, false);
+        if (subHits.length > 0) {
+          intersects = subHits;
+          break;
+        }
+      }
+    }
 
     if (intersects.length > 0) {
       const mesh = intersects[0].object;
@@ -817,6 +842,103 @@ export function inisialisasiJelajah3D({
     });
   }
 
+  /**
+   * Mengarahkan pandangan kamera ke gugus kepulauan tertentu secara sinematik
+   * @param {'semua'|'sumatra'|'jawa'|'bali-nusa'|'kalimantan'|'sulawesi'|'maluku-papua'} zonaId
+   */
+  function fokusGugusWilayah(zonaId) {
+    if (pengontrolTur && typeof pengontrolTur.apakahBerjalan === 'function' && pengontrolTur.apakahBerjalan()) {
+      pengontrolTur.hentikan();
+    }
+    if (pengelolaDetail && typeof pengelolaDetail.isAktif === 'function' && pengelolaDetail.isAktif()) {
+      pengelolaDetail.tutup();
+    }
+
+    if (!zonaId || zonaId === 'semua') {
+      if (meshTerpilih) {
+        meshTerpilih.userData.offsetTerpilih = 0;
+        if (meshTerpilih.material) {
+          meshTerpilih.material.emissive.set('#000000');
+          meshTerpilih.material.emissiveIntensity = 0;
+          if (meshTerpilih.userData.teksturTopo) {
+            meshTerpilih.material.map = meshTerpilih.userData.teksturTopo;
+            meshTerpilih.material.color.set(0xffffff);
+          }
+        }
+        meshTerpilih = null;
+        provTerpilihData = null;
+      }
+      pengontrolBendera.sembunyikan();
+      panelKanan.sembunyikan();
+      resetKameraKeOverview(1.2);
+      return;
+    }
+
+    const KOORDINAT_GUGUS = {
+      sumatra: {
+        lookAt: { x: -3.80, y: 0.15, z: -0.45 },
+        pos: { x: -3.80, y: 2.5, z: 3.1 }
+      },
+      jawa: {
+        lookAt: { x: -1.80, y: 0.15, z: 1.15 },
+        pos: { x: -1.80, y: 2.2, z: 3.6 }
+      },
+      'bali-nusa': {
+        lookAt: { x: 0.45, y: 0.15, z: 1.65 },
+        pos: { x: 0.45, y: 2.2, z: 3.9 }
+      },
+      kalimantan: {
+        lookAt: { x: -1.00, y: 0.15, z: -0.55 },
+        pos: { x: -1.00, y: 2.6, z: 2.8 }
+      },
+      sulawesi: {
+        lookAt: { x: 1.13, y: 0.15, z: -0.20 },
+        pos: { x: 1.13, y: 2.5, z: 3.0 }
+      },
+      'maluku-papua': {
+        lookAt: { x: 3.45, y: 0.15, z: 0.20 },
+        pos: { x: 3.45, y: 3.0, z: 3.8 }
+      }
+    };
+
+    const target = KOORDINAT_GUGUS[zonaId];
+    if (!target) return;
+
+    if (meshTerpilih) {
+      meshTerpilih.userData.offsetTerpilih = 0;
+      if (meshTerpilih.material) {
+        meshTerpilih.material.emissive.set('#000000');
+        meshTerpilih.material.emissiveIntensity = 0;
+        if (meshTerpilih.userData.teksturTopo) {
+          meshTerpilih.material.map = meshTerpilih.userData.teksturTopo;
+          meshTerpilih.material.color.set(0xffffff);
+        }
+      }
+      meshTerpilih = null;
+      provTerpilihData = null;
+      pengontrolBendera.sembunyikan();
+      panelKanan.sembunyikan();
+    }
+
+    gsap.killTweensOf(cameraTargetPos);
+    gsap.killTweensOf(cameraTargetLookAt);
+
+    gsap.to(cameraTargetPos, {
+      x: target.pos.x,
+      y: target.pos.y,
+      z: target.pos.z,
+      duration: 1.35,
+      ease: 'power2.inOut'
+    });
+    gsap.to(cameraTargetLookAt, {
+      x: target.lookAt.x,
+      y: target.lookAt.y,
+      z: target.lookAt.z,
+      duration: 1.35,
+      ease: 'power2.inOut'
+    });
+  }
+
   // Pasang Pengontrol Rute Cerita Tematik (Story Trails)
   const btnRuteTematik = document.getElementById('hud-rute-cerita');
   if (btnRuteTematik) {
@@ -1123,6 +1245,7 @@ export function inisialisasiJelajah3D({
     jedaRender: hentikanLoop,
     lanjutkanRender: mulaiLoop,
     perbaruiUkuran,
+    fokusGugusWilayah,
     mulaiTurSinematik: pengontrolTur.mulai,
     hentikanTurSinematik: pengontrolTur.hentikan,
     apakahTurBerjalan: pengontrolTur.apakahBerjalan

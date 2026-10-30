@@ -33,17 +33,17 @@ export function hitungPosisiKameraFit(aspect, faktorZoom = 1) {
   const fovVertikalRad = (34 * Math.PI) / 180;
   const fovHorizontalRad = 2 * Math.atan(Math.tan(fovVertikalRad / 2) * aspect);
 
-  // Penyesuaian radius target dasar berdasarkan aspek layar agar 38 provinsi selalu pas
+  // Penyesuaian radius target dasar: ponsel & tablet potret dibuat lebih dekat (3.9) agar pulau tampak chunky, dekat, dan mudah disentuh
   let radiusTargetDasar = 3.6;
   if (aspect < 0.8) {
     // Ponsel potret ramping (misal 390x844 atau 360x800)
-    radiusTargetDasar = 5.8;
+    radiusTargetDasar = 3.95;
   } else if (aspect < 1.0) {
     // Layar tablet potret / persegi
-    radiusTargetDasar = 4.5;
+    radiusTargetDasar = 3.8;
   } else if (aspect < 1.3) {
     // Layar tablet lanskap / laptop kecil
-    radiusTargetDasar = 3.8;
+    radiusTargetDasar = 3.6;
   } else {
     // Desktop layar lebar (aspect >= 1.3)
     radiusTargetDasar = 3.6;
@@ -55,9 +55,10 @@ export function hitungPosisiKameraFit(aspect, faktorZoom = 1) {
   const jarakHoriz = radiusTarget / Math.tan(fovHorizontalRad / 2);
   const jarak = Math.max(jarakVert, jarakHoriz);
 
-  // Sudut kamera 46 derajat dari horizontal: sudut 3/4 isometrik udara yang seimbang
-  // kepulauan terlihat lapang, relief 3D dan pulau-pulau tampak luas, jelas, dan mudah dijelajahi
-  const sudutElevasi = (46 * Math.PI) / 180;
+  // Sudut kamera diatur: 42 derajat untuk ponsel/tablet potret agar relief pulau tampak lebih timbul,
+  // 46 derajat untuk desktop
+  const sudutDerajat = aspect < 1.0 ? 42 : 46;
+  const sudutElevasi = (sudutDerajat * Math.PI) / 180;
   const y = jarak * Math.sin(sudutElevasi);
   const z = jarak * Math.cos(sudutElevasi);
 

@@ -21,10 +21,7 @@
     <link rel="icon" type="image/png" href="./favicon.png" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./assets/logo-emblem.png" />
-    <script>
-      // Teruskan akses langsung ke shell SPA terpadu (seamless single-page app)
-      window.location.replace('./index.html#paspor' + (window.location.search || ''));
-    </script>
+
     <script>
       (function () {
         try {
@@ -84,7 +81,7 @@
 
     <header id="header-utama" class="header-utama">
       <nav class="nav-bar" aria-label="Navigasi utama">
-        <a href="./index.html" class="nav-merek" aria-label="Lokalocal: Beranda">
+        <a href="/" class="nav-merek" aria-label="Lokalocal: Beranda">
           <img src="./assets/logo-lokalocal.png" alt="Lokalocal" class="nav-merek-logo" width="142" height="42" />
         </a>
 
@@ -103,22 +100,22 @@
 
         <ul id="nav-daftar" class="nav-daftar">
           <li>
-            <a href="./index.html" class="nav-tautan" data-nav-id="cerita">
+            <a href="/" class="nav-tautan" data-nav-id="cerita">
               Cerita
             </a>
           </li>
           <li>
-            <a href="./jelajah.html" class="nav-tautan" data-nav-id="jelajah">
+            <a href="/jelajah" class="nav-tautan" data-nav-id="jelajah">
               Jelajah
             </a>
           </li>
           <li>
-            <a href="./paspor.html" class="nav-tautan" data-nav-id="paspor" aria-current="page">
+            <a href="/paspor" class="nav-tautan" data-nav-id="paspor" aria-current="page">
               Paspor
             </a>
           </li>
           <li>
-            <a href="./kuis.html" class="nav-tautan" data-nav-id="kuis">
+            <a href="/kuis" class="nav-tautan" data-nav-id="kuis">
               Kuis
             </a>
           </li>
@@ -168,7 +165,7 @@
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
           </button>
-          <a href="./jelajah.html" class="nav-tombol-aksi" title="Buka Peta 3D Nusantara">
+          <a href="/jelajah" class="nav-tombol-aksi" title="Buka Peta 3D Nusantara">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
               <polyline points="2 17 12 22 22 17"></polyline>
@@ -229,8 +226,8 @@
                 </p>
               </div>
               <div style="display: flex; gap: var(--ruang-2);">
-                <a href="./jelajah.html" class="tombol tombol--utama">Jelajahi Peta 3D &rarr;</a>
-                <a href="./kuis.html" class="tombol tombol--garis">Uji Wawasan di Kuis &rarr;</a>
+                <a href="/jelajah" class="tombol tombol--utama">Jelajahi Peta 3D &rarr;</a>
+                <a href="/kuis" class="tombol tombol--garis">Uji Wawasan di Kuis &rarr;</a>
               </div>
             </div>
           </div>
@@ -365,22 +362,22 @@
             <p class="footer-kicker">Navigasi Utama</p>
             <ul class="footer-menu-list">
               <li>
-                <a href="./index.html" class="footer-menu-link">
+                <a href="/" class="footer-menu-link">
                   <span>Beranda Cerita</span>
                 </a>
               </li>
               <li>
-                <a href="./jelajah.html" class="footer-menu-link">
+                <a href="/jelajah" class="footer-menu-link">
                   <span>Jelajah Katalog 3D</span>
                 </a>
               </li>
               <li>
-                <a href="./paspor.html" class="footer-menu-link">
+                <a href="/paspor" class="footer-menu-link">
                   <span>Paspor Budaya</span>
                 </a>
               </li>
               <li>
-                <a href="./kuis.html" class="footer-menu-link">
+                <a href="/kuis" class="footer-menu-link">
                   <span>Kuis Kebudayaan</span>
                 </a>
               </li>

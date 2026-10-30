@@ -510,8 +510,8 @@ body.tema-malam .jelajah-wadah-fullscreen::before {
 /* Floating HUD Kiri Bawah */
 .jelajah-hud-kiri-bawah {
   position: absolute;
-  bottom: 16px;
-  left: 16px;
+  bottom: 84px;
+  left: 24px;
   z-index: 40;
   display: flex;
   flex-direction: column;
@@ -579,6 +579,92 @@ body.tema-malam .jelajah-wadah-fullscreen::before {
   text-decoration: underline;
 }
 
+/* Pita Pilihan Cepat 6 Gugus Wilayah (Quick-Jump Nusantara) */
+.jelajah-pita-wilayah {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 85;
+  pointer-events: auto;
+  max-width: calc(100vw - 32px);
+  width: max-content;
+}
+
+.jelajah-pita-scroll {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(18, 15, 13, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(230, 177, 74, 0.28);
+  border-radius: var(--r-bulat);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  white-space: nowrap;
+}
+
+.jelajah-pita-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.pita-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--kertas-redup);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-bulat);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.pita-chip:hover {
+  color: #ffffff;
+  background: rgba(230, 177, 74, 0.15);
+  border-color: rgba(230, 177, 74, 0.38);
+}
+
+.pita-chip.aktif {
+  color: #14110F;
+  background: var(--aksen);
+  border-color: var(--aksen);
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(230, 177, 74, 0.35);
+}
+
+.pita-chip-titik {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #14110F;
+}
+
+.pita-chip-badge {
+  font-size: 0.65rem;
+  padding: 1px 5px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  font-weight: 600;
+}
+
+.pita-chip.aktif .pita-chip-badge {
+  background: rgba(20, 17, 15, 0.18);
+  color: #14110F;
+}
+
 /* Floating HUD Kanan Bawah: Toolbar Zoom Kontrol Peta (Mengambang Aman di Atas Audio) */
 .jelajah-hud-kanan-bawah {
   position: absolute;
@@ -598,7 +684,7 @@ body.tema-malam .jelajah-wadah-fullscreen::before {
   transition: transform var(--dur-cepat), bottom var(--dur-cepat);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 860px) {
   /* 1. HUD Atas: Pill Status & Petunjuk Terpadu Simetris */
   .jelajah-hud-atas {
     top: 4.6rem;
@@ -627,10 +713,38 @@ body.tema-malam .jelajah-wadah-fullscreen::before {
     gap: 5px;
   }
 
-  /* 2. HUD Kanan Bawah: Toolbar Zoom & Aksi Mengambang di Poros Tengah */
+  /* 2. Pita Pilihan Cepat Gugus Wilayah di Ponsel/Tablet */
+  .jelajah-pita-wilayah {
+    position: fixed !important;
+    bottom: 94px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: calc(100vw - 16px);
+    width: auto;
+    display: flex;
+    justify-content: center;
+    z-index: 86;
+  }
+
+  .jelajah-pita-scroll {
+    max-width: calc(100vw - 20px);
+    padding: 3px 6px;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pita-chip {
+    min-height: 29px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.70rem;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  /* 3. HUD Kanan Bawah: Toolbar Zoom & Aksi Mengambang di Poros Tengah */
   .jelajah-hud-kanan-bawah {
     position: fixed !important;
-    bottom: 54px !important;
+    bottom: 50px !important;
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
@@ -656,25 +770,33 @@ body.tema-malam .jelajah-wadah-fullscreen::before {
     padding: 0.25rem 0.45rem;
     font-size: 0.72rem;
     gap: 4px;
+    flex-shrink: 0;
   }
 
   .hud-btn-ikon-only {
-    min-width: 25px;
-    font-size: 0.88rem;
-    padding: 0 4px;
+    min-width: 28px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 0;
+    flex-shrink: 0;
   }
 
   .hud-btn-zoom-val {
     padding: 0.25rem 0.4rem;
     font-size: 0.7rem;
+    flex-shrink: 0;
   }
 
   .hud-separator {
     height: 16px;
     margin: 0 1px;
+    flex-shrink: 0;
   }
 
-  /* 3. HUD Kiri Bawah: Atribusi Data Saja (Status Legenda Pindah ke HUD Atas) */
+  /* 4. HUD Kiri Bawah: Atribusi Data Saja (Status Legenda Pindah ke HUD Atas) */
   .jelajah-hud-kiri-bawah {
     position: fixed !important;
     bottom: 12px !important;

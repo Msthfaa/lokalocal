@@ -337,7 +337,7 @@
     <header id="header-utama" class="header-utama">
       <nav class="nav-bar" aria-label="Navigasi utama">
         <div class="nav-kiri">
-          <a href="./index.html" class="nav-merek" aria-label="Lokalocal: Beranda">
+          <a href="/" class="nav-merek" aria-label="Lokalocal: Beranda">
           <img src="./assets/logo-lokalocal.png" alt="Lokalocal" class="nav-merek-logo" width="142" height="42" />
         </a>
 
@@ -393,22 +393,22 @@
 
         <ul id="nav-daftar" class="nav-daftar">
           <li>
-            <a href="./index.html" class="nav-tautan" data-nav-id="cerita">
+            <a href="/" class="nav-tautan" data-nav-id="cerita">
               Cerita
             </a>
           </li>
           <li>
-            <a href="./jelajah.html" class="nav-tautan" data-nav-id="jelajah" aria-current="page">
+            <a href="/jelajah" class="nav-tautan" data-nav-id="jelajah" aria-current="page">
               Jelajah
             </a>
           </li>
           <li>
-            <a href="./paspor.html" class="nav-tautan" data-nav-id="paspor">
+            <a href="/paspor" class="nav-tautan" data-nav-id="paspor">
               Paspor
             </a>
           </li>
           <li>
-            <a href="./kuis.html" class="nav-tautan" data-nav-id="kuis">
+            <a href="/kuis" class="nav-tautan" data-nav-id="kuis">
               Kuis
             </a>
           </li>
@@ -458,7 +458,7 @@
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
           </button>
-          <a href="./index.html" class="nav-tombol-aksi" title="Kembali ke Cerita Budaya">
+          <a href="/" class="nav-tombol-aksi" title="Kembali ke Cerita Budaya">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
@@ -491,6 +491,40 @@
           <span class="hud-petunjuk-mobile"><span class="hud-dot hud-dot--ada"></span> <strong>28</strong> Tercatat &bull; <span class="hud-dot hud-dot--belum"></span> <strong>10</strong> Menanti &bull; Geser 360&deg;</span>
         </span>
       </div>
+
+      <!-- Pita Pilihan Cepat 6 Gugus Wilayah (Quick-Jump Nusantara) -->
+      <nav id="jelajah-pita-wilayah" class="jelajah-pita-wilayah" aria-label="Pilihan Cepat Gugus Wilayah">
+        <div class="jelajah-pita-scroll">
+          <button type="button" class="pita-chip aktif" data-gugus="semua" title="Tinjauan Penuh Nusantara">
+            <span class="pita-chip-titik"></span>
+            <span>Semua</span>
+          </button>
+          <button type="button" class="pita-chip" data-gugus="sumatra" title="Fokus ke Gugusan Sumatera (119 Catatan)">
+            <span>Sumatera</span>
+            <span class="pita-chip-badge">119</span>
+          </button>
+          <button type="button" class="pita-chip" data-gugus="jawa" title="Fokus ke Gugusan Jawa & Madura (186 Catatan)">
+            <span>Jawa</span>
+            <span class="pita-chip-badge">186</span>
+          </button>
+          <button type="button" class="pita-chip" data-gugus="bali-nusa" title="Fokus ke Bali & Nusa Tenggara (24 Catatan)">
+            <span>Bali &amp; Nusa</span>
+            <span class="pita-chip-badge">24</span>
+          </button>
+          <button type="button" class="pita-chip" data-gugus="kalimantan" title="Fokus ke Gugusan Kalimantan (46 Catatan)">
+            <span>Kalimantan</span>
+            <span class="pita-chip-badge">46</span>
+          </button>
+          <button type="button" class="pita-chip" data-gugus="sulawesi" title="Fokus ke Gugusan Sulawesi (43 Catatan)">
+            <span>Sulawesi</span>
+            <span class="pita-chip-badge">43</span>
+          </button>
+          <button type="button" class="pita-chip" data-gugus="maluku-papua" title="Fokus ke Maluku & Papua (22 Catatan)">
+            <span>Maluku &amp; Papua</span>
+            <span class="pita-chip-badge">22</span>
+          </button>
+        </div>
+      </nav>
 
       <!-- HUD Kiri Bawah: Legenda Ringkas & Atribusi Resmi -->
       <div class="jelajah-hud-kiri-bawah">
