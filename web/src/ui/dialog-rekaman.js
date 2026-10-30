@@ -14,7 +14,7 @@ import { pecahParagrafDeskripsi } from '../util/teks.js';
 import { buatPolaKartuSvg } from '../patterns/generate.js';
 import { dapatkanLabelPendekJenis } from './kartu.js';
 import { formatAngka } from '../util/format.js';
-import { dapatkanGambarBudaya, ambilFotoWikimediaRealtime } from '../data/gambar-budaya.js';
+import { dapatkanGambarBudaya, dapatkanSumberGambar } from '../data/gambar-budaya.js';
 
 /**
  * Menginisialisasi dialog detail rekaman budaya.
@@ -64,37 +64,28 @@ export function inisialisasiDialogRekaman({ tanggalAmbilTerformat = '9 Oktober 2
         })
       );
 
-      const pasangFotoHeader = (urlFoto) => {
-        if (!wadahPolaEl || !urlFoto) return;
+      const fotoLangsung = dapatkanGambarBudaya(rekaman);
+      if (wadahPolaEl && fotoLangsung) {
         const fotoEl = document.createElement('img');
         fotoEl.className = 'dialog-rekaman-banner-foto';
-        fotoEl.alt = rekaman.nama || 'Dokumentasi Budaya';
+        fotoEl.alt = rekaman.nama_tampil || rekaman.nama || 'Dokumentasi Budaya';
         fotoEl.loading = 'lazy';
+        fotoEl.referrerPolicy = 'no-referrer';
+        fotoEl.crossOrigin = 'anonymous';
         fotoEl.onload = () => {
           fotoEl.style.opacity = '1';
           if (!wadahPolaEl.querySelector('.dialog-rekaman-sumber-badge')) {
             const badge = document.createElement('span');
             badge.className = 'dialog-rekaman-sumber-badge';
-            badge.textContent = 'Foto Dokumentasi Wikipedia';
+            badge.textContent = dapatkanSumberGambar(rekaman);
             wadahPolaEl.appendChild(badge);
           }
         };
         fotoEl.onerror = () => {
           fotoEl.remove();
         };
-        fotoEl.src = urlFoto;
+        fotoEl.src = fotoLangsung;
         wadahPolaEl.appendChild(fotoEl);
-      };
-
-      const fotoLangsung = dapatkanGambarBudaya(rekaman);
-      if (fotoLangsung) {
-        pasangFotoHeader(fotoLangsung);
-      } else {
-        ambilFotoWikimediaRealtime(rekaman).then((hasil) => {
-          if (hasil?.url) {
-            pasangFotoHeader(hasil.url);
-          }
-        }).catch(() => {});
       }
     }
 

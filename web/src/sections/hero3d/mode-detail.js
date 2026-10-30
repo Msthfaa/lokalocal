@@ -37,7 +37,7 @@ import { gsap } from 'gsap';
 import { apakahKurangiGerak } from '../../util/motion.js';
 import { WARNA_JENIS_HEX, GRADIEN_JENIS_CSS } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
-import { dapatkanGambarBudaya, ambilFotoWikimediaRealtime } from '../../data/gambar-budaya.js';
+import { dapatkanGambarBudaya, dapatkanSumberGambar } from '../../data/gambar-budaya.js';
 import { buatPolaKartuSvg } from '../../patterns/generate.js';
 import {
   ikonPinLokasi,
@@ -989,6 +989,7 @@ export function buatPengelolaModeDetail({
                           });
                           const svgPolaHtml = elPola ? elPola.outerHTML : '';
                           const fotoUrl = dapatkanGambarBudaya(item);
+                          const sumberFoto = dapatkanSumberGambar(item);
                           const jenisLabel = (item.jenis_label || item.kategori || 'OPK').toUpperCase();
                           const kabLabel = item.kabupaten_nama || p.nama;
                           const warnaPill = WARNA_JENIS_HEX[item.jenis_kode] || WARNA_JENIS_HEX[item.jenis] || '#E6B14A';
@@ -1009,13 +1010,16 @@ export function buatPengelolaModeDetail({
                             <div class="kartu-galeri-media" data-id="${item.id}">
                               <div class="kartu-galeri-pola-svg" aria-hidden="true">${svgPolaHtml}</div>
                               <img
-                                src="${fotoUrl || ''}"
-                                alt="${item.nama}"
-                                class="kartu-galeri-img ${fotoUrl ? 'is-loaded' : ''}"
+                                src="${fotoUrl}"
+                                alt="${item.nama_tampil || item.nama}"
+                                class="kartu-galeri-img is-loaded"
                                 loading="lazy"
-                                style="${fotoUrl ? 'opacity: 1; display: block;' : 'opacity: 0; display: none;'}"
+                                referrerpolicy="no-referrer"
+                                crossorigin="anonymous"
+                                onload="this.classList.add('is-loaded'); this.style.opacity='1'; this.style.display='block';"
+                                onerror="this.style.opacity='0'; this.style.display='none';"
                               />
-                              ${fotoUrl ? '<span class="kartu-galeri-sumber-badge">Dokumentasi Wikipedia</span>' : ''}
+                              <span class="kartu-galeri-sumber-badge">${sumberFoto}</span>
                               <!-- Kategori Tag Melayang -->
                               <span class="kartu-galeri-badge" style="border-left: 3px solid ${warnaPill};">
                                 <span class="kartu-galeri-titik" style="background-color: ${warnaPill};"></span>
@@ -1224,42 +1228,6 @@ export function buatPengelolaModeDetail({
           bukaDetail();
         }
       });
-    });
-
-    // Fetch Asinkron Real-time Foto Wikipedia untuk kartu yang belum memiliki foto kurasi
-    kartuItems.forEach(async (card) => {
-      const id = card.dataset.id;
-      const item = daftarBudaya.find((b) => b.id === id);
-      if (!item) return;
-
-      const mediaEl = card.querySelector('.kartu-galeri-media');
-      const imgEl = card.querySelector('.kartu-galeri-img');
-      if (!imgEl) return;
-
-      if (imgEl.getAttribute('src')) return;
-
-      try {
-        const hasil = await ambilFotoWikimediaRealtime(item);
-        if (hasil?.url && mediaEl && imgEl) {
-          imgEl.onload = () => {
-            imgEl.style.display = 'block';
-            imgEl.style.opacity = '1';
-            if (!mediaEl.querySelector('.kartu-galeri-sumber-badge')) {
-              const badge = document.createElement('span');
-              badge.className = 'kartu-galeri-sumber-badge';
-              badge.textContent = 'Dokumentasi Wikipedia';
-              mediaEl.appendChild(badge);
-            }
-          };
-          imgEl.onerror = () => {
-            imgEl.style.display = 'none';
-            imgEl.style.opacity = '0';
-          };
-          imgEl.src = hasil.url;
-        }
-      } catch {
-        // Tetap gunakan pola tenun/batik SVG jika fetch gagal atau offline
-      }
     });
 
     // Animasi Entrance Elegan Ringan saat cangkang dibuka

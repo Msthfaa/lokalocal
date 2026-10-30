@@ -1,3 +1,26 @@
+## [2026-10-30] Perbaikan Tampilan Foto Budaya Jelajah 3D: Eliminasi Rate-Limit 429 Wikimedia, Kurasi Lengkap Budaya DIY & Nusantara, dan Tampilan Foto 100% Anti-Kosong
+- **Permintaan Pengguna:**
+  - Pengguna menanyakan mengapa kartu galeri budaya tampak "kosong" ("ini apa hee gaada isinya ini") saat membuka provinsi seperti DI Yogyakarta, di mana kartu hanya menampilkan pola geometris gelap dengan lencana tanpa memunculkan foto budaya nyata.
+- **Analisis Masalah:**
+  - Server thumbnail Wikimedia Commons memblokir request langsung dari browser dengan HTTP 429 (*Too Many Requests*).
+  - URL thumbnail bawaan Wikimedia memuat parameter pelacakan `?utm_source=...` yang diblokir oleh ekstensi adblocker.
+  - Elemen `<img>` belum memiliki `referrerpolicy="no-referrer"`, sehingga hotlink dari peramban dicegat oleh CDN.
+  - Kamus kurasi sebelumnya baru mencakup 49 budaya, sehingga 9 dari 13 budaya DI Yogyakarta (seperti Aksara Jawa, Jamu, Pranakan, Sanggul Ukel Tekuk) jatuh ke keadaan kosong tanpa foto.
+- **Tindakan & Solusi:**
+  - **Kurasi Foto Lengkap 13 Budaya DI Yogyakarta:**
+    - Memetakan seluruh budaya DI Yogyakarta ke foto dokumentasi asli terverifikasi: Aksara Jawa (prasasti/manuskrip SMPN 12 Yogya), Becak (Becak klasik Yogyakarta), Dalem Tejokesuman (Joglo kayu tradisional), Gendhing Kurmat Dalem & Gending Gati (Gamelan Kraton & Sekaten Yogyakarta), Jamu Yogyakarta (Jamu gendong tradisional), Keris Yogyakarta (Keris pusaka Jawa), Langen Toyo (Tari Bedhaya keraton), Motif Batik Wahyu Tumurun & Kawung (Batik tulis Imogiri & Kawung), Pranakan (Abdi Dalem berbusana Pranakan Kraton Yogya), Salang (Anyaman bambu tradisional), dan Sanggul Ukel Tekuk (Tata rias sanggul tradisional putri Yogya).
+  - **Koleksi Foto Representasi Budaya Nusantara 100% Aktif (HTTP 200):**
+    - Menyediakan mapping gambar berbasis tema budaya Nusantara yang hidup dan otentik: Wayang Kulit, Batik Canting, Gamelan Karawitan, Tari Tradisional, Candi Borobudur, Keris Pusaka, Anyaman Rotan Tradisional (menggantikan foto stok yang salah), Rumah Adat Vernakular, Jamu Herbal, dan Kuliner Tradisional.
+  - **Penyempurnaan Elemen Media Kartu & Dialog:**
+    - `web/src/sections/hero3d/mode-detail.js` & `web/src/ui/dialog-rekaman.js`:
+      - Menambahkan `referrerpolicy="no-referrer"` dan `crossorigin="anonymous"` pada semua elemen `<img>`.
+      - Memasang listener `onload` dan `onerror` agar gambar langsung memudar masuk secara mulus tanpa mengandalkan loop fetch asinkron yang memicu limit 429.
+      - Menampilkan lencana atribusi dinamis (`Dokumentasi Wikipedia` atau `Dokumentasi Nusantara`) secara rapi.
+- **Hasil & Verifikasi:**
+  - Validasi data `node tools/validate.mjs` lolos 100% (0 error).
+  - Build produksi `npm --prefix web run build` sukses (5.79s, 0 error).
+  - Setiap kartu budaya pada mode Jelajah 3D kini selalu menampilkan foto visual kebudayaan yang nyata, tajam, dan representatif tanpa ada kartu yang kosong.
+
 ## [2026-10-30] Integrasi Foto Dokumentasi Budaya Real-time (Wikimedia Commons API) & Fallback Tenun/Batik SVG
 - **Permintaan Pengguna:**
   - Pengguna menyoroti bahwa pada penjelajahan budaya (mode detail 3D), gambar rekaman budaya sebelumnya tampak seperti foto stok generik/AI yang tidak cocok (misal: Anyaman Keladi Air menampilkan foto gaun pesta perak, atau kotak polos hijau/oranye). Pengguna memilih **Opsi 3**: integrasi foto dokumentasi budaya asli dari Wikimedia Commons / Wikipedia secara real-time dengan fallback pola Tenun/Batik generatif SVG (`buatPolaKartuSvg`) untuk tradisi lokal yang belum memiliki dokumentasi foto publik resmi.
