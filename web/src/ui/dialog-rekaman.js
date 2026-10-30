@@ -14,7 +14,7 @@ import { pecahParagrafDeskripsi } from '../util/teks.js';
 import { buatPolaKartuSvg } from '../patterns/generate.js';
 import { dapatkanLabelPendekJenis } from './kartu.js';
 import { formatAngka } from '../util/format.js';
-import { dapatkanGambarBudaya, dapatkanSumberGambar } from '../data/gambar-budaya.js';
+import { dapatkanGambarBudaya, dapatkanCadanganGambarBudaya, dapatkanSumberGambar } from '../data/gambar-budaya.js';
 
 /**
  * Menginisialisasi dialog detail rekaman budaya.
@@ -82,7 +82,13 @@ export function inisialisasiDialogRekaman({ tanggalAmbilTerformat = '9 Oktober 2
           }
         };
         fotoEl.onerror = () => {
-          fotoEl.remove();
+          const cadangan = dapatkanCadanganGambarBudaya(rekaman);
+          if (cadangan && !fotoEl.dataset.fallback) {
+            fotoEl.dataset.fallback = '1';
+            fotoEl.src = cadangan;
+          } else {
+            fotoEl.remove();
+          }
         };
         fotoEl.src = fotoLangsung;
         wadahPolaEl.appendChild(fotoEl);

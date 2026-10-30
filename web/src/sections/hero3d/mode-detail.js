@@ -37,7 +37,7 @@ import { gsap } from 'gsap';
 import { apakahKurangiGerak } from '../../util/motion.js';
 import { WARNA_JENIS_HEX, GRADIEN_JENIS_CSS } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
-import { dapatkanGambarBudaya, dapatkanSumberGambar } from '../../data/gambar-budaya.js';
+import { dapatkanGambarBudaya, dapatkanCadanganGambarBudaya, dapatkanSumberGambar } from '../../data/gambar-budaya.js';
 import { buatPolaKartuSvg } from '../../patterns/generate.js';
 import {
   ikonPinLokasi,
@@ -1007,6 +1007,7 @@ export function buatPengelolaModeDetail({
                           });
                           const svgPolaHtml = elPola ? elPola.outerHTML : '';
                           const fotoUrl = dapatkanGambarBudaya(item);
+                          const cadanganFotoUrl = dapatkanCadanganGambarBudaya(item);
                           const sumberFoto = dapatkanSumberGambar(item);
                           const jenisLabel = (item.jenis_label || item.kategori || 'OPK').toUpperCase();
                           const kabLabel = item.kabupaten_nama || p.nama;
@@ -1035,7 +1036,7 @@ export function buatPengelolaModeDetail({
                                 referrerpolicy="no-referrer"
                                 crossorigin="anonymous"
                                 onload="this.classList.add('is-loaded'); this.style.opacity='1'; this.style.display='block';"
-                                onerror="this.style.opacity='0'; this.style.display='none';"
+                                onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${cadanganFotoUrl}'; } else { this.style.opacity='0'; this.style.display='none'; }"
                               />
                               <span class="kartu-galeri-sumber-badge">${sumberFoto}</span>
                               <!-- Kategori Tag Melayang -->

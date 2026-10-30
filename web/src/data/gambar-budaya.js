@@ -82,29 +82,22 @@ const POOL_KATEGORI = {
 };
 
 /**
- * Mendapatkan informasi lengkap foto representatif budaya (URL + Atribusi)
+ * Mencari foto budaya representatif dari koleksi otentik (Unsplash & Lokal)
+ * berbasis kata kunci budaya dan pool kategori (bebas rate-limit 429).
  *
  * @param {object} rekaman - Objek budaya
  * @returns {{ url: string, sumber: string }}
  */
-export function dapatkanInfoGambar(rekaman) {
+function dapatkanInfoGambarOtentik(rekaman) {
   if (!rekaman) {
     return { url: KOLEKSI_FOTO_BUDAYA.tari_tradisional, sumber: 'Dokumentasi Budaya' };
   }
 
   const id = rekaman.id;
-  // 1. Cek kamus kurasi Wikimedia terverifikasi
-  if (id && kamusKurasi[id]?.fotoUrl) {
-    return {
-      url: kamusKurasi[id].fotoUrl,
-      sumber: 'Dokumentasi Wikipedia'
-    };
-  }
-
   const namaLower = String(rekaman.nama || rekaman.nama_tampil || '').toLowerCase();
   const jenis = String(rekaman.jenis_kode || rekaman.jenis || rekaman.kategori || '').toLowerCase();
 
-  // 2. Pencocokan kata kunci budaya spesifik Nusantara
+  // 1. Pencocokan kata kunci budaya spesifik Nusantara
   // Wayang & Teater Tradisional
   if (/wayang|kulit|golek|teater|ketoprak|makyong|randai|lenong/.test(namaLower)) {
     return { url: KOLEKSI_FOTO_BUDAYA.wayang, sumber: 'Dokumentasi Nusantara' };
@@ -199,7 +192,7 @@ export function dapatkanInfoGambar(rekaman) {
     return { url: KOLEKSI_FOTO_BUDAYA.upacara_adat, sumber: 'Dokumentasi Nusantara' };
   }
 
-  // 3. Fallback deterministik berbasis pool kategori + hash ID agar konsisten
+  // 2. Fallback deterministik berbasis pool kategori + hash ID agar konsisten
   let katKunci = 'seni';
   if (/kriya|kerajinan|teknologi/.test(jenis)) katKunci = 'kerajinan';
   else if (/adat|ritus|perayaan/.test(jenis)) katKunci = 'adat';
@@ -219,6 +212,40 @@ export function dapatkanInfoGambar(rekaman) {
     url: pool[idx],
     sumber: 'Koleksi Budaya'
   };
+}
+
+/**
+ * Mendapatkan informasi lengkap foto representatif budaya (URL + Atribusi)
+ *
+ * @param {object} rekaman - Objek budaya
+ * @returns {{ url: string, sumber: string }}
+ */
+export function dapatkanInfoGambar(rekaman) {
+  if (!rekaman) {
+    return { url: KOLEKSI_FOTO_BUDAYA.tari_tradisional, sumber: 'Dokumentasi Budaya' };
+  }
+
+  const id = rekaman.id;
+  // 1. Cek kamus kurasi Wikimedia terverifikasi
+  if (id && kamusKurasi[id]?.fotoUrl) {
+    return {
+      url: kamusKurasi[id].fotoUrl,
+      sumber: 'Dokumentasi Wikipedia'
+    };
+  }
+
+  // 2. Gunakan koleksi foto otentik Nusantara
+  return dapatkanInfoGambarOtentik(rekaman);
+}
+
+/**
+ * Mendapatkan URL foto cadangan stabil (bebas Wikimedia / anti rate-limiting)
+ *
+ * @param {object} rekaman - Objek budaya
+ * @returns {string} URL foto cadangan
+ */
+export function dapatkanCadanganGambarBudaya(rekaman) {
+  return dapatkanInfoGambarOtentik(rekaman).url;
 }
 
 /**
