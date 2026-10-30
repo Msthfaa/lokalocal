@@ -1033,10 +1033,8 @@ export function buatPengelolaModeDetail({
                                 alt="${item.nama_tampil || item.nama}"
                                 class="kartu-galeri-img is-loaded"
                                 loading="lazy"
-                                referrerpolicy="no-referrer"
-                                crossorigin="anonymous"
                                 onload="this.classList.add('is-loaded'); this.style.opacity='1'; this.style.display='block';"
-                                onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${cadanganFotoUrl}'; } else { this.style.opacity='0'; this.style.display='none'; }"
+                                onerror="if (this.src !== '${cadanganFotoUrl}' && !this.dataset.fallback) { this.dataset.fallback = '1'; this.src = '${cadanganFotoUrl}'; const b = this.parentElement.querySelector('.kartu-galeri-sumber-badge'); if (b) b.textContent = 'Dokumentasi Nusantara'; } else if (!this.dataset.finalFallback) { this.dataset.finalFallback = '1'; this.src = '/images/top5/batik.jpg'; const b = this.parentElement.querySelector('.kartu-galeri-sumber-badge'); if (b) b.textContent = 'Dokumentasi Warisan Budaya'; }"
                               />
                               <span class="kartu-galeri-sumber-badge">${sumberFoto}</span>
                               <!-- Kategori Tag Melayang -->

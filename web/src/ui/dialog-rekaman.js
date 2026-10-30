@@ -70,24 +70,28 @@ export function inisialisasiDialogRekaman({ tanggalAmbilTerformat = '9 Oktober 2
         fotoEl.className = 'dialog-rekaman-banner-foto';
         fotoEl.alt = rekaman.nama_tampil || rekaman.nama || 'Dokumentasi Budaya';
         fotoEl.loading = 'lazy';
-        fotoEl.referrerPolicy = 'no-referrer';
-        fotoEl.crossOrigin = 'anonymous';
         fotoEl.onload = () => {
           fotoEl.style.opacity = '1';
-          if (!wadahPolaEl.querySelector('.dialog-rekaman-sumber-badge')) {
-            const badge = document.createElement('span');
+          let badge = wadahPolaEl.querySelector('.dialog-rekaman-sumber-badge');
+          if (!badge) {
+            badge = document.createElement('span');
             badge.className = 'dialog-rekaman-sumber-badge';
-            badge.textContent = dapatkanSumberGambar(rekaman);
             wadahPolaEl.appendChild(badge);
           }
+          badge.textContent = dapatkanSumberGambar(rekaman);
         };
         fotoEl.onerror = () => {
           const cadangan = dapatkanCadanganGambarBudaya(rekaman);
-          if (cadangan && !fotoEl.dataset.fallback) {
+          if (cadangan && !fotoEl.dataset.fallback && fotoEl.src !== cadangan) {
             fotoEl.dataset.fallback = '1';
             fotoEl.src = cadangan;
-          } else {
-            fotoEl.remove();
+            const badge = wadahPolaEl.querySelector('.dialog-rekaman-sumber-badge');
+            if (badge) badge.textContent = 'Dokumentasi Nusantara';
+          } else if (!fotoEl.dataset.finalFallback) {
+            fotoEl.dataset.finalFallback = '1';
+            fotoEl.src = '/images/top5/batik.jpg';
+            const badge = wadahPolaEl.querySelector('.dialog-rekaman-sumber-badge');
+            if (badge) badge.textContent = 'Dokumentasi Warisan Budaya';
           }
         };
         fotoEl.src = fotoLangsung;

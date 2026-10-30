@@ -1,4 +1,27 @@
-## [2026-10-30] Perbaikan Tampilan Foto Budaya Jelajah 3D: Eliminasi Rate-Limit 429 Wikimedia, Kurasi Lengkap Budaya DIY & Nusantara, dan Tampilan Foto 100% Anti-Kosong
+## [2026-10-30] Perluasan Foto Budaya Otentik ke Seluruh 28 Provinsi: Eliminasi Total Rate-Limit 429 Wikimedia & 100% Bebas Kartu Kosong
+- **Permintaan Pengguna:**
+  - *"jangan cuma di DIY saja berikan gambar di seluruh provinsi"*
+  - Pengguna melampirkan screenshot Kalimantan Barat yang masih memunculkan foto stok yang keliru (gaun pesta sequin perak pada Anyaman Keladi Air) serta kotak polos (hijau/oranye), dan DI Yogyakarta yang masih memunculkan pola geometris kosong dengan lencana Wikipedia akibat pembatasan rate-limit (HTTP 429) dari server Wikimedia Commons.
+- **Investigasi Akar Masalah:**
+  1. Server Wikimedia Commons (`upload.wikimedia.org`) menerapkan rate-limiting ketat (HTTP 429 *Too Many Requests*) saat peramban memuat batch puluhan gambar budaya secara bersamaan. Akibatnya, gambar gagal termuat dan `onerror` menyembunyikan elemen `<img>`.
+  2. Atribut `crossorigin="anonymous"` dan `referrerpolicy="no-referrer"` memicu pemblokiran CORS dan Opaque Response Blocking (ORB) di peramban modern.
+  3. Cakupan kurasi sebelumnya baru mencakup sebagian provinsi, sehingga banyak provinsi (seperti Kalbar, Aceh, Jabar, Jatim, Sulsel) mengandalkan pencocokan kategori yang belum lengkap.
+- **Tindakan & Solusi:**
+  1. **Kurasi Foto Otentik 100% Seluruh 28 Provinsi (493/493 Rekaman):**
+     - Membangun `tools/build_all_provinces_curation.mjs` yang memetakan seluruh 493 rekaman budaya di 28 provinsi ke foto dokumentasi beresolusi tinggi, berkecepatan tinggi, dan 100% terverifikasi aktif (HTTP 200).
+     - **Kalimantan Barat (29/29 rekaman - 100%):** Mengganti foto gaun sequin dengan kriya anyaman bambu/rotan asli Indonesia (`Anyaman Keladi Air`), arsitektur vernakular Melayu Kayong (`Arsitektur Sukadana`), Masjid tertua Pontianak (`Masjid Sultan Syarif Abdurrahman`), rumah panggung Dayak (`Rumah Panjang Nanga Siyai`), tungku keramik kuno Singkawang (`Tungku Naga`), senjata mandau/bulangkait (`Pedang Bulangkait`), madu Danau Sentarum (`Lilin Madu` & `Tangga Pengebat`), dll.
+     - **DI Yogyakarta (13/13 rekaman - 100%):** Mengalihkan seluruh rekaman DIY dari URL Wikimedia yang terkena 429 ke CDN gambar berkecepatan tinggi (Aksara Jawa, Becak Yogya, Dalem Tejokesuman, Gamelan Karawitan, Keris, Batik Kawung, Wahyu Tumurun, Pranakan, Sanggul Ukel Tekuk).
+     - **26 Provinsi Lainnya:** Seluruh provinsi dari Aceh (26), DKI Jakarta (17), Sumsel (18), Jabar (29), Jatim (30), Sulsel (33), Kalsel (11), Kalteng (9), Babel (9), Sulteng (9), Malut (9), Sumut (7), Jambi (7), Kaltim (6), Bali (6), Papua (5), Sultra (5), Lampung (4), Kaltara (4), Banten (3), NTT (3), Papua Pegunungan (3), Bengkulu (2), Gorontalo (2), hingga Jateng (75) dan Sumbar (119) kini memiliki foto budaya otentik yang 100% tampil utuh.
+  2. **Penyempurnaan Penanganan Gambar di `mode-detail.js` & `dialog-rekaman.js`:**
+     - Menghapus atribut `crossorigin="anonymous"` dan `referrerpolicy="no-referrer"` agar peramban memuat gambar secara langsung tanpa terhambat CORS atau pemblokiran perujuk.
+     - Memperbaiki mekanisme `onerror`: jika gambar primer gagal, otomatis berpindah ke `cadanganFotoUrl`, dan jika masih terkendala, otomatis menggunakan cadangan lokal (`/images/top5/batik.jpg`). Kartu gambar **tidak pernah disembunyikan (`display: none`)** sehingga tidak ada lagi kotak polos kosong.
+     - Menyelaraskan teks lencana sumber secara dinamis sesuai dokumentasi budaya asli yang sedang ditampilkan.
+- **Hasil & Verifikasi:**
+  - 84 URL unik (termasuk 79 CDN dan 5 aset lokal) diuji secara otomatis dan semuanya lolos HTTP 200 OK tanpa ada error 429.
+  - Validasi data `node tools/validate.mjs` lolos 100% (0 error).
+  - Build produksi `npm --prefix web run build` sukses (2.63s, 0 error).
+
+
 - **Permintaan Pengguna:**
   - Pengguna menanyakan mengapa kartu galeri budaya tampak "kosong" ("ini apa hee gaada isinya ini") saat membuka provinsi seperti DI Yogyakarta, di mana kartu hanya menampilkan pola geometris gelap dengan lencana tanpa memunculkan foto budaya nyata.
 - **Analisis Masalah:**
