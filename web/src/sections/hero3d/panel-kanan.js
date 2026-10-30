@@ -15,6 +15,40 @@ import { dapatkanGambarBudaya } from '../../data/gambar-budaya.js';
 import { buatSvgPieceProvinsi } from '../../map/render-piece.js';
 import { dapatkanChibiProvinsi } from '../../features/chibi.js';
 import { ikonPaspor, ikonCentang, ikonCari, ikonKompas } from '../../ui/ikon.js';
+import { KUNCI_STORAGE_PASPOR } from '../../features/paspor.js';
+
+/**
+ * Mengecek apakah provinsi telah tersimpan di localStorage Paspor Budaya
+ * @param {string|number} kode
+ * @returns {boolean}
+ */
+function apakahSudahStempelDiStorage(kode) {
+  if (!kode) return false;
+  const k = String(kode).trim();
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const raw = window.localStorage.getItem(KUNCI_STORAGE_PASPOR);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && parsed[k]) {
+          return true;
+        }
+      }
+    }
+  } catch {}
+  return false;
+}
+
+function dapatkanGugusPulau(kode) {
+  const k = parseInt(kode, 10);
+  if (k >= 11 && k <= 21) return 'SUMATERA';
+  if (k >= 31 && k <= 36) return 'JAWA';
+  if (k >= 51 && k <= 53) return 'BALI & NUSA TENGGARA';
+  if (k >= 61 && k <= 65) return 'KALIMANTAN';
+  if (k >= 71 && k <= 76) return 'SULAWESI';
+  if (k >= 81 && k <= 96) return 'MALUKU & PAPUA';
+  return 'NUSANTARA';
+}
 
 /**
  * Membuat komponen Floating Card & Detail 3 Zona untuk Jelajah 3D
@@ -125,7 +159,7 @@ export function buatPanelKanan({
     const p = provinsiAktif;
     const adalahKosong = p.status_data === 'belum_tercatat' || (p.total || 0) === 0;
     const warnaJenis = WARNA_JENIS_HEX[p.jenis_dominan] || '#E6B14A';
-    const sudahStempel = stempelTerkumpulMap.has(String(p.kode));
+    const sudahStempel = apakahSudahStempelDiStorage(p.kode) || stempelTerkumpulMap.has(String(p.kode));
 
     // Data karya budaya lokal dari budaya.clean.json
     let daftarTradisi = [];
@@ -201,7 +235,7 @@ export function buatPanelKanan({
               </div>
               <div class="kartu-kanan-judul-blok">
                 <span class="kartu-badge-kode" style="color: ${warnaJenis};">
-                  PROVINSI ${p.kode} &bull; ${chibiProv.suku}
+                  PROVINSI ${p.kode} &bull; ${dapatkanGugusPulau(p.kode)}
                 </span>
                 <h3 class="kartu-nama-prov">${p.nama}</h3>
               </div>
@@ -668,6 +702,10 @@ export function buatPanelKanan({
       btn.addEventListener('click', () => {
         if (!provinsiAktif) return;
         const kode = String(provinsiAktif.kode);
+        if (apakahSudahStempelDiStorage(kode) || stempelTerkumpulMap.has(kode)) {
+          btn.classList.add('is-terkumpul');
+          return;
+        }
         stempelTerkumpulMap.add(kode);
         if (typeof onCatatStempel === 'function') {
           onCatatStempel(kode, 'interaktif');

@@ -1,3 +1,25 @@
+## [2026-10-30] Sinkronisasi Persistensi Status Stempel Paspor ke Seluruh Kartu Jelajah 3D & Koreksi Gugus Kalimantan
+- **Permintaan Pengguna & Masalah yang Ditemukan:**
+  - Pengguna telah mengumpulkan stempel provinsi (misalnya Kalimantan Tengah / Kalteng) dan stempel tersebut telah berhasil tersimpan di halaman Paspor (`atlasbudaya:paspor:v1`).
+  - Namun, ketika kembali ke halaman Jelajah dan membuka kembali kartu provinsi tersebut, tombol stempel kembali ke status awal (`[ Stempel ]`) seolah-olah belum pernah dicap.
+  - Selain itu, subjudul provinsi Kalimantan sebelumnya salah terlabel sebagai `PROVINSI 62 • JAWA`.
+- **Tindakan & Solusi:**
+  - **Sinkronisasi Status Paspor dari LocalStorage:**
+    - `web/src/sections/hero3d/panel-kanan.js`: Menambahkan fungsi `apakahSudahStempelDiStorage(kode)` yang secara langsung memeriksa data persisten `atlasbudaya:paspor:v1` di `localStorage`.
+    - Mengintegrasikan pemeriksaan persisten ini ke dalam fungsi `render()`, sehingga tombol aksi langsung menampilkan status **`[ ✓ Terkumpul ]`** (dengan warna hijau mint dan ikon centang) setiap kali provinsi yang sudah dicap dibuka kembali.
+    - Pada Mode Expanded ("Eksplorasi 3 Zona"), tombol paspor otomatis menampilkan teks `Stempel Paspor Telah Dikoleksi`.
+    - `web/src/sections/hero3d/bendera.js`: Menerapkan sinkronisasi yang sama pada kartu popover bendera di atas pulau, sehingga tombol paspor bendera langsung berstatus `[ ✓ Stempel Dicatat ]`.
+    - `web/src/sections/hero3d/mode-detail.js`: Menerapkan sinkronisasi pada tombol simpan paspor di inspeksi detail 3D.
+  - **Koreksi Gugus Wilayah Kalimantan:**
+    - `web/src/features/chibi.js`: Memperbaiki pemetaan kode provinsi `61` s.d. `65` agar merepresentasikan adat Dayak (`Ksatria Dayak` & suku `Dayak`) dan bukan Jawa.
+    - `web/src/sections/hero3d/panel-kanan.js`: Menambahkan fungsi `dapatkanGugusPulau(kode)` untuk memetakan nama gugus pulau resmi Kemendagri (`SUMATERA`, `JAWA`, `BALI & NUSA TENGGARA`, `KALIMANTAN`, `SULAWESI`, `MALUKU & PAPUA`). Kini Kalimantan Tengah secara akurat berlabel **`PROVINSI 62 • KALIMANTAN`**.
+  - **Penyelarasan Desain:**
+    - `web/src/styles/sections.css`: Menambahkan styling status `.kartu-btn-paspor-mini.is-terkumpul` untuk mode terang/siang agar kontras hijau zamrud terlihat tajam dan elegan.
+- **Hasil & Verifikasi:**
+  - `verif_stempel_kalteng_terkumpul.png`: Desktop menampilkan tombol `[ ✓ Terkumpul ]` warna hijau mint dan subjudul akurat `PROVINSI 62 • KALIMANTAN`.
+  - `verif_mobile_stempel_kalteng_terkumpul.png`: Mobile bottom sheet menampilkan tombol `[ ✓ Terkumpul ]` secara persisten dan konsisten dengan halaman Paspor.
+  - Build produksi: `npm --prefix web run build` sukses (2.56s, 0 error).
+>>>>>>> 155667f (fix(paspor): persist collected stamp state in 3D diorama cards and correct Kalimantan region mapping)
 ## [2026-10-30] Integrasi Foto Dokumentasi Budaya Real-time (Wikimedia Commons API) & Fallback Tenun/Batik SVG
 - **Permintaan Pengguna:**
   - Pengguna menyoroti bahwa pada penjelajahan budaya (mode detail 3D), gambar rekaman budaya sebelumnya tampak seperti foto stok generik/AI yang tidak cocok (misal: Anyaman Keladi Air menampilkan foto gaun pesta perak, atau kotak polos hijau/oranye). Pengguna memilih **Opsi 3**: integrasi foto dokumentasi budaya asli dari Wikimedia Commons / Wikipedia secara real-time dengan fallback pola Tenun/Batik generatif SVG (`buatPolaKartuSvg`) untuk tradisi lokal yang belum memiliki dokumentasi foto publik resmi.
@@ -22,6 +44,7 @@
 - **Hasil & Verifikasi:**
   - Validasi data `node tools/validate.mjs` lolos 100% (0 error).
   - Build produksi `npm --prefix web run build` sukses tanpa error (2.45s).
+
 
 ## [2026-10-30] Penghapusan Indikator Loading Duplikat di Samping Navbar Jelajah
 - **Permintaan Pengguna:**
