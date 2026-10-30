@@ -22,7 +22,6 @@ import { apakahBisaMemuat3D } from '../sections/hero3d/fallback.js';
 import { renderPetaSvg } from '../map/render.js';
 import { pasangInteraksiPeta } from '../map/interactions.js';
 import { inisialisasiLoaderLucu } from '../ui/loader-lucu.js';
-import { siapkanGatotkacaMendarat, sambutGatotkacaDiJelajah } from '../ui/transisi-gatotkaca.js';
 import { inisialisasiSpotlightSearch } from '../ui/spotlight-search.js';
 
 let dialogRekamanKontrol = null;
@@ -50,44 +49,11 @@ async function mulaiHalamanJelajah() {
     }
   });
 
-  // Cek apakah tiba dengan penerbangan pesawat kartun budaya
   const urlParams = new URLSearchParams(window.location.search);
-  const adalahMendarat =
-    urlParams.get('mendarat') === '1' ||
-    sessionStorage.getItem('lokalocal_mendarat_pesawat') === '1';
 
-  try {
-    sessionStorage.removeItem('lokalocal_mendarat_pesawat');
-  } catch {
-    // Abaikan
-  }
-
-  // Jika tiba dengan transisi, langsung siapkan Gatotkaca melayang di atas kepulauan
-  if (adalahMendarat) {
-    siapkanGatotkacaMendarat();
-  }
-
-  // Cek apakah Peta 3D sudah pernah dimuat di sesi kunjungan ini
-  const KUNCI_SESI_PETA3D = 'lokalocal_peta3d_dimuat';
-  let peta3dSudahDimuat = false;
-  try {
-    peta3dSudahDimuat = sessionStorage.getItem(KUNCI_SESI_PETA3D) === 'true';
-  } catch {
-    // Abaikan
-  }
-
-  const paksaLoader =
-    typeof window !== 'undefined' &&
-    window.location &&
-    (window.location.search.includes('loader=1') || window.location.search.includes('reset=1'));
-
-  const lewatiLoader = (peta3dSudahDimuat || adalahMendarat) && !paksaLoader;
-
-  // Tampilkan layar muat interaktif & animasi lucu Nusantara (hanya saat pertama kali di sesi ini dan bukan saat mendarat)
-  const loaderLucu = inisialisasiLoaderLucu(document.body, { lewati: lewatiLoader });
-  if (!lewatiLoader) {
-    loaderLucu.aturProgres(18, 'Membaca arsip kebudayaan Nusantara...');
-  }
+  // Tampilkan layar muat interaktif & animasi lucu Kapal Pinisi Nusantara
+  const loaderLucu = inisialisasiLoaderLucu(document.body, { lewati: false });
+  loaderLucu.aturProgres(18, 'Membaca arsip kebudayaan Nusantara...');
 
   const dialogTentangKontrol = inisialisasiDialogTentang();
   const dialogTentangKamiKontrol = inisialisasiDialogTentangKami();
@@ -226,39 +192,20 @@ async function mulaiHalamanJelajah() {
       }
     });
 
-    // Tuntaskan layar muat dan jalankan sambutan Gatotkaca jika relevan
-    if (adalahMendarat) {
-      loaderLucu.selesai();
-      // Buka balon sambutan Gatotkaca di atas kepulauan 3D dengan tombol Oke
-      sambutGatotkacaDiJelajah({
-        onTouchdown: () => {
-          if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
+    // Tuntaskan layar muat Kapal Pinisi dan picu animasi kemunculan pulau 3D
+    loaderLucu.aturProgres(92, 'Menyalakan lentera laut & mengibarkan bendera...');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        loaderLucu.selesai('Nusantara siap dijelajahi. Selamat berlayar.');
+
+        // Memicu kemunculan dramatis 38 pulau satu per satu membal dari tengah nusantara
+        if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
+          setTimeout(() => {
             kontroler3D.mulaiAnimasiMasuk();
-          }
+          }, 450);
         }
       });
-    } else if (!lewatiLoader) {
-      loaderLucu.aturProgres(92, 'Menyalakan lentera laut & mengibarkan bendera...');
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          loaderLucu.selesai('Nusantara siap dijelajahi. Selamat berlayar.');
-
-          // Memicu kemunculan dramatis 38 pulau satu per satu membal dari tengah nusantara
-          if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
-            setTimeout(() => {
-              kontroler3D.mulaiAnimasiMasuk();
-            }, 450);
-          }
-        });
-      });
-    } else {
-      loaderLucu.selesai();
-      if (kontroler3D && typeof kontroler3D.mulaiAnimasiMasuk === 'function') {
-        setTimeout(() => {
-          kontroler3D.mulaiAnimasiMasuk();
-        }, 120);
-      }
-    }
+    });
 
     // Muat data lengkap (budaya.clean.json) secara langsung untuk kartu bendera & tradisi
     muatDataLengkap()
@@ -274,10 +221,9 @@ async function mulaiHalamanJelajah() {
     // Cek parameter URL untuk pemilihan provinsi langsung
     const provParam = urlParams.get('provinsi');
     if (provParam && kontroler3D && typeof kontroler3D.pilihProvinsi === 'function') {
-      const jedaBuka = adalahMendarat ? 1350 : (lewatiLoader ? 250 : 800);
       setTimeout(() => {
         kontroler3D.pilihProvinsi(provParam);
-      }, jedaBuka);
+      }, 800);
     }
 
   } catch (err) {

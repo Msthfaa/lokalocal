@@ -67,181 +67,19 @@
         max-height: 24px !important;
         flex-shrink: 0;
       }
-      .peta3d-sudah-pernah-dimuat #jelajah-loading-screen,
-      .peta3d-sudah-pernah-dimuat #nav-loading-kartun {
-        display: none !important;
-      }
-      html.sedang-mendarat-gatotkaca #transisi-gatotkaca-overlay {
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: auto !important;
-        display: flex !important;
-      }
-      html.sedang-mendarat-gatotkaca #gatotkaca-bank-atas {
-        transform: translateY(0%) !important;
-      }
-      html.sedang-mendarat-gatotkaca #gatotkaca-bank-bawah {
-        transform: translateY(0%) !important;
-      }
-      html.sedang-mendarat-gatotkaca #gatotkaca-langit-mist {
-        opacity: 1 !important;
+      .jelajah-loading-screen {
+        display: flex;
       }
     </style>
-
-    <script>
-      try {
-        var params = new URLSearchParams(window.location.search);
-        var adalahMendarat = params.get('mendarat') === '1' || sessionStorage.getItem('lokalocal_mendarat_pesawat') === '1';
-        if (adalahMendarat) {
-          document.documentElement.classList.add('sedang-mendarat-gatotkaca');
-        }
-        if (
-          (adalahMendarat || sessionStorage.getItem('lokalocal_peta3d_dimuat') === 'true') &&
-          !params.get('loader') &&
-          !params.get('reset')
-        ) {
-          document.documentElement.classList.add('peta3d-sudah-pernah-dimuat');
-        }
-      } catch (e) {}
-    </script>
 
     <!-- Muat Stylesheet Inti di Head -->
     <link rel="stylesheet" href="/src/styles/base.css" />
     <link rel="stylesheet" href="/src/styles/layout.css" />
     <link rel="stylesheet" href="/src/styles/components.css" />
     <link rel="stylesheet" href="/src/styles/sections.css" />
-    <link rel="stylesheet" href="/src/styles/transisi-gatotkaca.css" />
   </head>
   <body class="halaman-fullscreen-body tema-siang">
     <a href="#s5-peta-wadah" class="skip-link">Lompat ke peta 3D</a>
-
-    <!-- Overlay Transisi Gatotkaca (Tersedia Seketika untuk Menghindari Kedip saat Pindah Halaman) -->
-    <div id="transisi-gatotkaca-overlay" class="transisi-gatotkaca-overlay" role="status" aria-live="polite" aria-label="Transisi penerbangan Gatotkaca menuju Peta 3D Nusantara">
-      <!-- 1. Latar Kilau Langit & Mist Lembut -->
-      <div class="gatotkaca-langit-aura" id="gatotkaca-langit-aura"></div>
-      <div class="gatotkaca-langit-mist" id="gatotkaca-langit-mist"></div>
-
-      <!-- 2. Bank Awan Atas (Tirai Atas) -->
-      <div class="gatotkaca-tirai-bank-atas" id="gatotkaca-bank-atas">
-        <div class="gatotkaca-awan-solid-atas"></div>
-        <svg class="gatotkaca-awan-crest gatotkaca-awan-crest--atas" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="gBackAtas" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#E2E8F0" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#CBD5E1" stop-opacity="1"/>
-            </linearGradient>
-            <linearGradient id="gMidAtas" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#F1F5F9" stop-opacity="0.98"/>
-              <stop offset="100%" stop-color="#E2E8F0" stop-opacity="1"/>
-            </linearGradient>
-            <linearGradient id="gFrontAtas" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
-              <stop offset="100%" stop-color="#F8FAFC" stop-opacity="1"/>
-            </linearGradient>
-          </defs>
-          <path d="M -20,0 L -20,60 A 70,70 0 0,0 110,60 A 90,90 0 0,0 270,70 A 75,75 0 0,0 400,60 A 100,100 0 0,0 580,75 A 85,85 0 0,0 730,65 A 105,105 0 0,0 920,80 A 80,80 0 0,0 1060,65 A 95,95 0 0,0 1230,75 A 75,75 0 0,0 1360,60 A 85,85 0 0,0 1460,60 L 1460,0 Z" fill="url(#gBackAtas)" opacity="0.65"/>
-          <path d="M -20,0 L -20,50 A 80,80 0 0,0 130,55 A 70,70 0 0,0 260,50 A 90,90 0 0,0 410,65 A 85,85 0 0,0 570,55 A 100,100 0 0,0 750,70 A 80,80 0 0,0 900,60 A 95,95 0 0,0 1080,68 A 75,75 0 0,0 1220,52 A 85,85 0 0,0 1370,58 A 75,75 0 0,0 1460,50 L 1460,0 Z" fill="url(#gMidAtas)" opacity="0.85"/>
-          <path d="M -20,0 L -20,40 A 85,85 0 0,0 140,50 A 65,65 0 0,0 250,45 A 95,95 0 0,0 420,60 A 80,80 0 0,0 560,50 A 110,110 0 0,0 760,70 A 85,85 0 0,0 910,55 A 100,100 0 0,0 1090,65 A 70,70 0 0,0 1210,45 A 90,90 0 0,0 1370,55 A 70,70 0 0,0 1460,40 L 1460,0 Z" fill="url(#gFrontAtas)"/>
-        </svg>
-      </div>
-
-      <!-- 3. Bank Awan Bawah (Tirai Bawah) -->
-      <div class="gatotkaca-tirai-bank-bawah" id="gatotkaca-bank-bawah">
-        <svg class="gatotkaca-awan-crest gatotkaca-awan-crest--bawah" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="gBackBawah" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E2E8F0" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#CBD5E1" stop-opacity="1"/>
-            </linearGradient>
-            <linearGradient id="gMidBawah" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#F1F5F9" stop-opacity="0.98"/>
-              <stop offset="100%" stop-color="#E2E8F0" stop-opacity="1"/>
-            </linearGradient>
-            <linearGradient id="gFrontBawah" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
-              <stop offset="100%" stop-color="#F8FAFC" stop-opacity="1"/>
-            </linearGradient>
-          </defs>
-          <path d="M -20,200 L -20,140 A 70,70 0 0,1 110,140 A 90,90 0 0,1 270,130 A 75,75 0 0,1 400,140 A 100,100 0 0,1 580,125 A 85,85 0 0,1 730,135 A 105,105 0 0,1 920,120 A 80,80 0 0,1 1060,135 A 95,95 0 0,1 1230,125 A 75,75 0 0,1 1360,140 A 85,85 0 0,1 1460,140 L 1460,200 Z" fill="url(#gBackBawah)" opacity="0.65"/>
-          <path d="M -20,200 L -20,150 A 80,80 0 0,1 130,145 A 70,70 0 0,1 260,150 A 90,90 0 0,1 410,135 A 85,85 0 0,1 570,145 A 100,100 0 0,1 750,130 A 80,80 0 0,1 900,140 A 95,95 0 0,1 1080,132 A 75,75 0 0,1 1220,148 A 85,85 0 0,1 1370,142 A 75,75 0 0,1 1460,150 L 1460,200 Z" fill="url(#gMidBawah)" opacity="0.85"/>
-          <path d="M -20,200 L -20,160 A 85,85 0 0,1 140,150 A 65,65 0 0,1 250,155 A 95,95 0 0,1 420,140 A 80,80 0 0,1 560,150 A 110,110 0 0,1 760,130 A 85,85 0 0,1 910,145 A 100,100 0 0,1 1090,135 A 70,70 0 0,1 1210,155 A 90,90 0 0,1 1370,145 A 70,70 0 0,1 1460,160 L 1460,200 Z" fill="url(#gFrontBawah)"/>
-        </svg>
-        <div class="gatotkaca-awan-solid-bawah"></div>
-      </div>
-
-      <!-- 4. Awan-Awan Apung Chibi Melayang -->
-      <div class="gatotkaca-awan-apung-wadah" id="gatotkaca-awan-apung-wadah">
-        <div class="gatotkaca-awan-apung gatotkaca-awan-apung-1">
-          <svg viewBox="0 0 120 70" width="120" height="70" fill="none">
-            <path d="M 25 55 L 95 55 A 16 16 0 0 0 95 23 A 20 20 0 0 0 55 12 A 18 18 0 0 0 25 30 A 15 15 0 0 0 25 55 Z" fill="#FFFFFF"/>
-          </svg>
-        </div>
-        <div class="gatotkaca-awan-apung gatotkaca-awan-apung-2">
-          <svg viewBox="0 0 140 80" width="140" height="80" fill="none">
-            <path d="M 28 65 L 112 65 A 18 18 0 0 0 112 28 A 22 22 0 0 0 65 15 A 20 20 0 0 0 28 35 A 17 17 0 0 0 28 65 Z" fill="#FFFFFF"/>
-          </svg>
-        </div>
-        <div class="gatotkaca-awan-apung gatotkaca-awan-apung-3">
-          <svg viewBox="0 0 110 65" width="110" height="65" fill="none">
-            <path d="M 22 52 L 88 52 A 15 15 0 0 0 88 22 A 18 18 0 0 0 50 12 A 16 16 0 0 0 22 28 A 14 14 0 0 0 22 52 Z" fill="#FFFFFF"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- 5. Toast Teks Slogan Terbang -->
-      <div class="gatotkaca-toast-terbang" id="gatotkaca-toast-terbang">
-        <span class="gatotkaca-toast-ikon" aria-hidden="true">&#9650;</span>
-        <span>Otot Kawat Tulang Besi, Melesat ke Nusantara!</span>
-      </div>
-
-      <!-- 6. Panggung Utama Sambutan: Gatotkaca di Atas + Balon Dialog di Bawah -->
-      <div class="gatotkaca-panggung-wadah" id="gatotkaca-panggung-wadah">
-        <!-- Kontainer Posisi Gatotkaca -->
-        <div class="gatotkaca-aktor-posisi" id="gatotkaca-aktor-posisi">
-          <div class="gatotkaca-bobbing-wadah" id="gatotkaca-bobbing-wadah">
-            <div class="gatotkaca-aura-glow" id="gatotkaca-aura-glow"></div>
-            <img
-              src="/assets/gatotkaca-transparan.png"
-              alt="Gatotkaca Chibi Sang Ksatria Budaya Nusantara"
-              class="gatotkaca-gambar"
-              id="gatotkaca-gambar"
-              loading="eager"
-            />
-            <div class="gatotkaca-bayangan-bawah" id="gatotkaca-bayangan"></div>
-
-            <!-- Sparks Bintang Emas & Petir -->
-            <div class="gatotkaca-sparks-wadah" id="gatotkaca-sparks">
-              <span class="gatotkaca-spark" style="top: -12px; left: 16px;">✦</span>
-              <span class="gatotkaca-spark" style="top: -18px; right: 24px;">✦</span>
-              <span class="gatotkaca-spark" style="bottom: 30px; left: -12px;">✦</span>
-              <span class="gatotkaca-spark" style="bottom: 24px; right: -8px;">✦</span>
-              <span class="gatotkaca-spark" style="top: 45%; left: -24px;">✦</span>
-              <span class="gatotkaca-spark" style="top: 38%; right: -22px;">✦</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Balon Dialog Sambutan & Panduan Singkat (Tepat di Bawah Gatotkaca) -->
-        <div class="gatotkaca-dialog-wadah" id="gatotkaca-dialog-wadah">
-          <div class="gatotkaca-dialog-kartu">
-            <div class="gatotkaca-dialog-panah" aria-hidden="true"></div>
-            <div class="gatotkaca-lencana">
-              <span class="gatotkaca-lencana-titik" aria-hidden="true"></span>
-              <span>Ksatria Budaya Nusantara</span>
-            </div>
-            <h3 class="gatotkaca-dialog-judul">Selamat Datang di Peta 3D Nusantara!</h3>
-            <p class="gatotkaca-dialog-teks">
-              Jelajahi relief kepulauan Indonesia secara 360°! Putar sudut pandang, klik provinsi untuk menancapkan panji budaya, dan kumpulkan stempel di paspormu.
-            </p>
-            <button type="button" id="gatotkaca-btn-oke" class="gatotkaca-btn-oke" aria-label="Mulai jelajahi peta 3D">
-              <span>Oke, Ayo Jelajah!</span>
-              <span class="gatotkaca-btn-panah" aria-hidden="true">&rarr;</span>
-            </button>
-            <div class="gatotkaca-dialog-hint">Tekan tombol atau Enter untuk mulai</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Layar Pemuatan Interaktif & Animasi Lucu Nusantara -->
     <div id="jelajah-loading-screen" class="jelajah-loading-screen" role="status" aria-live="polite">

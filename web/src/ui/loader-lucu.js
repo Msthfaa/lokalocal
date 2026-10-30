@@ -59,6 +59,10 @@ export function inisialisasiLoaderLucu(wadahInduk = document.body, { lewati = fa
     elemenLoader.setAttribute('role', 'status');
     elemenLoader.setAttribute('aria-live', 'polite');
     wadahInduk.prepend(elemenLoader);
+  } else {
+    elemenLoader.classList.remove('is-selesai');
+    elemenLoader.style.display = 'flex';
+    elemenLoader.removeAttribute('aria-hidden');
   }
 
   // Struktur HTML Maskot & Antarmuka Ceria

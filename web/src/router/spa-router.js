@@ -7,7 +7,6 @@
  * serta memicu animasi sinematik Pesawat Kartun Budaya saat menuju halaman Jelajah.
  */
 
-import { terbangkanGatotkacaLepasLandas } from '../ui/transisi-gatotkaca.js';
 import { NAMA_SITUS } from '../config.js';
 import { gsap, apakahKurangiGerak } from '../util/motion.js';
 
@@ -111,8 +110,7 @@ export class SpaRouter {
   }
 
   /**
-   * Navigasi khusus ke halaman Jelajah 3D tersendiri (jelajah.html)
-   * dengan memicu animasi terbang Pesawat Kartun Budaya lepas landas
+   * Navigasi ke halaman Jelajah 3D dengan layar muat Kapal Pinisi Nusantara
    * @param {object} [opsiTambahan]
    * @param {string} [opsiTambahan.provinsi]
    */
@@ -120,27 +118,11 @@ export class SpaRouter {
     if (this.sedangTransisi) return;
     this.sedangTransisi = true;
 
-    try {
-      sessionStorage.setItem('lokalocal_mendarat_pesawat', '1');
-    } catch {}
-
-    const queryParams = [];
-    queryParams.push('mendarat=1');
+    let targetUrl = '/jelajah';
     if (opsiTambahan.provinsi) {
-      queryParams.push(`provinsi=${encodeURIComponent(opsiTambahan.provinsi)}`);
+      targetUrl += `?provinsi=${encodeURIComponent(opsiTambahan.provinsi)}`;
     }
-
-    const targetUrl = `./jelajah.html?${queryParams.join('&')}`;
-
-    try {
-      terbangkanGatotkacaLepasLandas({
-        onTerbangTinggi: () => {
-          window.location.href = targetUrl;
-        }
-      });
-    } catch {
-      window.location.href = targetUrl;
-    }
+    window.location.href = targetUrl;
   }
 
   /**

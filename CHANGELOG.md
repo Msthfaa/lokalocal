@@ -1,3 +1,20 @@
+## [2026-10-30] Pemulihan Penuh Layar Muat Kapal Pinisi Nusantara ("Si Kembara") Menuju Halaman Jelajah
+- **Permintaan Pengguna:**
+  - Pengguna meminta agar transisi/layar muat saat menuju halaman Jelajah menggunakan layar muat asli yang memuat animasi maskot Kapal Pinisi secara eksklusif.
+- **Tindakan & Solusi:**
+  - **Eliminasi Transisi Gatotkaca yang Memblokir Layar:**
+    - `web/jelajah.html`: Menghapus overlay Gatotkaca (`#transisi-gatotkaca-overlay`) dan stylesheet-nya, serta menghapus script yang sebelumnya menyembunyikan layar muat kapal jika pengguna pernah berkunjung.
+    - `web/src/router/spa-router.js`: Menghapus pemicu animasi terbang Gatotkaca lepas landas pada fungsi `navigasiKeJelajahDedicated()`, mengalihkan rute secara langsung dan bersih ke `/jelajah`.
+    - `web/src/pages/jelajah.js`: Menghapus modul `transisi-gatotkaca.js`, menyederhanakan siklus muat agar selalu menampilkan layar muat Kapal Pinisi hingga adegan 3D siap, lalu memicu animasi membal 38 keping pulau nusantara secara mulus.
+  - **Optimalisasi Layar Muat Kapal Pinisi ("Si Kembara"):**
+    - `web/src/ui/loader-lucu.js`: Memastikan elemen `#jelajah-loading-screen` tereset bersih (status `display: flex`, menghapus kelas `is-selesai`) setiap kali halaman dibuka.
+    - Maskot kapal pinisi mungil yang berkedip lucu, bergoyang di atas ombak berlapis, bilah progres Sabang-Merauke, serta pesan trivia budaya nusantara kini selalu menyambut pengguna saat menuju Jelajah.
+- **Hasil & Verifikasi:**
+  - `verif_loader_kapal_pinisi.png`: Layar muat kapal pinisi tampil anggun di layar ponsel (390x844) dengan progres bilah dan maskot beranimasi.
+  - `verif_jelajah_setelah_kapal.png`: Peta 3D nusantara terbuka luas dan mulus begitu layar muat kapal selesai tanpa ada sisa dialog pemblokir.
+  - `verif_desktop_loader_kapal.png`: Tampilan di desktop (1440x900) simetris, anggun di tengah layar dengan latar mistis khas Nusantara.
+  - Build produksi: `npm --prefix web run build` sukses (2.85s, 0 error).
+
 ## [2026-10-30] Redesain Gestur Sentuh & UX Mobile Jelajah 3D: Pinch-to-Zoom 2-Jari Alami, Bottom Sheet Provinsi Bebas Tabrakan, & Mini Story Pill Sinematik
 - **Permintaan & Masukan Pengguna (Uji Ponsel Nyata Android):**
   1. *Gestur Cubit (Pinch Zoom) Tidak Alami*: Saat dicubit untuk zoom in/out di HP, peta malah berputar liar tak terkendali.
