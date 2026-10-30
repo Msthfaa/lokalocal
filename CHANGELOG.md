@@ -1,3 +1,38 @@
+## [2026-10-30] Implementasi Rute Bersih (Clean URLs), Ide B Pita Gugus Wilayah 3D, Toleransi Raycast Sentuh Ponsel & Penataan Navigasi Sempurna
+- **Permintaan Pengguna:**
+  1. Bersihkan rute URL navigasi agar tidak menuliskan ekstensi file (`/`, `/jelajah`, `/paspor`, `/kuis`).
+  2. Perbaiki tombol-tombol pada halaman Jelajah 3D yang sebelumnya tidak bisa diklik karena terblokir invisible overlay.
+  3. Perbaiki jarak peta diorama yang terlalu jauh pada layar ponsel/tablet dan pastikan pulau mudah disentuh/diklik.
+  4. Laksanakan **Ide B**: Pita Pilihan Cepat 6 Gugus Wilayah (*Quick-Jump Island Chips*) tanpa AI slop, dan pastikan setiap fitur di Jelajah dapat digunakan dengan mulus di layar HP.
+- **Tindakan & Solusi:**
+  - **Clean URLs (`/`, `/jelajah`, `/paspor`, `/kuis`):**
+    - `web/vite.config.js`: Ditambahkan middleware rewrite dev server serta build hook `closeBundle()` yang secara otomatis menggandakan bundle produksi ke folder bersih (`dist/jelajah/index.html`, `dist/paspor/index.html`, `dist/kuis/index.html`) untuk hosting statis (Netlify/Vercel/GitHub Pages).
+    - `web/index.html`, `web/jelajah.html`, `web/paspor.html`, `web/kuis.html`: Seluruh tautan navigasi dan branding diubah dari `./*.html` menjadi rute bersih (`/`, `/jelajah`, `/paspor`, `/kuis`).
+  - **Eliminasi Invisible Blocking Overlay:**
+    - `web/src/styles/components.css`: `.jelajah-tur-overlay` dan `.rute-cerita-overlay` diatur `display: none !important; pointer-events: none !important; visibility: hidden !important;` ketika tidak berstatus `.aktif`, mengembalikan fungsionalitas 100% tombol HUD dan klik pulau 3D.
+  - **Kamera Diorama Pas & Raycast Sentuh HP:**
+    - `web/src/sections/hero3d/index.js`: Radius target kamera fit pada layar potret ponsel diturunkan dari 5.8 ke 3.95 dengan sudut elevasi 42°, membuat kepulauan Indonesia 1.5x lebih besar, chunky, dan dekat ke pandangan.
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Ambang batas seret pointer sentuh ditingkatkan ke 32px (durasi 750ms).
+      - Menambahkan uji kedekatan 8-arah (proximity testing 8–16px) untuk sentuhan jari pada pulau kecil (Bali, Lombok, DIY Yogyakarta, Maluku, dsb.) sehingga sangat mudah dipilih di layar sentuh.
+  - **Ide B — Pita Pilihan Cepat 6 Gugus Wilayah (`#jelajah-pita-wilayah`):**
+    - `web/jelajah.html`: Menambahkan elemen navigasi pita horizontal glassmorphism dengan 7 chip pilihan: `Semua`, `Sumatera` (119), `Jawa` (186), `Bali & Nusa` (24), `Kalimantan` (46), `Sulawesi` (43), `Maluku & Papua` (22).
+    - `web/src/sections/hero3d/jelajah3d.js`: Menambahkan method `fokusGugusWilayah(zonaId)` dengan koordinat terbang kamera yang presisi dan transisi GSAP yang sinematik.
+    - `web/src/pages/jelajah.js`: Menghubungkan interaksi klik chip wilayah ke kontroler 3D, otomatis menggeser chip aktif ke tengah layar dan sinkron dengan tombol Reset Putar.
+    - `web/src/styles/sections.css`: Menata posisi pita wilayah bertingkat rapi:
+      - Ponsel: Berada di `bottom: 94px` (di atas toolbar kontrol `bottom: 50px`), attribution di kiri bawah (`bottom: 12px`), pemutar audio di kanan bawah (`bottom: 10px`), bebas tabrakan 100%.
+      - Desktop: Berada di poros bawah tengah (`bottom: 24px`), dengan status SPKT di kiri (`bottom: 84px`) dan toolbar di kanan (`bottom: 84px`), simetris dan lapang.
+  - **Rata Tengah Menu Dropdown Mobile:**
+    - `web/src/styles/layout.css`: `.nav-daftar.terbuka .nav-tautan` diberi `width: 100%; max-width: 240px; justify-content: center; text-align: center;`, menghasilkan kapsul aktif yang presisi dan rata tengah di layar ponsel.
+- **Hasil & Verifikasi:**
+  - Pengujian visual headless Edge CDP:
+    - `verif_mobile_jelajah_overview_new.png`: Layar HP 390px tertata anggun, 3 tingkat kontrol tanpa tabrakan.
+    - `verif_mobile_jelajah_sumatra.png`: Kamera terbang mulus memperbesar Pulau Sumatera saat chip ditekan.
+    - `verif_mobile_jelajah_jawa.png`: Kamera terbang mulus ke Pulau Jawa & Kalimantan dengan chip aktif bersinar.
+    - `verif_desktop_jelajah_with_chips.png`: Tampilan desktop 1440px simetris, megah, dan bebas tabrakan.
+    - `verif_mobile_menu_centered_perfect.png`: Menu navigasi ponsel 100% rata tengah dan proporsional.
+  - Build produksi: `npm --prefix web run build` sukses (3.95s, 0 error).
+
 ## [2026-10-29] Optimasi Responsivitas Layar HP Jelajah 3D — Eliminasi Tabrakan HUD, Toolbar Tengah & Pill Status Ringkas
 - **Permintaan Pengguna:**
   - Mengoptimalkan tampilan Jelajah 3D agar responsif, tidak terpotong, dan tetap nyaman serta bagus saat digunakan di layar HP/ponsel.
