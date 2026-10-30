@@ -142,6 +142,10 @@ export function mulaiRute(ruteId, opsi = {}) {
   bunyikanKendangTak(0.5);
   tampilkanToast(`Memulai rute: ${rute.judul}`);
 
+  if (typeof document !== 'undefined') {
+    document.body.classList.add('jelajah-tur-sedang-jalan');
+  }
+
   bukaOverlayRute();
   perbaruiTampilanTitik();
 }
@@ -273,6 +277,9 @@ function selesaikanRute() {
 export function keluarRute() {
   ruteAktif = null;
   indeksTitikAktif = 0;
+  if (typeof document !== 'undefined') {
+    document.body.classList.remove('jelajah-tur-sedang-jalan');
+  }
   if (overlayRuteEl) {
     overlayRuteEl.setAttribute('hidden', '');
     overlayRuteEl.style.display = 'none';

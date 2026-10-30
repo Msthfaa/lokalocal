@@ -2268,26 +2268,83 @@ body.tema-siang .hud-atribusi-teks {
   color: #554A40;
 }
 
-/* Responsif Mobile (< 640px): Bottom Sheet */
-@media (max-width: 639px) {
+/* Responsif Mobile (<= 860px): Bottom Sheet Provinsi & State Management Bebas Benturan */
+@media (max-width: 860px) {
+  /* Sembunyikan Pita Wilayah & Toolbar saat Bottom Sheet atau Tur Sinematik aktif */
+  body.jelajah-ada-kartu-aktif .jelajah-pita-wilayah,
+  body.jelajah-ada-kartu-aktif .jelajah-hud-kanan-bawah,
+  body.jelajah-tur-sedang-jalan .jelajah-pita-wilayah,
+  body.jelajah-tur-sedang-jalan .jelajah-hud-kanan-bawah {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translate3d(-50%, 32px, 0) !important;
+    visibility: hidden !important;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease;
+  }
+
   .jelajah-kartu-kanan {
     position: fixed !important;
     top: auto !important;
-    bottom: 16px !important;
-    left: 12px !important;
-    right: 12px !important;
+    bottom: 12px !important;
+    left: 10px !important;
+    right: 10px !important;
     width: auto !important;
-    max-width: none !important;
-    border-radius: 16px;
-    transform: translate3d(0, 30px, 0);
+    max-width: 440px !important;
+    margin-inline: auto !important;
+    border-radius: 18px;
+    z-index: 110 !important;
+    background: rgba(18, 15, 12, 0.96) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(230, 177, 74, 0.38) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(230, 177, 74, 0.15) !important;
+    padding: 14px 16px !important;
+    transform: translate3d(0, 40px, 0);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   }
 
   .jelajah-kartu-kanan.is-muncul {
     transform: translate3d(0, 0, 0);
   }
 
+  .jelajah-kartu-kanan.is-compact {
+    padding: 14px 16px !important;
+  }
+
+  .jelajah-kartu-kanan.is-compact .kartu-compact-aksi {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .jelajah-kartu-kanan.is-compact .kartu-btn-perluas {
+    flex: 1;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--aksen);
+    color: #14110F;
+    font-weight: 700;
+    font-size: 0.86rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(230, 177, 74, 0.35);
+  }
+
+  .jelajah-kartu-kanan.is-compact .kartu-btn-paspor-mini {
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+  }
+
   .jelajah-kartu-kanan.is-expanded {
-    max-height: 78vh;
+    max-height: 82vh;
   }
 }
 

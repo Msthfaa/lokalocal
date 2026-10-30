@@ -437,6 +437,10 @@ export function buatPengontrolTurSinematik({
     sedangDijeda = false;
     indeksZona = 0;
 
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('jelajah-tur-sedang-jalan');
+    }
+
     tampilkanToast('Memulai Tur Sinematik Nusantara. Dengarkan narasi pemandu budaya.');
     terbangKeZona(0);
   }
@@ -481,6 +485,10 @@ export function buatPengontrolTurSinematik({
     if (!sedangBerjalan) return;
     sedangBerjalan = false;
     sedangDijeda = false;
+
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('jelajah-tur-sedang-jalan');
+    }
 
     hentikanVoiceOver();
     clearTimeout(timerZona);

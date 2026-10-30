@@ -348,12 +348,24 @@ export function inisialisasiJelajah3D({
     if (meshTerpilih && provTerpilihData) {
       const worldPusat = new Vector3();
       meshTerpilih.getWorldPosition(worldPusat);
-      cameraTargetPos.set(
-        cameraBasePos.x + worldPusat.x * 0.40,
-        cameraBasePos.y * 0.94,
-        cameraBasePos.z * 0.88 + worldPusat.z * 0.35
-      );
-      cameraTargetLookAt.set(worldPusat.x * 0.70, worldPusat.y + 0.08, worldPusat.z * 0.70);
+      const isMobileScreen = typeof window !== 'undefined' && (window.innerWidth <= 860 || adalahLayarSentuh);
+      if (isMobileScreen) {
+        // Pada ponsel/tablet: framing seimbang, tidak meluncur terlalu dekat
+        // agar konteks kepulauan tetangga dan perairan tetap terlihat
+        cameraTargetPos.set(
+          cameraBasePos.x + worldPusat.x * 0.22,
+          cameraBasePos.y * 0.98,
+          cameraBasePos.z * 0.94 + worldPusat.z * 0.18
+        );
+        cameraTargetLookAt.set(worldPusat.x * 0.50, worldPusat.y + 0.06, worldPusat.z * 0.50);
+      } else {
+        cameraTargetPos.set(
+          cameraBasePos.x + worldPusat.x * 0.40,
+          cameraBasePos.y * 0.94,
+          cameraBasePos.z * 0.88 + worldPusat.z * 0.35
+        );
+        cameraTargetLookAt.set(worldPusat.x * 0.70, worldPusat.y + 0.08, worldPusat.z * 0.70);
+      }
     } else {
       cameraTargetPos.copy(cameraBasePos);
       cameraTargetLookAt.set(0, 0.12, 0);
@@ -385,13 +397,34 @@ export function inisialisasiJelajah3D({
 
   perbaruiUkuran(true);
 
+  // Pelacak sentuhan multi-touch untuk pinch-to-zoom di layar HP
+  const sentuhanAktif = new Map();
+  let jarakPinchAwal = 0;
+  let zoomAwalPinch = 1.0;
+  let sedangPinch = false;
+
   // Event pointer / mouse / touch
   function onPointerDown(e) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
 
-    // Hentikan tur sinematik jika user mulai menyeret peta secara manual
+    // Hentikan tur sinematik jika user mulai berinteraksi dengan peta secara manual
     if (pengontrolTur && pengontrolTur.apakahBerjalan()) {
       pengontrolTur.hentikan(true);
+    }
+
+    if (e.pointerType === 'touch') {
+      sentuhanAktif.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (sentuhanAktif.size === 2) {
+        // Dua jari menyentuh: masuki mode pinch-to-zoom!
+        sedangPinch = true;
+        isDragging = false; // KUNCI ROTASI: Jangan putar peta saat mencubit!
+        const [p1, p2] = Array.from(sentuhanAktif.values());
+        jarakPinchAwal = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        zoomAwalPinch = zoomLevel;
+        return;
+      } else if (sentuhanAktif.size > 2) {
+        return;
+      }
     }
 
     isDragging = true;
@@ -406,7 +439,22 @@ export function inisialisasiJelajah3D({
   function onPointerMove(e) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
 
-    if (isDragging) {
+    if (e.pointerType === 'touch') {
+      sentuhanAktif.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (sedangPinch && sentuhanAktif.size >= 2) {
+        // Tangani gestur pinch cubit 2-jari:
+        const [p1, p2] = Array.from(sentuhanAktif.values());
+        const jarakSekarang = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        if (jarakPinchAwal > 0) {
+          const rasio = jarakSekarang / jarakPinchAwal;
+          const targetZoom = zoomAwalPinch * rasio;
+          aturZoom(targetZoom);
+        }
+        return; // SANGAT PENTING: Jangan rotasi saat mencubit!
+      }
+    }
+
+    if (isDragging && !sedangPinch) {
       const deltaX = e.clientX - dragStartX;
       dragDistance += Math.abs(deltaX);
       dragStartX = e.clientX;
@@ -460,6 +508,19 @@ export function inisialisasiJelajah3D({
   function onPointerUp(e) {
     if (pengelolaDetail && pengelolaDetail.isAktif()) return;
 
+    if (e.pointerType === 'touch') {
+      sentuhanAktif.delete(e.pointerId);
+      if (sentuhanAktif.size < 2) {
+        sedangPinch = false;
+        jarakPinchAwal = 0;
+      }
+      if (sentuhanAktif.size === 1) {
+        // Satu jari tersisa: setel ulang dragStartX agar tidak meloncat
+        const pSisa = Array.from(sentuhanAktif.values())[0];
+        dragStartX = pSisa.x;
+      }
+    }
+
     if (isDragging) {
       isDragging = false;
       kanvas.style.cursor = 'grab';
@@ -494,6 +555,18 @@ export function inisialisasiJelajah3D({
     if (distTotal < batasJarak && durasi < batasDurasi) {
       eksekusiKlikLayar(e.clientX, e.clientY, isTouch);
     }
+  }
+
+  function onPointerCancel(e) {
+    if (e.pointerType === 'touch') {
+      sentuhanAktif.delete(e.pointerId);
+      if (sentuhanAktif.size < 2) {
+        sedangPinch = false;
+        jarakPinchAwal = 0;
+      }
+    }
+    isDragging = false;
+    kanvas.style.cursor = 'grab';
   }
 
   function eksekusiKlikLayar(clientX, clientY, isTouch = false) {
@@ -559,6 +632,7 @@ export function inisialisasiJelajah3D({
   kanvas.addEventListener('pointerdown', onPointerDown);
   window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('pointerup', onPointerUp);
+  kanvas.addEventListener('pointercancel', onPointerCancel);
 
   function pilihProvinsi(kode, opsi = {}) {
     const kodeCari = String(kode).padStart(2, '0');
@@ -1171,6 +1245,7 @@ export function inisialisasiJelajah3D({
     window.removeEventListener('resize', saatResize);
     kanvas.removeEventListener('wheel', onWheel);
     kanvas.removeEventListener('pointerdown', onPointerDown);
+    kanvas.removeEventListener('pointercancel', onPointerCancel);
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerup', onPointerUp);
 

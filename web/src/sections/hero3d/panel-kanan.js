@@ -76,6 +76,9 @@ export function buatPanelKanan({
     elKartu.classList.add('is-muncul');
     elKartu.classList.toggle('is-expanded', statusMode === 'expanded');
     elKartu.classList.toggle('is-compact', statusMode === 'compact');
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('jelajah-ada-kartu-aktif');
+    }
   }
 
   /**
@@ -86,6 +89,9 @@ export function buatPanelKanan({
     statusMode = 'compact';
     elKartu.classList.remove('is-muncul', 'is-expanded');
     elKartu.classList.add('is-tersembunyi');
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('jelajah-ada-kartu-aktif');
+    }
   }
 
   /**
@@ -252,7 +258,7 @@ export function buatPanelKanan({
 
           <div class="kartu-compact-aksi">
             <button type="button" class="kartu-btn-perluas" aria-label="Buka rincian lengkap budaya provinsi ini">
-              <span>Buka Detail Budaya</span>
+              <span>${adalahKosong ? 'Pelajari Info Provinsi' : `Telusuri ${p.total} Warisan Budaya`}</span>
               <span class="kartu-ikon-panah">&rarr;</span>
             </button>
 
@@ -692,6 +698,9 @@ export function buatPanelKanan({
       if (provinsiAktif) render();
     },
     dispose: () => {
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove('jelajah-ada-kartu-aktif');
+      }
       if (elKartu && elKartu.parentNode) {
         elKartu.parentNode.removeChild(elKartu);
       }

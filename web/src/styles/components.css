@@ -759,6 +759,15 @@
 }
 
 @media (max-width: 860px) {
+  body.jelajah-ada-kartu-aktif .audio-backsound-dock,
+  body.jelajah-tur-sedang-jalan .audio-backsound-dock {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(20px) !important;
+    visibility: hidden !important;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  }
+
   .audio-backsound-dock {
     position: fixed !important;
     bottom: 10px !important;
@@ -808,53 +817,127 @@
     padding: 0;
   }
 
-  /* Overlay Tur Sinematik & Rute di HP */
+  /* Overlay Tur Sinematik & Rute di HP: Mini Story Pill (< 130px agar kanvas 3D tetap terlihat 80%+) */
+  .jelajah-tur-overlay {
+    padding-bottom: 12px !important;
+    padding-inline: 10px !important;
+  }
+
   .jelajah-tur-kartu {
-    padding: 12px 14px;
-    gap: 8px;
-    border-radius: 14px;
-    max-width: calc(100vw - 20px);
+    padding: 10px 14px 10px 14px !important;
+    gap: 6px !important;
+    border-radius: 16px !important;
+    max-width: min(480px, calc(100vw - 20px)) !important;
+    height: auto !important;
+    max-height: none !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 16px rgba(230, 177, 74, 0.25) !important;
+  }
+
+  .jelajah-tur-kartu-baris-atas {
+    gap: 6px !important;
+    align-items: center !important;
+  }
+
+  .jelajah-tur-lencana {
+    font-size: 0.68rem !important;
+    padding: 2px 8px !important;
+  }
+
+  .jelajah-tur-lencana-provinsi,
+  .jelajah-tur-subjudul,
+  .jelajah-tur-deskripsi {
+    display: none !important; /* Disembunyikan di HP agar kanvas 3D bebas lapang, narasi lengkap diputar via suara */
   }
 
   .jelajah-tur-judul {
-    font-size: 0.95rem;
+    font-size: 0.88rem !important;
+    line-height: 1.25 !important;
+    margin: 2px 0 0 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
-  .jelajah-tur-deskripsi {
-    font-size: 0.76rem;
-    line-height: 1.4;
+  .jelajah-tur-kartu-kontrol {
+    margin-top: 4px !important;
+    gap: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .jelajah-tur-kontrol-kiri {
+    display: flex !important;
+    gap: 6px !important;
+    width: 100% !important;
   }
 
   .jelajah-tur-ctrl-btn {
-    padding: 4px 9px;
-    font-size: 0.72rem;
+    flex: 1 !important;
+    min-height: 34px !important;
+    padding: 4px 10px !important;
+    font-size: 0.75rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
   }
 
   .jelajah-tur-hint-drag {
     display: none !important;
   }
 
+  /* Rute Tematik Overlay di HP */
+  .rute-cerita-overlay {
+    padding-bottom: 12px !important;
+    padding-inline: 10px !important;
+  }
+
   .rute-vignette-kartu {
-    padding: 14px 14px 12px 14px;
-    border-radius: 14px;
-    max-width: calc(100vw - 20px);
-    max-height: 80vh;
+    padding: 10px 14px !important;
+    border-radius: 16px !important;
+    max-width: min(480px, calc(100vw - 20px)) !important;
+    height: auto !important;
+    max-height: 145px !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75) !important;
+    overflow: hidden !important;
+  }
+
+  .rute-vignette-header {
+    margin-bottom: 2px !important;
   }
 
   .rute-vignette-judul {
-    font-size: 1.05rem;
-    margin-bottom: 4px;
+    font-size: 0.88rem !important;
+    margin-bottom: 2px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .rute-vignette-narasi {
-    font-size: 0.76rem;
-    line-height: 1.45;
-    margin-bottom: 8px;
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 4px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
   .rute-vignette-fakta {
-    padding: 6px 10px;
-    font-size: 0.72rem;
+    display: none !important;
+  }
+
+  .rute-vignette-aksi {
+    margin-top: 4px !important;
+    gap: 6px !important;
+  }
+
+  .rute-btn-nav {
+    min-height: 32px !important;
+    padding: 4px 10px !important;
+    font-size: 0.72rem !important;
   }
 }
 

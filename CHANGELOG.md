@@ -1,3 +1,39 @@
+## [2026-10-30] Redesain Gestur Sentuh & UX Mobile Jelajah 3D: Pinch-to-Zoom 2-Jari Alami, Bottom Sheet Provinsi Bebas Tabrakan, & Mini Story Pill Sinematik
+- **Permintaan & Masukan Pengguna (Uji Ponsel Nyata Android):**
+  1. *Gestur Cubit (Pinch Zoom) Tidak Alami*: Saat dicubit untuk zoom in/out di HP, peta malah berputar liar tak terkendali.
+  2. *Over-Zoom Saat Pulau Dipilih*: Mengklik salah satu pulau membuat kamera zoom in terlalu dekat (kehilangan konteks geografis pulau sekitar) dan kartu informasi menutupi toolbar serta audio player sehingga pengguna bingung apa langkah berikutnya.
+  3. *Tur Sinematik & Rute Tematik Menutupi Layar*: Kartu cerita tur/rute berukuran raksasa menutupi 60%–80% tinggi layar ponsel, menghalangi pemandangan diorama 3D dan kapal pinisi yang sedang berlayar.
+- **Tindakan & Solusi:**
+  - **Pinch-to-Zoom 2-Jari Alami & Anti-Putar Liar:**
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Mengimplementasikan `sentuhanAktif = new Map()` dengan event pointer terisolasi (`pointerdown`, `pointermove`, `pointerup`, `pointercancel`).
+      - Saat 2 jari menyentuh layar, rotasi drag 1-jari otomatis dibekukan (`sedangPinch = true; isDragging = false`).
+      - Rasio jarak Euclidean kedua jari secara instan dan halus mengatur tingkat zoom (`aturZoom(zoomAwalPinch * rasio)`), memberikan pengalaman navigasi sentuh peta modern yang presisi tanpa perputaran liar.
+  - **Framing Kamera Seimbang & Humanis:**
+    - `web/src/sections/hero3d/jelajah3d.js`:
+      - Menyesuaikan target kamera saat pulau dipilih pada viewport mobile (`<= 860px`): kamera mundur sedikit lebih tinggi (`cameraBasePos.y * 0.98`, `cameraBasePos.z * 0.94 + worldPusat.z * 0.18`) dengan sudut pandang fokus seimbang, memastikan pulau sekitar dan lautan tetap tampak megah tanpa efek zoom-in berlebihan.
+  - **Redesain Kartu Detail Menjadi Bottom Sheet Mobile Bebas Tabrakan:**
+    - `web/src/sections/hero3d/panel-kanan.js`:
+      - Mengaktifkan class `document.body.classList.add('jelajah-ada-kartu-aktif')` saat kartu informasi provinsi terbuka.
+      - Memperbarui tombol CTA aksi primer dengan teks dinamis yang tegas dan mengundang: `"Telusuri ${p.total} Warisan Budaya ➔"` (atau `"Pelajari Info Provinsi ➔"` untuk provinsi menanti pendataan).
+    - `web/src/styles/sections.css`:
+      - Mengubah tata letak kartu kanan pada ponsel menjadi Bottom Sheet yang menempel anggun di bagian bawah (`bottom: 12px; left: 10px; right: 10px; z-index: 110; border-radius: 18px`).
+      - Secara otomatis menyembunyikan Pita Wilayah dan Toolbar bawah saat Bottom Sheet aktif (`opacity: 0; pointer-events: none; transform: translate3d(-50%, 32px, 0)`).
+    - `web/src/styles/components.css`:
+      - Secara otomatis menyembunyikan pemutar musik (`#player-audio-mini`) saat Bottom Sheet aktif, mengeliminasi tabrakan dan tumpang-tindih tombol 100%. Tombol CTA emas dan tombol `[Stempel]` kini tampak bersih dan siap ditekan jempol pengguna.
+  - **Mini Story Pill Sinematik untuk Tur & Rute Tematik di HP:**
+    - `web/src/sections/hero3d/tur-sinematik.js` & `web/src/features/pengontrol-rute.js`:
+      - Mengaktifkan class `document.body.classList.add('jelajah-tur-sedang-jalan')` selama tur atau rute aktif.
+    - `web/src/styles/components.css`:
+      - Merampingkan `.jelajah-tur-kartu` dan `.rute-vignette-kartu` pada layar ponsel menjadi kapsul mini (tinggi total < 120px): menyembunyikan lencana duplikat dan teks deskripsi panjang (karena narasi suara otomatis dibacakan oleh pemandu), memperkecil tombol kontrol `Jeda` dan `Wilayah Berikutnya` ke 34px.
+      - Hasil: >80% layar ponsel kini bebas menampilkan pemandangan diorama 3D, efek partikel, dan kapal pinisi yang meluncur antar pulau secara dramatis.
+- **Hasil & Verifikasi:**
+  - Pengujian visual headless Edge CDP:
+    - `verif_mobile_bottom_sheet_diy.png`: Bottom sheet DI Yogyakarta tampil anggun, tombol CTA emas `"Telusuri 13 Warisan Budaya ➔"` dan tombol `[Stempel]` terlihat jelas tanpa tabrakan HUD atau audio player.
+    - `verif_mobile_tur_mini_pill.png`: Tur sinematik tampil dalam mini pill (< 120px), layar 3D pulau Sumatera, pinisi, dan awan terbuka luas.
+    - `verif_mobile_after_pinch_zoom.png`: Simulasi pinch 2-jari berhasil mengubah zoom hingga 180% dengan stabil tanpa memutar rotasi peta.
+  - Build produksi: `npm --prefix web run build` sukses (2.57s, 0 error).
+
 ## [2026-10-30] Implementasi Rute Bersih (Clean URLs), Ide B Pita Gugus Wilayah 3D, Toleransi Raycast Sentuh Ponsel & Penataan Navigasi Sempurna
 - **Permintaan Pengguna:**
   1. Bersihkan rute URL navigasi agar tidak menuliskan ekstensi file (`/`, `/jelajah`, `/paspor`, `/kuis`).
