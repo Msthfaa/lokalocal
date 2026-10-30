@@ -1,3 +1,28 @@
+## [2026-10-30] Integrasi Foto Dokumentasi Budaya Real-time (Wikimedia Commons API) & Fallback Tenun/Batik SVG
+- **Permintaan Pengguna:**
+  - Pengguna menyoroti bahwa pada penjelajahan budaya (mode detail 3D), gambar rekaman budaya sebelumnya tampak seperti foto stok generik/AI yang tidak cocok (misal: Anyaman Keladi Air menampilkan foto gaun pesta perak, atau kotak polos hijau/oranye). Pengguna memilih **Opsi 3**: integrasi foto dokumentasi budaya asli dari Wikimedia Commons / Wikipedia secara real-time dengan fallback pola Tenun/Batik generatif SVG (`buatPolaKartuSvg`) untuk tradisi lokal yang belum memiliki dokumentasi foto publik resmi.
+- **Tindakan & Solusi:**
+  - **Kamus Kurasi Foto Dokumentasi Asli:**
+    - `web/src/data/foto-wikimedia-kurasi.json` & `web/public/data/foto-wikimedia-kurasi.json`: Menyusun kamus 49 entri budaya Nusantara utama dengan foto dokumentasi asli terverifikasi dari Wikimedia Commons (Arak Bako, Congklak, Rabab, Randai, Tambua Tasa, Tato Mentawai, Candi Borobudur, Wayang, Kujang, Reog, Patung Dirgantara, Toko Kompak, dll.).
+  - **Layanan Real-time Wikimedia Commons API:**
+    - `web/src/data/gambar-budaya.js`: Menulis ulang modul penyedia gambar.
+      - Menghapus ketergantungan foto stok Unsplash yang tidak akurat.
+      - Menyediakan `dapatkanGambarBudaya(rekaman)` untuk pengecekan cepat dari kamus kurasi lokal.
+      - Menyediakan `ambilFotoWikimediaRealtime(rekaman)` dengan Action API Wikipedia Indonesia (`prop=pageimages`, `pithumbsize=600`, CORS `origin=*`, `Api-User-Agent`), dilengkapi cache in-memory dan `sessionStorage`.
+  - **Implementasi Pola Tenun/Batik SVG & Foto Asli pada Kartu Galeri 3D:**
+    - `web/src/sections/hero3d/mode-detail.js`:
+      - Mengintegrasikan `buatPolaKartuSvg` ke dalam setiap kartu galeri budaya sebagai lapisan dasar (z-index 1).
+      - Menjalankan pemuatan asinkron foto Wikimedia secara bertahap saat kartu dirender.
+      - Foto asli yang berhasil dimuat akan memudar masuk secara mulus (z-index 2) dilengkapi lencana atribusi `"Dokumentasi Wikipedia"`.
+      - Rekaman budaya lokal tanpa foto publik (misal: Anyaman Keladi Air, Arsitektur Sukadana) tetap tampil anggun dan bermartabat dengan ornamen tenun/batik SVG sesuai kategori warna OPK, tanpa risiko gambar rusak atau foto AI palsu.
+  - **Integrasi pada Dialog Detail Rekaman (<dialog>):**
+    - `web/src/ui/dialog-rekaman.js`: Menghubungkan pemuatan foto asli Wikimedia pada banner header dialog di atas motif tenun SVG.
+  - **Penyelarasan Desain CSS:**
+    - `web/src/styles/sections.css` & `web/src/styles/components.css`: Mengatur tata letak `.kartu-galeri-media`, `.kartu-galeri-pola-svg`, `.kartu-galeri-img`, dan badge atribusi `.kartu-galeri-sumber-badge`.
+- **Hasil & Verifikasi:**
+  - Validasi data `node tools/validate.mjs` lolos 100% (0 error).
+  - Build produksi `npm --prefix web run build` sukses tanpa error (2.45s).
+
 ## [2026-10-30] Pemulihan Penuh Layar Muat Kapal Pinisi Nusantara ("Si Kembara") Menuju Halaman Jelajah
 - **Permintaan Pengguna:**
   - Pengguna meminta agar transisi/layar muat saat menuju halaman Jelajah menggunakan layar muat asli yang memuat animasi maskot Kapal Pinisi secara eksklusif.

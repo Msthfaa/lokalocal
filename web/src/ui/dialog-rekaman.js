@@ -14,6 +14,7 @@ import { pecahParagrafDeskripsi } from '../util/teks.js';
 import { buatPolaKartuSvg } from '../patterns/generate.js';
 import { dapatkanLabelPendekJenis } from './kartu.js';
 import { formatAngka } from '../util/format.js';
+import { dapatkanGambarBudaya, ambilFotoWikimediaRealtime } from '../data/gambar-budaya.js';
 
 /**
  * Menginisialisasi dialog detail rekaman budaya.
@@ -50,7 +51,7 @@ export function inisialisasiDialogRekaman({ tanggalAmbilTerformat = '9 Oktober 2
   function bukaRekaman(rekaman, pemicuEl = null) {
     if (!rekaman || !dialogEl) return;
 
-    // 1. Pola SVG header
+    // 1. Pola SVG header & Foto Dokumentasi Wikimedia
     if (wadahPolaEl) {
       wadahPolaEl.textContent = '';
       wadahPolaEl.appendChild(
@@ -59,9 +60,42 @@ export function inisialisasiDialogRekaman({ tanggalAmbilTerformat = '9 Oktober 2
           jenisKode: rekaman.jenis_kode,
           kategoriKode: rekaman.kategori_kode,
           lebar: 680,
-          tinggi: 120
+          tinggi: 140
         })
       );
+
+      const pasangFotoHeader = (urlFoto) => {
+        if (!wadahPolaEl || !urlFoto) return;
+        const fotoEl = document.createElement('img');
+        fotoEl.className = 'dialog-rekaman-banner-foto';
+        fotoEl.alt = rekaman.nama || 'Dokumentasi Budaya';
+        fotoEl.loading = 'lazy';
+        fotoEl.onload = () => {
+          fotoEl.style.opacity = '1';
+          if (!wadahPolaEl.querySelector('.dialog-rekaman-sumber-badge')) {
+            const badge = document.createElement('span');
+            badge.className = 'dialog-rekaman-sumber-badge';
+            badge.textContent = 'Foto Dokumentasi Wikipedia';
+            wadahPolaEl.appendChild(badge);
+          }
+        };
+        fotoEl.onerror = () => {
+          fotoEl.remove();
+        };
+        fotoEl.src = urlFoto;
+        wadahPolaEl.appendChild(fotoEl);
+      };
+
+      const fotoLangsung = dapatkanGambarBudaya(rekaman);
+      if (fotoLangsung) {
+        pasangFotoHeader(fotoLangsung);
+      } else {
+        ambilFotoWikimediaRealtime(rekaman).then((hasil) => {
+          if (hasil?.url) {
+            pasangFotoHeader(hasil.url);
+          }
+        }).catch(() => {});
+      }
     }
 
     // 2. Judul

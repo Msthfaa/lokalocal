@@ -37,7 +37,8 @@ import { gsap } from 'gsap';
 import { apakahKurangiGerak } from '../../util/motion.js';
 import { WARNA_JENIS_HEX, GRADIEN_JENIS_CSS } from '../../map/scales.js';
 import { formatAngka } from '../../util/format.js';
-import { dapatkanGambarBudaya } from '../../data/gambar-budaya.js';
+import { dapatkanGambarBudaya, ambilFotoWikimediaRealtime } from '../../data/gambar-budaya.js';
+import { buatPolaKartuSvg } from '../../patterns/generate.js';
 import {
   ikonPinLokasi,
   ikonPaspor,
@@ -978,7 +979,15 @@ export function buatPengelolaModeDetail({
                   !adalahKosong && daftarBudaya.length > 0
                     ? daftarBudaya
                         .map((item) => {
-                          const gradienBg = GRADIEN_JENIS_CSS[item.jenis_kode] || GRADIEN_JENIS_CSS[item.jenis] || 'linear-gradient(135deg, #FFD36B, #FFF1B8)';
+                          // Pola Tenun / Batik SVG generatif deterministik sebagai identitas visual budaya asli
+                          const elPola = buatPolaKartuSvg({
+                            id: item.id,
+                            jenisKode: item.jenis_kode,
+                            kategoriKode: item.kategori_kode,
+                            lebar: 360,
+                            tinggi: 124
+                          });
+                          const svgPolaHtml = elPola ? elPola.outerHTML : '';
                           const fotoUrl = dapatkanGambarBudaya(item);
                           const jenisLabel = (item.jenis_label || item.kategori || 'OPK').toUpperCase();
                           const kabLabel = item.kabupaten_nama || p.nama;
@@ -996,15 +1005,17 @@ export function buatPengelolaModeDetail({
                             <!-- Shimmer Highlight Bar Top -->
                             <div class="kartu-galeri-shimmer" style="background: linear-gradient(90deg, transparent, ${warnaPill}, transparent);"></div>
 
-                            <!-- Banner Media Gambar (16:10) -->
-                            <div class="kartu-galeri-media" style="background: ${gradienBg};">
+                            <!-- Banner Media Gambar (16:10) & Pola Tenun SVG -->
+                            <div class="kartu-galeri-media" data-id="${item.id}">
+                              <div class="kartu-galeri-pola-svg" aria-hidden="true">${svgPolaHtml}</div>
                               <img
-                                src="${fotoUrl}"
+                                src="${fotoUrl || ''}"
                                 alt="${item.nama}"
-                                class="kartu-galeri-img"
+                                class="kartu-galeri-img ${fotoUrl ? 'is-loaded' : ''}"
                                 loading="lazy"
-                                onerror="this.style.opacity='0'; this.style.display='none';"
+                                style="${fotoUrl ? 'opacity: 1; display: block;' : 'opacity: 0; display: none;'}"
                               />
+                              ${fotoUrl ? '<span class="kartu-galeri-sumber-badge">Dokumentasi Wikipedia</span>' : ''}
                               <!-- Kategori Tag Melayang -->
                               <span class="kartu-galeri-badge" style="border-left: 3px solid ${warnaPill};">
                                 <span class="kartu-galeri-titik" style="background-color: ${warnaPill};"></span>
@@ -1213,6 +1224,42 @@ export function buatPengelolaModeDetail({
           bukaDetail();
         }
       });
+    });
+
+    // Fetch Asinkron Real-time Foto Wikipedia untuk kartu yang belum memiliki foto kurasi
+    kartuItems.forEach(async (card) => {
+      const id = card.dataset.id;
+      const item = daftarBudaya.find((b) => b.id === id);
+      if (!item) return;
+
+      const mediaEl = card.querySelector('.kartu-galeri-media');
+      const imgEl = card.querySelector('.kartu-galeri-img');
+      if (!imgEl) return;
+
+      if (imgEl.getAttribute('src')) return;
+
+      try {
+        const hasil = await ambilFotoWikimediaRealtime(item);
+        if (hasil?.url && mediaEl && imgEl) {
+          imgEl.onload = () => {
+            imgEl.style.display = 'block';
+            imgEl.style.opacity = '1';
+            if (!mediaEl.querySelector('.kartu-galeri-sumber-badge')) {
+              const badge = document.createElement('span');
+              badge.className = 'kartu-galeri-sumber-badge';
+              badge.textContent = 'Dokumentasi Wikipedia';
+              mediaEl.appendChild(badge);
+            }
+          };
+          imgEl.onerror = () => {
+            imgEl.style.display = 'none';
+            imgEl.style.opacity = '0';
+          };
+          imgEl.src = hasil.url;
+        }
+      } catch {
+        // Tetap gunakan pola tenun/batik SVG jika fetch gagal atau offline
+      }
     });
 
     // Animasi Entrance Elegan Ringan saat cangkang dibuka
