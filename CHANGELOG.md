@@ -1,3 +1,15 @@
+## [2026-10-30] Penghapusan Indikator Loading Duplikat di Samping Navbar Jelajah
+- **Permintaan Pengguna:**
+  - Menghapus pill loading kecil di sebelah navbar atas pada halaman Jelajah (`#nav-loading-kartun`), sehingga hanya kartu Kapal Pinisi di tengah layar yang menjadi indikator pemuatan.
+- **Tindakan & Solusi:**
+  - `web/jelajah.html`: Menghapus elemen `#nav-loading-kartun` beserta kontainer `.nav-kiri`, menyelaraskan struktur navbar Jelajah agar identik dan konsisten dengan halaman Beranda, Paspor, dan Kuis.
+  - `web/src/ui/loader-lucu.js`: Menghapus pembaruan progres DOM ke elemen navbar (`#nav-kartun-pesan`, `#nav-kartun-persen`, `#nav-loading-kartun`).
+  - `web/src/styles/sections.css`: Menghapus seluruh CSS spesifik `.nav-loading-kartun` dan keyframe terkait untuk membersihkan ukuran stylesheet.
+- **Hasil & Verifikasi:**
+  - `verif_desktop_loader_kapal.png`: Header navbar bersih dan simetris rata tengah tanpa pill loading ganda di samping logo.
+  - `verif_loader_kapal_pinisi.png`: Tampilan layar muat di HP tetap fokus dan elegan pada kartu tengah Kapal Pinisi.
+  - Build produksi: `npm --prefix web run build` sukses (3.56s, 0 error).
+
 ## [2026-10-30] Pemulihan Penuh Layar Muat Kapal Pinisi Nusantara ("Si Kembara") Menuju Halaman Jelajah
 - **Permintaan Pengguna:**
   - Pengguna meminta agar transisi/layar muat saat menuju halaman Jelajah menggunakan layar muat asli yang memuat animasi maskot Kapal Pinisi secara eksklusif.
